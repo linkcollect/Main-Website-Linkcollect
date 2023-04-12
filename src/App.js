@@ -1,13 +1,25 @@
-import logo from './logo.svg';
 import './App.css';
-import HeroSection from './components/Navbar';
 import Navbar from './components/Navbar';
-
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route
+} from "react-router-dom";
+import LoginPage from './pages/LoginPage';
+import SignupPage from './pages/SignupPage';
 function App() {
   return (
-    <div className="App">
-    <Navbar/>
-    </div>
+    <Router>
+      <div className="App">
+        <Navbar />
+        {/* <LoginPage /> */}
+        <Routes>
+          <Route exact path='/signup' element={<SignupPage />} />
+          <Route exact path='/login' element={<LoginPage />} />
+
+        </Routes>
+      </div>
+    </Router>
   );
 }
 
