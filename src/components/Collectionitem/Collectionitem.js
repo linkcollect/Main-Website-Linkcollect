@@ -1,41 +1,46 @@
 import React from "react";
-import "./styles.css";
+import { Link } from "react-router-dom";
 import collectionImage from "../../assets/collectionImage.png";
-
-
-const Collectionitem = (props) => {
+import upvote from "../../assets/Upvote.svg";
+import dot from "../../assets/3dot.svg";
+const Collectionitem = ({ id, image, title, links, type, explore }) => {
   return (
     <>
-      <div
-        className=" col-2 h-14 bg-white border-gray-200 "
-        style={{ maxWidth: "16rem" }}
+      <Link
+        to={`/${id}`}
+        className="bg-bgPrimary border border-textSecondary rounded-lg overflow-hidden w-[269px]"
       >
-        <img
-          src={props.image || collectionImage}
-          alt=""
-          style={{
-            width: "286px",
-            maxWidth: "inherit",
-            borderRadius: "7px 7px 0px 0px",
-          }}
-        />
-        <div className="flex flex-row justify-around bg-white">
-          <h5 className="mb-2 font-semibold tracking-tight text-gray-900 bg-transparent flex mt-2 pl-2 pt-2 cardTitle">
-            {props.title}
-          </h5>
-          <p className="mb-2 text tracking-tight text-gray-900 bg-transparent flex m-2 onlyFont ml-10 mt-4">
-            {props.links}
-          </p>
+        <img src={image || collectionImage} />
+
+        <div className="m-3">
+          <div className="flex justify-between items-center mb-3">
+            <p className="font-semibold text-textPrimary text-[14px]">
+              {title}
+            </p>
+            <p className="text-textPrimary font-light text-[12px]">
+              {links} Links
+            </p>
+          </div>
+          <div className="bg-white flex mb-3">
+            <p className="px-6 border border-textSecondary rounded-full text-sm font-light">
+              {type}
+            </p>
+          </div>
+
+          {/* It will be shown when we will be in explore section */}
+          {explore && (
+            <div className="flex justify-between">
+              <button className="rounded-lg bg-primary font-normal text-bgPrimary py-2 px-4 flex items-center justify-center gap-2">
+                <span className="text-[13px]">Upvote</span>{" "}
+                <img src={upvote} alt="upvote" />
+              </button>
+              <button className="rounded-md border border-textSecondary py-2 px-4">
+                <img src={dot} alt="menu" />
+              </button>
+            </div>
+          )}
         </div>
-        <div className="bg-white p-3 flex">
-          <p
-            href="/"
-            className="inline-flex items-center onlyFont bg-transparent border-gray-500 border-solid border-2 rounded-3xl privacyFont  pl-6 pr-6 leading-4"
-          >
-            {props.type}
-          </p>
-        </div>
-      </div>
+      </Link>
     </>
   );
 };
