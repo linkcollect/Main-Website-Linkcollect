@@ -7,16 +7,20 @@ import {
 } from "react-router-dom";
 import LoginPage from './pages/LoginPage';
 import SignupPage from './pages/SignupPage';
-import Sidebar from './components/Sidebar';
+
+import Home from './pages/Home';
+
 function App() {
   return (
     <Router>
       <div className="App">
-        {/* <Navbar /> */}
+{/* <Navbar />   */}
+
         <Routes>
           <Route exact path='/signup' element={<SignupPage />} />
           <Route exact path='/login' element={<LoginPage />} />
-          <Route exact path='/sidebar' element={<Sidebar />} />
+          <Route exact path='/' element={<Home />} />
+
         </Routes>
       </div>
     </Router>
