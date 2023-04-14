@@ -1,17 +1,48 @@
 @import url('https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600&display=swap');
+/* *{
+  background: linear-gradient(270deg, #9092FF 1.26%, rgba(144, 146, 255, 0) 100%);
+} */
 .Heading{
     font-family: 'Lexend', sans-serif;
     font-size: 31.59px;
     font-weight: 600;
+    line-height: 40px;
+    text-align: center;
+    height: 98px;
 }
+.form--heading{
+  font-family: 'Lexend';
+font-style: normal;
+font-weight: 700;
+font-size: 24px;
+line-height: 59px;
+/* or 248% */
 
-.para{
+display: flex;
+align-items: center;
+justify-content: center;
+text-align: center;
+letter-spacing: 0.294258px;
+color: #232438;
+mix-blend-mode: normal;
+}
+#para{
     font-family: 'Lexend', sans-serif;
     font-weight: 300;
+    color:  #232438;
+    /* height: 60px; */
+}
+.para{
+  font-family: 'Lexend', sans-serif;
+  font-weight: 300;
 }
 
 input {
     border-radius: 10px;
+
+}
+input:focus{
+  border: 1px solid slategray;
 }
 
 .hr-text {
