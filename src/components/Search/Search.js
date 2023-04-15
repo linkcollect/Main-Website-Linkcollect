@@ -25,7 +25,7 @@ const SearchBox = ({onChnageHandler}) => {
         <input
           type="text"
           id="simple-search"
-          class="bg-bgPrimary border border-textSecondary text-textSecondary text-sm rounded-lg block w-full p-4 pl-10"
+          class="bg-bgPrimary border border-secondary text-textSecondary text-sm rounded-lg block w-full p-3 pl-10"
           placeholder="Search for collection or links"
           onChange={onChnageHandler}
         />
