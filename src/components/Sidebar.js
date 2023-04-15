@@ -12,21 +12,21 @@ const Sidebar = () => {
         setShowCollections(!showCollections)
     }
     return (
-        <div class='h-screen fixed left-0 top-0 w-80  bg-white'>
-            <div className="flex flex-col items-center justify-between h-screen">
-                <div>
-                    <img src={mainlogo} alt="" className='w-48 block mx-auto mt-0 h-[78px]'/>
-                    <div className="mt-2">
-                        <img src={ProfileImage} alt="" className='w-20 h-20 rounded-2xl mt-12 mx-auto' />
-                        <h1 className="text-black mx-auto text-center font-semibold mt-4 w-44 h-9 text-3xl para">Harsh Singh</h1>
-                            <p className="text-center h-5 para text-sm mx-auto w-[247px]">ohiostudent@gmail.com</p>
-                    </div>
+        <div class='h-full fixed left-0 top-0 w-80  bg-white px-1'>
+            <img src={mainlogo} alt="" className='w-48 mx-auto'/>
+            <div className="flex flex-col items-center justify-around h-full">
+                {/* Profile Info */}
+                <div className='w-full'>
+                        <img src={ProfileImage} alt="" className='w-20 h-20 rounded-2xl mx-auto' />
+                        <p className="font-bold text-[25px]">Harsh Singh</p>
+                        <p className="text-center h-5 para text-sm mx-auto w-[247px]">ohiostudent@gmail.com</p>
                 </div>
-                <div className="">
-                    <div className="flex items-center justify-between mt-10 mx-auto w-[301px] h-[51px]" style={{borderRadius: '8px', border: `1px solid rgba(206, 208, 251, 0.41)` }}>
-                        <div className="flex items-center justify-center gap-2 px-2">
+
+                <div className="w-full">
+                    <div className="w-full rounded-lg font-bold text-textPrimary border-2 border-[#ededed] rounded-lg py-3 flex justify-btween px-3">
+                        <div className="w-full flex items-center gap-2">
                             <img src={StackIcon} alt="" className='w-8 h-8' />
-                            <span className="text-black para text-lg font-normal">Collections</span>
+                            <span className="text-textPrimary">Collections</span>
                         </div>
                         <div className="flex items-center justify-center gap-2">
                             <span className='font-normal w-5 h-5' style={{ color: '#6166F1', fontSize: '16px', lineHeight: '20px' }}>48</span>
@@ -49,25 +49,26 @@ const Sidebar = () => {
                     </div>
                 </div>
 
-                <div>
+                <div className='w-full'>
 
-                    <div className="flex items-center justify-center gap-2 mx-auto mt-14 cursor-pointer" style={{ width: '301px', height: '47px', background: '#6166F1', borderRadius: '8px' }}>
+                <button className="w-full rounded-lg bg-primary font-bold text-bgPrimary py-3 flex justify-center items-center gap-2">
                         <img src={AddIcon} alt="" className='w-4' />
-                        <span className="text-white font-medium para" style={{ fontSize: '16px', lineHeight: '16px' }}>Create Collection</span>
-                    </div>
+                        <span>Create Collection</span>
+                </button>
 
-                    <div className="flex items-center justify-center gap-2 mx-auto mt-1 cursor-pointer bg-white" style={{ width: '301px', height: '47px', borderRadius: '8px', border: `1px solid #EBECFD` }}>
-                        <span className="text-black para font-medium" style={{ fontSize: '16px', lineHeight: '16px' }}>Share Profile</span>
+                <button className="w-full rounded-lg font-bold text-textPrimary border-2 border-[#ededed] rounded-lg py-3 flex justify-center mt-1">
+                        <span className="">Share Profile</span>
                         <img src={Link} alt="" className='w-4' />
-                    </div>
+                </button>
 
-                    <div className="flex items-center justify-center gap-2 mx-auto mt-1 cursor-pointer bg-white" style={{ width: '301px', height: '47px', borderRadius: '8px', border: `1px solid #EBECFD` }}>
-                        <span className="text-black para font-medium" style={{ fontSize: '16px', lineHeight: '16px' }}>Public</span>
-                    </div>
-                    <div className="flex items-center justify-center gap-2 mx-auto mt-4 cursor-pointer bg-white" style={{ width: '301px', height: '47px' }}>
-                        <img src={Logout} alt="" className='w-5 h-5' />
-                        <span className="text-red-600 para text-xl" style={{ fontSize: '16px', lineHeight: '16px' }}>Logout</span>
-                    </div>
+                <div className="w-full rounded-lg font-bold text-textPrimary border-2 border-[#ededed] rounded-lg py-3 flex justify-center mt-1">
+                        <span>Share Profile</span>
+                        <img src={Link} alt="" className='w-4' />
+                </div>
+                <button className=" w-full flex items-center justify-center gap-2 cursor-pointer bg-white pt-5 pb-9">
+                    <img src={Logout} alt="" className='w-5 h-5' />
+                    <span className="text-danger para text-xl" style={{ fontSize: '16px', lineHeight: '16px' }}>Logout</span>
+                </button>
                 </div>
             </div>
         </div>
