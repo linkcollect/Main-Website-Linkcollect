@@ -1,6 +1,7 @@
 import React from "react";
 import searchIcon from "../../assets/SearchVector.svg"
-const SearchBox = ({onChnageHandler}) => {
+const SearchBox = ({onChnageHandler,onSearch}) => {
+
   return (
     <form class="flex items-center">
       <label for="simple-search" class="sr-only">
@@ -27,10 +28,10 @@ const SearchBox = ({onChnageHandler}) => {
           id="simple-search"
           class="bg-bgPrimary border border-secondary text-textSecondary text-sm rounded-lg block w-full p-3 pl-10"
           placeholder="Search for collection or links"
-          onChange={onChnageHandler}
+          onChange={(e)=>onChnageHandler(e.target.value)}
         />
         <div className="absolute right-3 inset-y-0 flex items-center">
-          <button><img src={searchIcon}/></button>
+          <button onClick={onSearch}><img src={searchIcon}/></button>
         </div>
       </div>
     </form>

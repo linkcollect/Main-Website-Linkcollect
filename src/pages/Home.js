@@ -103,11 +103,12 @@ const collectionsGlobal = [
 const Home = () => {
   const [collectionItems, setCollectionsItems] = useState([]);
   const [tab, setTab] = useState(1);
+  const [searchQuery,setSearchQuery] = useState("");
 
   const userName = "hasrh";
 
   useEffect(() => {
-    if (tab == 1) {
+    if (tab === 1) {
       // Api calls for the own collections
       setCollectionsItems(collections);
     } else {
@@ -130,13 +131,22 @@ const Home = () => {
     setTab(index);
   };
 
+  const searchHnadeler = (e) =>{
+    e.preventDefault();
+    console.log(searchQuery)
+    // Api call and state upadte
+  }
+
+
   return (
     <div className="grid grid-cols-6">
-      <Sidebar />
+      <Sidebar/>
       <div className="w-full h-screen bg-bgSecondary col-span-5 py-10 px-20">
         <p className="text-left font-bold text-[30px]">Ohayo, {userName}</p>
         <div className="w-full mt-3">
-          <Search />
+          <form onSubmit={searchHnadeler}>
+          <Search onSearch={searchHnadeler} onChnageHandler={setSearchQuery}/>
+          </form>
           {/* Need to add filter option here */}
         </div>
 
@@ -167,10 +177,10 @@ const Home = () => {
               image={collections.image}
               title={collections.title}
               links={collections.links}
-              type={tab == 1 ? collections.type : null}
-              explore={tab == 2 ? true : false}
-              isUpvoted={tab==2 ? collections.upvoate : null}
-              upVote={tab==2 ?  upVoteHadnler : null}
+              type={tab === 1 ? collections.type : null}
+              explore={tab === 2 ? true : false}
+              isUpvoted={tab===2 ? collections.upvoate : null}
+              upVote={tab===2 ?  upVoteHadnler : null}
             />
           ))}
         </div>
