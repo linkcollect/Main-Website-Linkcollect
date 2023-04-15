@@ -55,12 +55,12 @@ const Sidebar = () => {
         </div>
         <div style={{ height: "65px" }}>
           {showCollections && (
-            <div className="flex flex-col mx-auto bg-bgSecondary py-3">
+            <div className="flex flex-col mx-auto bg-bgSecondary py-3 cursor-pointer">
               <div className="flex items-center justify-between px-2 pb-3">
                 <span className="text-black font-normal">Private</span>
                 <span className="font-normal w-5 h-5 text-primary">36</span>
               </div>
-              <div className="flex items-center justify-between px-2 ">
+              <div className="flex items-center justify-between px-2 cursor-pointer">
                 <span className="text-black font-normal">Public</span>
                 <span className="font-normal w-5 h-5 text-primary">12</span>
               </div>
