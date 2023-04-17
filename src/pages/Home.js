@@ -4,101 +4,7 @@ import Search from "../components/Search/Search";
 import Sidebar from "../components/Sidebar/Sidebar";
 import collectionImage from "../assets/collectionImage.png";
 import { upload } from "@testing-library/user-event/dist/upload";
-const collections = [
-  {
-    id: "1",
-    image: collectionImage,
-    title: "Fav Buildspace Ideas",
-    links: "28",
-    type: "Private",
-  },
-  {
-    id: "2",
-    image: collectionImage,
-    title: "Fav Buildspace Ideas",
-    links: "28",
-    type: "Private",
-  },
-  {
-    id: "3",
-    image: collectionImage,
-    title: "Fav Buildspace Ideas",
-    links: "28",
-    type: "Private",
-  },
-  {
-    id: "4",
-    image: collectionImage,
-    title: "Fav Buildspace Ideas",
-    links: "28",
-    type: "Public",
-  },
-  {
-    id: "5",
-    image: collectionImage,
-    title: "Fav Buildspace Ideas",
-    links: "28",
-    type: "Public",
-  },
-  {
-    id: "7",
-    image: collectionImage,
-    title: "Fav Buildspace Ideas",
-    links: "28",
-    type: "Public",
-  },
-];
-const collectionsGlobal = [
-  {
-    id: "1",
-    image: collectionImage,
-    title: "Fav Buildspace Ideas",
-    links: "36",
-    upvoate: false
-  },
-  {
-    id: "2",
-    image: collectionImage,
-    title: "Fav Ideas",
-    links: "35",
-    upvoate: false
-  },
-  {
-    id: "3",
-    image: collectionImage,
-    title: "Fav  Ideas",
-    links: "28",
-    upvoate: false
-  },
-  {
-    id: "4",
-    image: collectionImage,
-    title: "Fav Buildspace Ideas",
-    links: "27",
-    upvoate: false
-  },
-  {
-    id: "5",
-    image: collectionImage,
-    title: "Fav Buildspace Ideas",
-    links: "28",
-    upvoate: false
-  },
-  {
-    id: "7",
-    image: collectionImage,
-    title: "Fav Buildspace Ideas",
-    links: "28",
-    upvoate: false
-  },
-  {
-    id: "8",
-    image: collectionImage,
-    title: "Fav Buildspace Ideas 2",
-    links: "39",
-    upvoate: false
-  },
-];
+import { collections, collectionsGlobal } from "../dummyData";
 
 const Home = () => {
   const [collectionItems, setCollectionsItems] = useState([]);
@@ -108,6 +14,7 @@ const Home = () => {
   const userName = "hasrh";
 
   useEffect(() => {
+    console.log(tab);
     if (tab === 1) {
       // Api calls for the own collections
       setCollectionsItems(collections);
@@ -139,9 +46,10 @@ const Home = () => {
 
 
   return (
-    <div className="grid grid-cols-6">
+    <div className="flex bg-bgSecondary">
       <Sidebar/>
-      <div className="w-full h-screen bg-bgSecondary col-span-5 py-10 px-20">
+      <div className="w-full flex-2 pl-[22rem] col-span-5 py-10 pr-[7rem]">
+      <div className="fixed w-[74vw] bg-bgSecondary top-0 pt-10 pb-3">
         <p className="text-left font-bold text-[30px]">Ohayo, {userName}</p>
         <div className="w-full mt-3">
           <form onSubmit={searchHnadeler}>
@@ -170,7 +78,8 @@ const Home = () => {
           </div>
         </div>
 
-        <div className="flex flex-wrap w-full gap-2 mt-5">
+      </div>
+        <div className="flex flex-wrap w-full gap-2 mt-[13rem]">
           {collectionItems.map((collections) => (
             <Collectionitem
               id={collections.id}

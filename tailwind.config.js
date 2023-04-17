@@ -20,7 +20,3 @@ module.exports = {
   },
   plugins: [],
 }
-
-/* *{
-  background: linear-gradient(270deg, #9092FF 1.26%, rgba(144, 146, 255, 0) 100%);
-} */
