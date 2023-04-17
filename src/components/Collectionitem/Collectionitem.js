@@ -1,39 +1,66 @@
 import React from "react";
-import "./styles.css";
+import { Link } from "react-router-dom";
 import collectionImage from "../../assets/collectionImage.png";
-
-
-const Collectionitem = (props) => {
+import upvote from "../../assets/Upvote.svg";
+import dot from "../../assets/3dot.svg";
+import noUpvote from "../../assets/Vector.svg";
+const Collectionitem = ({
+  id,
+  image,
+  title,
+  links,
+  type,
+  explore,
+  isUpvoted,
+  upVote,
+}) => {
   return (
     <>
-      <div
-        className=" col-2 h-14 bg-white border-gray-200 "
-        style={{ maxWidth: "16rem" }}
-      >
-        <img
-          src={props.image || collectionImage}
-          alt=""
-          style={{
-            width: "286px",
-            maxWidth: "inherit",
-            borderRadius: "7px 7px 0px 0px",
-          }}
-        />
-        <div className="flex flex-row justify-around bg-white">
-          <h5 className="mb-2 font-semibold tracking-tight text-gray-900 bg-transparent flex mt-2 pl-2 pt-2 cardTitle">
-            {props.title}
-          </h5>
-          <p className="mb-2 text tracking-tight text-gray-900 bg-transparent flex m-2 onlyFont ml-10 mt-4">
-            {props.links}
-          </p>
-        </div>
-        <div className="bg-white p-3 flex">
-          <p
-            href="/"
-            className="inline-flex items-center onlyFont bg-transparent border-gray-500 border-solid border-2 rounded-3xl privacyFont  pl-6 pr-6 leading-4"
-          >
-            {props.type}
-          </p>
+      <div className="bg-bgPrimary border-2 border-bgSecondary rounded-lg overflow-hidden w-[269px]">
+        <div>
+          <Link to={`/${id}`}>
+            <img src={image || collectionImage} />
+            <div className="flex justify-between items-center m-3">
+              <p className="font-semibold text-textPrimary text-[14px]">
+                {title}
+              </p>
+              <p className="text-textPrimary font-light text-[12px]">
+                {links} Links
+              </p>
+            </div>
+          </Link>
+
+          {/* Condional rendering based on tabs 
+            if explore tab opens
+              ==> Show Upvote button
+            if My collections tab open
+              ==> show public or private option
+          */}
+          <div className="flex justify-between m-3 items-center">
+            {explore ? (
+              <button
+                className={`rounded-lg w-[50%] transition duration-200 ease-in-out ${
+                  isUpvoted
+                    ? "bg-primary text-bgPrimary"
+                    : "bg-bgPrimary text-textPrimary"
+                } font-normal py-2 px-4 flex items-center justify-center gap-2 border border-primary`}
+                onClick={() => upVote(id)}
+              >
+                <span className="text-[13px]">Upvote</span>{" "}
+                <img src={isUpvoted ? upvote : noUpvote} alt="upvote" />
+              </button>
+            ) : (
+              <div>
+                <p className="px-6  border border-textSecondary rounded-full text-sm font-light">
+                  {type}
+                </p>
+              </div>
+            )}
+
+            <button className="rounded-md border-2 border-secondary py-3 px-4">
+              <img src={dot} alt="menu" />
+            </button>
+          </div>
         </div>
       </div>
     </>

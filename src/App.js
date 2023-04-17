@@ -1,26 +1,23 @@
 import './App.css';
-import Navbar from './components/Navbar';
 import {
   BrowserRouter as Router,
   Routes,
   Route
 } from "react-router-dom";
-import LoginPage from './pages/LoginPage';
-import SignupPage from './pages/SignupPage';
+import Login from './pages/Login';
+import Signup from './pages/Signup';
 
 import Home from './pages/Home';
-
+import Sidebar from './components/Sidebar/Sidebar'
 function App() {
   return (
     <Router>
       <div className="App">
-{/* <Navbar />   */}
-
         <Routes>
-          <Route exact path='/signup' element={<SignupPage />} />
-          <Route exact path='/login' element={<LoginPage />} />
-          <Route exact path='/' element={<Home />} />
-
+          <Route path='/signup' element={<Signup />} />
+          <Route path='/login' element={<Login />} />
+          <Route  path='/' element={<Home />} />
+          <Route path="/explore"/>
         </Routes>
       </div>
     </Router>
