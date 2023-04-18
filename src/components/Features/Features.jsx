@@ -42,7 +42,7 @@ const Features = () => {
           img={CommandIcon}
           title={"Access bookmarks using commands"}
           details={
-            "Share collectionName & instantly replace the text with a shareable link of the collection, to share it even faster"
+            "Use our commands and key shortcuts anywhere on your browser to save your time, do shit that matters instead"
           }
         />
       </div>
