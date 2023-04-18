@@ -21,28 +21,28 @@ const Features = () => {
           img={BookmarkIcon}
           title={"Save from anywhere"}
           details={
-            "Use our chrome extension on any browser to save any link to your collection with just a right click"
+            "Use our browser extension on any browser to save any link to your collection with just a right click ✅"
           }
         />
         <Card
           img={ShareIcon}
           title={"Share to anyone"}
           details={
-            "we create a shareable link instantly so you can share your bookmarks with your friends super fast"
+            "we create a shareable link instantly so you can share your bookmarks with your friends supa fast ⚡️"
           }
         />
         <Card
           img={SearchIcon}
           title={"Discover the best"}
           details={
-            "Explore what people are liking the most, upvote collections you like "
+            "Explore what people are liking the most, upvote and save collections you like 💼"
           }
         />
         <Card
           img={CommandIcon}
           title={"Access bookmarks using commands"}
           details={
-            "Use our commands and key shortcuts anywhere on your browser to save your time, do shit that matters instead"
+            "Use our commands and key shortcuts anywhere on your browser to save your time, do shit that matters instead 👀"
           }
         />
       </div>
