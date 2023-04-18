@@ -24,8 +24,8 @@ const Navbar = () => {
              <div>   
              <ul className="flex items-center justify-center space-x-5 w-max ">
                     <a href="#how-it-works"><li className='font-light text-textPrimary text-[18px] cursor-pointer leading-[22px]'>How it works</li></a>
-                    <a href="https://calendly.com/linkcollect/linkcollect-io"><li className='font-light text-textPrimary text-[18px] cursor-pointer leading-[22px]'>Request Demo</li></a>
-                    <a> href="https://twitter.com/linkcollect_io"<li className='font-light text-textPrimary text-[18px] cursor-pointer leading-[22px]'>Contact Us</li></a>
+                    <a href="https://calendly.com/linkcollect/linkcollect-io" target="_blank"> <li className='font-light text-textPrimary text-[18px] cursor-pointer leading-[22px]'>Request Demo</li></a>
+                    <a href="https://twitter.com/linkcollect_io" target="_blank"><li className='font-light text-textPrimary text-[18px] cursor-pointer leading-[22px]'>Contact Us</li></a>
                 </ul>
             </div>
 
