@@ -16,7 +16,7 @@ import Grill from "../../assets/Grill.svg";
 const Features = () => {
   return (
     <>
-      <div className="flex flex-wrap  w-[780px] gap-[26px] items-center justify-center mx-auto mt-[400px]">
+      <div id="how-it-works" className="flex flex-wrap  w-[780px] gap-[26px] items-center justify-center mx-auto mt-[400px]">
         <Card
           img={BookmarkIcon}
           title={"Save from anywhere"}
