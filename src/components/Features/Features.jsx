@@ -1,38 +1,134 @@
-import React from 'react'
-import Card from './Card'
-import BookmarkIcon from '../../assets/Frame 40250.svg'
-import ShareIcon from '../../assets/Frame 40250share.svg'
-import SearchIcon from '../../assets/Frame 40250search.svg'
-import CommandIcon from '../../assets/Frame 40250command.svg'
+import React from "react";
+import Card from "./Card";
+import BookmarkIcon from "../../assets/Frame 40250.svg";
+import ShareIcon from "../../assets/Frame 40250share.svg";
+import SearchIcon from "../../assets/Frame 40250search.svg";
+import CommandIcon from "../../assets/Frame 40250command.svg";
+import Card1 from "../../assets/Card.mp4";
+import LCLogo from "../../assets/LCLogo.svg";
+import mainlogoWhite from '../../assets/mainlogoWhite.svg'
+import telegram from '../../assets/telegram.svg'
+import instagram from '../../assets/instagram.svg'
+import medium from '../../assets/medium.svg'
+import discord from '../../assets/discord.svg'
+import twitter from '../../assets/twitter.svg'
+import Grill from '../../assets/Grill.svg'
+
 
 const Features = () => {
-    return (
-        <>
-            <div className="flex flex-wrap  w-[780px] gap-[26px] items-center justify-center mx-auto my-[400px]">
-                <Card
-                    img={BookmarkIcon}
-                    title={'Save from anywhere'}
-                    details={'Use our chrome extension on any browser to save any link to your collection with just a right click'}
-                />
-                <Card
-                    img={ShareIcon}
-                    title={'Share to anyone'}
-                    details={'we create a shareable link instantly so you can share your bookmarks with your friends super fast'}
-                />
-                <Card
-                    img={SearchIcon}
-                    title={'Discover the best'}
-                    details={'Explore what people are liking the most, upvote collections you like '}
-                />
-                <Card
-                    img={CommandIcon}
-                    title={'Access bookmarks using commands'}
-                    details={'Share collectionName & instantly replace the text with a shareable link of the collection, to share it even faster'}
-                />
-
+  return (
+    <>
+      <div className="flex flex-wrap  w-[780px] gap-[26px] items-center justify-center mx-auto mt-[400px]">
+        <Card
+          img={BookmarkIcon}
+          title={"Save from anywhere"}
+          details={
+            "Use our chrome extension on any browser to save any link to your collection with just a right click"
+          }
+        />
+        <Card
+          img={ShareIcon}
+          title={"Share to anyone"}
+          details={
+            "we create a shareable link instantly so you can share your bookmarks with your friends super fast"
+          }
+        />
+        <Card
+          img={SearchIcon}
+          title={"Discover the best"}
+          details={
+            "Explore what people are liking the most, upvote collections you like "
+          }
+        />
+        <Card
+          img={CommandIcon}
+          title={"Access bookmarks using commands"}
+          details={
+            "Share collectionName & instantly replace the text with a shareable link of the collection, to share it even faster"
+          }
+        />
+      </div>
+      {/* Card Animation Section  */}
+      <div className="flex justify-center items-center ml-48  mt-24 mb-8">
+        <div className="mt-10">
+          <video
+          style={{width:'825px',height:'448px'    }}
+            src={Card1}
+            muted
+            autoPlay
+            loop
+          ></video>
+        </div>
+        <div className="main-div mt-24  ">
+          <div className="sub-div flex ">
+            <div>
+              <img src={LCLogo} alt="" />
             </div>
-        </>
-    )
-}
+            <div>
+              <h1 className="ml-5 text-[#6166F1] font-bold text-4xl">Create awesome collections of links</h1>
+            </div>
+          </div>
+          <div className="w-3/5 text-left ml-9 leading-8" >
+            <p>
+              maybe your favourite videos, blogs, twitter threads, ai tools or
+              learning resources and share these collections with your friends
+              in just one click right from our browser extension, yes it's that
+              simple{" "}
+            </p>
+          </div>
+          <div className="main-div mt-8 ">
+          <div className="sub-div flex ">
+            <div>
+              <img src={LCLogo} alt="" />
+            </div>
+            <div>
+              <h1 className="ml-5 text-[#6166F1] font-bold text-4xl">Share your LinkCollect profile</h1>
+            </div>
+          </div>
+          <div className="w-3/5 text-left ml-9 leading-8" >
+            <p>
+            with anyone and they can view all your public collections that you have created or if you will create later{" "}
+            </p>
+          </div>
+        </div>
+        </div>
 
-export default Features
+        
+      </div>
+
+
+      {/* Footer */}
+<img src={Grill} alt="" className="mt-32" />
+      <div className="main-footer ">
+        <div className="sub-footer flex justify-around items-center bg-[#6166F1] pt-10 pb-10">
+<div className="flex flex-col">
+<img src={mainlogoWhite} width="241px"  alt="" />
+<p className="text-left ml-7 w-3/4 text-[#FFF] ">When you find something you like on the internet, save it with linkcollect before you forget</p>
+<div className="loco-tray flex gap-7 ml-7 mt-14 cursor-pointer">
+<img src={twitter} alt="" />
+<img src={telegram} alt="" />
+<img src={instagram} alt="" />
+<img src={medium} alt="" />
+<img src={discord} alt="" />
+</div>
+</div>
+
+
+<div className=" flex flex-col gap-4 font-light text-left text-[#FFF] mb-15 " >
+    <p>How it works</p>
+    <p>FAQs</p>
+    <p>Request demo</p>
+    <p>Contact us</p>
+</div>
+   
+        </div>
+        <div className="flex justify-around text-center bg-[#6166F1] text-[#fff] font-thin text-xs pb-5">
+            <div>2023 @linkcollect.io</div>
+            <div>Help@linkcollect.xyz</div>
+        </div>
+      </div>
+    </>
+  );
+};
+
+export default Features;
