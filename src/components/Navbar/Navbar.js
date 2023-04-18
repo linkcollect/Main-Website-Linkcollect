@@ -23,9 +23,9 @@ const Navbar = () => {
 
              <div>   
              <ul className="flex items-center justify-center space-x-5 w-max ">
-                    <li className='font-light text-textPrimary text-[18px] cursor-pointer leading-[22px]'>How it works</li>
-                    <li className='font-light text-textPrimary text-[18px] cursor-pointer leading-[22px]'>Request Demo</li>
-                    <li className='font-light text-textPrimary text-[18px] cursor-pointer leading-[22px]'>Contact Us</li>
+                    <a href="#how-it-works"><li className='font-light text-textPrimary text-[18px] cursor-pointer leading-[22px]'>How it works</li></a>
+                    <a><li className='font-light text-textPrimary text-[18px] cursor-pointer leading-[22px]'>Request Demo</li></a>
+                    <a><li className='font-light text-textPrimary text-[18px] cursor-pointer leading-[22px]'>Contact Us</li></a>
                 </ul>
             </div>
 

@@ -16,7 +16,7 @@ import Grill from "../../assets/Grill.svg";
 const Features = () => {
   return (
     <>
-      <div className="flex flex-wrap  w-[780px] gap-[26px] items-center justify-center mx-auto mt-[400px]">
+      <div className="flex flex-wrap  w-[780px] gap-[26px] items-center justify-center mx-auto mt-[400px]" id="how-it-works">
         <Card
           img={BookmarkIcon}
           title={"Save from anywhere"}
@@ -47,18 +47,19 @@ const Features = () => {
         />
       </div>
       {/* Card Animation Section  */}
-      <div className="flex justify-center items-center ml-48  mt-24 mb-8">
-        <div className="mt-10">
+      <div className="flex justify-center w-full items-center mt-24 mb-8 px-[170px]">
+        <div className="flex-1 w-[200px] flex justify-center ml-10">
           <video
-            style={{ width: "825px", height: "448px" }}
+            style={{  height: "448px" }}
             src={Card1}
             muted
             autoPlay
             loop
           ></video>
         </div>
-        <div className="main-div mt-24  ">
-          <div className="sub-div flex ">
+        <div className="flex flex-col gap-[60px] w-[50%]">
+          <div>
+          <div className="flex ">
             <div>
               <img src={LCLogo} alt="" />
             </div>
@@ -68,16 +69,17 @@ const Features = () => {
               </h1>
             </div>
           </div>
-          <div className="w-3/5 text-left ml-9 leading-8">
+          <div className=" text-left ml-9 leading-8 font-light text-xl">
             <p>
               maybe your favourite videos, blogs, twitter threads, ai tools or
               learning resources and share these collections with your friends
               in just one click right from our browser extension, yes it's that
-              simple{" "}
+              simple 😉{" "}
             </p>
           </div>
-          <div className="main-div mt-8 ">
-            <div className="sub-div flex ">
+          </div>
+          <div>
+            <div className="flex">
               <div>
                 <img src={LCLogo} alt="" />
               </div>
@@ -87,7 +89,7 @@ const Features = () => {
                 </h1>
               </div>
             </div>
-            <div className="w-3/5 text-left ml-9 leading-8">
+            <div className=" text-left ml-9 leading-8 font-light text-xl">
               <p>
                 with anyone and they can view all your public collections that
                 you have created or if you will create later{" "}
@@ -107,7 +109,7 @@ const Features = () => {
               When you find something you like on the internet, save it with
               linkcollect before you forget
             </p>
-            <div className="loco-tray flex gap-7 ml-7 mt-14 cursor-pointer">
+            <div className="loco-tray flex gap-7 ml-7 mt-14 cursor-pointer items-center">
               <a href="https://twitter.com/linkcollect_io" target="_blank"><img src={twitter} alt="" /></a>
               <a href="https://www.instagram.com/linkcollect/" target="_blank"><img src={instagram} alt="" /></a>
               <a href="https://medium.com/@askwhyharsh" target="_blank"><img src={medium} alt="" /></a>
