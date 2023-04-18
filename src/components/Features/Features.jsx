@@ -16,7 +16,7 @@ import Grill from "../../assets/Grill.svg";
 const Features = () => {
   return (
     <>
-      <div className="flex flex-wrap  w-[780px] gap-[26px] items-center justify-center mx-auto mt-[400px]" id="how-it-works">
+      <div className="flex flex-wrap  w-[780px] gap-[26px] items-center justify-center mx-auto mt-[400px]">
         <Card
           img={BookmarkIcon}
           title={"Save from anywhere"}
@@ -47,19 +47,18 @@ const Features = () => {
         />
       </div>
       {/* Card Animation Section  */}
-      <div className="flex justify-center w-full items-center mt-24 mb-8 px-[170px]">
-        <div className="flex-1 w-[200px] flex justify-center ml-10">
+      <div className="flex justify-center items-center ml-48  mt-24 mb-8">
+        <div className="mt-10">
           <video
-            style={{  height: "448px" }}
+            style={{ width: "825px", height: "448px" }}
             src={Card1}
             muted
             autoPlay
             loop
           ></video>
         </div>
-        <div className="flex flex-col gap-[60px] w-[50%]">
-          <div>
-          <div className="flex ">
+        <div className="main-div mt-24  ">
+          <div className="sub-div flex ">
             <div>
               <img src={LCLogo} alt="" />
             </div>
@@ -69,7 +68,7 @@ const Features = () => {
               </h1>
             </div>
           </div>
-          <div className=" text-left ml-9 leading-8 font-light text-xl">
+          <div className="w-3/5 text-left ml-9 leading-8">
             <p>
               maybe your favourite videos, blogs, twitter threads, ai tools or
               learning resources and share these collections with your friends
@@ -77,9 +76,8 @@ const Features = () => {
               simple 😉{" "}
             </p>
           </div>
-          </div>
-          <div>
-            <div className="flex">
+          <div className="main-div mt-8 ">
+            <div className="sub-div flex ">
               <div>
                 <img src={LCLogo} alt="" />
               </div>
@@ -89,7 +87,7 @@ const Features = () => {
                 </h1>
               </div>
             </div>
-            <div className=" text-left ml-9 leading-8 font-light text-xl">
+            <div className="w-3/5 text-left ml-9 leading-8">
               <p>
                 with anyone and they can view all your public collections that
                 you have created or if you will create later{" "}
