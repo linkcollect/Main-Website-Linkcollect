@@ -110,7 +110,7 @@ const Features = () => {
             <div className="loco-tray flex gap-7 ml-7 mt-14 cursor-pointer">
               <a href="https://twitter.com/linkcollect_io" target="_blank"><img src={twitter} alt="" /></a>
               <a href="https://www.instagram.com/linkcollect/" target="_blank"><img src={instagram} alt="" /></a>
-              <a ><img src={medium} alt="" /></a>
+              <a href="https://medium.com/@askwhyharsh" target="_blank"><img src={medium} alt="" /></a>
               <a href="https://discord.gg/Pt9b4AefE9" target="_blank"><img src={discord} alt="" /></a>
             </div>
           </div>
