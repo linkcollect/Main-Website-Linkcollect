@@ -30,10 +30,10 @@ const Navbar = () => {
 
                 <div className="flex items-center justify-center gap-6 w-max ml-14">
                     <div className="w-[138px] cursor-pointer h-[63px] border-solid border-[0.5px] border-primary text-primary flex items-center justify-center">
-                        <p className='text-center mx-auto w-[161.94px] h-[26px] font-medium text-[20.61px] leading-[26px] '>Login</p>
+                        <button className='text-center mx-auto w-[161.94px] h-[26px] font-medium text-[20.61px] leading-[26px] cursor-not-allowed' disabled>Login</button>
                     </div>
-                    <div className="w-[190px] cursor-pointer h-[63.31px] bg-primary flex items-center justify-center ">
-                        <p id='NavBtn' className='text-center  h-[26px] text-bgPrimary text-[17.61px]  font-medium'  onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>{buttonText}</p>
+                    <div className="w-[190px] cursor-pointer h-[63.31px] bg-primary flex items-center justify-center" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+                        <p id='NavBtn' className='text-center  h-[26px] text-bgPrimary text-[17.61px] font-medium'  >{buttonText}</p>
                     </div>
 
                 </div>

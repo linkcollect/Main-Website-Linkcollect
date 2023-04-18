@@ -6,14 +6,12 @@ import SearchIcon from "../../assets/Frame 40250search.svg";
 import CommandIcon from "../../assets/Frame 40250command.svg";
 import Card1 from "../../assets/Card.mp4";
 import LCLogo from "../../assets/LCLogo.svg";
-import mainlogoWhite from '../../assets/mainlogoWhite.svg'
-import telegram from '../../assets/telegram.svg'
-import instagram from '../../assets/instagram.svg'
-import medium from '../../assets/medium.svg'
-import discord from '../../assets/discord.svg'
-import twitter from '../../assets/twitter.svg'
-import Grill from '../../assets/Grill.svg'
-
+import mainlogoWhite from "../../assets/mainlogoWhite.svg";
+import instagram from "../../assets/instagram.svg";
+import medium from "../../assets/medium.svg";
+import discord from "../../assets/discord.svg";
+import twitter from "../../assets/twitter.svg";
+import Grill from "../../assets/Grill.svg";
 
 const Features = () => {
   return (
@@ -52,7 +50,7 @@ const Features = () => {
       <div className="flex justify-center items-center ml-48  mt-24 mb-8">
         <div className="mt-10">
           <video
-          style={{width:'825px',height:'448px'    }}
+            style={{ width: "825px", height: "448px" }}
             src={Card1}
             muted
             autoPlay
@@ -65,10 +63,12 @@ const Features = () => {
               <img src={LCLogo} alt="" />
             </div>
             <div>
-              <h1 className="ml-5 text-[#6166F1] font-bold text-4xl">Create awesome collections of links</h1>
+              <h1 className="ml-5 text-[#6166F1] font-bold text-4xl">
+                Create awesome collections of links
+              </h1>
             </div>
           </div>
-          <div className="w-3/5 text-left ml-9 leading-8" >
+          <div className="w-3/5 text-left ml-9 leading-8">
             <p>
               maybe your favourite videos, blogs, twitter threads, ai tools or
               learning resources and share these collections with your friends
@@ -77,54 +77,54 @@ const Features = () => {
             </p>
           </div>
           <div className="main-div mt-8 ">
-          <div className="sub-div flex ">
-            <div>
-              <img src={LCLogo} alt="" />
+            <div className="sub-div flex ">
+              <div>
+                <img src={LCLogo} alt="" />
+              </div>
+              <div>
+                <h1 className="ml-5 text-[#6166F1] font-bold text-4xl">
+                  Share your LinkCollect profile
+                </h1>
+              </div>
             </div>
-            <div>
-              <h1 className="ml-5 text-[#6166F1] font-bold text-4xl">Share your LinkCollect profile</h1>
+            <div className="w-3/5 text-left ml-9 leading-8">
+              <p>
+                with anyone and they can view all your public collections that
+                you have created or if you will create later{" "}
+              </p>
             </div>
           </div>
-          <div className="w-3/5 text-left ml-9 leading-8" >
-            <p>
-            with anyone and they can view all your public collections that you have created or if you will create later{" "}
-            </p>
-          </div>
         </div>
-        </div>
-
-        
       </div>
 
-
       {/* Footer */}
-<img src={Grill} alt="" className="mt-32" />
+      <img src={Grill} alt="" className="mt-32" />
       <div className="main-footer ">
         <div className="sub-footer flex justify-around items-center bg-[#6166F1] pt-10 pb-10">
-<div className="flex flex-col">
-<img src={mainlogoWhite} width="241px"  alt="" />
-<p className="text-left ml-7 w-3/4 text-[#FFF] ">When you find something you like on the internet, save it with linkcollect before you forget</p>
-<div className="loco-tray flex gap-7 ml-7 mt-14 cursor-pointer">
-<img src={twitter} alt="" />
-<img src={telegram} alt="" />
-<img src={instagram} alt="" />
-<img src={medium} alt="" />
-<img src={discord} alt="" />
-</div>
-</div>
+          <div className="flex flex-col">
+            <img src={mainlogoWhite} width="241px" alt="" />
+            <p className="text-left ml-7 w-3/4 text-[#FFF] ">
+              When you find something you like on the internet, save it with
+              linkcollect before you forget
+            </p>
+            <div className="loco-tray flex gap-7 ml-7 mt-14 cursor-pointer">
+              <a href="https://twitter.com/linkcollect_io" target="_blank"><img src={twitter} alt="" /></a>
+              <a href="https://www.instagram.com/linkcollect/" target="_blank"><img src={instagram} alt="" /></a>
+              <a ><img src={medium} alt="" /></a>
+              <a href="https://discord.gg/Pt9b4AefE9" target="_blank"><img src={discord} alt="" /></a>
+            </div>
+          </div>
 
-
-<div className=" flex flex-col gap-4 font-light text-left text-[#FFF] mb-15 " >
-    <p>How it works</p>
-    <p>FAQs</p>
-    <p>Request demo</p>
-    <p>Contact us</p>
-</div>
-   
+          <div className=" flex flex-col gap-4 font-light text-left text-[#FFF] mb-15 ">
+            <p>How it works</p>
+            <p>FAQs</p>
+            <p>Request demo</p>
+            <p>Contact us</p>
+          </div>
         </div>
         <div className="flex justify-around text-center bg-[#6166F1] text-[#fff] font-thin text-xs pb-5">
-            <div>2023 @linkcollect.io</div>
-            <div>Help@linkcollect.xyz</div>
+          <div>2023 @linkcollect.io</div>
+          <div>Help@linkcollect.xyz</div>
         </div>
       </div>
     </>

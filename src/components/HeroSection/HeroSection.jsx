@@ -15,10 +15,14 @@ const HeroSection = () => {
                 <a  id='HeroBtn' href='https://docs.google.com/forms/d/e/1FAIpQLSdw2m4_JDB0BTgkbgR1LSOYuZFcxLwGbvnTPb6-T6WHC9LbwA/viewform?fbzx=8861905125589284430' target='_blank' rel='noreffer' className='lexend font-medium text-[28px] leading-[35px] text-bgPrimary text-center ' >
                 Get Early Access</a>
             </div>
-            <div className="w-full h-[356px] my-56 relative">
-                <img src={BG} alt="" className='w-full  h-full' />
+            <div className="w-full my-56 relative">
+                <img src={BG} alt="" className='w-full h-full' />
                 {/*will change it to video later*/}
-                <video src={Vid} className='w-[1001px] h-[647.06px] top-[-100px] left-[250px]  absolute block mx-auto rounded-xl' autoPlay muted loop/>
+                <div className='top-[-100px] w-full flex justify-center absolute block '>
+                    <div className='w-[1000px] overflow-hidden block border-[20px] border-secondary border-b-0'>
+                    <video src={Vid} className='' autoPlay muted loop/>
+                    </div>
+                </div>
             </div>
         </>
 

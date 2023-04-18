@@ -3,17 +3,17 @@
   "name": "Linkcollect",
   "icons": [
     {
-      "src": "favicon.ico",
+      "src": "logo_192_x_192.png",
       "sizes": "64x64 32x32 24x24 16x16",
       "type": "image/x-icon"
     },
     {
-      "src": "android-chrome-192x192.png",
+      "src": "logo_192_x_192.png",
       "type": "image/png",
       "sizes": "192x192"
     },
     {
-      "src": "android-chrome-512x512.png",
+      "src": "logo_192_x_192.png",
       "type": "image/png",
       "sizes": "512x512"
     }
