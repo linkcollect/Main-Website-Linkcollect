@@ -124,7 +124,7 @@ const Features = () => {
         </div>
         <div className="flex justify-around text-center bg-[#6166F1] text-[#fff] font-thin text-xs pb-5">
           <div>2023 @linkcollect.io</div>
-          <div>Help@linkcollect.xyz</div>
+          <div>linkcollect.io@gmail.com</div>
         </div>
       </div>
     </>
