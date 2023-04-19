@@ -1,10 +1,23 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Banner from "../components/Banner/Banner";
 import mainLogo from "../assets/mainLogo.svg";
 import Input from "../components/Input/Input";
-import googleIcon from "../assets/googleIcon.svg";
+import GoogleAuthBtn from "../components/GoogleAuthBtn";
+import { register } from "../api-services/authService";
+
 const Signup = () => {
+  const [verifying, setVerifying] = useState(false)
+
+  const handleRegister = async(e)=>{
+    e.preventDefault();
+
+    const {name, email, password} = e.target;
+
+    const {data} = await register(name.value, email.value, password.value.trim());
+    return setVerifying(true)
+  }
+
   return (
     <>
       <div className="bg-gradient-to-r from-gradinetInitial to-gradientEnd from-50% h-screen">
@@ -13,7 +26,8 @@ const Signup = () => {
         </div>
         <div className="flex flex-row justify-evenly items-center">
           <Banner />
-          <div className="flex items-center justify-center pt-6 ">
+          {!verifying?
+          <div className="flex items-center justify-center mt-[-75px]">
             <div className="rounded-2xl bg-bgPrimary shadow-2xl p-10 w-[410px] height[600px]">
               <div>
                 <img
@@ -28,10 +42,11 @@ const Signup = () => {
                   className="text-center text-lg para -mt-2"
                   style={{ color: "#747474" }}
                 >
-                  Log in to linkCollect
+                  Sign Up to LinkCollect
                 </p>
               </div>
               <div className="mt-8 mb-3">
+                <form onSubmit={handleRegister}>
                 <div className="mb-3">
                   <Input
                     id="name"
@@ -62,7 +77,7 @@ const Signup = () => {
                   Forget Your Password?
                 </p>
                 <button className="w-full rounded-lg bg-primary font-bold text-bgPrimary py-3">
-                  Login
+                  Sign Up
                 </button>
                 <p className="font-light text-left text-textSecondary mt-1">
                   Don't have an account?{" "}
@@ -70,14 +85,16 @@ const Signup = () => {
                     Sign Up
                   </Link>
                 </p>
+                </form>
               </div>
               <hr class="hr-text mt-4" data-content="OR" />
-              <button className="w-full rounded-lg font-bold text-textPrimary border-2 border-[#ededed] rounded-lg py-3 flex justify-center mt-4">
-                <img src={googleIcon} alt="" width="26px" />
-                Continue with Google
-              </button>
+              <GoogleAuthBtn />
             </div>
           </div>
+          :
+        <div>
+          Please go to your EMAIL and click on verify Button
+        </div>}
         </div>
       </div>
     </>

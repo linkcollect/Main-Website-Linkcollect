@@ -1,10 +1,41 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import Banner from "../components/Banner/Banner";
 import mainLogo from "../assets/mainLogo.svg";
 import Input from "../components/Input/Input";
-import googleIcon from "../assets/googleIcon.svg";
-const LoginPage = () => {
+import GoogleAuthBtn from "../components/GoogleAuthBtn";
+import { login } from "../api-services/authService";
+import jwt from "jsonwebtoken";
+
+const Login = ({handleSetUser}) => {
+  const location = useLocation();
+  const navigate = useNavigate()
+
+  // For google auth redirect and email verification redirect from server with token in query
+  useEffect(() => {
+    const token = new URLSearchParams(location.search).get("token");
+    setUserAndRedirect(token)
+  }, [])
+
+  // To handle login
+  const handleLogin = async (e) => {
+    e.preventDefault()
+    const { email, password } = e.target;
+    const { data } = await login(email.value, password.value.trim());
+    const token = data.data.token;
+    setUserAndRedirect(token)
+  }
+
+  const setUserAndRedirect = async (token) => {
+    if (!token) return;
+    const { userId } = jwt.decode(token);
+    // const response = await getUserById(userId);
+    handleSetUser({userId});
+    localStorage.setItem("token", token);
+    return navigate("/");
+  }
+
+
   return (
     <>
       <div className="bg-gradient-to-r from-gradinetInitial to-gradientEnd from-50% h-screen">
@@ -13,7 +44,7 @@ const LoginPage = () => {
         </div>
         <div className="flex flex-row justify-evenly items-center">
           <Banner />
-          <div className="flex items-center justify-center pt-6 ">
+          <div className="flex items-center justify-center mt-[-32px]">
             <div className="rounded-2xl bg-bgPrimary shadow-2xl p-10 w-[410px] height[600px]">
               <div>
                 <img
@@ -28,9 +59,10 @@ const LoginPage = () => {
                   className="text-center text-lg para -mt-2"
                   style={{ color: "#747474" }}
                 >
-                  Log in to linkCollect
+                  Log in to LinkCollect
                 </p>
               </div>
+              <form onSubmit={handleLogin}>
               <div className="mt-8 mb-3">
                 <div className="mb-3">
                   <Input
@@ -63,11 +95,9 @@ const LoginPage = () => {
                   </Link>
                 </p>
               </div>
+              </form>
               <hr class="hr-text mt-4" data-content="OR" />
-              <button className="w-full rounded-lg font-bold text-textPrimary border-2 border-[#ededed] rounded-lg py-3 flex justify-center mt-4">
-                <img src={googleIcon} alt="" width="26px" />
-                Continue with Google
-              </button>
+              <GoogleAuthBtn />
             </div>
           </div>
         </div>
@@ -76,4 +106,4 @@ const LoginPage = () => {
   );
 };
 
-export default LoginPage;
+export default Login;
