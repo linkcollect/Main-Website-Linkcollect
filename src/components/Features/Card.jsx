@@ -2,12 +2,12 @@ import React from "react";
 
 const Card = ({ img, title, details }) => {
   return (
-    <div className="w-[361px] h-[200px] bg-[#EEEEFF] flex flex-col justify-start gap-4 px-4 py-4">
-      <img src={img} alt="" className="w-[47px] h-[47px]" />
-      <p className="lexend font-semibold text-normal leading-[100%] text-textPrimary text-start">
+    <div className="w-[273px] h-[120px] bg-[#EEEEFF] flex flex-col justify-start gap-2 px-4 py-2 border-solid border-[1px] border-primary xl:w-[361px] xl:h-[200px] xl:py-4 xl:gap-4 ">
+      <img src={img} alt="" className="w-[29.81px] h-[29.81px] xl:w-[47px] xl:h-[47px]" />
+      <p className="lexend w-[141px] h-[16px] text-[12px] font-semibold text-normal leading-[12px] text-textPrimary text-start">
         {title}
       </p>
-      <p className="w-[320px] h-[42px] lexend text-[11.38px] leading-[19px] text-textPrimary text-start">
+      <p className="w-[255px] h-[26px] lexend text-[10px] leading-[18px] text-textPrimary text-start xl:w-[320px] xl:h-[42px] xl:text-[12px]">
         {details}
       </p>
     </div>
