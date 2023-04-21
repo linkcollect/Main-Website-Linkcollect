@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import BG from '../../assets/Grill.svg'
 // import Vid from '../../assets/lC 1.svg'
 import Vid from '../../assets/screenrecdash.mp4'
+import DekstopVid from '../../assets/DekstopScreenrecdash.mp4'
 
 const HeroSection = () => {
    
@@ -22,7 +23,8 @@ const HeroSection = () => {
                 {/*will change it to video later*/}
                 <div className='w-[277px] h-[179px] left-[12.5%] top-[-40px]  sm:mx-auto md:w-[450px] md:h-[300px] md:left-[25%] lg:w-[600px] lg:h-[500px] xl:top-[-100px] xl:left-0 xl:w-full xl:h-[620px] flex justify-center absolute'>
                     <div className='w-[1000px] overflow-hidden block '>
-                    <video src={Vid} className='border-[20px] border-secondary border-b-0' autoPlay muted loop/>
+                    <video src={Vid} className='border-[20px] block border-secondary border-b-0 sm:hidden' autoPlay muted loop/>
+                    <video src={DekstopVid} className='border-[20px] hidden border-secondary border-b-0 sm:block' autoPlay muted loop/>
                     </div>
                 </div>
             </div>
