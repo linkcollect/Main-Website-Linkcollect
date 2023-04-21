@@ -3,12 +3,12 @@ import Navbar from '../components/Navbar/Navbar'
 import HeroSection from '../components/HeroSection/HeroSection'
 import Features from '../components/Features/Features'
 
-const LandingPage = () => {
+const LandingPage = ({windowWidth}) => {
   return (
 <>
-<Navbar />
+<Navbar windowWidth={windowWidth}/>
 <HeroSection />
-<Features />
+<Features windowWidth={windowWidth}/>
 </>
     )
 }
