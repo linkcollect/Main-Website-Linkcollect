@@ -14,48 +14,6 @@ import twitter from "../../assets/twitter.svg";
 import Grill from "../../assets/Grill.svg";
 import Vector from '../../assets/Vector.png'
 const Features = ({ windowWidth }) => {
-  async function getWebsiteData(url) {
-    const response = await fetch(url);
-    const html = await response.text();
-    const doc = new DOMParser().parseFromString(html, "text/html");
-    const titleTags = doc.querySelectorAll("meta[property='og:title']");
-    const twitterCardTag = doc.querySelector("meta[name='twitter:card'][content='summary'], meta[name='twitter:card'][content='summary_large_image']");
-    const faviconTag = doc.querySelector("link[rel='shortcut icon'], link[rel='icon'], link[rel='apple-touch-icon']");
-    let title = null;
-    let faviconUrl = null;
-    if (titleTags.length > 0) {
-      for (let i = 0; i < titleTags.length; i++) {
-        const tag = titleTags[i];
-        if (tag.tagName === "TITLE") {
-          title = tag.textContent.trim();
-          break;
-        } else if (tag.getAttribute("property") === "og:title") {
-          title = tag.getAttribute("content").trim();
-          break;
-        }
-      }
-    }
-    if (twitterCardTag) {
-      const twitterTitleTag = doc.querySelector("meta[name='twitter:title']");
-      if (twitterTitleTag) {
-        title = twitterTitleTag.getAttribute("content").trim();
-      }
-      const twitterImageTag = doc.querySelector("meta[name='twitter:image']");
-      if (twitterImageTag) {
-        const twitterImageUrl = twitterImageTag.getAttribute("content").trim();
-        if (twitterImageUrl) {
-          faviconUrl = new URL(twitterImageUrl, url).href;
-        }
-      }
-    }
-    if (faviconTag) {
-      const faviconHref = faviconTag.getAttribute("href");
-      if (faviconHref) {
-        faviconUrl = new URL(faviconHref, url).href;
-      }
-    }
-    return { title, faviconUrl };
-  }
   return (
     <>
       <div id="how-it-works" className={`flex flex-wrap ${windowWidth < 700 ? 'flex-col' : ""} w-[100%] gap-[26px] items-center justify-center mx-auto mt-[50px] lg:w-[800px] lg:mt-[200px] xl:w-[780px] xl:mt-[400px] 2xl:-[800px]`}>
@@ -108,19 +66,21 @@ const Features = ({ windowWidth }) => {
               </h1>
             </div>
             <p className="text-textPrimary text-sm text-left lexend font-light mt-4  mx-auto w-[18.4rem] h-[5.32rem] flex items-center justify-center">
-              maybe your favourite videos, blogs, twitter threads, ai tools or learning resources and share these collections with your friends in just one click right from our browser extension, yes it's that simple 😉
+              with anyone and they can view all your public collections that you have created, do research and curate good collections and share with the worlds
             </p>
           </div>
 
           {/*Create Aweasome collection of links */}
-          <div className="w-[21.8rem] h-44 mx-auto  py-6 flex flex-col items-center justify-cemter gap-2 rounded-md my-6 border-solid border-[1px] border-primary">
+          <div className="w-[21.8rem] h-44 mx-auto  py-6 flex flex-col items-center justify-cemter gap-3 rounded-md my-6 border-solid border-[1px] border-primary">
             <div className="flex items-center justify-start gap-2">
               <img src={LCLogo} alt="" className="w-[1.3rem] h-[1.3rem] ml-4" />
               <h1 className="text-primary lexend text-[1.2rem] leading-5 w-[21.7rem] h-5 font-bold text-start">
                 Create awesome collections of links                </h1>
             </div>
             <p className="text-textPrimary text-sm text-left lexend font-light mt-4  mx-auto w-[18.4rem] h-[5.32rem] flex items-center justify-center">
-              with anyone and they can view all your public collections that you have created, do research and curate good collections and share with the worlds               </p>
+              maybe your favourite videos, blogs, twitter threads, ai tools or learning resources and share these collections with your friends in just one click right from our browser extension, yes it's that simple 😉
+
+            </p>
           </div>
 
         </div>
@@ -139,7 +99,7 @@ const Features = ({ windowWidth }) => {
           <div className="main-div  mx-auto mt-4  xl:mt-24">
             <div className="sub-div flex">
               <div>
-                <img src={LCLogo} alt="" className="sm:w-[20px] xl:w-[30px]"/>
+                <img src={LCLogo} alt="" className="sm:w-[20px] xl:w-[30px]" />
               </div>
               <div>
                 <h1 className=" text-[#6166F1] font-bold sm:text-2xl xl:text-4xl xl:ml-5">
@@ -158,7 +118,7 @@ const Features = ({ windowWidth }) => {
             <div className="main-div mt-8 ">
               <div className="sub-div flex ">
                 <div>
-                  <img src={LCLogo} alt="" className="sm:w-[20px] xl:w-[30px]"/>
+                  <img src={LCLogo} alt="" className="sm:w-[20px] xl:w-[30px]" />
                 </div>
                 <div>
                   <h1 className="ml-5 text-[#6166F1] font-bold sm:text-2xl xl:text-4xl">
