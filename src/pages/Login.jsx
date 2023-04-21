@@ -32,7 +32,7 @@ const Login = ({handleSetUser}) => {
     // const response = await getUserById(userId);
     handleSetUser({userId});
     localStorage.setItem("token", token);
-    return navigate(`/+${username}`);
+    return navigate(`/${username}`);
   }
 
 

@@ -53,7 +53,7 @@ function App() {
         <Routes>
           <Route  path='/' element={<LandingPage windowWidth={windowWidth}/>} />
           <Route path='/signup' element={user? <Navigate to="/:username"/> : <Signup/>} />
-          <Route path='/login' element={user? <Navigate to="/username"/>:<Login handleSetUser={handleSetUser} />} />
+          <Route path='/login' element={user? <Navigate to="/:username"/>:<Login handleSetUser={handleSetUser} />} />
           {/* After creating the dash board we will use the dash board componet */}
           <Route path="/:username" element={user? <Loginsucc/> :  <Navigate to="/login"/>}/>
           <Route path="*" element={<Navigate to="/"/>}/>
