@@ -47,21 +47,17 @@ function App() {
   const handleSetUser = (user) => {
     setUser(user);
   };
-
   return (
     <Router>
       <div className="App">
         <Routes>
-          {/* <Route path='/' element={<Emailsent/>} /> */}
-          {/* <Route path='/' element={<Loginsucc/>} />  */}
-          {/* <Route path="/" element={<Error />}/> */}
           
-          <Route path='/signup' element={<Signup />} />
-          <Route path='/login' element={<Login handleSetUser={handleSetUser} />} />
           <Route  path='/' element={<LandingPage windowWidth={windowWidth}/>} />
-          {/* <Route path="/explore"/> */}
+          <Route path='/signup' element={user? <Navigate to="/:username"/> : <Signup/>} />
+          <Route path='/login' element={user? <Navigate to="/username"/>:<Login handleSetUser={handleSetUser} />} />
+          {/* After creating the dash board we will use the dash board componet */}
+          <Route path="/:userId" element={user? <Loginsucc/> :  <Navigate to="/login"/>}/>
           <Route path="*" element={<Navigate to="/"/>}/>
-        
         </Routes>
       </div>
     </Router>
