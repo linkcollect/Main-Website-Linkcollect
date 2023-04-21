@@ -80,9 +80,9 @@ const Signup = () => {
                   Sign Up
                 </button>
                 <p className="font-light text-left text-textSecondary mt-1">
-                  Don't have an account?{" "}
-                  <Link to="/signup" className="text-primary font-bold">
-                    Sign Up
+                  Already have an account?{" "}
+                  <Link to="/login" className="text-primary font-bold">
+                    Log in
                   </Link>
                 </p>
                 </form>
