@@ -26,16 +26,13 @@ const Loginsucc = () => {
               />
               <h1 className="lexend text-lg font-bold mt-5">Login Success</h1>
               <p className="text-left mt-2 text-[#background: #232438] lexend font-light text-[14px]">
-                You were succesfully logged in, enjoy using linkcollect and do
-                share us some of your favourite collections 😁
+                You were succesfully logged in, enjoy using linkcollect, open extension and start using 😁
                 <br/>
                 <br/>
                 Make sure you pin LinkCollect extension in your extension manager so you can access it easily :) happy 
                 surfing
               </p>
-              <button className="w-full rounded-lg bg-primary font-bold text-bgPrimary py-3 mt-5">
-                  Open Extension
-                </button>
+            
             </div>
           </div>
         </div>
