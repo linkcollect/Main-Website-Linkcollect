@@ -10,6 +10,7 @@ import Signup from './pages/Signup';
 import Login from './pages/Login';
 import { useEffect, useState } from 'react';
 import { setJwtInRequestHeader } from './api-services/httpService';
+import Privacy from './components/PrivacyPolicy/Privacy';
 
 import Emailsent from './pages/Emailsent';
 import Loginsucc from './pages/Loginsucc';
@@ -47,21 +48,18 @@ function App() {
   const handleSetUser = (user) => {
     setUser(user);
   };
-
   return (
     <Router>
       <div className="App">
         <Routes>
-          {/* <Route path='/' element={<Emailsent/>} /> */}
-          {/* <Route path='/' element={<Loginsucc/>} />  */}
-          {/* <Route path="/" element={<Error />}/> */}
-          
-          <Route path='/signup' element={<Signup />} />
-          <Route path='/login' element={<Login handleSetUser={handleSetUser} />} />
           <Route  path='/' element={<LandingPage windowWidth={windowWidth}/>} />
+          <Route  path='/privacy' element={<Privacy />} />
           {/* <Route path="/explore"/> */}
+          <Route path='/signup' element={user? <Navigate to="/:username"/> : <Signup/>} />
+          <Route path='/login' element={user? <Navigate to="/:username"/>:<Login handleSetUser={handleSetUser} />} />
+          {/* After creating the dash board we will use the dash board componet */}
+          <Route path="/:username" element={user? <Loginsucc/> :  <Navigate to="/login"/>}/>
           <Route path="*" element={<Navigate to="/"/>}/>
-        
         </Routes>
       </div>
     </Router>
