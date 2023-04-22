@@ -13,6 +13,7 @@ import discord from "../../assets/discord.svg";
 import twitter from "../../assets/twitter.svg";
 import Grill from "../../assets/Grill.svg";
 import Vector from '../../assets/Vector.png'
+import { Link } from "react-router-dom";
 const Features = ({ windowWidth }) => {
   return (
     <>
@@ -161,6 +162,7 @@ const Features = ({ windowWidth }) => {
               <p>How it works</p>
               <p>FAQs</p>
               <p>Request demo</p>
+              <Link to='/privacy'><p>Privacy Policy</p></Link>
               <p>Contact us</p>
             </div>
           </div>
