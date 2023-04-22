@@ -3,7 +3,6 @@ import Collectionitem from "../components/Collectionitem/Collectionitem";
 import Search from "../components/Search/Search";
 import Sidebar from "../components/Sidebar/Sidebar";
 import collectionImage from "../assets/collectionImage.png";
-import { upload } from "@testing-library/user-event/dist/upload";
 import { collections, collectionsGlobal } from "../dummyData";
 
 const Home = () => {
