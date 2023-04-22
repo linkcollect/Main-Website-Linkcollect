@@ -10,6 +10,7 @@ import Signup from './pages/Signup';
 import Login from './pages/Login';
 import { useEffect, useState } from 'react';
 import { setJwtInRequestHeader } from './api-services/httpService';
+import Privacy from './components/PrivacyPolicy/Privacy';
 
 import Emailsent from './pages/Emailsent';
 import Loginsucc from './pages/Loginsucc';
@@ -52,6 +53,8 @@ function App() {
       <div className="App">
         <Routes>
           <Route  path='/' element={<LandingPage windowWidth={windowWidth}/>} />
+          <Route  path='/privacy' element={<Privacy />} />
+          {/* <Route path="/explore"/> */}
           <Route path='/signup' element={user? <Navigate to="/:username"/> : <Signup/>} />
           <Route path='/login' element={user? <Navigate to="/:username"/>:<Login handleSetUser={handleSetUser} />} />
           {/* After creating the dash board we will use the dash board componet */}
