@@ -10,7 +10,7 @@ import Signup from './pages/Signup';
 import Login from './pages/Login';
 import { useEffect, useState } from 'react';
 import { setJwtInRequestHeader } from './api-services/httpService';
-
+import Privacy from './components/PrivacyPolicy/Privacy';
 function App() {
   const [user, setUser] = useState();
   //for responsiveness
@@ -51,6 +51,7 @@ function App() {
           <Route path='/signup' element={<Signup />} />
           <Route path='/login' element={<Login handleSetUser={handleSetUser} />} />
           <Route  path='/' element={<LandingPage windowWidth={windowWidth}/>} />
+          <Route  path='/privacy' element={<Privacy />} />
           {/* <Route path="/explore"/> */}
           <Route path="*" element={<Navigate to="/"/>}/>
         </Routes>
