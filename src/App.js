@@ -15,6 +15,7 @@ import Emailsent from './pages/Emailsent';
 import Loginsucc from './pages/Loginsucc';
 import Error from './pages/Error';
 import NLCollectionView from './pages/NLCollectionView';
+import Home from './pages/Home'
 function App() {
   
 
