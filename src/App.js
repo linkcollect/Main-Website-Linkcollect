@@ -15,8 +15,12 @@ import Privacy from './components/PrivacyPolicy/Privacy';
 import Emailsent from './pages/Emailsent';
 import Loginsucc from './pages/Loginsucc';
 import Error from './pages/Error';
+import Home from './pages/Home';
 
 function App() {
+  
+
+
   const [user, setUser] = useState();
   //for responsiveness
   let width
@@ -53,6 +57,9 @@ function App() {
       <div className="App">
         <Routes>
           <Route  path='/' element={<LandingPage windowWidth={windowWidth}/>} />
+
+          <Route  path='/home' element={<Home/>} />
+
           <Route  path='/privacy' element={<Privacy />} />
           {/* <Route path="/explore"/> */}
           <Route path='/signup' element={user? <Navigate to="/:username"/> : <Signup/>} />
