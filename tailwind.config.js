@@ -14,7 +14,8 @@ module.exports = {
       textSecondary:"#a9a9b8",
       danger:"#ff0000",
       gradientEnd:"#9092FF",
-      gradinetInitial:"rgba(144, 146, 255, 0)"
+      gradinetInitial:"rgba(144, 146, 255, 0)",
+      grey:"#E4E4F2"
 
     }
   },

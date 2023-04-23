@@ -3,15 +3,15 @@ import searchIcon from "../../assets/SearchVector.svg"
 const SearchBox = ({onChnageHandler,onSearch}) => {
 
   return (
-    <form class="flex items-center">
-      <label for="simple-search" class="sr-only">
+    <div className="flex items-center w-full">
+      <label for="simple-search" className="sr-only">
         Search
       </label>
-      <div class="relative w-full">
-        <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+      <div className="relative w-full">
+        <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
           <svg
             aria-hidden="true"
-            class="w-5 h-5 text-gray-500 dark:text-gray-400"
+            className="w-5 h-5 text-gray-500 dark:text-gray-400"
             fill="#636472"
             viewBox="0 0 20 20"
             xmlns="http://www.w3.org/2000/svg"
@@ -26,7 +26,7 @@ const SearchBox = ({onChnageHandler,onSearch}) => {
         <input
           type="text"
           id="simple-search"
-          class="bg-bgPrimary border border-secondary text-textSecondary text-sm rounded-lg block w-full p-3 pl-10"
+          className="bg-bgPrimary border border-secondary text-textSecondary text-sm rounded-lg block w-full p-3 pl-10"
           placeholder="Search for collection or links"
           onChange={(e)=>onChnageHandler(e.target.value)}
         />
@@ -34,7 +34,7 @@ const SearchBox = ({onChnageHandler,onSearch}) => {
           <button onClick={onSearch}><img src={searchIcon}/></button>
         </div>
       </div>
-    </form>
+    </div>
   );
 };
 
