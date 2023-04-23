@@ -1,9 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import collectionImage from "../../assets/collectionImage.png";
 import upvote from "../../assets/Upvote.svg";
 import dot from "../../assets/3dot.svg";
+
 import noUpvote from "../../assets/Vector.svg";
+import toogle from '../../assets/toggle.svg';
+import paste from '../../assets/paste.svg';
+import bin from '../../assets/bin.svg';
+
+
 const Collectionitem = ({
   id,
   image,
@@ -14,10 +20,17 @@ const Collectionitem = ({
   isUpvoted,
   upVote,
 }) => {
+  
+  const [display, setDisplay] = useState(false)
+const menuhandler =()=>{
+setDisplay(!display)
+  
+}
+
   return (
     <>
       <div className="bg-bgPrimary border-2 border-bgSecondary rounded-lg overflow-hidden w-[269px]">
-        <div>
+        <div className="border-[#EBECFD]-500">
           <Link to={`/${id}`}>
             <img src={image || collectionImage} />
             <div className="flex justify-between items-center m-3">
@@ -57,10 +70,19 @@ const Collectionitem = ({
               </div>
             )}
 
-            <button className="rounded-md border-2 border-secondary py-3 px-4">
-              <img src={dot} alt="menu" />
+            <button onClick={menuhandler}  className="rounded-md border-2 border-secondary py-3 px-4">
+              <img src={dot} alt="menu"  />
             </button>
+
           </div>
+
+<div className={`threedotmenu ${display ? '' : "hidden"}`}>
+          <div className="absolute flex flex-col justify-end ml-20 bg-bgPrimary p-5 rounded-xl text-xs leading-5" >
+ <div className="flex justify-between pr-4"><p className="lexend  "> Copy link</p> <img className="pl-8" src={paste} alt="" /></div>
+ <div className="flex justify-between pr-4"><p className="lexend" >Public</p>  <img src={toogle} alt="" /></div>
+ <div className="flex justify-between pr-4"><p className="lexend">Delete</p> <img src={bin} alt="" /></div>
+            </div>
+</div>
         </div>
       </div>
     </>

@@ -16,6 +16,9 @@ import Loginsucc from './pages/Loginsucc';
 import Error from './pages/Error';
 import NLCollectionView from './pages/NLCollectionView';
 function App() {
+  
+
+
   const [user, setUser] = useState();
   //for responsiveness
   let width
@@ -52,6 +55,9 @@ function App() {
       <div className="App">
         <Routes>
           <Route  path='/' element={<LandingPage windowWidth={windowWidth}/>} />
+
+          <Route  path='/home' element={<Home/>} />
+
           <Route  path='/privacy' element={<Privacy />} />
           <Route  path='/collection' element={<NLCollectionView />} />
           {/* <Route path="/explore"/> */}
