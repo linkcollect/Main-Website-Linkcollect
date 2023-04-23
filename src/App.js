@@ -14,8 +14,12 @@ import { setJwtInRequestHeader } from './api-services/httpService';
 import Emailsent from './pages/Emailsent';
 import Loginsucc from './pages/Loginsucc';
 import Error from './pages/Error';
+import Home from './pages/Home';
 
 function App() {
+  
+
+
   const [user, setUser] = useState();
   //for responsiveness
   let width
@@ -59,6 +63,9 @@ function App() {
           <Route path='/signup' element={<Signup />} />
           <Route path='/login' element={<Login handleSetUser={handleSetUser} />} />
           <Route  path='/' element={<LandingPage windowWidth={windowWidth}/>} />
+
+          <Route  path='/home' element={<Home/>} />
+
           {/* <Route path="/explore"/> */}
           <Route path="*" element={<Navigate to="/"/>}/>
         

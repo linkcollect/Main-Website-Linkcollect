@@ -13,8 +13,8 @@ const Sidebar = () => {
   };
   return (
     <aside className="flex-1 bg-bgPrimary fixed">
-        <div className="flex flex-col top-0 items-center justify-between h-[100vh] w-full px-2">
-          <img src={mainlogo} alt="" className="w-48 mx-auto" />
+        <div className="flex flex-col top-0 items-center justify-between h-[100vh] w-[365px] px-2">
+          <img src={mainlogo} alt="" className="w-[192px] mx-auto" />
           {/* Profile Info */}
           <div className="w-full">
             <img
@@ -22,9 +22,9 @@ const Sidebar = () => {
               alt=""
               className="w-20 h-20 rounded-2xl mx-auto"
             />
-            <p className="font-bold text-[25px]">Harsh Singh</p>
-            <p className="text-center h-5 para text-sm mx-auto w-[247px]">
-              ohiostudent@gmail.com
+            <p className="font-bold text-[20px]">Harsh Singh</p>
+            <p className="text-center h-5 para text-[15px] mx-auto w-[247px]">
+            Username@harsh.singh0008mm
             </p>
           </div>
 
@@ -33,7 +33,7 @@ const Sidebar = () => {
             <div className="w-full rounded-lg font-bold text-textPrimary border-2 border-[#ededed] rounded-lg py-3 flex justify-btween px-3">
               <div className="w-full flex items-center gap-2">
                 <img src={StackIcon} alt="" className="w-8 h-8" />
-                <span className="text-textPrimary">Collections</span>
+                <span className="text-[19px]">Collections</span>
               </div>
               <div className="flex items-center justify-center gap-2">
                 <span
