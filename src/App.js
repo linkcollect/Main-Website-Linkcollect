@@ -11,11 +11,10 @@ import Login from './pages/Login';
 import { useEffect, useState } from 'react';
 import { setJwtInRequestHeader } from './api-services/httpService';
 import Privacy from './components/PrivacyPolicy/Privacy';
-
 import Emailsent from './pages/Emailsent';
 import Loginsucc from './pages/Loginsucc';
 import Error from './pages/Error';
-
+import NLCollectionView from './pages/NLCollectionView';
 function App() {
   const [user, setUser] = useState();
   //for responsiveness
@@ -54,6 +53,7 @@ function App() {
         <Routes>
           <Route  path='/' element={<LandingPage windowWidth={windowWidth}/>} />
           <Route  path='/privacy' element={<Privacy />} />
+          <Route  path='/collection' element={<NLCollectionView />} />
           {/* <Route path="/explore"/> */}
           <Route path='/signup' element={user? <Navigate to="/:username"/> : <Signup/>} />
           <Route path='/login' element={user? <Navigate to="/:username"/>:<Login handleSetUser={handleSetUser} />} />
