@@ -1,15 +1,35 @@
 import React from 'react'
 import Sidebar from '../components/Sidebar/Sidebar'
 import BookmarkItems from '../components/BookmarkItem/BookmarkItems'
+import TopBar from '../components/Topbar/TopBar'
+import {bookmarkItems} from '../dummyData'
 const NLCollectionView = () => {
+  
   return (
-    <div className='bg-bgSecondary min-h-screen w-full flex gap-12'>
-<Sidebar />
-<div className="w-2/3 ml-[20%] mx-auto">
-<BookmarkItems />
-</div>
+    <div className='bg-bgSecondary min-h-screen w-full flex'>
+      <div className="flex-1">
+        <Sidebar />
+      </div>
+      <div className="h-screen flex flex-col overflow-y-hidden">
+        <div className="bg-bgPrimary pt-2 flex justify-center items-center w-full mx-auto ">
+          <TopBar />
+        </div>
+        <div className="w-full h-[60%] mx-auto">
+          <div className='w-full mx-auto h-full  overflow-y-scroll scrollbar-hide py-4'>
+            <div className='w-[90%] mx-auto space-y-4'>
+         {bookmarkItems.map(bookmarkItem => <BookmarkItems 
+         Thumbnail={bookmarkItem.Thumbnail}
+         linkTitle={bookmarkItem.linkTitle}
+         link={bookmarkItem.link}
+         />)}
+            
+            </div>
+          </div>
+
+        </div>
+      </div>
     </div>
-    )
+  )
 }
 
 export default NLCollectionView;

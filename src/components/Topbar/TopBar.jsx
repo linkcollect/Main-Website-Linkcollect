@@ -3,7 +3,7 @@ import Search from "../Search/Search";
 import backarrow from "../../assets/back-arrow.svg";
 import profileImage from "../../assets/profileImage.svg";
 
-const Guest = () => {
+const TopBar = () => {
   const [display, setDisplay] = useState(false);
   const clickhandler = () => {
     console.log("The button was cliked");
@@ -11,54 +11,51 @@ const Guest = () => {
   };
   return (
     <>
-      <div className="bg-bgPrimary">
-        <div className="flex justify-between bg-bgPrimary p-5 ">
+      <div className="w-full px-8 bg-bgPrimary py-4">
+
+        {/* Actions */}
+        <div className="flex justify-between bg-bgPrimary mb-2">
           {/* <div className='border-2'>Sidebar</div> */}
-          <div className="">
-            <div>
-              <img src={backarrow} className="rotate-[268deg] w-8" alt="" />
-            </div>
+          <div>
+            <img src={backarrow} className="rotate-[268deg] w-8" alt="" />
+          </div>
+          <div className="flex">
+            <button className="lexend text-base text-primary rounded-lg border-primary border-2 pl-7 pt-2 pb-2 pr-7 mr-2">
+              Log in
+            </button>
+            <button className="lexend text-base bg-primary rounded-lg border-primary border-2 pl-7 pt-2 pb-2 pr-7  text-bgPrimary">
+              Sign up
+            </button>
           </div>
 
-          <div className="flex ">
-            <div className="flex justify-around">
-              <div className="flex justify-between">
-                <button className="lexend text-base text-primary rounded-lg border-primary border-2 pl-7 pt-2 pb-2 pr-7 mr-2">
-                  Log in
-                </button>
-                <button className="lexend text-base bg-primary rounded-lg border-primary border-2 pl-7 pt-2 pb-2 pr-7  text-bgPrimary">
-                  Sign up
-                </button>
-              </div>
-            </div>
-          </div>
         </div>
-        <div className="flex ml-10">
-          <div>
+
+        {/* Profile Section */}
+        <div className="flex justify-between ml-10 mt-2">
+          <div className=" w-[270px] h-[89px]">
             <img
               src={profileImage}
-              width="200px"
-              height="109px"
-              className="rounded-lg "
+              className="rounded-sm w-[270px] h-[89px] object-cover"
               alt=""
             />
           </div>
           <div className="flex flex-col text-left ml-10">
-            <h1 className="lexend text-3xl font-bold">
+            <h1 className="lexend text-xl font-bold">
               Collection name this is a good{" "}
             </h1>
-            <p className="w-10/12 mt-2">
+            <p className="w-10/12 mt-2 text-sm">
               Vestibulum eu quam nec neque pellentesque efficitur id eget nisl.
               Proin porta est convallis lacus blandit pretium sed non enim.
               Maecenas lacinia non orci at aliquam. Donec finibus, urna
               Vestibulum eu{" "}
             </p>
           </div>
-          <div className="mr-20 w-28 mt-1">
-            <p>28 Links</p>
+          <div className="mr-20 w-28 mt-1 ">
+            <p className="w-20 h-6">28 Links</p>
           </div>
         </div>
 
+        {/* Search Bar and Filter */}
         <div className="ml-10 mt-5 mr-10  flex ">
           <Search />
           <div className="relative">
@@ -83,9 +80,9 @@ const Guest = () => {
               </svg>
             </button>
 
-           { display && <div className="w-[11rem] absolute block right-7  ">
+            {display && <div className="w-[11rem] absolute block right-7  ">
               <div
-                className="mr-2 cursor-pointer bg-white p-2 mt-2 rounded-xl border-grey border-2 leading-6" >
+                className="mr-2 cursor-pointer bg-bgPrimary p-2 mt-2 rounded-xl border-grey border-2 leading-6 shadow-xl" >
                 <p className="cursor-pointer">
                   Newest To Oldest{" "}
                 </p>
@@ -101,4 +98,4 @@ const Guest = () => {
   );
 };
 
-export default Guest;
+export default TopBar;

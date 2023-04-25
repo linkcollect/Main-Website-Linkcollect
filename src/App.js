@@ -60,7 +60,7 @@ function App() {
           <Route  path='/home' element={<Home/>} />
 
           <Route  path='/privacy' element={<Privacy />} />
-          <Route  path='/collection' element={<NLCollectionView />} />
+          <Route  path='/c/:collectionId' element={<NLCollectionView />} />
           {/* <Route path="/explore"/> */}
           <Route path='/signup' element={user? <Navigate to="/:username"/> : <Signup/>} />
           <Route path='/login' element={user? <Navigate to="/:username"/>:<Login handleSetUser={handleSetUser} />} />

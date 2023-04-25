@@ -13,7 +13,7 @@ const Sidebar = () => {
     setShowCollections(!showCollections);
   };
   return (
-    <aside className="flex-1 w-[305px] bg-bgPrimary fixed">
+    <aside className="w-[305px] bg-bgPrimary ">
       <div className={`flex flex-col top-0 items-center justify-between h-[100vh] w-full px-2 ${isLoggedIn?'':'pb-12'} `}>
         {/* Profile Info */}
         <div className="flex flex-col gap-8">
