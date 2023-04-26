@@ -232,41 +232,41 @@ export  const collectionsGlobal = [
     {
       Thumbnail: 'https://image.lexica.art/full_jpg/092e5d31-98b6-436b-aeaa-14122627548d',
       linkTitle: 'LinkCollect',
-      link: 'tusharv.xyz'
+      link: 'https://www.tusharv.xyz/'
     },
     {
       Thumbnail: 'https://image.lexica.art/full_jpg/092e5d31-98b6-436b-aeaa-14122627548d',
       linkTitle: 'LinkCollect',
-      link: 'tusharv.xyz'
+      link: 'https://www.tusharv.xyz/'
     },
     {
       Thumbnail: 'https://image.lexica.art/full_jpg/092e5d31-98b6-436b-aeaa-14122627548d',
       linkTitle: 'LinkCollect',
-      link: 'tusharv.xyz'
+      link: 'https://www.tusharv.xyz/'
     },
     {
       Thumbnail: 'https://image.lexica.art/full_jpg/092e5d31-98b6-436b-aeaa-14122627548d',
       linkTitle: 'LinkCollect',
-      link: 'tusharv.xyz'
+      link: 'https://www.tusharv.xyz/'
     },
     {
       Thumbnail: 'https://image.lexica.art/full_jpg/092e5d31-98b6-436b-aeaa-14122627548d',
       linkTitle: 'LinkCollect',
-      link: 'tusharv.xyz'
+      link: 'https://www.tusharv.xyz/'
     },
     {
       Thumbnail: 'https://image.lexica.art/full_jpg/092e5d31-98b6-436b-aeaa-14122627548d',
       linkTitle: 'LinkCollect',
-      link: 'tusharv.xyz'
+      link: 'https://www.tusharv.xyz/'
     },
     {
       Thumbnail: 'https://image.lexica.art/full_jpg/092e5d31-98b6-436b-aeaa-14122627548d',
       linkTitle: 'LinkCollect',
-      link: 'tusharv.xyz'
+      link: 'https://www.tusharv.xyz/'
     },
     {
       Thumbnail: 'https://image.lexica.art/full_jpg/092e5d31-98b6-436b-aeaa-14122627548d',
       linkTitle: 'LinkCollect',
-      link: 'tusharv.xyz'
+      link: 'https://www.tusharv.xyz/'
     }
   ]
