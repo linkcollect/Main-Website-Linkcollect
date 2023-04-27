@@ -73,9 +73,9 @@ const Signup = () => {
                 </div>
 
                 {/* Need to add link after adding the api for forget pass */}
-                <p className="text-textSecondary text-left mb-4 font-light">
+                {/* <p className="text-textSecondary text-left mb-4 font-light">
                   Forget Your Password?
-                </p>
+                </p> */}
                 <button className="w-full rounded-lg bg-primary font-bold text-bgPrimary py-3">
                   Sign Up
                 </button>
