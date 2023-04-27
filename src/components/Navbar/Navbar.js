@@ -3,19 +3,6 @@ import Logo from '../../assets/mainLogo.svg'
 import { Link } from 'react-router-dom';
 
 const Navbar = ({windowWidth}) => {
-    const [buttonText, setButtonText] = useState("Install");
-
-    const handleMouseEnter = () => {
-        let a = document.getElementById('NavBtn')
-        a.style.transition = '1s'
-        a.style.transitionDelay = '1.5'
-        a.style.transitionTimingFunction = 'ease-in-out'
-        setButtonText("Coming Soon");
-    };
-
-    const handleMouseLeave = () => {
-        setButtonText("Install");
-    };
     return (
         <div className='w-full flex items-center justify-around lexend'>
             <div>
@@ -38,9 +25,9 @@ const Navbar = ({windowWidth}) => {
                                 <button className='text-center mx-auto w-[161.94px] h-[26px] font-medium md:text-[16px] md:leading-[20px] xl:text-[20.61px] xl:leading-[26px]'>Login</button>
                             </div>
                         </Link>
-                        <div className=" w-[110px] h-[53.31px] cursor-pointer  bg-primary flex items-center justify-center md:w-[110px] md:h-[53.31px] xl:h-[63.31px] xl:w-[190px]" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
-                            <p id='NavBtn' className='text-center  h-[26px] text-bgPrimary md:text-[16px] xl:text-[17.61px] font-medium'  >{buttonText}</p>
-                        </div>
+                        <a href='https://chrome.google.com/webstore/detail/linkcollect/knekpacpcgkieomkhhngenjeeokddkif/' target='_blank' rel='noreferrer' className=" w-[110px] h-[53.31px] cursor-pointer  bg-primary flex items-center justify-center md:w-[110px] md:h-[53.31px] xl:h-[63.31px] xl:w-[190px]">
+                            <p id='NavBtn'  className='text-center  h-[26px] text-bgPrimary md:text-[16px] xl:text-[17.61px] font-medium'  >Install</p>
+                        </a>
                     </div>
                 </div>
             </>: ''

@@ -2,8 +2,9 @@ import React, { useState } from "react";
 import Search from "../Search/Search";
 import backarrow from "../../assets/back-arrow.svg";
 import profileImage from "../../assets/profileImage.svg";
-
-const Guest = () => {
+import { Link } from "react-router-dom";
+import MainLogo from '../../assets/mainLogo.svg'
+const TopBar = ({windowWidth}) => {
   const [display, setDisplay] = useState(false);
   const clickhandler = () => {
     console.log("The button was cliked");
@@ -11,55 +12,64 @@ const Guest = () => {
   };
   return (
     <>
-      <div className="bg-bgPrimary">
-        <div className="flex justify-between bg-bgPrimary p-5 ">
-          {/* <div className='border-2'>Sidebar</div> */}
-          <div className="">
-            <div>
-              <img src={backarrow} className="rotate-[268deg] w-8" alt="" />
-            </div>
-          </div>
+      <div className="w-full px-8 bg-bgPrimary py-2 sm:py-4">
 
-          <div className="flex ">
-            <div className="flex justify-around">
-              <div className="flex justify-between">
-                <button className="lexend text-base text-primary rounded-lg border-primary border-2 pl-7 pt-2 pb-2 pr-7 mr-2">
-                  Log in
-                </button>
-                <button className="lexend text-base bg-primary rounded-lg border-primary border-2 pl-7 pt-2 pb-2 pr-7  text-bgPrimary">
-                  Sign up
-                </button>
-              </div>
-            </div>
+        {/* Actions */}
+        <div className="flex justify-between bg-bgPrimary mb-5 sm:mb-2">
+          {/* <div className='border-2'>Sidebar</div> */}
+          <div className="flex items-center">
+            <img src={backarrow} className="rotate-[268deg] w-8" alt="" />
           </div>
+          {windowWidth<600 && 
+          <div className="w-32 h-10 flex items-center justify-end">
+            <Link to="/"><img src={MainLogo} alt="" className="w-32 h-14 ml-2"/></Link>
+          </div>}
+          {windowWidth>600 && <div className="flex space-x-2">
+            <button className="lexend text-base text-primary rounded-lg border-primary border-2 px-3 py-2 sm:px-7 sm:py-2">
+              Log in
+            </button>
+            <button className="lexend text-base bg-primary rounded-lg border-primary border-2 px-3 py-2 sm:px-7 sm:py-2  text-bgPrimary">
+              Sign up
+            </button>
+          </div>}
+
         </div>
-        <div className="flex ml-10">
-          <div>
+
+        {/* Profile Section */}
+        <div className="flex flex-col sm:flex-row justify-between  sm:ml-10 sm:mt-2">
+          <div className="flex justify-between w-full h-[80px] mx-auto sm:w-[270px] sm:h-[89px]">
             <img
               src={profileImage}
-              width="200px"
-              height="109px"
-              className="rounded-lg "
+              className="rounded w-[140px] h-[70px]  sm:w-[270px] sm:h-[89px] object-cover"
               alt=""
             />
+            {windowWidth < 600 && 
+            <div className="">
+            <p className="w-20 h-6">28 Links</p>
           </div>
-          <div className="flex flex-col text-left ml-10">
-            <h1 className="lexend text-3xl font-bold">
+            }
+          </div>
+          <div className="flex flex-col text-left sm:ml-10">
+            <h1 className="lexend text-xl font-bold">
               Collection name this is a good{" "}
             </h1>
-            <p className="w-10/12 mt-2">
+            <p className="w-10/12 mt-2 text-sm">
               Vestibulum eu quam nec neque pellentesque efficitur id eget nisl.
               Proin porta est convallis lacus blandit pretium sed non enim.
               Maecenas lacinia non orci at aliquam. Donec finibus, urna
               Vestibulum eu{" "}
             </p>
           </div>
-          <div className="mr-20 w-28 mt-1">
-            <p>28 Links</p>
+          {
+            windowWidth>600 && 
+            <div className="sm:mr-20 w-28 mt-1">
+            <p className="w-20 h-6">28 Links</p>
           </div>
+          }
         </div>
 
-        <div className="ml-10 mt-5 mr-10  flex ">
+        {/* Search Bar and Filter */}
+        <div className="sm:ml-10 mt-5 sm:mr-10  flex ">
           <Search />
           <div className="relative">
             <button
@@ -67,12 +77,10 @@ const Guest = () => {
               className="inline-flex border-grey border-2 text  items-center py-2.5 px-3 ml-2  rounded-xl"
             >
               <svg
-                width="26"
-                height="26"
                 viewBox="0 0 26 26"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
-                className="bg-transparent "
+                className="bg-transparent w-4 h-4 sm:w-6 sm:h-6 "
               >
                 <path
                   fillRule="evenodd"
@@ -83,9 +91,9 @@ const Guest = () => {
               </svg>
             </button>
 
-           { display && <div className="w-[11rem] absolute block right-7  ">
+            {display && <div className="w-[11rem] absolute block right-7  ">
               <div
-                className="mr-2 cursor-pointer bg-white p-2 mt-2 rounded-xl border-grey border-2 leading-6" >
+                className="mr-2 cursor-pointer bg-bgPrimary p-2 mt-2 rounded-xl border-grey border-2 leading-6 shadow-xl" >
                 <p className="cursor-pointer">
                   Newest To Oldest{" "}
                 </p>
@@ -101,4 +109,4 @@ const Guest = () => {
   );
 };
 
-export default Guest;
+export default TopBar;

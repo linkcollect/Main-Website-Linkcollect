@@ -15,8 +15,8 @@ module.exports = {
       danger:"#ff0000",
       gradientEnd:"#9092FF",
       gradinetInitial:"rgba(144, 146, 255, 0)",
-      grey:"#E4E4F2"
-
+      grey:"#E4E4F2",
+      textDark: "#080024" 
     }
   },
   plugins: [],

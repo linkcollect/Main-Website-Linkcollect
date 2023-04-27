@@ -10,3 +10,21 @@
   /* aspect-ratio: 1155/1151; */
   /* position: relative; */
 }
+* {
+  scrollbar-width: thin;
+}
+
+/* Chrome, Edge, and Safari */
+*::-webkit-scrollbar {
+  width: 3px;
+  background-color: #D1D1D1;
+}
+
+*::-webkit-scrollbar-track {
+  border-radius: 20px;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: #232438;
+  border-radius: 14px;
+}
