@@ -1,14 +1,12 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import collectionImage from "../../assets/collectionImage.png";
 import upvote from "../../assets/Upvote.svg";
 import dot from "../../assets/3dot.svg";
-
 import noUpvote from "../../assets/Vector.svg";
-import toogle from '../../assets/toggle.svg';
-import paste from '../../assets/paste.svg';
-import bin from '../../assets/bin.svg';
-
+import toogle from "../../assets/toggle.svg";
+import paste from "../../assets/paste.svg";
+import bin from "../../assets/bin.svg";
+import defultCollectionImage from "../../assets/folder.png";
 
 const Collectionitem = ({
   id,
@@ -16,23 +14,26 @@ const Collectionitem = ({
   title,
   links,
   type,
+  description,
   explore,
   isUpvoted,
   upVote,
 }) => {
-  
-  const [display, setDisplay] = useState(false)
-const menuhandler =()=>{
-setDisplay(!display)
-  
-}
+  const [display, setDisplay] = useState(false);
+  const menuhandler = () => {
+    setDisplay(!display);
+  };
 
   return (
     <>
       <div className="bg-bgPrimary border-2 border-bgSecondary rounded-lg overflow-hidden w-[269px]">
         <div className="border-[#EBECFD]-500">
-          <Link to={`/${id}`}>
-            <img src={image || collectionImage} />
+          <Link to={`/c/${id}`} state={{
+            title:title,
+            description:description,
+            links:links
+          }}>
+            <img src={image!="undefined" && image!== undefined ? image : defultCollectionImage} />
             <div className="flex justify-between items-center m-3">
               <p className="font-semibold text-textPrimary text-[14px]">
                 {title}
@@ -65,24 +66,34 @@ setDisplay(!display)
             ) : (
               <div>
                 <p className="px-6  border border-textSecondary rounded-full text-sm font-light">
-                  {type}
+                  {type ? "Public" : "Private"}
                 </p>
               </div>
             )}
 
-            <button onClick={menuhandler}  className="rounded-md border-2 border-secondary py-3 px-4">
-              <img src={dot} alt="menu"  />
-            </button>
-
+              {/* 3dots menu button */}
+            {/* <button
+              onClick={menuhandler}
+              className="rounded-md border-2 border-secondary py-3 px-4"
+            >
+              <img src={dot} alt="menu" />
+            </button> */}
           </div>
-
-<div className={`threedotmenu ${display ? '' : "hidden"}`}>
-          <div className="absolute flex flex-col justify-end ml-20 bg-bgPrimary p-5 rounded-xl text-xs leading-5" >
- <div className="flex justify-between pr-4"><p className="lexend  "> Copy link</p> <img className="pl-8" src={paste} alt="" /></div>
- <div className="flex justify-between pr-4"><p className="lexend" >Public</p>  <img src={toogle} alt="" /></div>
- <div className="flex justify-between pr-4"><p className="lexend">Delete</p> <img src={bin} alt="" /></div>
+              {/* 3dots menu */}
+          {/* <div className={`threedotmenu ${display ? "" : "hidden"}`}>
+            <div className="absolute flex flex-col justify-end ml-20 bg-bgPrimary p-5 rounded-xl text-xs leading-5">
+              <div className="flex justify-between pr-4">
+                <p className="lexend  "> Copy link</p>{" "}
+                <img className="pl-8" src={paste} alt="" />
+              </div>
+              <div className="flex justify-between pr-4">
+                <p className="lexend">Public</p> <img src={toogle} alt="" />
+              </div>
+              <div className="flex justify-between pr-4">
+                <p className="lexend">Delete</p> <img src={bin} alt="" />
+              </div>
             </div>
-</div>
+          </div> */}
         </div>
       </div>
     </>

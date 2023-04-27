@@ -5,26 +5,28 @@ import mainLogo from "../assets/mainLogo.svg";
 import Input from "../components/Input/Input";
 import GoogleAuthBtn from "../components/GoogleAuthBtn";
 import { register } from "../api-services/authService";
+import Emailsent from "../components/EmialVerified/Emailsent";
+import Loader from "../components/Loader/Loader";
 
 const Signup = () => {
   const [verifying, setVerifying] = useState(false)
+  const [isSiging,setIsSigning] = useState(false)
 
   const handleRegister = async(e)=>{
     e.preventDefault();
+    setIsSigning(true);
 
     const {name, email, password} = e.target;
 
     const {data} = await register(name.value, email.value, password.value.trim());
+    setIsSigning(false);
     return setVerifying(true)
   }
 
   return (
     <>
-      <div className="bg-gradient-to-r from-gradinetInitial to-gradientEnd from-50% h-screen">
-        <div className="w-[50%] m-auto">
-          <img src={mainLogo} alt="" />
-        </div>
-        <div className="flex flex-row justify-evenly items-center">
+      <div className="bg-gradient-to-r from-gradinetInitial to-gradientEnd from-50%">
+        <div className="flex flex-row justify-evenly items-center h-screen">
           <Banner />
           {!verifying?
           <div className="flex items-center justify-center mt-[-75px]">
@@ -76,8 +78,9 @@ const Signup = () => {
                 {/* <p className="text-textSecondary text-left mb-4 font-light">
                   Forget Your Password?
                 </p> */}
-                <button className="w-full rounded-lg bg-primary font-bold text-bgPrimary py-3">
-                  Sign Up
+
+                <button className="w-full rounded-lg bg-primary font-bold text-bgPrimary py-3 flex justify-center items-center">
+                  {!isSiging ? "Sign Up" : <Loader/>}
                 </button>
                 <p className="font-light text-left text-textSecondary mt-1">
                   Already have an account?{" "}
@@ -93,7 +96,7 @@ const Signup = () => {
           </div>
           :
         <div>
-          Please go to your EMAIL and click on verify Button
+          <Emailsent/>
         </div>}
         </div>
       </div>

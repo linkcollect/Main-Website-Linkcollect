@@ -3,69 +3,80 @@ import Search from "../Search/Search";
 import backarrow from "../../assets/back-arrow.svg";
 import profileImage from "../../assets/profileImage.svg";
 import { Link } from "react-router-dom";
-import MainLogo from '../../assets/mainLogo.svg'
-const TopBar = ({windowWidth}) => {
+import MainLogo from "../../assets/mainLogo.svg";
+import { on } from "process";
+import { useSelector } from "react-redux";
+const TopBar = ({
+  windowWidth,
+  onBack,
+  collectionName,
+  collectionDesc,
+  noOfLinks,
+}) => {
   const [display, setDisplay] = useState(false);
+  const auth = useSelector((state) => state.auth);
+
   const clickhandler = () => {
-    console.log("The button was cliked");
-    setDisplay(!display)
+    setDisplay(!display);
   };
+
   return (
     <>
       <div className="w-full px-8 bg-bgPrimary py-2 sm:py-4">
-
         {/* Actions */}
         <div className="flex justify-between bg-bgPrimary mb-5 sm:mb-2">
           {/* <div className='border-2'>Sidebar</div> */}
           <div className="flex items-center">
-            <img src={backarrow} className="rotate-[268deg] w-8" alt="" />
+            <button onClick={onBack}>
+              <img src={backarrow} className="rotate-[268deg] w-8" alt="" />
+            </button>
           </div>
-          {windowWidth<600 && 
-          <div className="w-32 h-10 flex items-center justify-end">
-            <Link to="/"><img src={MainLogo} alt="" className="w-32 h-14 ml-2"/></Link>
-          </div>}
-          {windowWidth>600 && <div className="flex space-x-2">
-            <button className="lexend text-base text-primary rounded-lg border-primary border-2 px-3 py-2 sm:px-7 sm:py-2">
-              Log in
-            </button>
-            <button className="lexend text-base bg-primary rounded-lg border-primary border-2 px-3 py-2 sm:px-7 sm:py-2  text-bgPrimary">
-              Sign up
-            </button>
-          </div>}
-
+          {windowWidth < 600 && (
+            <div className="w-32 h-10 flex items-center justify-end">
+              <Link to="/">
+                <img src={MainLogo} alt="" className="w-32 h-14 ml-2" />
+              </Link>
+            </div>
+          )}
+          {windowWidth > 600 && !auth.token && (
+            <div className="flex space-x-2">
+              <button className="lexend text-base text-primary rounded-lg border-primary border-2 px-3 py-2 sm:px-7 sm:py-2">
+                Log in
+              </button>
+              <button className="lexend text-base bg-primary rounded-lg border-primary border-2 px-3 py-2 sm:px-7 sm:py-2  text-bgPrimary">
+                Sign up
+              </button>
+            </div>
+          )}
         </div>
 
         {/* Profile Section */}
         <div className="flex flex-col sm:flex-row justify-between  sm:ml-10 sm:mt-2">
-          <div className="flex justify-between w-full h-[80px] mx-auto sm:w-[270px] sm:h-[89px]">
-            <img
-              src={profileImage}
-              className="rounded w-[140px] h-[70px]  sm:w-[270px] sm:h-[89px] object-cover"
-              alt=""
-            />
-            {windowWidth < 600 && 
+          <div className="flex">
+            <div className="flex justify-between w-full h-[80px] sm:w-[140px] sm:h-[89px]">
+              <img
+                src={profileImage}
+                className="rounded w-[140px] h-[70px]  sm:w-[270px] sm:h-[89px] object-cover"
+                alt=""
+              />
+            </div>
+            <div className="flex flex-col text-left sm:ml-10">
+              <h1 className="lexend text-xl font-bold">{collectionName}</h1>
+              <p className="w-10/12 mt-2 text-sm break-all">{collectionDesc}</p>
+            </div>
+          </div>
+
+          {windowWidth < 600 && (
             <div className="">
-            <p className="w-20 h-6">28 Links</p>
-          </div>
-            }
-          </div>
-          <div className="flex flex-col text-left sm:ml-10">
-            <h1 className="lexend text-xl font-bold">
-              Collection name this is a good{" "}
-            </h1>
-            <p className="w-10/12 mt-2 text-sm">
-              Vestibulum eu quam nec neque pellentesque efficitur id eget nisl.
-              Proin porta est convallis lacus blandit pretium sed non enim.
-              Maecenas lacinia non orci at aliquam. Donec finibus, urna
-              Vestibulum eu{" "}
-            </p>
-          </div>
-          {
-            windowWidth>600 && 
+              <p className="w-20 h-6">{noOfLinks} Links</p>
+            </div>
+          )}
+
+          {windowWidth > 600 && (
             <div className="sm:mr-20 w-28 mt-1">
-            <p className="w-20 h-6">28 Links</p>
-          </div>
-          }
+              <p className="w-20 h-6">{noOfLinks} Links</p>
+            </div>
+          )}
         </div>
 
         {/* Search Bar and Filter */}
@@ -91,17 +102,14 @@ const TopBar = ({windowWidth}) => {
               </svg>
             </button>
 
-            {display && <div className="w-[11rem] absolute block right-7  ">
-              <div
-                className="mr-2 cursor-pointer bg-bgPrimary p-2 mt-2 rounded-xl border-grey border-2 leading-6 shadow-xl" >
-                <p className="cursor-pointer">
-                  Newest To Oldest{" "}
-                </p>
-                <p className="cursor-pointer">
-                  Oldest To Newest
-                </p>
+            {display && (
+              <div className="w-[11rem] absolute block right-7  ">
+                <div className="mr-2 cursor-pointer bg-bgPrimary p-2 mt-2 rounded-xl border-grey border-2 leading-6 shadow-xl">
+                  <p className="cursor-pointer">Newest To Oldest </p>
+                  <p className="cursor-pointer">Oldest To Newest</p>
+                </div>
               </div>
-            </div>}
+            )}
           </div>
         </div>
       </div>
