@@ -4,7 +4,7 @@ import backarrow from "../../assets/back-arrow.svg";
 import profileImage from "../../assets/profileImage.svg";
 import { Link } from "react-router-dom";
 import MainLogo from "../../assets/mainLogo.svg";
-import { on } from "process";
+import defultCollectionImage from "../../assets/defaultCollectio.png";
 import { useSelector } from "react-redux";
 const TopBar = ({
   windowWidth,
@@ -12,6 +12,7 @@ const TopBar = ({
   collectionName,
   collectionDesc,
   noOfLinks,
+  image
 }) => {
   const [display, setDisplay] = useState(false);
   const auth = useSelector((state) => state.auth);
@@ -40,12 +41,12 @@ const TopBar = ({
           )}
           {windowWidth > 600 && !auth.token && (
             <div className="flex space-x-2">
-              <button className="lexend text-base text-primary rounded-lg border-primary border-2 px-3 py-2 sm:px-7 sm:py-2">
+              <Link to="/login" className="lexend text-base text-primary rounded-lg border-primary border-2 px-3 py-2 sm:px-7 sm:py-2">
                 Log in
-              </button>
-              <button className="lexend text-base bg-primary rounded-lg border-primary border-2 px-3 py-2 sm:px-7 sm:py-2  text-bgPrimary">
+              </Link>
+              <Link to="/signup" className="lexend text-base bg-primary rounded-lg border-primary border-2 px-3 py-2 sm:px-7 sm:py-2  text-bgPrimary">
                 Sign up
-              </button>
+              </Link>
             </div>
           )}
         </div>
@@ -55,7 +56,7 @@ const TopBar = ({
           <div className="flex">
             <div className="flex justify-between w-full h-[80px] sm:w-[140px] sm:h-[89px]">
               <img
-                src={profileImage}
+                src={image!="undefined" && image!== undefined ? image : defultCollectionImage}
                 className="rounded w-[140px] h-[70px]  sm:w-[270px] sm:h-[89px] object-cover"
                 alt=""
               />

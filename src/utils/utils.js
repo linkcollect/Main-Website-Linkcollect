@@ -51,7 +51,6 @@ const getDuration = (seconds) => {
   };
   
 export const fromNow = (date)=>{
-    console.log(Math.floor((Date.now() - new Date(date) + 2630000*100) / 1000))
    let seconds = Math.floor((Date.now() - new Date(date)) / 1000);
   let unit = "second";
   let direction = "ago";

@@ -6,7 +6,7 @@ import noUpvote from "../../assets/Vector.svg";
 import toogle from "../../assets/toggle.svg";
 import paste from "../../assets/paste.svg";
 import bin from "../../assets/bin.svg";
-import defultCollectionImage from "../../assets/folder.png";
+import defultCollectionImage from "../../assets/defaultCollectio.png";
 
 const Collectionitem = ({
   id,
@@ -31,7 +31,8 @@ const Collectionitem = ({
           <Link to={`/c/${id}`} state={{
             title:title,
             description:description,
-            links:links
+            links:links,
+            image: image
           }}>
             <img src={image!="undefined" && image!== undefined ? image : defultCollectionImage} />
             <div className="flex justify-between items-center m-3">

@@ -7,7 +7,7 @@ import AddIcon from "../../assets/add-tab.svg";
 import Link from "../../assets/link.svg";
 import Logout from "../../assets/logout.svg";
 import { useSelector } from "react-redux";
-const Sidebar = ({numberOfPublicLink,numberOfPrivateLink}) => {
+const Sidebar = ({numberOfPublicLink,numberOfPrivateLink,numberOfLinks,profileView}) => {
   const [showCollections, setShowCollections] = useState(false);
   const auth  = useSelector(state=>state.auth);
   const handleShowCollection = () => {
@@ -50,9 +50,9 @@ const Sidebar = ({numberOfPublicLink,numberOfPrivateLink}) => {
                     lineHeight: "20px",
                   }}
                 >
-                  {numberOfPublicLink+numberOfPrivateLink}
+                  {numberOfLinks}
                 </span>
-                {auth.token &&
+                {auth.token && profileView &&
                   <img
                     src={ArrowIcon}
                     alt=""

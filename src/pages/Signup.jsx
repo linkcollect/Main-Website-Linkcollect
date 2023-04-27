@@ -15,12 +15,17 @@ const Signup = () => {
   const handleRegister = async(e)=>{
     e.preventDefault();
     setIsSigning(true);
-
-    const {name, email, password} = e.target;
-
-    const {data} = await register(name.value, email.value, password.value.trim());
-    setIsSigning(false);
-    return setVerifying(true)
+    try {
+      
+      const {name, email, password} = e.target;
+  
+      const {data} = await register(name.value, email.value, password.value.trim());
+      setIsSigning(false);
+      setVerifying(true);
+    } catch (error) {
+      console.log(error)
+      setIsSigning(false)
+    }
   }
 
   return (

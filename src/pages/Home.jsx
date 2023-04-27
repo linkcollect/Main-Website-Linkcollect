@@ -95,6 +95,8 @@ const Home = () => {
         <Sidebar
           numberOfPublicLink={linkData.publicLink}
           numberOfPrivateLink={linkData.privateLink}
+          numberOfLinks={linkData.privateLink+linkData.publicLink}
+          profileView={true}
         />
       </div>
       <div className="w-full flex-2 h-screen overflow-y-hidden">
