@@ -14,6 +14,8 @@ import twitter from "../../assets/twitter.svg";
 import Grill from "../../assets/Grill.svg";
 import Vector from '../../assets/Vector.png'
 import { Link } from "react-router-dom";
+import FamewallEmbed from 'react-famewall'
+
 const Features = ({ windowWidth }) => {
   return (
     <>
@@ -139,6 +141,12 @@ const Features = ({ windowWidth }) => {
 
       </div>
 
+      <div className='mx-auto w-full'>
+                <FamewallEmbed
+                    wallUrl="linkcollect"
+                    carouselMode={true}
+                />
+            </div>
       {/* Footer */}
       <img src={Grill} alt="" className="mt-16 xl:mt-32" />
       <div className="main-footer">
