@@ -1,12 +1,13 @@
+
 import React, { useEffect, useState } from "react";
 import Collectionitem from "../components/Collectionitem/Collectionitem";
 import Search from "../components/Search/Search";
 import Sidebar from "../components/Sidebar/Sidebar";
 import PageLoader from "../components/Loader/PageLoader";
 import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
-
-import { getAllCollections } from "../api-services/collectionService";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import jwt from "jsonwebtoken"
+import { getAllByUsername, getAllCollections } from "../api-services/collectionService";
 import { dataSortByType } from "../utils/utils";
 
 const Home = () => {
@@ -14,26 +15,37 @@ const Home = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const auth = useSelector((state) => state.auth);
   const navigate = useNavigate();
+  const { username } = useParams();
+  const [user, setUser] = useState({})
+
   // gloabl collections
   const [collections, SetCollections] = useState([]);
 
   // Filterd/search collection that will be shown
   const [filteredCollection, setFiltererdCollection] = useState([]);
 
-  const [loading, setLoadeing] = useState(true);
+  const [loading, setLoading] = useState(true);
 
   const [linkData, setLinkData] = useState({
     publicLink: 0,
     privateLink: 0,
   });
-  useEffect(() => {
-    if (!auth.token) {
-      return navigate("/");
+
+
+  useEffect(()=>{
+    const token = localStorage.getItem("token")
+    if(token){
+      const { userId, username:tokenUsername } = jwt.decode(token);
+      if(username === tokenUsername) setUser({username, userId, isOwner: true})
+      else setUser({ userId, username })
     }
-    setLoadeing(true);
+  })
+
+  useEffect(() => {
+    setLoading(true);
     const getCollections = async () => {
       try {
-        const res = await getAllCollections();
+        const res = await getAllByUsername(username);
         const sorteData = dataSortByType(res.data.data);
         let publicLink = 0;
         let privateLink = 0;
@@ -45,9 +57,9 @@ const Home = () => {
         });
         SetCollections(sorteData);
         setFiltererdCollection(sorteData);
-        setLoadeing(false);
+        setLoading(false);
       } catch (error) {
-        setLoadeing(false);
+        setLoading(false);
       }
     };
     getCollections(auth.token);
@@ -93,6 +105,7 @@ const Home = () => {
     <div className="flex bg-bgSecondary">
       <div className="flex-1">
         <Sidebar
+          user={user}
           numberOfPublicLink={linkData.publicLink}
           numberOfPrivateLink={linkData.privateLink}
           numberOfLinks={linkData.privateLink+linkData.publicLink}
@@ -101,7 +114,18 @@ const Home = () => {
       </div>
       <div className="w-full flex-2 h-screen overflow-y-hidden">
         {/* Top bar */}
+        {!user.userId && (
+            <div className="flex space-x-2">
+              <Link to="/login" className="lexend text-base text-primary rounded-lg border-primary border-2 px-3 py-2 sm:px-7 sm:py-2">
+                Log in
+              </Link>
+              <Link to="/signup" className="lexend text-base bg-primary rounded-lg border-primary border-2 px-3 py-2 sm:px-7 sm:py-2  text-bgPrimary">
+                Sign up
+              </Link>
+            </div>
+          )}
         <div className="px-8 bg-bgPrimary">
+        {/* Modify this */}
           <p className="text-left font-bold text-[30px] pt-10">
             Ohayo, {auth.user.username}
           </p>
@@ -122,7 +146,7 @@ const Home = () => {
               }`}
               onClick={() => tabHander(1)}
             >
-              My Collections
+              {user.isOwner ? "My Collections" : "Collections"}
             </div>
             <div
               className={`p-2 cursor-pointer ${

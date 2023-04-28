@@ -46,8 +46,10 @@ function App() {
       token: token,
       user: { userId: userId, username: username },
     }))
+    setUser({userId, username})
     }
   },[])
+  
   return (
     <Router>
       <div className="App">
@@ -57,13 +59,13 @@ function App() {
 
           <Route
             path="/signup"
-            element={auth.token ? <Navigate to="/:username" /> : <Signup />}
+            element={auth.token ? <Navigate to={`/${user?.username}`} /> : <Signup />}
           />
           <Route
             path="/login"
             element={
               auth.token ? (
-                <Navigate to="/:username" />
+                <Navigate to={`/${user?.username}`} />
               ) : (
                 <Login/>
               )
@@ -71,7 +73,7 @@ function App() {
           />
           <Route
             path="/:username"
-            element={auth.token ? <Home /> : <Navigate to="/login" />}
+            element={<Home /> }
             />
           <Route path="/privacy" element={<Privacy />} />
           <Route path="/c/:collectionId" element={<Bookmarks />} />
