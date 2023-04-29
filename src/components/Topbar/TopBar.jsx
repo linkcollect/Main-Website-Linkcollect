@@ -5,6 +5,7 @@ import profileImage from "../../assets/profileImage.svg";
 import { Link } from "react-router-dom";
 import MainLogo from "../../assets/mainLogo.svg";
 import defultCollectionImage from "../../assets/defaultCollectio.png";
+import { nameShortner } from "../../utils/utils";
 const TopBar = ({
   windowWidth,
   onBack,
@@ -54,16 +55,16 @@ const TopBar = ({
         {/* Profile Section */}
         <div className="flex flex-col sm:flex-row justify-between  sm:ml-10 sm:mt-2">
           <div className="flex">
-            <div className="flex justify-between w-full h-[80px] sm:w-[140px] sm:h-[89px]">
+            <div className="flex justify-between w-[180px] h-[80px] sm:w-[140px] sm:h-[89px]">
               <img
                 src={image!="undefined" && image!== undefined ? image : defultCollectionImage}
-                className="rounded w-[140px] h-[70px]  sm:w-[270px] sm:h-[89px] object-cover"
+                className="block mr-auto rounded w-[140px] h-[70px]  sm:w-[270px] sm:h-[89px] object-cover"
                 alt=""
               />
             </div>
             <div className="flex flex-col text-left sm:ml-10">
-              <h1 className="lexend text-xl font-bold">{collectionName}</h1>
-              <p className="w-full mt-2 text-sm">{collectionDesc}</p>
+              <h1 className="lexend text-xl font-bold">{windowWidth<600? nameShortner(collectionName, 14):collectionName}</h1>
+              <p className="w-full mt-2 text-sm">{windowWidth<600?nameShortner(collectionDesc, 18):collectionDesc}</p>
             </div>
           </div>
 
