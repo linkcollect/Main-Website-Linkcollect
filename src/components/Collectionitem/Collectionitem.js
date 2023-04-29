@@ -7,6 +7,7 @@ import toogle from "../../assets/toggle.svg";
 import paste from "../../assets/paste.svg";
 import bin from "../../assets/bin.svg";
 import defultCollectionImage from "../../assets/defaultCollectio.png";
+import {nameShortner} from "../../utils/utils"
 
 const Collectionitem = ({
   id,
@@ -35,10 +36,12 @@ const Collectionitem = ({
             links:links,
             image: image
           }}>
-            <img src={image!="undefined" && image!== undefined ? image : defultCollectionImage} />
+            <div >
+            <img src={image!="undefined" && image!== undefined ? image : defultCollectionImage} className="w-[269px] h-[162px]"/>
+            </div>
             <div className="flex justify-between items-center m-3">
               <p className="font-semibold text-textPrimary text-[14px]">
-                {title}
+                {nameShortner(title,20)}
               </p>
               <p className="text-textPrimary font-light text-[12px]">
                 {links} Links

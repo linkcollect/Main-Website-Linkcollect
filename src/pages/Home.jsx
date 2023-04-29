@@ -9,7 +9,7 @@ import { dataSortByType } from "../utils/utils";
 import { getByUsername } from "../api-services/userService";
 import jwt from "jsonwebtoken"
 import BookmarkItems from "../components/BookmarkItem/BookmarkItems";
-const Home = ({user}) => {
+const Home = ({user,handleSetUser}) => {
   const [tab, setTab] = useState(1);
   const { username } = useParams();
   const [vistiedUser, setVisitiedUser] = useState({})
@@ -27,23 +27,19 @@ const Home = ({user}) => {
     const getCollections = async () => {
       try {
         const res = await getByUsername(username);
-        console.log(res.data.data.collections)
         const sorteData = dataSortByType(res.data.data.collections);
         let publicCollection = 0;
         let privateCollection = 0;
-        console.log(sorteData)
         sorteData.map((data) => (data.isPublic ? publicCollection++ : privateCollection++));
         SetCollections(sorteData);
         setFiltererdCollection(sorteData);
-
-        console.log("data",publicCollection,privateCollection)
       
         if(user.isLoggedIn){
           if(username===user.username){
-            console.log("Case 1")
             //Means Loggedin user visintig their own profile so no need of fetching the data of the user
             setVisitiedUser({
-              username:username,
+              username:res.data.data.name,
+              email:res.data.data.email,
               isLoggedIn:true,
               isOwner:true,
               link:{
@@ -55,10 +51,10 @@ const Home = ({user}) => {
             // Loggedin user has Vistied others profile so need to get the user info
             // api call
             setVisitiedUser({
-              username:username,
+              username:res.data.data.name,
               isLoggedIn:true,
               isOwner:false,
-              links:{
+              link:{
                 publicCollection,
                 privateCollection,
               }
@@ -68,10 +64,10 @@ const Home = ({user}) => {
         // Not loogedIn
         else{
           setVisitiedUser({
-            username:username,
+            username:res.data.data.name,
             isLoggedIn:false,
             isOwner:false,
-            links:{
+            link:{
               publicCollection,
               privateCollection,
             }
@@ -136,6 +132,7 @@ const Home = ({user}) => {
       <div className="flex-1">
         <Sidebar
           user={vistiedUser}
+          handleSetUser={handleSetUser}
         />
       </div>
       <div className="w-full flex-2 h-screen overflow-y-hidden">

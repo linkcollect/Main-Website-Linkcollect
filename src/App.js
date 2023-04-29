@@ -45,7 +45,7 @@ function App() {
 
   const handleSetUser = (userId,username,isLoggedIn)=>{
     setUser({
-      userId,username,isLoggedIn:isLoggedIn
+      userId:userId,username:username,isLoggedIn:isLoggedIn
     });
   }
   
@@ -72,10 +72,10 @@ function App() {
           />
           <Route
             path="/:username"
-            element={<Home user={user}/> }
+            element={<Home user={user} handleSetUser={handleSetUser}/> }
           />
           <Route path="/privacy" element={<Privacy />} />
-          <Route path="/:username/c/:collectionId" element={<Bookmarks user={user}/>} />
+          <Route path="/:username/c/:collectionId" element={<Bookmarks user={user} handleSetUser={handleSetUser}/>} />
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
       </div>

@@ -23,7 +23,6 @@ const Signup = () => {
       setIsSigning(false);
       setVerifying(true);
     } catch (error) {
-      console.log(error)
       setIsSigning(false)
     }
   }

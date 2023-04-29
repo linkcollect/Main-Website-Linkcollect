@@ -8,16 +8,14 @@ import PageLoader from "../components/Loader/PageLoader";
 import { getByUsername } from "../api-services/userService";
 
 
-const Bookmarks = ({user}) => {
+const Bookmarks = ({user,handleSetUser}) => {
   const navigation = useNavigate();
   const { collectionId,username } = useParams();
-  console.log(username);
   const location = useLocation();
   const [collection, setCollection] = useState([]);
   const [filteredCollection,setFilteredCollection] = useState([])
   const [isLoading, setIsLoading] = useState(false);
   const [visitedUser,setVisitedUser] = useState({});
-  console.log(location);
   let width;
   if (typeof window !== "undefined") {
     width = window.innerWidth;
@@ -37,11 +35,11 @@ const Bookmarks = ({user}) => {
         setFilteredCollection(collection.data.data)
         if(user.isLoggedIn){
           if(username===user.username){
-            console.log("Case 1")
             //Means Loggedin user visintig their own profile so no need of fetching the data of the user
             setVisitedUser({
               username:username,
               isLoggedIn:true,
+              email:res.data.data.email,
               isOwner:true,
               link:{
                 publicCollection,
@@ -125,7 +123,7 @@ const Bookmarks = ({user}) => {
     <div className="bg-bgSecondary min-h-screen w-full flex">
       {windowWidth > 800 && (
         <div className="flex-1">
-          <Sidebar user={visitedUser} />
+          <Sidebar user={visitedUser} handleSetUser={handleSetUser}/>
         </div>
       )}
       <div className="h-screen w-full flex flex-col overflow-y-hidden">
@@ -143,14 +141,14 @@ const Bookmarks = ({user}) => {
             searchHnadeler={searchHnadeler}
           />
         </div>
-        <div className="w-full h-[60%] mx-auto">
+        <div className="w-full h-[80%] mx-auto">
           {isLoading ? (
             <div className="flex h-full w-full justify-center items-center">
               <PageLoader />
             </div>
           ) : collection.timelines && collection.timelines.length > 0 ? (
             <div className="w-full mx-auto h-full  overflow-y-scroll scrollbar-hide py-4">
-              <div className="w-[90%] mx-auto space-y-4">
+              <div className="w-[90%] mx-auto space-y-2">
                 {filteredCollection.timelines.map((timeline) => (
                   <BookmarkItems
                     key={timeline._id}

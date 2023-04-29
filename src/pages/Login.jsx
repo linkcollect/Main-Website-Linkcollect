@@ -31,7 +31,6 @@ const Login = ({handleSetUser}) => {
       const token = data.data.token;
       await setUserAndRedirect(token)
     } catch (error) {
-      console.log(error)
       setIsLogging(false);
     }
   }

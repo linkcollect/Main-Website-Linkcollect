@@ -1,15 +1,17 @@
 import React, { useRef, useState } from "react";
 import mainlogo from "../../assets/mainLogo.svg";
-import ProfileImage from "../../assets/profileImage.svg";
+import ProfileImage from "../../assets/profile.jpeg";
 import StackIcon from "../../assets/stack-simple.svg";
 import ArrowIcon from "../../assets/back-arrow.svg";
 import AddIcon from "../../assets/add-tab.svg";
 import Link from "../../assets/link.svg";
 import Logout from "../../assets/logout.svg";
 import approve from "../../assets/approve.svg"
+import { useNavigate } from "react-router-dom";
 
-const Sidebar = ({user}) => {
+const Sidebar = ({user,handleSetUser}) => {
   const copyRef= useRef();
+  const navigate = useNavigate()
   const [showCollections, setShowCollections] = useState(false);
   const handleShowCollection = () => {
     setShowCollections(!showCollections);
@@ -21,6 +23,12 @@ const Sidebar = ({user}) => {
       copyRef.current.src=Link
     },1500);
   };
+
+  const logoutHandler =  () =>{
+    localStorage.removeItem("token");
+    handleSetUser(null,null,false)
+    return navigate("/")
+  }
   return (
     <aside className="w-[305px] bg-bgPrimary ">
       <div className={`flex flex-col top-0 items-center justify-between h-[100vh] w-full px-2 ${user?'':'pb-12'} `}>
@@ -28,12 +36,15 @@ const Sidebar = ({user}) => {
         <div className="flex flex-col gap-8">
         <img src={mainlogo} alt="" className="w-40 mx-auto" />
           <div className="w-full">
+            <div className="w-[90px] h-[73px] rounded-2xl mx-auto mb-2 overflow-hidden">
             <img
               src={ProfileImage}
-              alt=""
-              className="w-[73px] h-[73px] rounded-2xl mx-auto"
+              className="w-[90px] h-[73px] object-cover"
+              
             />
+            </div>
             <p className="font-bold text-[16px]">{user.username}</p>
+            {user.email && <p className="font-light text-[16px] pt-1">{user.email}</p>}
           </div>
 
           {/* Collection priavaci info */}
@@ -86,12 +97,12 @@ const Sidebar = ({user}) => {
         </div>
         {/* Action buttons */}
         <div className="w-full">
-          {user?.isOwner &&
+          {/* {user?.isOwner &&
             <button className="w-full rounded-lg bg-primary font-bold text-bgPrimary py-2 flex justify-center items-center gap-2">
               <img src={AddIcon} alt="" className="w-4" />
               <span className="text-[14px]">Create Collection</span>
             </button>
-          }
+          } */}
 
           <button onClick={onCopy} className={`w-full font-bold text-textPrimary border-[1px] ${'border-primary'} rounded-lg py-2 flex justify-center items-center gap-1 mt-1 mb-1`}>
             <span className="text-[14px]">Share Profile</span>
@@ -99,11 +110,11 @@ const Sidebar = ({user}) => {
           </button>
           {user?.isOwner &&
             <>
-              <div className="w-full font-bold text-textPrimary border-2 border-[#ededed] rounded-lg py-2 flex justify-center items-center gap-1 mt-1">
+              {/* <div className="w-full font-bold text-textPrimary border-2 border-[#ededed] rounded-lg py-2 flex justify-center items-center gap-1 mt-1">
                 <span className="text-[14px]">Public</span>
                 <img src={Link} alt="" className="w-4" />
-              </div>
-              <button className=" w-full flex items-center justify-center gap-1 cursor-pointer bg-white py-4">
+              </div> */}
+              <button className=" w-full flex items-center justify-center gap-1 cursor-pointer bg-white py-4" onClick={logoutHandler}>
                 <img src={Logout} alt="" className="w-5 h-5" />
                 <span
                   className="text-danger para  text-[12px] leading-[12px]"                >
