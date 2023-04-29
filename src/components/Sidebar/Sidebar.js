@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import mainlogo from "../../assets/mainLogo.svg";
 import ProfileImage from "../../assets/profileImage.svg";
 import StackIcon from "../../assets/stack-simple.svg";
@@ -6,12 +6,20 @@ import ArrowIcon from "../../assets/back-arrow.svg";
 import AddIcon from "../../assets/add-tab.svg";
 import Link from "../../assets/link.svg";
 import Logout from "../../assets/logout.svg";
-import { useSelector } from "react-redux";
-const Sidebar = ({numberOfPublicLink,numberOfPrivateLink,numberOfLinks,profileView, user}) => {
+import approve from "../../assets/approve.svg"
+
+const Sidebar = ({user}) => {
+  const copyRef= useRef();
   const [showCollections, setShowCollections] = useState(false);
-  const auth  = useSelector(state=>state.auth);
   const handleShowCollection = () => {
     setShowCollections(!showCollections);
+  };
+  const onCopy = () => {
+    if(copyRef) copyRef.current.src=approve;
+    navigator.clipboard.writeText("https://linkcollect.io/"+user.username);
+    setTimeout(()=>{
+      copyRef.current.src=Link
+    },1500);
   };
   return (
     <aside className="w-[305px] bg-bgPrimary ">
@@ -25,13 +33,7 @@ const Sidebar = ({numberOfPublicLink,numberOfPrivateLink,numberOfLinks,profileVi
               alt=""
               className="w-[73px] h-[73px] rounded-2xl mx-auto"
             />
-            <p className="font-bold text-[16px]">{auth.user.username}</p>
-            {/* Need email from backend */}
-            {user?.isOwner &&
-              <p className={`text-center h-5 para text-sm mx-auto w-[247px]`}>
-                ohiostudent@gmail.com
-              </p>
-            }
+            <p className="font-bold text-[16px]">{user.username}</p>
           </div>
 
           {/* Collection priavaci info */}
@@ -50,9 +52,9 @@ const Sidebar = ({numberOfPublicLink,numberOfPrivateLink,numberOfLinks,profileVi
                     lineHeight: "20px",
                   }}
                 >
-                  {numberOfLinks}
+                  {user.link?.privateCollection+user.link?.publicCollection || 0}
                 </span>
-                {user?.userId && profileView &&
+                {user?.isLoggedIn && user.isOwner &&
                   <img
                     src={ArrowIcon}
                     alt=""
@@ -71,11 +73,11 @@ const Sidebar = ({numberOfPublicLink,numberOfPrivateLink,numberOfLinks,profileVi
                 <div className="flex flex-col mx-auto bg-bgSecondary py-3 cursor-pointer">
                   <div className="flex items-center justify-between px-2 pb-3">
                     <span className="text-black font-normal">Private</span>
-                    <span className="font-normal w-5 h-5 text-primary">{numberOfPrivateLink}</span>
+                    <span className="font-normal w-5 h-5 text-primary">{user.link?.privateCollection || 0}</span>
                   </div>
                   <div className="flex items-center justify-between px-2 cursor-pointer">
                     <span className="text-black font-normal">Public</span>
-                    <span className="font-normal w-5 h-5 text-primary">{numberOfPublicLink}</span>
+                    <span className="font-normal w-5 h-5 text-primary">{user.link?.publicCollection || 0}</span>
                   </div>
                 </div>
               )}
@@ -91,9 +93,9 @@ const Sidebar = ({numberOfPublicLink,numberOfPrivateLink,numberOfLinks,profileVi
             </button>
           }
 
-          <button className={`w-full font-bold text-textPrimary border-[1px] ${'border-primary'} rounded-lg py-2 flex justify-center items-center gap-1 mt-1`}>
+          <button onClick={onCopy} className={`w-full font-bold text-textPrimary border-[1px] ${'border-primary'} rounded-lg py-2 flex justify-center items-center gap-1 mt-1 mb-1`}>
             <span className="text-[14px]">Share Profile</span>
-            <img src={Link} alt="" className="w-4" />
+            <img ref={copyRef} src={Link} alt="" className="w-4" />
           </button>
           {user?.isOwner &&
             <>
@@ -101,7 +103,7 @@ const Sidebar = ({numberOfPublicLink,numberOfPrivateLink,numberOfLinks,profileVi
                 <span className="text-[14px]">Public</span>
                 <img src={Link} alt="" className="w-4" />
               </div>
-              <button className=" w-full flex items-center justify-center gap-1 cursor-pointer bg-white py-4 border-t border-t-grey">
+              <button className=" w-full flex items-center justify-center gap-1 cursor-pointer bg-white py-4">
                 <img src={Logout} alt="" className="w-5 h-5" />
                 <span
                   className="text-danger para  text-[12px] leading-[12px]"                >

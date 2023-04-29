@@ -13,6 +13,7 @@ const Collectionitem = ({
   image,
   title,
   links,
+  username,
   type,
   description,
   explore,
@@ -28,7 +29,7 @@ const Collectionitem = ({
     <>
       <div className="bg-bgPrimary border-2 border-bgSecondary rounded-lg overflow-hidden w-[269px]">
         <div className="border-[#EBECFD]-500">
-          <Link to={`/c/${id}`} state={{
+          <Link to={`/${username}/c/${id}`} state={{
             title:title,
             description:description,
             links:links,

@@ -4,19 +4,15 @@ import Collectionitem from "../components/Collectionitem/Collectionitem";
 import Search from "../components/Search/Search";
 import Sidebar from "../components/Sidebar/Sidebar";
 import PageLoader from "../components/Loader/PageLoader";
-import { useSelector } from "react-redux";
-import { Link, useNavigate, useParams } from "react-router-dom";
-import jwt from "jsonwebtoken"
-import { getAllByUsername, getAllCollections } from "../api-services/collectionService";
+import { Link,  useParams } from "react-router-dom";
 import { dataSortByType } from "../utils/utils";
-
-const Home = () => {
+import { getByUsername } from "../api-services/userService";
+import jwt from "jsonwebtoken"
+import BookmarkItems from "../components/BookmarkItem/BookmarkItems";
+const Home = ({user}) => {
   const [tab, setTab] = useState(1);
-  const [searchQuery, setSearchQuery] = useState("");
-  const auth = useSelector((state) => state.auth);
-  const navigate = useNavigate();
   const { username } = useParams();
-  const [user, setUser] = useState({})
+  const [vistiedUser, setVisitiedUser] = useState({})
 
   // gloabl collections
   const [collections, SetCollections] = useState([]);
@@ -26,44 +22,71 @@ const Home = () => {
 
   const [loading, setLoading] = useState(true);
 
-  const [linkData, setLinkData] = useState({
-    publicLink: 0,
-    privateLink: 0,
-  });
-
-
-  useEffect(()=>{
-    const token = localStorage.getItem("token")
-    if(token){
-      const { userId, username:tokenUsername } = jwt.decode(token);
-      if(username === tokenUsername) setUser({username, userId, isOwner: true})
-      else setUser({ userId, username })
-    }
-  })
-
   useEffect(() => {
     setLoading(true);
     const getCollections = async () => {
       try {
-        const res = await getAllByUsername(username);
-        const sorteData = dataSortByType(res.data.data);
-        let publicLink = 0;
-        let privateLink = 0;
-        console.log(res.data.data)
-        sorteData.map((data) => (data.isPublic ? publicLink++ : privateLink++));
-        setLinkData({
-          privateLink: privateLink,
-          publicLink: publicLink,
-        });
+        const res = await getByUsername(username);
+        console.log(res.data.data.collections)
+        const sorteData = dataSortByType(res.data.data.collections);
+        let publicCollection = 0;
+        let privateCollection = 0;
+        console.log(sorteData)
+        sorteData.map((data) => (data.isPublic ? publicCollection++ : privateCollection++));
         SetCollections(sorteData);
         setFiltererdCollection(sorteData);
+
+        console.log("data",publicCollection,privateCollection)
+      
+        if(user.isLoggedIn){
+          if(username===user.username){
+            console.log("Case 1")
+            //Means Loggedin user visintig their own profile so no need of fetching the data of the user
+            setVisitiedUser({
+              username:username,
+              isLoggedIn:true,
+              isOwner:true,
+              link:{
+                publicCollection,
+                privateCollection,
+              }
+            })
+          }else {
+            // Loggedin user has Vistied others profile so need to get the user info
+            // api call
+            setVisitiedUser({
+              username:username,
+              isLoggedIn:true,
+              isOwner:false,
+              links:{
+                publicCollection,
+                privateCollection,
+              }
+            })
+          }
+        }
+        // Not loogedIn
+        else{
+          setVisitiedUser({
+            username:username,
+            isLoggedIn:false,
+            isOwner:false,
+            links:{
+              publicCollection,
+              privateCollection,
+            }
+          })
+        }
+
         setLoading(false);
+
       } catch (error) {
         setLoading(false);
       }
     };
-    getCollections(auth.token);
-  }, []);
+
+    getCollections();
+  }, [user]);
 
   // useEffect(() => {
   //   console.log(tab);
@@ -97,25 +120,34 @@ const Home = () => {
 
   const searchHnadeler = (e) => {
     e.preventDefault();
-    console.log(searchQuery);
-    // Api call and state upadte
+      // As we need to search in global collections
+      const tempCollections = [...collections];
+      let newfilteredCollection = tempCollections;
+      if (e.target.value !== "") {
+        newfilteredCollection = tempCollections.filter((collection) =>
+          collection.title.toLowerCase().includes(e.target.value.toLowerCase())
+        );
+      }
+      setFiltererdCollection(newfilteredCollection);
   };
 
   return (
     <div className="flex bg-bgSecondary">
       <div className="flex-1">
         <Sidebar
-          user={user}
-          numberOfPublicLink={linkData.publicLink}
-          numberOfPrivateLink={linkData.privateLink}
-          numberOfLinks={linkData.privateLink+linkData.publicLink}
-          profileView={true}
+          user={vistiedUser}
         />
       </div>
       <div className="w-full flex-2 h-screen overflow-y-hidden">
         {/* Top bar */}
-        {!user.userId && (
-            <div className="flex space-x-2">
+        <div className="px-8 bg-bgPrimary">
+        {/* Modify this */}
+          <div className="flex w-full justify-between items-center">
+          <p className="text-left font-bold text-[30px] pt-10">
+            Ohayo, {user?.username}
+          </p> 
+          {!user.isLoggedIn && (
+          <div className="flex space-x-2">
               <Link to="/login" className="lexend text-base text-primary rounded-lg border-primary border-2 px-3 py-2 sm:px-7 sm:py-2">
                 Log in
               </Link>
@@ -123,17 +155,13 @@ const Home = () => {
                 Sign up
               </Link>
             </div>
-          )}
-        <div className="px-8 bg-bgPrimary">
-        {/* Modify this */}
-          <p className="text-left font-bold text-[30px] pt-10">
-            Ohayo, {auth.user.username}
-          </p>
+        )}
+          </div>
+          
           <div className="w-full mt-3">
             <form onSubmit={searchHnadeler}>
               <Search
                 onSearch={searchHnadeler}
-                onChnageHandler={setSearchQuery}
               />
             </form>
           </div>
@@ -146,16 +174,16 @@ const Home = () => {
               }`}
               onClick={() => tabHander(1)}
             >
-              {user.isOwner ? "My Collections" : "Collections"}
+              {vistiedUser.isOwner ? "My Collections" : "Collections"}
             </div>
-            <div
+            {/* <div
               className={`p-2 cursor-pointer ${
                 tab === 2 ? "border-b-2 border-b-primary" : null
               }`}
               onClick={() => tabHander(2)}
             >
               Explore all
-            </div>
+            </div> */}
           </div>
         </div>
         {/* Collections */}
@@ -175,6 +203,7 @@ const Home = () => {
                     links={collections.timelines.length}
                     type={collections.isPublic}
                     description={collections.description}
+                    username={collections.username}
                   />
                 ))}
               </div>

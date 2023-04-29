@@ -1,15 +1,21 @@
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import Copy from '../../assets/copyIcon.svg'
 import Menu from '../../assets/menuIcon.svg'
 import Redirect from '../../assets/redirectIcon.svg'
+import approve from "../../assets/approve.svg"
+
 import { nameShortner,getOrigin, fromNow } from '../../utils/utils'
 
-const BookmarkItems = ({ id, name, url, favicon,windowWidth,updatedAt }) => {
+const BookmarkItems = ({ id, name, url, favicon,windowWidth,updatedAt,user }) => {
   const [show, setShow] = useState(false)
-  const [isLoggedIn, setIsLoggedIn] = useState(false)
-  const handleCopy = (link) => {
-    navigator.clipboard.writeText(link)
-  }
+  const copyRef = useRef()
+  const onCopy = () => {
+    if(copyRef) copyRef.current.src=approve;
+    navigator.clipboard.writeText(url);
+    setTimeout(()=>{
+      copyRef.current.src=Copy
+    },1500);
+  };
   return (
     <div className='flex items-center justify-between w-full h-[55px] rounded-xl mx-auto py-2 bg-bgPrimary' style={{ border: `1px solid rgba(97, 102, 241, 0.16)` }}>
       <div className="flex items-center gap-2 sm:gap-5 mx-4  w-[130px] h-[46px]">
@@ -27,16 +33,15 @@ const BookmarkItems = ({ id, name, url, favicon,windowWidth,updatedAt }) => {
         </div>}
         <div className="flex  items-center justify-end sm:justify-center w-[138px] h-[45px] gap-[33px]">
           <div className="flex justify-center items-center gap-2 h-[45px] w-[98.18px] ">
-            <div className="w-7 h-7 sm:w-9 sm:h-9 bg-[#F7F7F7] rounded-full flex items-center justify-center" onClick={() => { handleCopy(url) }}>
-              <img src={Copy} alt="" className='w-4 h-4 sm:w-6 sm:h-6 mx-auto block cursor-pointer' />
+            <button onClick={onCopy} className="w-7 h-7 sm:w-9 sm:h-9 bg-[#F7F7F7] rounded-full flex items-center justify-center">
+              <img ref={copyRef} src={Copy} alt="" className='w-4 h-4 sm:w-6 sm:h-6 mx-auto block cursor-pointer' />
 
-            </div>
+            </button>
             <a href={url} className="w-8 h-8 sm:w-9 sm:h-9 bg-[#F7F7F7] rounded-full flex items-center justify-center" target='_blank' rel='noreferer'>
               <img src={Redirect} alt="" className='w-7 h-7 mx-auto block cursor-pointer' />
             </a>
           </div>
-          {isLoggedIn &&
-            <div className="relative pr-4">
+            {user.isLoggedIn && user.isOwner && <div className="relative pr-4">
               <div className='w-4  h-4 flex items-center justify-center'>
                 <img src={Menu} alt="" className='w-[25px] h-[25px] cursor-pointer' onClick={() => { setShow(!show) }} />
               </div>
@@ -46,8 +51,7 @@ const BookmarkItems = ({ id, name, url, favicon,windowWidth,updatedAt }) => {
                   <div className="w-[115px] h-[14px] text-[#232438] para text-[14px] mx-auto text-start cursor-pointer">Add Note</div>
                 </div>
               }
-            </div>
-          }
+            </div>}
         </div>
       </div>
 

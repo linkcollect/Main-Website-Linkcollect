@@ -5,17 +5,17 @@ import profileImage from "../../assets/profileImage.svg";
 import { Link } from "react-router-dom";
 import MainLogo from "../../assets/mainLogo.svg";
 import defultCollectionImage from "../../assets/defaultCollectio.png";
-import { useSelector } from "react-redux";
 const TopBar = ({
   windowWidth,
   onBack,
   collectionName,
   collectionDesc,
   noOfLinks,
-  image
+  image,
+  isLoggedIn,
+  searchHnadeler
 }) => {
   const [display, setDisplay] = useState(false);
-  const auth = useSelector((state) => state.auth);
 
   const clickhandler = () => {
     setDisplay(!display);
@@ -39,7 +39,7 @@ const TopBar = ({
               </Link>
             </div>
           )}
-          {windowWidth > 600 && !auth.token && (
+          {windowWidth > 600 && !isLoggedIn && (
             <div className="flex space-x-2">
               <Link to="/login" className="lexend text-base text-primary rounded-lg border-primary border-2 px-3 py-2 sm:px-7 sm:py-2">
                 Log in
@@ -63,7 +63,7 @@ const TopBar = ({
             </div>
             <div className="flex flex-col text-left sm:ml-10">
               <h1 className="lexend text-xl font-bold">{collectionName}</h1>
-              <p className="w-10/12 mt-2 text-sm break-all">{collectionDesc}</p>
+              <p className="w-full mt-2 text-sm">{collectionDesc}</p>
             </div>
           </div>
 
@@ -82,7 +82,7 @@ const TopBar = ({
 
         {/* Search Bar and Filter */}
         <div className="sm:ml-10 mt-5 sm:mr-10  flex ">
-          <Search />
+          <Search onSearch={searchHnadeler}/>
           <div className="relative">
             <button
               onClick={clickhandler}

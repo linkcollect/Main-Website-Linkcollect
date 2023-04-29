@@ -2,18 +2,21 @@ import React, { useState, useEffect } from "react";
 import Sidebar from "../components/Sidebar/Sidebar";
 import BookmarkItems from "../components/BookmarkItem/BookmarkItems";
 import TopBar from "../components/Topbar/TopBar";
-import { bookmarkItems } from "../dummyData";
 import { useParams, useNavigate, useLocation } from "react-router-dom";
 import { getCollection } from "../api-services/collectionService";
 import PageLoader from "../components/Loader/PageLoader";
+import { getByUsername } from "../api-services/userService";
 
-const Bookmarks = () => {
+
+const Bookmarks = ({user}) => {
   const navigation = useNavigate();
-  const { collectionId } = useParams();
+  const { collectionId,username } = useParams();
+  console.log(username);
   const location = useLocation();
   const [collection, setCollection] = useState([]);
+  const [filteredCollection,setFilteredCollection] = useState([])
   const [isLoading, setIsLoading] = useState(false);
-  const [isFetching, setIsFetching] = useState(false);
+  const [visitedUser,setVisitedUser] = useState({});
   console.log(location);
   let width;
   if (typeof window !== "undefined") {
@@ -23,17 +26,63 @@ const Bookmarks = () => {
 
   useEffect(() => {
     setIsLoading(true);
-    try {
-      async function gettingCollection() {
-        const { data } = await getCollection(collectionId);
-        console.log(data.data);
-        setCollection(data.data);
+    const getData = async () =>{
+      try {
+        const res = await getByUsername(username);
+        const collection = await getCollection(collectionId);
+        let publicCollection = 0;
+        let privateCollection = 0;
+        res.data.data.collections.map((data) => (data.isPublic ? publicCollection++ : privateCollection++));
+        setCollection(collection.data.data);
+        setFilteredCollection(collection.data.data)
+        if(user.isLoggedIn){
+          if(username===user.username){
+            console.log("Case 1")
+            //Means Loggedin user visintig their own profile so no need of fetching the data of the user
+            setVisitedUser({
+              username:username,
+              isLoggedIn:true,
+              isOwner:true,
+              link:{
+                publicCollection,
+                privateCollection,
+              }
+            })
+          }else {
+            // Loggedin user has Vistied others profile so need to get the user info
+            // api call
+            setVisitedUser({
+              username:username,
+              isLoggedIn:true,
+              isOwner:false,
+              link:{
+                publicCollection,
+                privateCollection,
+              }
+            })
+          }
+        }
+        // Not loogedIn
+        else{
+          setVisitedUser({
+            username:username,
+            isLoggedIn:false,
+            isOwner:false,
+            link:{
+              publicCollection,
+              privateCollection,
+            }
+          })
+        }
+
+        setIsLoading(false);
+
+      } catch (error) {
         setIsLoading(false);
       }
-      gettingCollection();
-    } catch (error) {
-      setIsLoading(false);
+
     }
+    getData();
   }, []);
 
   // For responsive
@@ -49,7 +98,20 @@ const Bookmarks = () => {
     navigation(-1);
   };
 
-  
+  const searchHnadeler = (e) => {
+    e.preventDefault();
+      // As we need to search in global collections
+      const tempCollection = {...collection};
+      let newfilteredCollection = tempCollection;
+      let newfilteredBookmarks = []
+      if (e.target.value !== "") {
+        newfilteredBookmarks = tempCollection.timelines.filter((collection) =>
+          collection.title.toLowerCase().includes(e.target.value.toLowerCase())
+        );
+        newfilteredCollection.timelines=newfilteredBookmarks;
+      }
+      setFilteredCollection(newfilteredCollection)
+  };
   // If I am visting the collections from link
   if (!location.state && !collection.timelines) {
     return (
@@ -63,7 +125,7 @@ const Bookmarks = () => {
     <div className="bg-bgSecondary min-h-screen w-full flex">
       {windowWidth > 800 && (
         <div className="flex-1">
-          <Sidebar numberOfLinks = {collection?.timelines?.length || 0}/>
+          <Sidebar user={visitedUser} />
         </div>
       )}
       <div className="h-screen w-full flex flex-col overflow-y-hidden">
@@ -71,10 +133,14 @@ const Bookmarks = () => {
           <TopBar
             windowWidth={windowWidth}
             onBack={backHandler}
-            collectionName={location.state?.title || collection.title}
-            collectionDesc={location.state?.description || collection.description}
-            noOfLinks={location.state?.links || collection.timelines.length}
-            image={location.state?.image || collection.image}
+            collectionName={location.state?.title || collection?.title}
+            collectionDesc={
+              location.state?.description || collection?.description
+            }
+            noOfLinks={location.state?.links || collection.timelines?.length}
+            image={location.state?.image || collection?.image}
+            isLoggedIn={user.isLoggedIn}
+            searchHnadeler={searchHnadeler}
           />
         </div>
         <div className="w-full h-[60%] mx-auto">
@@ -85,7 +151,7 @@ const Bookmarks = () => {
           ) : collection.timelines && collection.timelines.length > 0 ? (
             <div className="w-full mx-auto h-full  overflow-y-scroll scrollbar-hide py-4">
               <div className="w-[90%] mx-auto space-y-4">
-                {collection.timelines.map((timeline) => (
+                {filteredCollection.timelines.map((timeline) => (
                   <BookmarkItems
                     key={timeline._id}
                     id={timeline._id}
@@ -94,7 +160,7 @@ const Bookmarks = () => {
                     favicon={timeline.favicon}
                     windowWidth={windowWidth}
                     updatedAt={timeline.updatedAt}
-                    // onDelete={deleleteBookmark}
+                    user={visitedUser}
                   />
                 ))}
               </div>

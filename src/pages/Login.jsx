@@ -1,60 +1,49 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-
 import jwt from "jsonwebtoken";
 import Banner from "../components/Banner/Banner";
 import mainLogo from "../assets/mainLogo.svg";
 import Input from "../components/Input/Input";
 import GoogleAuthBtn from "../components/GoogleAuthBtn";
 import Loader from "../components/Loader/Loader";
-
-
 import { login } from "../api-services/authService";
-import { authFailure, authStart, authSuccess } from "../actions/authActions";
 import { setJwtInRequestHeader } from "../api-services/httpService";
 
 const Login = ({handleSetUser}) => {
   const location = useLocation();
   const navigate = useNavigate();
-  const auth = useSelector(state=>state.auth);
-  const dispatch  = useDispatch();
+  const [isLogging,setIsLogging]=useState(false);
 
   // For google auth redirect and email verification redirect from server with token in query
   useEffect(() => {
     
-     let token = new URLSearchParams(location.search).get("token");
+    let token = new URLSearchParams(location.search).get("token");
     setUserAndRedirect(token)
   }, [])
 
   // To handle login
   const handleLogin = async (e) => {
     e.preventDefault();
-    dispatch(authStart());
+    setIsLogging(true);
     try {
       const { email, password } = e.target;
       const { data } = await login(email.value, password.value.trim());
       const token = data.data.token;
       await setUserAndRedirect(token)
     } catch (error) {
-      dispatch(authFailure())
+      console.log(error)
+      setIsLogging(false);
     }
   }
 
   const setUserAndRedirect = async (token) => {
     if (!token) return;
     const { userId,username } = jwt.decode(token);
-    
-    dispatch(authSuccess({
-      token: token,
-      user: { userId: userId, username: username },
-    }))
-    setJwtInRequestHeader(token)
+    setJwtInRequestHeader(token);
     localStorage.setItem("token", token);
+    handleSetUser(userId,username,true)
     navigate(`/${username}`);
   }
-
-  console.log(auth)
 
   return (
     <>
@@ -103,7 +92,7 @@ const Login = ({handleSetUser}) => {
                   Forget Your Password?
                 </p> */}
                 <button className="w-full rounded-lg bg-primary font-bold text-bgPrimary py-3 flex justify-center">
-                  {!auth.loading ? "Login" : <Loader/>}
+                  {!isLogging ? "Login" : <Loader/>}
                 </button>
                 <p className="font-light text-left text-textSecondary mt-1">
                   Don't have an account?{" "}
