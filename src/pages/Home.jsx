@@ -184,7 +184,7 @@ const Home = ({user,handleSetUser}) => {
           </div>
         </div>
         {/* Collections */}
-        <div className=" w-full h-[75%]">
+        <div className=" w-full h-[65%]">
           {loading ? (
             <div className="flex h-full w-full justify-center items-center">
               <PageLoader />

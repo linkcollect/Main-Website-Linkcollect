@@ -141,7 +141,7 @@ const Bookmarks = ({user,handleSetUser}) => {
             searchHnadeler={searchHnadeler}
           />
         </div>
-        <div className="w-full h-[80%] mx-auto">
+        <div className="w-full h-[65%] mx-auto">
           {isLoading ? (
             <div className="flex h-full w-full justify-center items-center">
               <PageLoader />
