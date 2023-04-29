@@ -1,6 +1,6 @@
 import React from "react";
 import searchIcon from "../../assets/SearchVector.svg"
-const SearchBox = ({onChnageHandler,onSearch}) => {
+const SearchBox = ({onSearch}) => {
 
   return (
     <div className="flex items-center w-full">
@@ -16,7 +16,9 @@ const SearchBox = ({onChnageHandler,onSearch}) => {
           id="simple-search"
           className="bg-bgPrimary border border-secondary text-textSecondary text-sm rounded-lg block w-full p-3 pl-10 focus:outline-none"
           placeholder="Search for collection or links"
+          onChange={onSearch}
         />
+
         {/* onchange to be added in the above line
           onChange={(e)=>onChnageHandler(e.target.value)}
         */}

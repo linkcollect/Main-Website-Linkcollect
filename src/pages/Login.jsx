@@ -1,51 +1,56 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import jwt from "jsonwebtoken";
 import Banner from "../components/Banner/Banner";
 import mainLogo from "../assets/mainLogo.svg";
 import Input from "../components/Input/Input";
 import GoogleAuthBtn from "../components/GoogleAuthBtn";
+import Loader from "../components/Loader/Loader";
 import { login } from "../api-services/authService";
-import jwt from "jsonwebtoken";
+import { setJwtInRequestHeader } from "../api-services/httpService";
 
 const Login = ({handleSetUser}) => {
   const location = useLocation();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+  const [isLogging,setIsLogging]=useState(false);
 
   // For google auth redirect and email verification redirect from server with token in query
   useEffect(() => {
-    const token = new URLSearchParams(location.search).get("token");
+    
+    let token = new URLSearchParams(location.search).get("token");
     setUserAndRedirect(token)
   }, [])
 
   // To handle login
   const handleLogin = async (e) => {
-    e.preventDefault()
-    const { email, password } = e.target;
-    const { data } = await login(email.value, password.value.trim());
-    const token = data.data.token;
-    setUserAndRedirect(token)
+    e.preventDefault();
+    setIsLogging(true);
+    try {
+      const { email, password } = e.target;
+      const { data } = await login(email.value, password.value.trim());
+      const token = data.data.token;
+      await setUserAndRedirect(token)
+    } catch (error) {
+      setIsLogging(false);
+    }
   }
 
   const setUserAndRedirect = async (token) => {
     if (!token) return;
     const { userId,username } = jwt.decode(token);
-    // const response = await getUserById(userId);
-    handleSetUser({userId});
+    setJwtInRequestHeader(token);
     localStorage.setItem("token", token);
-    return navigate(`/${username}`);
+    handleSetUser(userId,username,true)
+    navigate(`/${username}`);
   }
-
 
   return (
     <>
-      <div className="bg-gradient-to-r from-gradinetInitial to-gradientEnd from-50% h-screen">
-        <div className="w-[50%] m-auto">
-          <img src={mainLogo} alt="" />
-        </div>
-        <div className="flex flex-row justify-evenly items-center">
+      <div className="bg-gradient-to-r from-gradinetInitial to-gradientEnd from-50%">
+        <div className="flex flex-row justify-evenly items-center h-screen flex-wrap">
           <Banner />
-          <div className="flex items-center justify-center mt-[-32px]">
-            <div className="rounded-2xl bg-bgPrimary shadow-2xl p-10 w-[410px] height[600px]">
+          <div className="flex items-center justify-center ">
+            <div className="rounded-2xl bg-bgPrimary shadow-2xl px-10 pt-[40px] pb-[60px] w-[410px]">
               <div>
                 <img
                   className="mx-auto h-16 w-36"
@@ -85,8 +90,8 @@ const Login = ({handleSetUser}) => {
                 {/* <p className="text-textSecondary text-left mb-4 font-light">
                   Forget Your Password?
                 </p> */}
-                <button className="w-full rounded-lg bg-primary font-bold text-bgPrimary py-3">
-                  Login
+                <button className="w-full rounded-lg bg-primary font-bold text-bgPrimary py-3 flex justify-center">
+                  {!isLogging ? "Login" : <Loader/>}
                 </button>
                 <p className="font-light text-left text-textSecondary mt-1">
                   Don't have an account?{" "}
