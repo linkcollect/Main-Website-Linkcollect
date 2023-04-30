@@ -23,7 +23,7 @@ const BookmarkItems = ({ id, name, url, favicon,windowWidth,updatedAt,user }) =>
           <img src={favicon} alt="Icon" className='w-[30.68px] h-[30px] rounded-md object-cover' />
         </div>
         <div className="flex flex-col items-start justify-center gap-[2.63px] w-12 h-10 sm:h-10 sm:w-[4.8rem]">
-          <p className='w-64 font-medium text-start para text-[12px] sm:text-[16px] text-textPrimary sm:w-max sm:h-[21px]'>{windowWidth<600? nameShortner(name,20) : nameShortner(name,70)}</p>
+          <p className='w-64 font-medium text-start para text-[12px] sm:text-[16px] text-textPrimary sm:w-max sm:h-[21px]'>{windowWidth<600? nameShortner(name,20) : nameShortner(name,65)}</p>
           <p className='w-56 text-textPrimary text-start text-[10px] sm:text-[12px] sm:w-[271px] sm:h-[16px] para'>{windowWidth<700? nameShortner(getOrigin(url),15): nameShortner(getOrigin(url),30)}</p>
         </div>
       </div>

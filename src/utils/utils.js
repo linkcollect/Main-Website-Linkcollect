@@ -52,7 +52,7 @@ const getDuration = (seconds) => {
   
 export const fromNow = (date)=>{
    let seconds = Math.floor((Date.now() - new Date(date)) / 1000);
-  let unit = "second";
+  let unit = "sec";
   let direction = "ago";
   if (seconds < 0) {
     seconds = -seconds;
@@ -70,7 +70,7 @@ export const fromNow = (date)=>{
     unit = "hour";
   } else if (seconds >= 60) {
     value = Math.floor(seconds / 60);
-    unit = "minute";
+    unit = "min";
   }
   if (value != 1)
     unit = unit + "s";
