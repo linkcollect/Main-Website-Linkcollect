@@ -9,7 +9,7 @@ import { dataSortByType } from "../utils/utils";
 import { getByUsername } from "../api-services/userService";
 import jwt from "jsonwebtoken"
 import BookmarkItems from "../components/BookmarkItem/BookmarkItems";
-const Home = ({user,handleSetUser}) => {
+const Home = ({user,handleSetUser,windowWidth}) => {
   const [tab, setTab] = useState(1);
   const { username } = useParams();
   const [vistiedUser, setVisitiedUser] = useState({})
@@ -128,21 +128,24 @@ const Home = ({user,handleSetUser}) => {
   };
 
   return (
-    <div className="flex bg-bgSecondary">
-      <div className="flex-1">
+    
+    <div className={`flex bg-bgSecondary ${ windowWidth < 700 ? "flex-col" : "" }`}>
+      <div className={`flex-1`}>
         <Sidebar
           user={vistiedUser}
           handleSetUser={handleSetUser}
+          windowWidth={windowWidth}
         />
       </div>
-      <div className="w-full flex-2 h-screen overflow-y-hidden">
+      <div className="w-full flex-2 max-h-none sm:h-screen  overflow-y-hidden">
         {/* Top bar */}
         <div className="px-8 bg-bgPrimary">
         {/* Modify this */}
           <div className="flex w-full justify-between items-center">
-          <p className="text-left font-bold text-[30px] pt-10">
+          <p className={`text-left font-bold text-[30px] pt-10 ${windowWidth < 700 ? "hidden" : ""}`}>
             Ohayo, {user?.username}
           </p> 
+         { windowWidth > 700 && <>
           {!user.isLoggedIn && (
           <div className="flex space-x-2">
               <Link to="/login" className="lexend text-base text-primary rounded-lg border-primary border-2 px-3 py-2 sm:px-7 sm:py-2">
@@ -153,9 +156,10 @@ const Home = ({user,handleSetUser}) => {
               </Link>
             </div>
         )}
+        </>}
           </div>
           
-          <div className="w-full mt-3">
+          <div className={`w-full mt-3 ${windowWidth < 700 ? "hidden" : ""}`}>
             <form onSubmit={searchHnadeler}>
               <Search
                 onSearch={searchHnadeler}
@@ -164,7 +168,7 @@ const Home = ({user,handleSetUser}) => {
           </div>
 
           {/* Tabs */}
-          <div className="mt-10 text-left font-semibold flex relative">
+          <div className={`mt-10 text-left font-semibold flex relative ${windowWidth < 700 ? "hidden" : ""} `}>
             <div
               className={`p-2 cursor-pointer ${
                 tab === 1 ? "border-b-2 border-b-primary" : null
@@ -191,7 +195,7 @@ const Home = ({user,handleSetUser}) => {
             </div>
           ) : filteredCollection.length > 0 ? (
             <div className="w-full mx-auto h-full overflow-y-scroll py-4">
-              <div className="w-[90%] mx-auto flex flex-wrap gap-2">
+              <div className="w-[95%] mx-auto flex flex-wrap gap-2">
                 {filteredCollection.map((collections) => (
                   <Collectionitem
                     id={collections._id}
@@ -201,6 +205,7 @@ const Home = ({user,handleSetUser}) => {
                     type={collections.isPublic}
                     description={collections.description}
                     username={collections.username}
+                    windowWidth={windowWidth}
                   />
                 ))}
               </div>

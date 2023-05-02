@@ -72,7 +72,7 @@ function App() {
           />
           <Route
             path="/:username"
-            element={<Home user={user} handleSetUser={handleSetUser}/> }
+            element={<Home user={user} windowWidth={windowWidth} handleSetUser={handleSetUser}/> }
           />
           <Route path="/privacy" element={<Privacy />} />
           <Route path="/:username/c/:collectionId" element={<Bookmarks user={user} handleSetUser={handleSetUser}/>} />

@@ -9,7 +9,7 @@ import Logout from "../../assets/logout.svg";
 import approve from "../../assets/approve.svg"
 import { useNavigate } from "react-router-dom";
 
-const Sidebar = ({user,handleSetUser}) => {
+const Sidebar = ({user,handleSetUser,windowWidth}) => {
   const copyRef= useRef();
   const navigate = useNavigate()
   const [showCollections, setShowCollections] = useState(false);
@@ -30,7 +30,7 @@ const Sidebar = ({user,handleSetUser}) => {
     return navigate("/")
   }
   return (
-    <aside className="w-[305px] bg-bgPrimary ">
+    <aside className={` bg-bgPrimary ${windowWidth < 700 ? "h-[350px] w-full " : 'w-[305px]'} `}>
       <div className={`flex flex-col top-0 items-center justify-between h-[100vh] w-full px-2 ${user?'':'pb-12'} `}>
         {/* Profile Info */}
         <div className="flex flex-col gap-8">
@@ -48,20 +48,20 @@ const Sidebar = ({user,handleSetUser}) => {
           </div>
 
           {/* Collection priavaci info */}
-          <div className="w-full #">
-            <div className={`w-[281px] h-[41px]  rounded-lg font-bold text-textPrimary border-[1px] ${user? 'border-[#ededed]':'border-primary'}  py-1 flex justify-between px-2`}>
+          <div className={`${windowWidth < 700 ? " flex items-center justify-center gap-2 w-full": "" }`}>
+            <div className={`${windowWidth < 700 ? "w-[163px]" : "w-[281px]"} h-[41px]  rounded-lg font-bold text-textPrimary border-[1px] ${user? 'border-borderPrimary':'border-primary'}  py-1 flex justify-between px-2`}>
+
               <div className=" flex items-center gap-2">
                 <img src={StackIcon} alt="" className="w-5 h-5" />
-                <span className="text-textPrimary text-[16px] w-[80px] h-[25px]">Collections</span>
+                <span className={`text-textPrimary text-[13px] sm:text-[16px] w-[60px] h-[23px] sm:h-[25px]`}>Collections</span>
               </div>
+
+              
+          
               <div className="flex items-center justify-center gap-2">
+          
                 <span
-                  className="font-normal w-5 h-5"
-                  style={{
-                    color: "#6166F1",
-                    fontSize: "16px",
-                    lineHeight: "20px",
-                  }}
+                  className={`font-normal w-5 h-5 leading-5 text-[10px] sm:text-[16px] text-primary `}
                 >
                   {user.link?.privateCollection+user.link?.publicCollection || 0}
                 </span>
@@ -77,9 +77,17 @@ const Sidebar = ({user,handleSetUser}) => {
                     onClick={handleShowCollection}
                   />
                 }
+                   
               </div>
+              
             </div>
-            <div className='h-[65px] w-[281px]'>
+            {/* for responsive button */}
+            <button onClick={onCopy} className={` w-[160px]  border-borderPrimary border-[1px] font-bold text-textPrimary   rounded-lg py-2 flex justify-center items-center gap-[8px] sm:gap-1 mt-1 mb-1 ${windowWidth < 700 ? "block" : "hidden"}`}>
+            <span className="text-[14px]">Share Profile</span>
+            <img ref={copyRef} src={Link} alt="" className="w-4" />
+          </button>
+ {/* problem aarha ha tha when adjusting width of collections in mobile devicess so added the logic of windowWidth */}
+            <div className={`h-[65px] w-[281px] ${windowWidth < 700 ? "hidden" : 'block' }`}>
               {showCollections && (
                 <div className="flex flex-col mx-auto bg-bgSecondary py-3 cursor-pointer">
                   <div className="flex items-center justify-between px-2 pb-3">
@@ -104,7 +112,7 @@ const Sidebar = ({user,handleSetUser}) => {
             </button>
           } */}
 
-          <button onClick={onCopy} className={`w-full font-bold text-textPrimary border-[1px] ${'border-primary'} rounded-lg py-2 flex justify-center items-center gap-1 mt-1 mb-1`}>
+          <button onClick={onCopy} className={`w-full font-bold text-textPrimary border-[1px] ${'border-primary'} rounded-lg py-2 flex justify-center items-center gap-1 mt-1 mb-1 ${windowWidth < 700 ? "hidden" : ""}`}>
             <span className="text-[14px]">Share Profile</span>
             <img ref={copyRef} src={Link} alt="" className="w-4" />
           </button>
