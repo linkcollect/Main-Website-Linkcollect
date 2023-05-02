@@ -3,8 +3,13 @@ export const nameShortner = (name,length) => {
 }
 
 export const getOrigin = (weblink) =>{
-    const url = new URL(weblink);
+    try {
+      const url = new URL(weblink);
       return url.host
+      
+    } catch (error) {
+      return ""
+    }
 }
 
 export const getAddedTime = (time)=>{
