@@ -16,7 +16,8 @@ module.exports = {
       gradientEnd:"#9092FF",
       gradinetInitial:"rgba(144, 146, 255, 0)",
       grey:"#E4E4F2",
-      textDark: "#080024" 
+      textDark: "#080024", 
+      borderPrimary:"#ededed"
     }
   },
   plugins: [],

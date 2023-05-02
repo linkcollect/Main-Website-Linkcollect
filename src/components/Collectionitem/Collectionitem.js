@@ -20,6 +20,7 @@ const Collectionitem = ({
   explore,
   isUpvoted,
   upVote,
+  windowWidth
 }) => {
   const [display, setDisplay] = useState(false);
   const menuhandler = () => {
@@ -28,7 +29,7 @@ const Collectionitem = ({
 
   return (
     <>
-      <div className="bg-bgPrimary border-2 border-bgSecondary rounded-lg overflow-hidden w-[269px]">
+      <div className="bg-bgPrimary border-2 border-bgSecondary rounded-lg overflow-hidden w-[48%] sm:w-[269px]">
         <div className="border-[#EBECFD]-500">
           <Link to={`/${username}/c/${id}`} state={{
             title:title,
@@ -41,7 +42,7 @@ const Collectionitem = ({
             </div>
             <div className="flex justify-between items-center m-3">
               <p className="font-semibold text-textPrimary text-[14px]">
-                {nameShortner(title,20)}
+                {windowWidth > 700 ? nameShortner(title,20) : nameShortner(title,10) }
               </p>
               <p className="text-textPrimary font-light text-[12px]">
                 {links} Links
@@ -70,7 +71,7 @@ const Collectionitem = ({
               </button>
             ) : (
               <div>
-                <p className="px-6  border border-textSecondary rounded-full text-sm font-light">
+                <p className="px-4 sm:px-6   border border-textSecondary rounded-full text-[12px] sm:text-sm font-light">
                   {type ? "Public" : "Private"}
                 </p>
               </div>
