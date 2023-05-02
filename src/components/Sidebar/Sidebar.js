@@ -43,7 +43,7 @@ const Sidebar = ({user,handleSetUser}) => {
               
             />
             </div>
-            <p className="font-bold text-[16px]">{user.username}</p>
+            <p className="font-bold text-[16px]">{user.isLoggedIn ? user.username : user.name}</p>
             {user.email && <p className="font-light text-[16px] pt-1">{user.email}</p>}
           </div>
 

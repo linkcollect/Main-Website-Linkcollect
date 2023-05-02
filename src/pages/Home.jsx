@@ -38,7 +38,8 @@ const Home = ({user,handleSetUser}) => {
           if(username===user.username){
             //Means Loggedin user visintig their own profile so no need of fetching the data of the user
             setVisitiedUser({
-              username:res.data.data.name,
+              username:res.data.data.username,
+              name:res.data.data.name,
               email:res.data.data.email,
               isLoggedIn:true,
               isOwner:true,
@@ -51,7 +52,8 @@ const Home = ({user,handleSetUser}) => {
             // Loggedin user has Vistied others profile so need to get the user info
             // api call
             setVisitiedUser({
-              username:res.data.data.name,
+              username:res.data.data.username,
+              name:res.data.data.name,
               isLoggedIn:true,
               isOwner:false,
               link:{
@@ -64,7 +66,8 @@ const Home = ({user,handleSetUser}) => {
         // Not loogedIn
         else{
           setVisitiedUser({
-            username:res.data.data.name,
+            username:res.data.data.username,
+            name:res.data.data.name,
             isLoggedIn:false,
             isOwner:false,
             link:{
