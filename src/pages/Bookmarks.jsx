@@ -28,6 +28,7 @@ const Bookmarks = ({user,handleSetUser}) => {
       try {
         const res = await getByUsername(username);
         const collection = await getCollection(collectionId);
+        console.log(collection)
         let publicCollection = 0;
         let privateCollection = 0;
         res.data.data.collections.map((data) => (data.isPublic ? publicCollection++ : privateCollection++));
@@ -37,8 +38,8 @@ const Bookmarks = ({user,handleSetUser}) => {
           if(username===user.username){
             //Means Loggedin user visintig their own profile so no need of fetching the data of the user
             setVisitedUser({
-              username:username,
-              isLoggedIn:true,
+              username:res.data.data.username,
+              name:res.data.data.name,
               email:res.data.data.email,
               isOwner:true,
               link:{
@@ -50,8 +51,8 @@ const Bookmarks = ({user,handleSetUser}) => {
             // Loggedin user has Vistied others profile so need to get the user info
             // api call
             setVisitedUser({
-              username:username,
-              isLoggedIn:true,
+              username:res.data.data.username,
+              name:res.data.data.name,
               isOwner:false,
               link:{
                 publicCollection,
@@ -63,8 +64,8 @@ const Bookmarks = ({user,handleSetUser}) => {
         // Not loogedIn
         else{
           setVisitedUser({
-            username:username,
-            isLoggedIn:false,
+            username:res.data.data.username,
+              name:res.data.data.name,
             isOwner:false,
             link:{
               publicCollection,
@@ -110,7 +111,7 @@ const Bookmarks = ({user,handleSetUser}) => {
       }
       setFilteredCollection(newfilteredCollection)
   };
-  // If I am visting the collections from link
+  // If I am visting the directlty collections from link
   if (!location.state && !collection.timelines) {
     return (
       <div className="flex h-screen w-full justify-center items-center">
