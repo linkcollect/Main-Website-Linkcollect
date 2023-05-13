@@ -45,6 +45,7 @@ if(copyImageRef)    {copyImageRef.current.src = approve
     );
 
 setTimeout(() => {  copyImageRef.current.src = paste;
+  
 setCopyText("Copy Link")
 }, 2500);
   };
@@ -126,9 +127,9 @@ setCopyText("Copy Link")
           
           <div className={`threedotmenu ${display ? "" : "hidden"}`}>
             <div className="absolute flex flex-col justify-end ml-20 bg-bgPrimary p-5 rounded-xl text-xs leading-5 ">
-              <button className="flex justify-between items-center pr-4" onClick={()=>{handleCopy(id)}} >
-                <p className="lexend"> {copyText}</p>{" "}
-                <img className="pl-3   w-6 h-6" ref={copyImageRef} src={paste}  alt="" />
+              <button className="flex justify-between items-center pr-4 gap-5" onClick={()=>{handleCopy(id)}} >
+                <p className="lexend whitespace-nowrap w-12"> {copyText}</p>
+                <img className="pl-3 w-6 h-6" ref={copyImageRef} src={paste}  alt="" />
               </button>
               <button className="flex justify-between pr-4 ">
                 <p className="lexend">Public</p> <img className="pt-1" src={toogle} alt="" />
@@ -141,7 +142,7 @@ setCopyText("Copy Link")
                   onDelete(id);
                 }}
               >
-                <p className="lexend">Delete</p> <img src={bin} alt="" />
+                <p className="lexend ">Delete</p> <img className="w-5 h-5 pl-2" src={bin} alt="" />
               </button>
             </div>
           </div>
