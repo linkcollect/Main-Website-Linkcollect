@@ -9,9 +9,15 @@ import { dataSortByType } from "../utils/utils";
 import { getByUsername } from "../api-services/userService";
 import jwt from "jsonwebtoken"
 import BookmarkItems from "../components/BookmarkItem/BookmarkItems";
+import { deleteCollection } from "../api-services/collectionService"; 
+import approve from '../assets/approve.svg' 
+import { useRef } from "react";
+import paste from '../assets/paste.svg'
+
 const Home = ({user,handleSetUser,windowWidth}) => {
   const [tab, setTab] = useState(1);
   const { username } = useParams();
+
   const [vistiedUser, setVisitiedUser] = useState({})
 
   // gloabl collections
@@ -21,12 +27,14 @@ const Home = ({user,handleSetUser,windowWidth}) => {
   const [filteredCollection, setFiltererdCollection] = useState([]);
 
   const [loading, setLoading] = useState(true);
+  const copyImageRef = useRef()
 
   useEffect(() => {
     setLoading(true);
     const getCollections = async () => {
       try {
         const res = await getByUsername(username);
+        console.log(res.data.data);
         const sorteData = dataSortByType(res.data.data.collections);
         let publicCollection = 0;
         let privateCollection = 0;
@@ -129,6 +137,21 @@ const Home = ({user,handleSetUser,windowWidth}) => {
       }
       setFiltererdCollection(newfilteredCollection);
   };
+  // Bookmark delete handler
+  const deleteHandler = async (collectionId) => {
+   
+    try {
+   const newdata = collections.filter((collection) => collection._id !== collectionId);
+   setFiltererdCollection(newdata)
+   SetCollections(newdata)
+   await deleteCollection(collectionId);
+      
+    } catch (error) {
+      console.log(error);
+    }
+    
+  };
+
 
   return (
     
@@ -209,6 +232,10 @@ const Home = ({user,handleSetUser,windowWidth}) => {
                     description={collections.description}
                     username={collections.username}
                     windowWidth={windowWidth}
+                    onDelete={deleteHandler}
+                    isOwner={vistiedUser.isOwner}
+                    vistiedUser={vistiedUser}
+                    
                   />
                 ))}
               </div>
