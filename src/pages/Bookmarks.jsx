@@ -46,7 +46,6 @@ const Bookmarks = ({ user, handleSetUser }) => {
       try {
         const res = await getByUsername(username);
         const collection = await getCollection(collectionId);
-        // console.log(collection)
         let publicCollection = 0;
         let privateCollection = 0;
         res.data.data.collections.map((data) => (data.isPublic ? publicCollection++ : privateCollection++));
@@ -103,6 +102,8 @@ const Bookmarks = ({ user, handleSetUser }) => {
   }, []);
 
   //edit collection
+  const close = () => setIsOpen(false)
+  const open = () => setIsOpen(true)
   const handleEditCollection = async () => {
     if (data.title === "" || data.title.length > 40 || data.description.length > 240) return
     setLoading(true)
@@ -115,7 +116,7 @@ const Bookmarks = ({ user, handleSetUser }) => {
         form.append("image", image);
       }
       const response = await updateCollection(collectionId, form);
-      setCollection(response.data.data)
+      // setCollection(response.data.data)
       console.log(response.data.data)
     } catch (error) {
 
@@ -194,7 +195,8 @@ const Bookmarks = ({ user, handleSetUser }) => {
             isLoggedIn={user.isLoggedIn}
             searchHnadeler={searchHnadeler}
             isOpen={isOpen}
-            setIsOpen={setIsOpen}
+            close={close}
+            open={open}
           />
         </div>
         <div className="w-full h-[65%] mx-auto">
