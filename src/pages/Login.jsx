@@ -47,21 +47,21 @@ const Login = ({handleSetUser}) => {
   return (
     <>
       <div className="bg-gradient-to-r from-gradinetInitial to-gradientEnd from-50%">
-        <div className="flex flex-row justify-evenly items-center h-screen flex-wrap">
+        <div className="flex flex-row flex-wrap items-center h-screen justify-evenly">
           <Banner />
           <div className="flex items-center justify-center ">
             <div className="rounded-2xl bg-bgPrimary shadow-2xl px-10 pt-[40px] pb-[60px] w-[410px]">
               <div>
                 <img
-                  className="mx-auto h-16 w-36"
+                  className="h-16 mx-auto w-36"
                   src={mainLogo}
                   alt="LinkCollect"
                 />
-                <h2 className="mt-2 mb-3 text-center text-3xl font-bold tracking-tight">
+                <h2 className="mt-2 mb-3 text-3xl font-bold tracking-tight text-center">
                   Welcome
                 </h2>
                 <p
-                  className="text-center text-lg para -mt-2"
+                  className="-mt-2 text-lg text-center para"
                   style={{ color: "#747474" }}
                 >
                   Log in to LinkCollect
@@ -87,21 +87,21 @@ const Login = ({handleSetUser}) => {
                 </div>
 
                 {/* Need to add link after adding the api for forget pass */}
-                {/* <p className="text-textSecondary text-left mb-4 font-light">
+                {/* <p className="mb-4 font-light text-left text-textSecondary">
                   Forget Your Password?
                 </p> */}
-                <button className="w-full rounded-lg bg-primary font-bold text-bgPrimary py-3 flex justify-center">
+                <button className="flex justify-center w-full py-3 font-bold rounded-lg bg-primary text-bgPrimary">
                   {!isLogging ? "Login" : <Loader/>}
                 </button>
-                <p className="font-light text-left text-textSecondary mt-1">
+                <p className="mt-1 font-light text-left text-textSecondary">
                   Don't have an account?{" "}
-                  <Link to="/signup" className="text-primary font-bold">
+                  <Link to="/signup" className="font-bold text-primary">
                     Sign Up
                   </Link>
                 </p>
               </div>
               </form>
-              <hr class="hr-text mt-4" data-content="OR" />
+              <hr className="mt-4 hr-text" data-content="OR" />
               <GoogleAuthBtn />
             </div>
           </div>
