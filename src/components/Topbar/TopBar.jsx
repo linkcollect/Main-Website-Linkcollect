@@ -17,6 +17,7 @@ const TopBar = ({
   isLoggedIn,
   searchHnadeler,
   isOpen,
+  isOwner,
   close,
   open
 }) => {
@@ -80,10 +81,12 @@ const TopBar = ({
 
           {windowWidth > 600 && (
             <div className="flex flex-col items-center justify-around mt-1 sm:mr-20 w-28">
-              <div className="w-40 h-8 px-1 py-2 flex justify-center items-center gap-2 rounded-[96px] bg-editOptionBackground cursor-pointer" onClick={isOpen ? close : open}>
-                <img src={Edit} alt="" className="w-5 h-5" />
-                <p className="h-5 text-sm font-normal leading-5 w-28 text-primary">Edit Collection</p>
-              </div>
+              {isOwner &&
+                <div className="w-40 h-8 px-1 py-2 flex justify-center items-center gap-2 rounded-[96px] bg-editOptionBackground cursor-pointer" onClick={isOpen ? close : open}>
+                  <img src={Edit} alt="" className="w-5 h-5" />
+                  <p className="h-5 text-sm font-normal leading-5 w-28 text-primary">Edit Collection</p>
+                </div>
+              }
               <p className="w-20 h-6">{noOfLinks} Links</p>
             </div>
           )}

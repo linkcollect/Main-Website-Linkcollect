@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Sidebar from "../components/Sidebar/Sidebar";
 import BookmarkItems from "../components/BookmarkItem/BookmarkItems";
 import TopBar from "../components/Topbar/TopBar";
-import { useParams, useNavigate, useLocation } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { getCollection } from "../api-services/collectionService";
 import PageLoader from "../components/Loader/PageLoader";
 import { getByUsername } from "../api-services/userService";
@@ -12,14 +12,13 @@ import { updateCollection } from "../api-services/collectionService";
 const Bookmarks = ({ user, handleSetUser, windowWidth }) => {
   const navigation = useNavigate();
   const { collectionId, username } = useParams();
-  const location = useLocation();
   const [collection, setCollection] = useState([]);
   const [filteredCollection, setFilteredCollection] = useState([])
   const [isLoading, setIsLoading] = useState(false);
   const [visitedUser, setVisitedUser] = useState({});
   const [isOpen, setIsOpen] = useState(false);
   const [loading, setLoading] = useState(false)
-  
+
   //edit collection
   const [data, setData] = useState({
     title: "",
@@ -112,7 +111,8 @@ const Bookmarks = ({ user, handleSetUser, windowWidth }) => {
         form.append("image", image);
       }
       const response = await updateCollection(collectionId, form);
-      // setCollection(response.data.data)
+      setCollection(response.data.data)
+      setFilteredCollection(response.data.data)
       console.log(response.data.data)
     } catch (error) {
 
@@ -123,7 +123,7 @@ const Bookmarks = ({ user, handleSetUser, windowWidth }) => {
     setIsOpen(false)
     setLoading(false)
   }
- 
+
   const backHandler = (e) => {
     e.preventDefault();
     navigation(-1);
@@ -143,14 +143,6 @@ const Bookmarks = ({ user, handleSetUser, windowWidth }) => {
     }
     setFilteredCollection(newfilteredCollection)
   };
-  // If I am visting the directlty collections from link
-  if (!location.state && !collection.timelines) {
-    return (
-      <div className="flex items-center justify-center w-full h-screen">
-        <PageLoader />
-      </div>
-    );
-  }
 
   return (
     <div className="flex w-full min-h-screen bg-bgSecondary">
@@ -162,28 +154,29 @@ const Bookmarks = ({ user, handleSetUser, windowWidth }) => {
         </div>
       )}
       <div className="flex flex-col w-full h-screen overflow-y-hidden">
-      <Modal
-        isOpen={isOpen}
-        setIsOpen={setIsOpen}
-        inputHandler={onInput}
-        imageHandler={onInputFile}
-        image={image}
-        data={data}
-        onSubmit={handleEditCollection}
-        loading={loading}
-        windowWidth={windowWidth}
-      />
+        <Modal
+          isOpen={isOpen}
+          setIsOpen={setIsOpen}
+          inputHandler={onInput}
+          imageHandler={onInputFile}
+          image={image}
+          data={data}
+          onSubmit={handleEditCollection}
+          loading={loading}
+          windowWidth={windowWidth}
+        />
         <div className="flex items-center justify-center w-full pt-2 mx-auto bg-bgPrimary ">
           <TopBar
             windowWidth={windowWidth}
             onBack={backHandler}
-            collectionName={location.state?.title || collection?.title}
+            collectionName={collection?.title}
             collectionDesc={
-              location.state?.description || collection?.description
+              collection?.description
             }
-            noOfLinks={location.state?.links || collection.timelines?.length}
-            image={location.state?.image || collection?.image}
+            noOfLinks={collection.timelines?.length}
+            image={collection?.image}
             isLoggedIn={user.isLoggedIn}
+            isOwner={visitedUser.isOwner}
             searchHnadeler={searchHnadeler}
             isOpen={isOpen}
             close={close}
