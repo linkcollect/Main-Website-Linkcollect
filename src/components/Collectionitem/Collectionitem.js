@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import upvote from "../../assets/Upvote.svg";
 import dot from "../../assets/3dot.svg";
@@ -7,8 +7,8 @@ import toogle from "../../assets/toggle.svg";
 import paste from "../../assets/paste.svg";
 import bin from "../../assets/bin.svg";
 import defultCollectionImage from "../../assets/defaultCollectio.png";
-import { nameShortner } from "../../utils/utils"
-
+import { nameShortner } from "../../utils/utils";
+import approve from "../../assets/approve.svg";
 const Collectionitem = ({
   id,
   image,
@@ -20,13 +20,35 @@ const Collectionitem = ({
   explore,
   isUpvoted,
   upVote,
-  windowWidth
+  windowWidth,
+  onDelete,
+  isOwner,
+  vistiedUser,
+
 }) => {
+  const copyImageRef = useRef();
+  const [copyText, setCopyText] = useState("Copy Link")
   const [display, setDisplay] = useState(false);
   const menuhandler = () => {
     setDisplay(!display);
   };
 
+  
+  const handleCopy = (collectionId) => {
+    setCopyText("Copied!")
+if(copyImageRef)    {copyImageRef.current.src = approve
+
+}
+
+    navigator.clipboard.writeText(
+      `http://linkcollect.io/${vistiedUser.username}/c/${collectionId}`
+    );
+
+setTimeout(() => {  copyImageRef.current.src = paste;
+  
+setCopyText("Copy Link")
+}, 2500);
+  };
   return (
     <>
       <div className="bg-bgPrimary border-2 border-bgSecondary rounded-lg overflow-hidden w-[48%] sm:w-[269px]">
@@ -37,7 +59,9 @@ const Collectionitem = ({
             </div>
             <div className="flex items-center justify-between m-3">
               <p className="font-semibold text-textPrimary text-[14px]">
-                {windowWidth > 700 ? nameShortner(title, 20) : nameShortner(title, 10)}
+                {windowWidth > 700
+                  ? nameShortner(title, 20)
+                  : nameShortner(title, 10)}
               </p>
               <p className="text-textPrimary font-light text-[12px]">
                 {links} Links
@@ -72,30 +96,45 @@ const Collectionitem = ({
             )}
 
             {/* 3dots menu button */}
-            {/* <button
-              onClick={menuhandler}
-              className="px-4 py-3 border-2 rounded-md border-secondary"
-            >
-              <img src={dot} alt="menu" />
-            </button> */}
+            {isOwner && (
+              <button
+              
+                onClick={menuhandler}
+                className="rounded-md border-2 border-secondary py-3 px-4"
+              >
+                <img src={dot} alt="menu" />
+              </button>
+            )}
           </div>
           {/* 3dots menu */}
-          {/* <div className={`threedotmenu ${display ? "" : "hidden"}`}>
-            <div className="absolute flex flex-col justify-end p-5 ml-20 text-xs leading-5 bg-bgPrimary rounded-xl">
-              <div className="flex justify-between pr-4">
-                <p className="lexend "> Copy link</p>{" "}
-                <img className="pl-8" src={paste} alt="" />
-              </div>
-              <div className="flex justify-between pr-4">
-                <p className="lexend">Public</p> <img src={toogle} alt="" />
-              </div>
-              <div className="flex justify-between pr-4">
-                <p className="lexend">Delete</p> <img src={bin} alt="" />
-              </div>
+          {isOwner && 
+          
+          <div className={`threedotmenu ${display ? "" : "hidden"}`}>
+            <div className="absolute flex flex-col justify-end ml-20 bg-bgPrimary p-5 rounded-xl text-xs leading-5 ">
+              <button className="flex justify-between items-center pr-4 gap-5" onClick={()=>{handleCopy(id)}} >
+                <p className="lexend whitespace-nowrap w-12"> {copyText}</p>
+                <img className="pl-3 w-6 h-6" ref={copyImageRef} src={paste}  alt="" />
+              </button>
+              {/* <button className="flex justify-between pr-4 "> */}
+                {/* <p className="lexend">Public</p> <img className="pt-1" src={toogle} alt="" /> */}
+              {/* </button> */}
+
+              <button
+                className="flex justify-between pr-4"
+                onClick={() => {
+                  menuhandler();
+                  onDelete(id);
+                }}
+              >
+                <p className="lexend ">Delete</p> <img className="w-5 h-5 pl-2" src={bin} alt="" />
+              </button>
             </div>
-          </div> */}
+          </div>
+          }
         </div>
       </div>
+      
+      
     </>
   );
 };
