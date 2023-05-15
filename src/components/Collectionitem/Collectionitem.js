@@ -112,7 +112,7 @@ setCopyText("Copy Link")
             )}
 
             {/* 3dots menu button */}
-            {/* {isOwner && (
+            {isOwner && (
               <button
               
                 onClick={menuhandler}
@@ -121,7 +121,7 @@ setCopyText("Copy Link")
                 <img src={dot} alt="menu" />
               </button>
             )}
-          </div> */}
+          </div>
           {/* 3dots menu */}
           {isOwner && 
           
@@ -131,9 +131,9 @@ setCopyText("Copy Link")
                 <p className="lexend whitespace-nowrap w-12"> {copyText}</p>
                 <img className="pl-3 w-6 h-6" ref={copyImageRef} src={paste}  alt="" />
               </button>
-              <button className="flex justify-between pr-4 ">
-                <p className="lexend">Public</p> <img className="pt-1" src={toogle} alt="" />
-              </button>
+              {/* <button className="flex justify-between pr-4 "> */}
+                {/* <p className="lexend">Public</p> <img className="pt-1" src={toogle} alt="" /> */}
+              {/* </button> */}
 
               <button
                 className="flex justify-between pr-4"
@@ -149,7 +149,8 @@ setCopyText("Copy Link")
           }
         </div>
       </div>
-      </div>
+      
+      
     </>
   );
 };
