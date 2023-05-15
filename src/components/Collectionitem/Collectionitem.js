@@ -112,7 +112,7 @@ setCopyText("Copy Link")
             )}
 
             {/* 3dots menu button */}
-            {isOwner && (
+            {/* {isOwner && (
               <button
               
                 onClick={menuhandler}
@@ -121,7 +121,7 @@ setCopyText("Copy Link")
                 <img src={dot} alt="menu" />
               </button>
             )}
-          </div>
+          </div> */}
           {/* 3dots menu */}
           {isOwner && 
           
@@ -148,6 +148,7 @@ setCopyText("Copy Link")
           </div>
           }
         </div>
+      </div>
       </div>
     </>
   );
