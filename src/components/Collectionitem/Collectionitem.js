@@ -7,7 +7,7 @@ import toogle from "../../assets/toggle.svg";
 import paste from "../../assets/paste.svg";
 import bin from "../../assets/bin.svg";
 import defultCollectionImage from "../../assets/defaultCollectio.png";
-import {nameShortner} from "../../utils/utils"
+import { nameShortner } from "../../utils/utils"
 
 const Collectionitem = ({
   id,
@@ -31,18 +31,13 @@ const Collectionitem = ({
     <>
       <div className="bg-bgPrimary border-2 border-bgSecondary rounded-lg overflow-hidden w-[48%] sm:w-[269px]">
         <div className="border-[#EBECFD]-500">
-          <Link to={`/${username}/c/${id}`} state={{
-            title:title,
-            description:description,
-            links:links,
-            image: image
-          }}>
+          <Link to={`/${username}/c/${id}`}>
             <div >
-            <img src={image!="undefined" && image!== undefined ? image : defultCollectionImage} className="w-[269px] h-[162px]"/>
+              <img src={image != "undefined" && image !== undefined ? image : defultCollectionImage} className="w-[269px] h-[162px]" />
             </div>
-            <div className="flex justify-between items-center m-3">
+            <div className="flex items-center justify-between m-3">
               <p className="font-semibold text-textPrimary text-[14px]">
-                {windowWidth > 700 ? nameShortner(title,20) : nameShortner(title,10) }
+                {windowWidth > 700 ? nameShortner(title, 20) : nameShortner(title, 10)}
               </p>
               <p className="text-textPrimary font-light text-[12px]">
                 {links} Links
@@ -56,14 +51,13 @@ const Collectionitem = ({
             if My collections tab open
               ==> show public or private option
           */}
-          <div className="flex justify-between m-3 items-center">
+          <div className="flex items-center justify-between m-3">
             {explore ? (
               <button
-                className={`rounded-lg w-[50%] transition duration-200 ease-in-out ${
-                  isUpvoted
+                className={`rounded-lg w-[50%] transition duration-200 ease-in-out ${isUpvoted
                     ? "bg-primary text-bgPrimary"
                     : "bg-bgPrimary text-textPrimary"
-                } font-normal py-2 px-4 flex items-center justify-center gap-2 border border-primary`}
+                  } font-normal py-2 px-4 flex items-center justify-center gap-2 border border-primary`}
                 onClick={() => upVote(id)}
               >
                 <span className="text-[13px]">Upvote</span>{" "}
@@ -77,19 +71,19 @@ const Collectionitem = ({
               </div>
             )}
 
-              {/* 3dots menu button */}
+            {/* 3dots menu button */}
             {/* <button
               onClick={menuhandler}
-              className="rounded-md border-2 border-secondary py-3 px-4"
+              className="px-4 py-3 border-2 rounded-md border-secondary"
             >
               <img src={dot} alt="menu" />
             </button> */}
           </div>
-              {/* 3dots menu */}
+          {/* 3dots menu */}
           {/* <div className={`threedotmenu ${display ? "" : "hidden"}`}>
-            <div className="absolute flex flex-col justify-end ml-20 bg-bgPrimary p-5 rounded-xl text-xs leading-5">
+            <div className="absolute flex flex-col justify-end p-5 ml-20 text-xs leading-5 bg-bgPrimary rounded-xl">
               <div className="flex justify-between pr-4">
-                <p className="lexend  "> Copy link</p>{" "}
+                <p className="lexend "> Copy link</p>{" "}
                 <img className="pl-8" src={paste} alt="" />
               </div>
               <div className="flex justify-between pr-4">

@@ -30,22 +30,22 @@ const Signup = () => {
   return (
     <>
       <div className="bg-gradient-to-r from-gradinetInitial to-gradientEnd from-50%">
-        <div className="flex flex-row justify-evenly items-center h-screen">
+        <div className="flex flex-row items-center h-screen justify-evenly">
           <Banner />
           {!verifying?
           <div className="flex items-center justify-center mt-[-75px]">
             <div className="rounded-2xl bg-bgPrimary shadow-2xl p-10 w-[410px] height[600px]">
               <div>
                 <img
-                  className="mx-auto h-16 w-36"
+                  className="h-16 mx-auto w-36"
                   src={mainLogo}
                   alt="LinkCollect"
                 />
-                <h2 className="mt-2 mb-3 text-center text-3xl font-bold tracking-tight">
+                <h2 className="mt-2 mb-3 text-3xl font-bold tracking-tight text-center">
                   Welcome
                 </h2>
                 <p
-                  className="text-center text-lg para -mt-2"
+                  className="-mt-2 text-lg text-center para"
                   style={{ color: "#747474" }}
                 >
                   Sign Up to LinkCollect
@@ -79,22 +79,22 @@ const Signup = () => {
                 </div>
 
                 {/* Need to add link after adding the api for forget pass */}
-                {/* <p className="text-textSecondary text-left mb-4 font-light">
+                {/* <p className="mb-4 font-light text-left text-textSecondary">
                   Forget Your Password?
                 </p> */}
 
-                <button className="w-full rounded-lg bg-primary font-bold text-bgPrimary py-3 flex justify-center items-center">
+                <button className="flex items-center justify-center w-full py-3 font-bold rounded-lg bg-primary text-bgPrimary">
                   {!isSiging ? "Sign Up" : <Loader/>}
                 </button>
-                <p className="font-light text-left text-textSecondary mt-1">
+                <p className="mt-1 font-light text-left text-textSecondary">
                   Already have an account?{" "}
-                  <Link to="/login" className="text-primary font-bold">
+                  <Link to="/login" className="font-bold text-primary">
                     Log in
                   </Link>
                 </p>
                 </form>
               </div>
-              <hr class="hr-text mt-4" data-content="OR" />
+              <hr className="mt-4 hr-text" data-content="OR" />
               <GoogleAuthBtn />
             </div>
           </div>
