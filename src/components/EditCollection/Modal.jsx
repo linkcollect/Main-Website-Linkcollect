@@ -1,48 +1,3 @@
-// import { motion } from "framer-motion";
-// import Backdrop from "./Backdrop";
-// import EditCollection from "./EditCollection";
-
-// const dropIn = {
-//     hidden: {
-//       y: "-100vh",
-//       opacity: 0,
-//     },
-//     visible: {
-//       y: "0",
-//       opacity: 1,
-//       transition: {
-//         duration: 0.1,
-//         type: "spring",
-//         damping: 25,
-//         stiffness: 500,
-//       },
-//     },
-//     exit: {
-//       y: "100vh",
-//       opacity: 0,
-//     },
-//   };
-
-
-// const Modal = ({ handleClose, text }) => {
-
-//     return (
-//       <Backdrop onClick={handleClose}>
-//           <motion.div
-//             onClick={(e) => e.stopPropagation()}  
-//             className="modal orange-"
-//             variants={dropIn}
-//             initial="hidden"
-//             animate="visible"
-//             exit="exit"
-//           >
-//             <EditCollection />
-//           </motion.div>
-//       </Backdrop>
-//     );
-//   };
-
-
 import * as React from "react"
 import { useState } from "react"
 import { Dialog } from "@headlessui/react"
@@ -59,16 +14,6 @@ export const Modal = ({
     onSubmit,
     loading
 }) => {
-    //Handling save
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        if (data.title === "" || data.title.length > 40 || data.description.length > 240) return
-        try {
-            console.log(data)
-        } catch (error) {
-        }
-        setIsOpen(false);
-    }
 
     return (
         <AnimatePresence>
@@ -77,14 +22,14 @@ export const Modal = ({
                     open={isOpen}
                     onClose={setIsOpen}
                     as="div"
-                    className="fixed inset-0 z-10 flex items-center justify-center overflow-y-auto"
+                    className="fixed inset-0 z-10 flex items-center justify-center w-full overflow-y-auto"
                 >
                     <div className="flex flex-col py-8 text-center">
                         <Dialog.Overlay />
                     </div>
                     {/* edit collection Page */}
                     <motion.div
-                        className='absolute top-0 right-0 flex items-center justify-center w-[80%] h-screen bg-opacity-70 bg-editBackground '
+                        className='absolute top-0 right-0 flex items-center justify-center w-full h-screen  2xl:w-[82%] xl:w-[76%] lg:w-[74%]  bg-opacity-70 bg-editBackground'
                         initial={{
                             opacity: 0,
                             scale: 0.75,
@@ -106,13 +51,13 @@ export const Modal = ({
                             },
                         }}
                     >
-                        <div className='inset-0 z-10 w-[416px] h-[605px] flex flex-col items-center justify-between bg-bgSecondary py-4 mx-auto my-28 rounded-lg'>
+                        <div className='inset-0 z-10 w-11/12 h-[600px] sm:w-[416px] sm:h-[605px] flex flex-col items-center justify-between bg-bgSecondary py-4 mx-auto my-28 rounded-lg'>
                             <div>
                                 <h1 className="text-center font-medium text-[22px]  text-textPrimary ">Edit Collection</h1>
                             </div>
                             <div className='flex flex-col items-center justify-center gap-8'>
                                 {/* Collection Name Input */}
-                                <div className='w-96 h-14 '>
+                                <div className='w-[95%] sm:w-96 sm:h-14 '>
                                     <Input
                                         type={'text'}
                                         value={data.title}
@@ -124,7 +69,7 @@ export const Modal = ({
                                     />
                                 </div>
                                 {/* Collection Description Input */}
-                                <div className='w-96 h-28 '>
+                                <div className='w-[95%] sm:w-96 sm:h-28 '>
 
                                     <label className="block">
                                         <span className="text-textSecondary flex justify-between items-end  text-[16px] font-light mb-[3px]">
@@ -142,7 +87,7 @@ export const Modal = ({
                                 </div>
 
                                 {/* Collection Privacy Input */}
-                                <div className='w-96 h-14 '>
+                                <div className='w-[95%] sm:w-96 sm:h-14 '>
                                     <Select
                                         value={data.privacy}
                                         onInputHandler={inputHandler}
@@ -156,7 +101,7 @@ export const Modal = ({
                                     />
                                 </div>
                                 {/* Collection Thumbnail Input */}
-                                <div className='w-96 h-14 '>
+                                <div className='w-[95%] sm:w-96 sm:h-14 '>
                                     <Input
                                         type={'file'}
                                         placeholder="Upload image"
@@ -168,11 +113,11 @@ export const Modal = ({
 
 
                             </div>
-                            <div className="flex justify-between w-full px-4 flex-items-center">
-                                <div className='flex items-center justify-center w-[48%] h-12 rounded-xl bg-inputBackground px-3 py-6 font-medium text-[16px] text-textDark cursor-pointer' onClick={() => setIsOpen(false)} >
+                            <div className="flex w-full px-4 sm:justify-between justify-evenly flex-items-center">
+                                <div className='flex items-center justify-center w-[45%] sm:w-[48%] h-12 rounded-xl bg-inputBackground px-3 py-6 font-medium text-[16px] text-textDark cursor-pointer' onClick={() => setIsOpen(false)} >
                                     <span>Cancel</span>
                                 </div>
-                                <div className='flex items-center justify-center w-[48%] h-12 rounded-xl bg-primary px-3 py-6 font-medium text-[16px] text-bgPrimary cursor-pointer' onClick={onSubmit} >
+                                <div className='flex items-center justify-center w-[45%] sm:w-[48%] h-12 rounded-xl bg-primary px-3 py-6 font-medium text-[16px] text-bgPrimary cursor-pointer' onClick={onSubmit} >
                                     {loading?<Loader />:<span >Save</span>}
                                 </div>
                             </div>

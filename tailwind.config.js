@@ -20,7 +20,8 @@ module.exports = {
       borderPrimary:"#ededed",
       inputBackground: "rgba(234,234,234,0.5)",
       inputBorder: "rgba(75, 78, 252, 0.08)",
-      editBackground: "rgba(125, 125, 125, 0.6)"
+      editBackground: "rgba(125, 125, 125, 0.6)",
+      editOptionBackground: "#E6E6FF"
     }
   },
   plugins: [],

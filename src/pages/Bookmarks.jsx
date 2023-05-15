@@ -9,7 +9,7 @@ import { getByUsername } from "../api-services/userService";
 import Modal from "../components/EditCollection/Modal";
 import { updateCollection } from "../api-services/collectionService";
 
-const Bookmarks = ({ user, handleSetUser }) => {
+const Bookmarks = ({ user, handleSetUser, windowWidth }) => {
   const navigation = useNavigate();
   const { collectionId, username } = useParams();
   const location = useLocation();
@@ -19,11 +19,7 @@ const Bookmarks = ({ user, handleSetUser }) => {
   const [visitedUser, setVisitedUser] = useState({});
   const [isOpen, setIsOpen] = useState(false);
   const [loading, setLoading] = useState(false)
-  let width;
-  if (typeof window !== "undefined") {
-    width = window.innerWidth;
-  }
-  const [windowWidth, setWindowWidth] = useState(width);
+  
   //edit collection
   const [data, setData] = useState({
     title: "",
@@ -127,14 +123,7 @@ const Bookmarks = ({ user, handleSetUser }) => {
     setIsOpen(false)
     setLoading(false)
   }
-  // For responsive
-  useEffect(() => {
-    function watchWidth() {
-      setWindowWidth(window.innerWidth);
-    }
-    window.addEventListener("resize", watchWidth);
-  }, [windowWidth]);
-
+ 
   const backHandler = (e) => {
     e.preventDefault();
     navigation(-1);
@@ -165,6 +154,14 @@ const Bookmarks = ({ user, handleSetUser }) => {
 
   return (
     <div className="flex w-full min-h-screen bg-bgSecondary">
+
+
+      {windowWidth > 800 && (
+        <div className="flex-1">
+          <Sidebar user={visitedUser} handleSetUser={handleSetUser} />
+        </div>
+      )}
+      <div className="flex flex-col w-full h-screen overflow-y-hidden">
       <Modal
         isOpen={isOpen}
         setIsOpen={setIsOpen}
@@ -174,14 +171,8 @@ const Bookmarks = ({ user, handleSetUser }) => {
         data={data}
         onSubmit={handleEditCollection}
         loading={loading}
+        windowWidth={windowWidth}
       />
-
-      {windowWidth > 800 && (
-        <div className="flex-1">
-          <Sidebar user={visitedUser} handleSetUser={handleSetUser} />
-        </div>
-      )}
-      <div className="flex flex-col w-full h-screen overflow-y-hidden">
         <div className="flex items-center justify-center w-full pt-2 mx-auto bg-bgPrimary ">
           <TopBar
             windowWidth={windowWidth}

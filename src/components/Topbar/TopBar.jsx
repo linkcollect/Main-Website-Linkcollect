@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import MainLogo from "../../assets/mainLogo.svg";
 import defultCollectionImage from "../../assets/defaultCollectio.png";
 import { nameShortner } from "../../utils/utils";
+import Edit from '../../assets/editIcon.svg'
 const TopBar = ({
   windowWidth,
   onBack,
@@ -60,33 +61,41 @@ const TopBar = ({
           <div className="flex">
             <div className="flex justify-between w-[180px] h-[80px] sm:w-[140px] sm:h-[89px]">
               <img
-                src={image!="undefined" && image!== undefined ? image : defultCollectionImage}
+                src={image != "undefined" && image !== undefined ? image : defultCollectionImage}
                 className="block mr-auto rounded w-[140px] h-[70px]  sm:w-[270px] sm:h-[89px] object-cover"
                 alt=""
               />
             </div>
             <div className="flex flex-col text-left sm:ml-10">
-              <h1 className="text-xl font-bold lexend">{windowWidth<600? nameShortner(collectionName, 14):collectionName}</h1>
-              <p className="w-full mt-2 text-sm">{windowWidth<600?nameShortner(collectionDesc, 18):collectionDesc}</p>
+              <h1 className="text-xl font-bold lexend">{windowWidth < 600 ? nameShortner(collectionName, 14) : collectionName}</h1>
+              <p className="w-full mt-2 text-sm">{windowWidth < 600 ? nameShortner(collectionDesc, 18) : collectionDesc}</p>
             </div>
           </div>
 
           {windowWidth < 600 && (
-            <div className="">
+            <div className="flex items-center justify-around ">
               <p className="w-20 h-6">{noOfLinks} Links</p>
+              <div className="w-40 h-8 px-1 py-2 flex justify-center items-center gap-2 rounded-[96px] bg-editOptionBackground cursor-pointer" onClick={isOpen ? close : open}>
+                <img src={Edit} alt="" className="w-5 h-5" />
+                <p className="h-5 text-sm font-normal leading-5 w-28 text-primary">Edit Collection</p>
+              </div>
             </div>
           )}
 
           {windowWidth > 600 && (
-            <div className="mt-1 sm:mr-20 w-28">
-              <p className="w-20 h-6" onClick={isOpen? close: open}>{noOfLinks} Links</p>
+            <div className="flex flex-col items-center justify-around mt-1 sm:mr-20 w-28">
+              <div className="w-40 h-8 px-1 py-2 flex justify-center items-center gap-2 rounded-[96px] bg-editOptionBackground cursor-pointer" onClick={isOpen ? close : open}>
+                <img src={Edit} alt="" className="w-5 h-5" />
+                <p className="h-5 text-sm font-normal leading-5 w-28 text-primary">Edit Collection</p>
+              </div>
+              <p className="w-20 h-6">{noOfLinks} Links</p>
             </div>
           )}
         </div>
 
         {/* Search Bar and Filter */}
         <div className="flex mt-5 sm:ml-10 sm:mr-10 ">
-          <Search onSearch={searchHnadeler}/>
+          <Search onSearch={searchHnadeler} />
           <div className="relative">
             <button
               onClick={clickhandler}
