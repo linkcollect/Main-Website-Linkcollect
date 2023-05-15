@@ -53,26 +53,11 @@ setCopyText("Copy Link")
     <>
       <div className="bg-bgPrimary border-2 border-bgSecondary rounded-lg overflow-hidden w-[48%] sm:w-[269px]">
         <div className="border-[#EBECFD]-500">
-          <Link
-            to={`/${username}/c/${id}`}
-            state={{
-              title: title,
-              description: description,
-              links: links,
-              image: image,
-            }}
-          >
-            <div>
-              <img
-                src={
-                  image != "undefined" && image !== undefined
-                    ? image
-                    : defultCollectionImage
-                }
-                className="w-[269px] h-[162px]"
-              />
+          <Link to={`/${username}/c/${id}`}>
+            <div >
+              <img src={image != "undefined" && image !== undefined ? image : defultCollectionImage} className="w-[269px] h-[162px]" />
             </div>
-            <div className="flex justify-between items-center m-3">
+            <div className="flex items-center justify-between m-3">
               <p className="font-semibold text-textPrimary text-[14px]">
                 {windowWidth > 700
                   ? nameShortner(title, 20)
@@ -90,14 +75,13 @@ setCopyText("Copy Link")
             if My collections tab open
               ==> show public or private option
           */}
-          <div className="flex justify-between m-3 items-center">
+          <div className="flex items-center justify-between m-3">
             {explore ? (
               <button
-                className={`rounded-lg w-[50%] transition duration-200 ease-in-out ${
-                  isUpvoted
+                className={`rounded-lg w-[50%] transition duration-200 ease-in-out ${isUpvoted
                     ? "bg-primary text-bgPrimary"
                     : "bg-bgPrimary text-textPrimary"
-                } font-normal py-2 px-4 flex items-center justify-center gap-2 border border-primary`}
+                  } font-normal py-2 px-4 flex items-center justify-center gap-2 border border-primary`}
                 onClick={() => upVote(id)}
               >
                 <span className="text-[13px]">Upvote</span>{" "}

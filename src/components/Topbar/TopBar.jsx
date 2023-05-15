@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import MainLogo from "../../assets/mainLogo.svg";
 import defultCollectionImage from "../../assets/defaultCollectio.png";
 import { nameShortner } from "../../utils/utils";
+import Edit from '../../assets/editIcon.svg'
 const TopBar = ({
   windowWidth,
   onBack,
@@ -14,7 +15,11 @@ const TopBar = ({
   noOfLinks,
   image,
   isLoggedIn,
-  searchHnadeler
+  searchHnadeler,
+  isOpen,
+  isOwner,
+  close,
+  open
 }) => {
   const [display, setDisplay] = useState(false);
 
@@ -24,9 +29,9 @@ const TopBar = ({
 
   return (
     <>
-      <div className="w-full px-8 bg-bgPrimary py-2 sm:py-4">
+      <div className="w-full px-8 py-2 bg-bgPrimary sm:py-4">
         {/* Actions */}
-        <div className="flex justify-between bg-bgPrimary mb-5 sm:mb-2">
+        <div className="flex justify-between mb-5 bg-bgPrimary sm:mb-2">
           {/* <div className='border-2'>Sidebar</div> */}
           <div className="flex items-center">
             <button onClick={onBack}>
@@ -34,18 +39,18 @@ const TopBar = ({
             </button>
           </div>
           {windowWidth < 600 && (
-            <div className="w-32 h-10 flex items-center justify-end">
+            <div className="flex items-center justify-end w-32 h-10">
               <Link to="/">
-                <img src={MainLogo} alt="" className="w-32 h-14 ml-2" />
+                <img src={MainLogo} alt="" className="w-32 ml-2 h-14" />
               </Link>
             </div>
           )}
           {windowWidth > 600 && !isLoggedIn && (
             <div className="flex space-x-2">
-              <Link to="/login" className="lexend text-base text-primary rounded-lg border-primary border-2 px-3 py-2 sm:px-7 sm:py-2">
+              <Link to="/login" className="px-3 py-2 text-base border-2 rounded-lg lexend text-primary border-primary sm:px-7 sm:py-2">
                 Log in
               </Link>
-              <Link to="/signup" className="lexend text-base bg-primary rounded-lg border-primary border-2 px-3 py-2 sm:px-7 sm:py-2  text-bgPrimary">
+              <Link to="/signup" className="px-3 py-2 text-base border-2 rounded-lg lexend bg-primary border-primary sm:px-7 sm:py-2 text-bgPrimary">
                 Sign up
               </Link>
             </div>
@@ -53,18 +58,18 @@ const TopBar = ({
         </div>
 
         {/* Profile Section */}
-        <div className="flex flex-col sm:flex-row justify-between  sm:ml-10 sm:mt-2">
+        <div className="flex flex-col justify-between sm:flex-row sm:ml-10 sm:mt-2">
           <div className="flex">
             <div className="flex justify-between w-[180px] h-[80px] sm:w-[140px] sm:h-[89px]">
               <img
-                src={image!="undefined" && image!== undefined ? image : defultCollectionImage}
+                src={image != "undefined" && image !== undefined ? image : defultCollectionImage}
                 className="block mr-auto rounded w-[140px] h-[70px]  sm:w-[270px] sm:h-[89px] object-cover"
                 alt=""
               />
             </div>
             <div className="flex flex-col text-left sm:ml-10">
-              <h1 className="lexend text-xl font-bold">{windowWidth<600? nameShortner(collectionName, 14):collectionName}</h1>
-              <p className="w-full mt-2 text-sm">{windowWidth<600?nameShortner(collectionDesc, 18):collectionDesc}</p>
+              <h1 className="text-xl font-bold lexend">{windowWidth < 600 ? nameShortner(collectionName, 14) : collectionName}</h1>
+              <p className="w-full mt-2 text-sm">{windowWidth < 600 ? nameShortner(collectionDesc, 18) : collectionDesc}</p>
             </div>
           </div>
 
@@ -75,15 +80,21 @@ const TopBar = ({
           )}
 
           {windowWidth > 600 && (
-            <div className="sm:mr-20 w-28 mt-1">
+            <div className="flex flex-col items-center justify-around mt-1 sm:mr-20 w-28">
+              {isOwner &&
+                <div className="w-40 h-8 px-1 py-2 flex justify-center items-center gap-2 rounded-[96px] bg-editOptionBackground cursor-pointer" onClick={isOpen ? close : open}>
+                  <img src={Edit} alt="" className="w-5 h-5" />
+                  <p className="h-5 text-sm font-normal leading-5 w-28 text-primary">Edit Collection</p>
+                </div>
+              }
               <p className="w-20 h-6">{noOfLinks} Links</p>
             </div>
           )}
         </div>
 
         {/* Search Bar and Filter */}
-        <div className="sm:ml-10 mt-5 sm:mr-10  flex ">
-          <Search onSearch={searchHnadeler}/>
+        <div className="flex mt-5 sm:ml-10 sm:mr-10 ">
+          <Search onSearch={searchHnadeler} />
           <div className="relative">
             <button
               onClick={clickhandler}
@@ -93,7 +104,7 @@ const TopBar = ({
                 viewBox="0 0 26 26"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
-                className="bg-transparent w-4 h-4 sm:w-6 sm:h-6 "
+                className="w-4 h-4 bg-transparent sm:w-6 sm:h-6 "
               >
                 <path
                   fillRule="evenodd"
@@ -106,7 +117,7 @@ const TopBar = ({
 
             {display && (
               <div className="w-[11rem] absolute block right-7  ">
-                <div className="mr-2 cursor-pointer bg-bgPrimary p-2 mt-2 rounded-xl border-grey border-2 leading-6 shadow-xl">
+                <div className="p-2 mt-2 mr-2 leading-6 border-2 shadow-xl cursor-pointer bg-bgPrimary rounded-xl border-grey">
                   <p className="cursor-pointer">Newest To Oldest </p>
                   <p className="cursor-pointer">Oldest To Newest</p>
                 </div>

@@ -75,7 +75,7 @@ function App() {
             element={<Home user={user} windowWidth={windowWidth} handleSetUser={handleSetUser}/> }
           />
           <Route path="/privacy" element={<Privacy />} />
-          <Route path="/:username/c/:collectionId" element={<Bookmarks user={user} handleSetUser={handleSetUser}/>} />
+          <Route path="/:username/c/:collectionId" element={<Bookmarks user={user} handleSetUser={handleSetUser}  windowWidth={windowWidth}/>} />
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
       </div>
