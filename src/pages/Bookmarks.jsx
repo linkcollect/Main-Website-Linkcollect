@@ -112,12 +112,11 @@ const Bookmarks = ({ user, handleSetUser, windowWidth }) => {
       }
       const response = await updateCollection(collectionId, form);
       setCollection(response.data.data)
-      setFilteredCollection(response.data.data)
-      console.log(response.data.data)
+      // Checking for collections
+      // console.log(response.data.data)
     } catch (error) {
 
     }
-    console.log(collection)
     setImage(undefined)
     setData(data => ({ ...data, title: '', description: '', privacy: '' }))
     setIsOpen(false)
