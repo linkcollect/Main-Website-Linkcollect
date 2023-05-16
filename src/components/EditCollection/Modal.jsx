@@ -1,8 +1,6 @@
 import * as React from "react"
-import { useState } from "react"
 import { Dialog } from "@headlessui/react"
 import { motion, AnimatePresence } from "framer-motion"
-import EditCollection from "./EditCollection"
 import Input, { Select } from './InputEditCollection';
 import Loader from '../Loader/Loader'
 export const Modal = ({
@@ -29,7 +27,7 @@ export const Modal = ({
                     </div>
                     {/* edit collection Page */}
                     <motion.div
-                        className='absolute top-0 right-0 flex items-center justify-center w-full h-screen  2xl:w-[82%] xl:w-[76%] lg:w-[74%]  bg-opacity-70 bg-editBackground'
+                        className='absolute top-0 right-0 flex items-center justify-center w-full h-screen  2xl:w-[80.5%] xl:w-[78%] lg:w-[74%]  bg-opacity-70 bg-editBackground'
                         initial={{
                             opacity: 0,
                             scale: 0.75,
