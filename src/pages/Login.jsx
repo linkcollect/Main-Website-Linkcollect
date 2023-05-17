@@ -8,8 +8,9 @@ import GoogleAuthBtn from "../components/GoogleAuthBtn";
 import Loader from "../components/Loader/Loader";
 import { login } from "../api-services/authService";
 import { setJwtInRequestHeader } from "../api-services/httpService";
+import { fileURLToPath } from "url";
 
-const Login = ({handleSetUser}) => {
+const Login = ({handleSetUser, windowWidth}) => {
   const location = useLocation();
   const navigate = useNavigate();
   const [isLogging,setIsLogging]=useState(false);
@@ -46,11 +47,18 @@ const Login = ({handleSetUser}) => {
 
   return (
     <>
-      <div className="bg-gradient-to-r from-gradinetInitial to-gradientEnd from-50%">
-        <div className="flex flex-row flex-wrap items-center h-screen justify-evenly">
-          <Banner />
-          <div className="flex items-center justify-center ">
-            <div className="rounded-2xl bg-bgPrimary shadow-2xl px-10 pt-[40px] pb-[60px] w-[410px]">
+      <div className="bg-gradient-to-r from-gradinetInitial to-gradientEnd from-50% ">
+        <div className="flex flex-col items-center justify-around min-h-screen gap-24 pb-12 lg:gap-0 sm:flex-wrap lg:flex-nowrap sm:flex-row md:justify-evenly max-w-[2000px] mx-auto">
+        {windowWidth>600 && <Banner />} 
+        {windowWidth<600 && 
+        <Link to={'/'}>
+        <div className="flex items-center justify-center w-full">
+          <img src={mainLogo} alt="" className="h-16 w-36" />
+        </div>
+        </Link>
+        }
+          <div className="flex items-center justify-center w-[90%] sm:w-2/3 md:w-1/2 max-w-[420px] sm:max-w-[600px] md:max-w-[420px] ">
+            <div className="rounded-2xl bg-bgPrimary shadow-2xl px-10 pt-[40px] pb-[60px] w-full md:w-[410px]">
               <div>
                 <img
                   className="h-16 mx-auto w-36"
