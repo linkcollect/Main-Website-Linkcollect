@@ -79,6 +79,7 @@ const TopBar = ({
             </div>
           )}
 
+          {/* Edit Collection */}
           {windowWidth > 600 && (
             <div className="flex flex-col items-center justify-around mt-1 sm:mr-20 w-28">
               {isOwner &&

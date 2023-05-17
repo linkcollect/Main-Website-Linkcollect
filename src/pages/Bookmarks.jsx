@@ -105,7 +105,9 @@ const Bookmarks = ({ user, handleSetUser, windowWidth }) => {
     try {
       const form = new FormData();
       form.append("title", data.title);
-      form.append("description", data.description);
+      if (data.description !== "") {
+        form.append("description", data.description);
+      }
       form.append("isPublic", data.privacy === "public" ? true : false);
       if (image !== "") {
         form.append("image", image);

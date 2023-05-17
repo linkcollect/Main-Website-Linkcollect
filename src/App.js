@@ -23,15 +23,15 @@ function App() {
   }
   const [windowWidth, setWindowWidth] = useState(width);
 
-  // To set JWT token in request header for authorization on each API call
   useEffect(() => {
     function watchWidth() {
       setWindowWidth(window.innerWidth);
     }
-
+    
     window.addEventListener("resize", watchWidth);
   }, [windowWidth]);
-
+  
+  // To set JWT token in request header for authorization on each API call
   useEffect(()=>{
     const token = localStorage.getItem("token")
     if(token){
@@ -66,7 +66,7 @@ function App() {
               user.isLoggedIn ? (
                 <Navigate to={`/${user?.username}`} />
               ) : (
-                <Login handleSetUser={handleSetUser}/>
+                <Login handleSetUser={handleSetUser} windowWidth={windowWidth}/>
               )
             }
           />
