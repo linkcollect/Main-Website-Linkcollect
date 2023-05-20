@@ -33,21 +33,22 @@ const Collectionitem = ({
     setDisplay(!display);
   };
 
-  
+
   const handleCopy = (collectionId) => {
     setCopyText("Copied!")
-if(copyImageRef)    {copyImageRef.current.src = approve
-
-}
+    if (copyImageRef) {
+      copyImageRef.current.src = approve
+    }
 
     navigator.clipboard.writeText(
       `http://linkcollect.io/${vistiedUser.username}/c/${collectionId}`
     );
 
-setTimeout(() => {  copyImageRef.current.src = paste;
-  
-setCopyText("Copy Link")
-}, 2500);
+    setTimeout(() => {
+      copyImageRef.current.src = paste;
+
+      setCopyText("Copy Link")
+    }, 2500);
   };
   return (
     <>
@@ -79,8 +80,8 @@ setCopyText("Copy Link")
             {explore ? (
               <button
                 className={`rounded-lg w-[50%] transition duration-200 ease-in-out ${isUpvoted
-                    ? "bg-primary text-bgPrimary"
-                    : "bg-bgPrimary text-textPrimary"
+                  ? "bg-primary text-bgPrimary"
+                  : "bg-bgPrimary text-textPrimary"
                   } font-normal py-2 px-4 flex items-center justify-center gap-2 border border-primary`}
                 onClick={() => upVote(id)}
               >
@@ -98,43 +99,43 @@ setCopyText("Copy Link")
             {/* 3dots menu button */}
             {isOwner && (
               <button
-              
+
                 onClick={menuhandler}
-                className="rounded-md border-2 border-secondary py-3 px-4"
+                className="px-4 py-3 border-2 rounded-md border-secondary"
               >
                 <img src={dot} alt="menu" />
               </button>
             )}
           </div>
           {/* 3dots menu */}
-          {isOwner && 
-          
-          <div className={`threedotmenu ${display ? "" : "hidden"}`}>
-            <div className="absolute flex flex-col justify-end ml-20 bg-bgPrimary p-5 rounded-xl text-xs leading-5 ">
-              <button className="flex justify-between items-center pr-4 gap-5" onClick={()=>{handleCopy(id)}} >
-                <p className="lexend whitespace-nowrap w-12"> {copyText}</p>
-                <img className="pl-3 w-6 h-6" ref={copyImageRef} src={paste}  alt="" />
-              </button>
-              {/* <button className="flex justify-between pr-4 "> */}
-                {/* <p className="lexend">Public</p> <img className="pt-1" src={toogle} alt="" /> */}
-              {/* </button> */}
+          {isOwner &&
 
-              <button
-                className="flex justify-between pr-4"
-                onClick={() => {
-                  menuhandler();
-                  onDelete(id);
-                }}
-              >
-                <p className="lexend ">Delete</p> <img className="w-5 h-5 pl-2" src={bin} alt="" />
-              </button>
+            <div className={`threedotmenu ${display ? "" : "hidden"}`}>
+              <div className="absolute flex flex-col justify-end p-5 ml-4 text-xs leading-5 shadow-2xl drop-shadow-xl sm:ml-20 bg-bgPrimary rounded-xl ">
+                <button className="flex items-center justify-between gap-5 pr-4" onClick={() => { handleCopy(id) }} >
+                  <p className="w-12 lexend whitespace-nowrap"> {copyText}</p>
+                  <img className="w-6 h-6 pl-3" ref={copyImageRef} src={paste} alt="" />
+                </button>
+                {/* <button className="flex justify-between pr-4 "> */}
+                {/* <p className="lexend">Public</p> <img className="pt-1" src={toogle} alt="" /> */}
+                {/* </button> */}
+
+                <button
+                  className="flex justify-between pr-4"
+                  onClick={() => {
+                    menuhandler();
+                    onDelete(id);
+                  }}
+                >
+                  <p className="lexend ">Delete</p> <img className="w-5 h-5 pl-2" src={bin} alt="" />
+                </button>
+              </div>
             </div>
-          </div>
           }
         </div>
       </div>
-      
-      
+
+
     </>
   );
 };
