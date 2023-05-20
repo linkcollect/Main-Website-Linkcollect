@@ -34,7 +34,6 @@ const Home = ({user,handleSetUser,windowWidth}) => {
     const getCollections = async () => {
       try {
         const res = await getByUsername(username);
-        console.log(res.data.data);
         const sorteData = dataSortByType(res.data.data.collections);
         let publicCollection = 0;
         let privateCollection = 0;
@@ -163,21 +162,21 @@ const Home = ({user,handleSetUser,windowWidth}) => {
           windowWidth={windowWidth}
         />
       </div>
-      <div className="w-full flex-2 max-h-none sm:h-screen  overflow-y-hidden">
+      <div className="w-full overflow-y-hidden flex-2 max-h-none sm:h-screen">
         {/* Top bar */}
         <div className="px-8 bg-bgPrimary">
         {/* Modify this */}
-          <div className="flex w-full justify-between items-center">
+          <div className="flex items-center justify-between w-full">
           <p className={`text-left font-bold text-[30px] pt-10 ${windowWidth < 700 ? "hidden" : ""}`}>
             Ohayo, {user?.username}
           </p> 
          { windowWidth > 700 && <>
           {!user.isLoggedIn && (
           <div className="flex space-x-2">
-              <Link to="/login" className="lexend text-base text-primary rounded-lg border-primary border-2 px-3 py-2 sm:px-7 sm:py-2">
+              <Link to="/login" className="px-3 py-2 text-base border-2 rounded-lg lexend text-primary border-primary sm:px-7 sm:py-2">
                 Log in
               </Link>
-              <Link to="/signup" className="lexend text-base bg-primary rounded-lg border-primary border-2 px-3 py-2 sm:px-7 sm:py-2  text-bgPrimary">
+              <Link to="/signup" className="px-3 py-2 text-base border-2 rounded-lg lexend bg-primary border-primary sm:px-7 sm:py-2 text-bgPrimary">
                 Sign up
               </Link>
             </div>
@@ -216,11 +215,11 @@ const Home = ({user,handleSetUser,windowWidth}) => {
         {/* Collections */}
         <div className=" w-full h-[65%]">
           {loading ? (
-            <div className="flex h-full w-full justify-center items-center">
+            <div className="flex items-center justify-center w-full h-full">
               <PageLoader />
             </div>
           ) : filteredCollection.length > 0 ? (
-            <div className="w-full mx-auto h-full overflow-y-scroll py-4">
+            <div className="w-full h-full py-4 mx-auto overflow-y-scroll">
               <div className="w-[95%] mx-auto flex flex-wrap gap-2">
                 {filteredCollection.map((collections) => (
                   <Collectionitem
@@ -241,8 +240,8 @@ const Home = ({user,handleSetUser,windowWidth}) => {
               </div>
             </div>
           ) : (
-            <div className="flex flex-col h-full w-full justify-center items-center">
-              <p className="text-textPrimary text-5xl mb-5">
+            <div className="flex flex-col items-center justify-center w-full h-full">
+              <p className="mb-5 text-5xl text-textPrimary">
                 No Collection Found
               </p>
               <p className="text-textPrimary">You can add it from extension</p>
