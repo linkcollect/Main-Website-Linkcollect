@@ -18,13 +18,11 @@ const Bookmarks = ({ user, handleSetUser, windowWidth }) => {
   const [visitedUser, setVisitedUser] = useState({});
   const [isOpen, setIsOpen] = useState(false);
   const [loading, setLoading] = useState(false)
-  console.log(filteredCollection.title, filteredCollection.description, filteredCollection.isPublic)
-  
   //edit collection
   const [data, setData] = useState({
-    title: filteredCollection.title,
-    privacy: `${filteredCollection.isPublic? 'public': 'private'}`,
-    description: filteredCollection.description
+    title: '',
+    privacy: '',
+    description: ''
   })
   const [image, setImage] = useState();
   const onInput = (e) => {
@@ -35,7 +33,6 @@ const Bookmarks = ({ user, handleSetUser, windowWidth }) => {
     e.preventDefault();
     setImage(e.target.files[0])
   };
-
   useEffect(() => {
     setIsLoading(true);
     const getData = async () => {
@@ -46,7 +43,6 @@ const Bookmarks = ({ user, handleSetUser, windowWidth }) => {
         let privateCollection = 0;
         res.data.data.collections.map((data) => (data.isPublic ? publicCollection++ : privateCollection++));
         setCollection(collection.data.data);
-        console.log(collection.data.data)
         setFilteredCollection(collection.data.data)
         if (user.isLoggedIn) {
           if (username === user.username) {
@@ -87,17 +83,27 @@ const Bookmarks = ({ user, handleSetUser, windowWidth }) => {
             }
           })
         }
-
+        
         setIsLoading(false);
-
+        
       } catch (error) {
         setIsLoading(false);
       }
-
+      
     }
     getData();
+    
   }, []);
-
+  
+  // Setting initial values to edit collection
+  useEffect(()=>{
+    setData({
+      ...data,
+      title: collection.title,
+      description: collection.description,
+      privacy: collection.isPublic ? 'public' : 'private'
+    })
+  },[collection])
   //edit collection
   const close = () => setIsOpen(false)
   const open = () => setIsOpen(true)
