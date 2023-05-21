@@ -17,7 +17,9 @@ const Sidebar = ({ user, handleSetUser, windowWidth }) => {
     setShowCollections(!showCollections);
   };
   const onCopy = () => {
-    if (copyRef) copyRef.current.src = approve;
+    if (copyRef) {
+      copyRef.current.src = approve;
+    }
     navigator.clipboard.writeText("https://linkcollect.io/" + user.username);
     setTimeout(() => {
       copyRef.current.src = LinkIcon
@@ -51,7 +53,7 @@ const Sidebar = ({ user, handleSetUser, windowWidth }) => {
 
           {/* Collection priavaci info */}
           <div className={`${windowWidth < 700 ? " flex items-center justify-center gap-2 w-full" : ""}`}>
-            <div className={`${windowWidth < 700 ? "w-[163px]" : "w-[281px]"} h-[41px]  rounded-lg font-bold text-textPrimary border-[1px] ${user ? 'border-borderPrimary' : 'border-primary'}  py-1 flex justify-between px-2`}>
+            <div className={`${windowWidth < 700 ? "w-[163px]" : "w-[281px]"} h-[41px]  rounded-lg font-bold text-textPrimary border-[1px] ${user ? 'border-borderPrimary' : 'border-primary'}  py-1 flex items-center justify-between px-2`}>
 
               <div className="flex items-center gap-2 ">
                 <img src={StackIcon} alt="" className="w-5 h-5" />
@@ -63,7 +65,7 @@ const Sidebar = ({ user, handleSetUser, windowWidth }) => {
               <div className="flex items-center justify-center gap-2">
 
                 <span
-                  className={`font-normal w-5 h-5 leading-5 text-[10px] sm:text-[16px] text-primary `}
+                  className={`font-normal w-5 h-5 leading-5 text-[14px] sm:text-[16px] text-primary `}
                 >
                   {user.link?.privateCollection + user.link?.publicCollection || 0}
                 </span>
@@ -73,13 +75,12 @@ const Sidebar = ({ user, handleSetUser, windowWidth }) => {
                     alt=""
                     className={
                       showCollections
-                        ? "w-6 h-6 rotate-0 cursor-pointer"
-                        : "w-6 h-6 rotate-180 cursor-pointer"
+                        ? "w-6 h-6 rotate-0 cursor-pointer hidden sm:block"
+                        : "w-6 h-6 rotate-180 cursor-pointer hidden sm:block"
                     }
                     onClick={handleShowCollection}
                   />
                 }
-
               </div>
 
             </div>
@@ -116,7 +117,7 @@ const Sidebar = ({ user, handleSetUser, windowWidth }) => {
 
           <button onClick={onCopy} className={`w-full font-bold text-textPrimary border-[1px] ${'border-primary'} rounded-lg py-2 flex justify-center items-center gap-1 mt-1 mb-1 ${windowWidth < 700 ? "hidden" : ""}`}>
             <span className="text-[14px]">Share Profile</span>
-            <img ref={copyRef} src={Link} alt="" className="w-4" />
+            <img ref={copyRef} src={LinkIcon} alt="" className="w-4" />
           </button>
           {user?.isOwner &&
             <>
