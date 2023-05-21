@@ -18,12 +18,13 @@ const Bookmarks = ({ user, handleSetUser, windowWidth }) => {
   const [visitedUser, setVisitedUser] = useState({});
   const [isOpen, setIsOpen] = useState(false);
   const [loading, setLoading] = useState(false)
-
+  console.log(filteredCollection.title, filteredCollection.description, filteredCollection.isPublic)
+  
   //edit collection
   const [data, setData] = useState({
-    title: "",
-    privacy: "public",
-    description: ""
+    title: filteredCollection.title,
+    privacy: `${filteredCollection.isPublic? 'public': 'private'}`,
+    description: filteredCollection.description
   })
   const [image, setImage] = useState();
   const onInput = (e) => {
@@ -45,6 +46,7 @@ const Bookmarks = ({ user, handleSetUser, windowWidth }) => {
         let privateCollection = 0;
         res.data.data.collections.map((data) => (data.isPublic ? publicCollection++ : privateCollection++));
         setCollection(collection.data.data);
+        console.log(collection.data.data)
         setFilteredCollection(collection.data.data)
         if (user.isLoggedIn) {
           if (username === user.username) {
@@ -127,7 +129,7 @@ const Bookmarks = ({ user, handleSetUser, windowWidth }) => {
 
   const backHandler = (e) => {
     e.preventDefault();
-    navigation(-1);
+    navigation(`/${username}`);
   };
 
   const searchHnadeler = (e) => {
