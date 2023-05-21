@@ -17,7 +17,7 @@ const BookmarkItems = ({ id, name, url, favicon,windowWidth,updatedAt,user }) =>
     },1500);
   };
   return (
-    <a href={url} target='_blank' rel='noreferer' className='cursor-pointer flex items-center justify-between w-full h-[55px] rounded-xl mx-auto py-2 bg-bgPrimary' style={{ border: `1px solid rgba(97, 102, 241, 0.16)` }}>
+    <a href={url} target='_blank' rel='noreferer' className='cursor-pointer flex items-center justify-between w-full h-[55px] rounded-xl mx-auto py-2 bg-bgPrimary hover:bg-bookmarkItemBG  duration-200 hover:scale-[1.01] transition-all ' style={{ border: `1px solid rgba(97, 102, 241, 0.16)` }}>
       <div className="flex items-center gap-2 sm:gap-5 mx-4  w-[130px] h-[46px]">
         <div className="w-[46px] h-[48px] flex items-center justify-center">
           <img src={favicon} alt="Icon" className='w-[30.68px] h-[30px] rounded-md object-cover' />
