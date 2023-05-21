@@ -17,8 +17,8 @@ const BookmarkItems = ({ id, name, url, favicon,windowWidth,updatedAt,user }) =>
     },1500);
   };
   return (
-    <a href={url} target='_blank' rel='noreferer' className='cursor-pointer flex items-center justify-between w-full h-[55px] rounded-xl mx-auto py-2 bg-bgPrimary hover:bg-bookmarkItemBG  duration-200 hover:scale-[1.01] transition-all ' style={{ border: `1px solid rgba(97, 102, 241, 0.16)` }}>
-      <div className="flex items-center gap-2 sm:gap-5 mx-4  w-[130px] h-[46px]">
+    <div  className='cursor-pointer flex items-center justify-between w-full h-[55px] rounded-xl mx-auto py-2 bg-bgPrimary hover:bg-bookmarkItemBG  duration-200 hover:scale-[1.01] transition-all ' style={{ border: `1px solid rgba(97, 102, 241, 0.16)` }}>
+      <a href={url} target='_blank' rel='noreferer' className="flex items-center gap-2 sm:gap-5 mx-4  w-[130px] h-[46px]">
         <div className="w-[46px] h-[48px] flex items-center justify-center">
           <img src={favicon} alt="Icon" className='w-[30.68px] h-[30px] rounded-md object-cover' />
         </div>
@@ -26,7 +26,7 @@ const BookmarkItems = ({ id, name, url, favicon,windowWidth,updatedAt,user }) =>
           <p className='w-64 font-medium text-start para text-[12px] sm:text-[16px] text-textPrimary sm:w-max sm:h-[21px]'>{windowWidth<600? nameShortner(name,20) : nameShortner(name,60)}</p>
           <p className='w-56 text-textPrimary text-start text-[10px] sm:text-[12px] sm:w-[271px] sm:h-[16px] para'>{windowWidth<700? nameShortner(getOrigin(url),15): nameShortner(getOrigin(url),30)}</p>
         </div>
-      </div>
+      </a>
       <div className="w-[40%] flex items-center justify-between ">
         {windowWidth > 700 && <div className='flex items-center justify-center w-20 h-9'>
           <p className='text-xs font-light text-center lexend text-textDark'>{fromNow(updatedAt)}</p>
@@ -55,7 +55,7 @@ const BookmarkItems = ({ id, name, url, favicon,windowWidth,updatedAt,user }) =>
         </div>
       </div>
 
-    </a>
+    </div>
   )
 }
 
