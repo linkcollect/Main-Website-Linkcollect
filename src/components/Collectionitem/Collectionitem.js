@@ -33,6 +33,16 @@ const Collectionitem = ({
     setDisplay(!display);
   };
 
+  //collection Popup stuff
+  const menuRef = useRef()
+  const popupRef = useRef()
+
+   // Popup menu close functiinality if users clocked outside of it
+   window.addEventListener("click",e=>{
+    if(e.target !== popupRef.current && e.target !== menuRef.current){
+      setDisplay(false);
+    }
+    })
 
   const handleCopy = (collectionId) => {
     setCopyText("Copied!")
@@ -52,7 +62,7 @@ const Collectionitem = ({
   };
   return (
     <>
-      <div className="bg-bgPrimary border-2 border-bgSecondary rounded-lg overflow-hidden w-[48%] sm:w-[269px]">
+      <div className="bg-bgPrimary border-2 relative border-bgSecondary rounded-lg   w-[48%] sm:w-[269px]">
         <div className="border-[#EBECFD]-500">
           <Link to={`/${username}/c/${id}`}>
             <div >
@@ -99,19 +109,19 @@ const Collectionitem = ({
             {/* 3dots menu button */}
             {isOwner && (
               <button
-
                 onClick={menuhandler}
+                ref={menuRef}
                 className="px-4 py-3 border-2 rounded-md border-secondary"
               >
-                <img src={dot} alt="menu" />
+                <img src={dot} alt="menu"  />
               </button>
             )}
           </div>
           {/* 3dots menu */}
           {isOwner &&
 
-            <div className={`threedotmenu ${display ? "" : "hidden"}`}>
-              <div className="absolute flex flex-col justify-end p-5 ml-4 text-xs leading-5 shadow-2xl drop-shadow-xl sm:ml-20 bg-bgPrimary rounded-xl ">
+            <div onClick={(e) => e.stopPropagation()} ref={popupRef} className={`absolute right-4 z-[999] -bottom-20 ${display ? "" : "hidden"}`}>
+              <div className="flex flex-col justify-end p-5 text-xs leading-5 shadow-2xl -bottom-20 drop-shadow-xl bg-bgPrimary rounded-xl">
                 <button className="flex items-center justify-between gap-5 pr-4" onClick={() => { handleCopy(id) }} >
                   <p className="w-12 lexend whitespace-nowrap"> {copyText}</p>
                   <img className="w-6 h-6 pl-3" ref={copyImageRef} src={paste} alt="" />
