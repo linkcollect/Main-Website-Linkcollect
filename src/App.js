@@ -58,7 +58,7 @@ function App() {
 
           <Route
             path="/signup"
-            element={user.isLoggedIn ? <Navigate to={`/${user?.username}`} /> : <Signup />}
+            element={user.isLoggedIn ? <Navigate to={`/${user?.username}`} /> : <Signup windowWidth={windowWidth} />}
           />
           <Route
             path="/login"

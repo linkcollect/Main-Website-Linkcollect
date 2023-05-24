@@ -9,10 +9,12 @@ import Logout from "../../assets/logout.svg";
 import approve from "../../assets/approve.svg"
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
+import LinkCopied from '../../assets/LinkCopied.svg'
 const Sidebar = ({ user, handleSetUser, windowWidth }) => {
   const copyRef = useRef();
   const navigate = useNavigate()
   const [showCollections, setShowCollections] = useState(false);
+  const [isCopied, setIsCopied] = useState(false)
   const handleShowCollection = () => {
     setShowCollections(!showCollections);
   };
@@ -21,8 +23,10 @@ const Sidebar = ({ user, handleSetUser, windowWidth }) => {
       copyRef.current.src = approve;
     }
     navigator.clipboard.writeText("https://linkcollect.io/" + user.username);
+    setIsCopied(true)
     setTimeout(() => {
       copyRef.current.src = LinkIcon
+      setIsCopied(false)
     }, 1500);
   };
 
@@ -85,9 +89,14 @@ const Sidebar = ({ user, handleSetUser, windowWidth }) => {
 
             </div>
             {/* for responsive button */}
-            <button onClick={onCopy} className={` w-[160px]  border-borderPrimary border-[1px] font-bold text-textPrimary   rounded-lg py-2 flex justify-center items-center gap-[8px] sm:gap-1 mt-1 mb-1 ${windowWidth < 700 ? "block" : "hidden"}`}>
+            <button onClick={onCopy} className={` w-[160px]  border-borderPrimary border-[1px] font-bold text-textPrimary   rounded-lg py-2 flex justify-center items-center gap-[8px] sm:gap-1 mt-1 mb-1 ${windowWidth < 700 ? "block" : "hidden"} relative`}>
               <span className="text-[14px]">Share Profile</span>
               <img ref={copyRef} src={LinkIcon} alt="" className="w-4" />
+              {isCopied &&
+              <div className={`absolute ${isCopied ? 'opacity-100' : 'opacity-0'} transition-opacity duration-500 -top-8`}>
+                <img alt='LinkCopied' src={LinkCopied} />
+              </div>
+            }
             </button>
             {/* problem aarha ha tha when adjusting width of collections in mobile devicess so added the logic of windowWidth */}
             <div className={`h-[65px] w-[281px] ${windowWidth < 700 ? "hidden" : 'block'}`}>
@@ -114,10 +123,15 @@ const Sidebar = ({ user, handleSetUser, windowWidth }) => {
               <span className="text-[14px]">Create Collection</span>
             </button>
           } */}
-
-          <button onClick={onCopy} className={`w-full font-bold text-textPrimary border-[1px] ${'border-primary'} rounded-lg py-2 flex justify-center items-center gap-1 mt-1 mb-1 ${windowWidth < 700 ? "hidden" : ""}`}>
+          {/* Share Profile */}
+          <button onClick={onCopy} className={`w-full font-bold text-textPrimary border-[1px] ${'border-primary'} rounded-lg py-2 flex justify-center items-center gap-1 mt-1 mb-1 ${windowWidth < 700 ? "hidden" : ""} relative`}>
             <span className="text-[14px]">Share Profile</span>
             <img ref={copyRef} src={LinkIcon} alt="" className="w-4" />
+            {isCopied &&
+              <div className={`absolute ${isCopied ? 'opacity-100' : 'opacity-0'} transition-opacity duration-500 -top-8`}>
+                <img alt='LinkCopied' src={LinkCopied} />
+              </div>
+            }
           </button>
           {user?.isOwner &&
             <>
