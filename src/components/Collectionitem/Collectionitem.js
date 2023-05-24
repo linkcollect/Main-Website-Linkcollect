@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, } from "react";
 import { Link } from "react-router-dom";
 import upvote from "../../assets/Upvote.svg";
 import dot from "../../assets/3dot.svg";
@@ -29,20 +29,24 @@ const Collectionitem = ({
   const copyImageRef = useRef();
   const [copyText, setCopyText] = useState("Copy Link")
   const [display, setDisplay] = useState(false);
+  const [isPublic, setIsPublic] = useState(true)
   const menuhandler = () => {
-    setDisplay(!display);
+    setDisplay(prev => !prev);
+    console.log(display)
   };
+  console.log(display)
 
   //collection Popup stuff
   const menuRef = useRef()
   const popupRef = useRef()
 
-   // Popup menu close functiinality if users clocked outside of it
-   window.addEventListener("click",e=>{
-    if(e.target !== popupRef.current && e.target !== menuRef.current){
+  // Popup menu close functiinality if users clocked outside of it
+  window.addEventListener("click", e => {
+    if (e.target !== popupRef.current && e.target !== menuRef.current && display) {
       setDisplay(false);
+      console.log(display)
     }
-    })
+  })
 
   const handleCopy = (collectionId) => {
     setCopyText("Copied!")
@@ -60,6 +64,10 @@ const Collectionitem = ({
       setCopyText("Copy Link")
     }, 2500);
   };
+  // Privacy handler
+  const handlePrivacy = () => {
+    setIsPublic(!isPublic)
+  }
   return (
     <>
       <div className="bg-bgPrimary border-2 relative border-bgSecondary rounded-lg   w-[48%] sm:w-[269px]">
@@ -107,29 +115,37 @@ const Collectionitem = ({
             )}
 
             {/* 3dots menu button */}
-            {isOwner && (
+            {/* not resolvedd yet */}
+            {/* {isOwner && (
               <button
                 onClick={menuhandler}
                 ref={menuRef}
                 className="px-4 py-3 border-2 rounded-md border-secondary"
               >
-                <img src={dot} alt="menu"  />
+                <img src={dot} alt="menu" />
               </button>
-            )}
+            )} */}
           </div>
           {/* 3dots menu */}
           {isOwner &&
-
             <div onClick={(e) => e.stopPropagation()} ref={popupRef} className={`absolute right-4 z-[999] -bottom-20 ${display ? "" : "hidden"}`}>
-              <div className="flex flex-col justify-end p-5 text-xs leading-5 shadow-2xl -bottom-20 drop-shadow-xl bg-bgPrimary rounded-xl">
+              <div className="flex flex-col justify-end p-5 text-xs leading-5 shadow-2xl -bottom-20 drop-shadow-xl bg-bookmarkItemBG rounded-xl">
+                {/* Copy collection */}
                 <button className="flex items-center justify-between gap-5 pr-4" onClick={() => { handleCopy(id) }} >
                   <p className="w-12 lexend whitespace-nowrap"> {copyText}</p>
                   <img className="w-6 h-6 pl-3" ref={copyImageRef} src={paste} alt="" />
                 </button>
-                {/* <button className="flex justify-between pr-4 "> */}
-                {/* <p className="lexend">Public</p> <img className="pt-1" src={toogle} alt="" /> */}
-                {/* </button> */}
 
+                {/* Collection Privacy */}
+                <button className="flex justify-between pr-4 " onClick={handlePrivacy}>
+                  <p className="lexend">Public</p>
+                  <div className={`w-4 h-[9.5px] px-0.5 py-0.5 rounded-xl mt-1 ${isPublic? 'bg-primary': 'bg-textSecondary'} flex items-center  ${isPublic? 'justify-end': 'justify-start'}`}>
+                    <div className="w-[6px] h-[6px] rounded-full bg-bgPrimary"></div>
+                  </div>
+                  {/* <img className="pt-1" src={toogle} alt="" /> */}
+                </button>
+
+                {/* Delete Collection */}
                 <button
                   className="flex justify-between pr-4"
                   onClick={() => {
