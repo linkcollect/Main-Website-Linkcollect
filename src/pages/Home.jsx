@@ -13,6 +13,7 @@ import { deleteCollection } from "../api-services/collectionService";
 import approve from '../assets/approve.svg' 
 import { useRef } from "react";
 import paste from '../assets/paste.svg'
+import { Helmet } from "react-helmet";
 
 const Home = ({user,handleSetUser,windowWidth}) => {
   const [tab, setTab] = useState(1);
@@ -25,6 +26,9 @@ const Home = ({user,handleSetUser,windowWidth}) => {
 
   // Filterd/search collection that will be shown
   const [filteredCollection, setFiltererdCollection] = useState([]);
+
+  // Name of User
+  const [nameOfUser, setNameofUser] = useState('')
 
   const [loading, setLoading] = useState(true);
   const copyImageRef = useRef()
@@ -40,7 +44,7 @@ const Home = ({user,handleSetUser,windowWidth}) => {
         sorteData.map((data) => (data.isPublic ? publicCollection++ : privateCollection++));
         SetCollections(sorteData);
         setFiltererdCollection(sorteData);
-      
+      setNameofUser(res.data.data.name)
         if(user.isLoggedIn){
           if(username===user.username){
             //Means Loggedin user visintig their own profile so no need of fetching the data of the user
@@ -151,10 +155,13 @@ const Home = ({user,handleSetUser,windowWidth}) => {
     
   };
 
-
   return (
     
     <div className={`flex bg-bgSecondary ${ windowWidth < 700 ? "flex-col" : "" }`}>
+      <Helmet>
+        
+        <title>{nameOfUser?.toUpperCase()} - (User on Linkcollect)</title>
+      </Helmet> 
       <div className={`flex-1`}>
         <Sidebar
           user={vistiedUser}
