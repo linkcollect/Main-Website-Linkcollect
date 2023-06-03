@@ -157,7 +157,6 @@ const Bookmarks = ({ user, handleSetUser, windowWidth }) => {
 
   // For helmet purposes
   const {title, description} = collection
-  console.log(title, description,defaultCollectionImage)
   return (
     
       <div className="flex w-full min-h-screen bg-bgSecondary">
