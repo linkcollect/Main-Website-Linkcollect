@@ -8,7 +8,8 @@ import PageLoader from "../components/Loader/PageLoader";
 import { getByUsername } from "../api-services/userService";
 import Modal from "../components/EditCollection/Modal";
 import { updateCollection } from "../api-services/collectionService";
-
+import { Helmet } from "react-helmet";
+import defaultCollectionImage from '../assets/defaultCollectio.png'
 const Bookmarks = ({ user, handleSetUser, windowWidth }) => {
   const navigation = useNavigate();
   const { collectionId, username } = useParams();
@@ -83,27 +84,27 @@ const Bookmarks = ({ user, handleSetUser, windowWidth }) => {
             }
           })
         }
-        
+
         setIsLoading(false);
-        
+
       } catch (error) {
         setIsLoading(false);
       }
-      
+
     }
     getData();
-    
+
   }, []);
-  
+
   // Setting initial values to edit collection
-  useEffect(()=>{
+  useEffect(() => {
     setData({
       ...data,
       title: collection.title,
       description: collection.description,
       privacy: collection.isPublic ? 'public' : 'private'
     })
-  },[collection])
+  }, [collection])
   //edit collection
   const close = () => setIsOpen(false)
   const open = () => setIsOpen(true)
@@ -153,78 +154,91 @@ const Bookmarks = ({ user, handleSetUser, windowWidth }) => {
     setFilteredCollection(newfilteredCollection)
   };
 
+
+  // For helmet purposes
+  const {title, description} = collection
+  console.log(title, description,defaultCollectionImage)
   return (
-    <div className="flex w-full min-h-screen bg-bgSecondary">
+    
+      <div className="flex w-full min-h-screen bg-bgSecondary">
+      <Helmet>
+        <title>{collection.title}</title>
+
+        {/* below is not working yet but above is !! */}
+        {/* <meta property="og:image" content={defaultCollectionImage} />
+        <meta property="og:title" content={title}/>
+        <meta property="og:description" content={description}/> */}
+      </Helmet>
 
 
-      {windowWidth > 800 && (
-        <div className="flex-1">
-          <Sidebar user={visitedUser} handleSetUser={handleSetUser} />
-        </div>
-      )}
-      <div className="flex flex-col w-full h-screen overflow-y-hidden">
-        <Modal
-          isOpen={isOpen}
-          setIsOpen={setIsOpen}
-          inputHandler={onInput}
-          imageHandler={onInputFile}
-          image={image}
-          data={data}
-          onSubmit={handleEditCollection}
-          loading={loading}
-          windowWidth={windowWidth}
-        />
-        <div className="flex items-center justify-center w-full pt-2 mx-auto bg-bgPrimary ">
-          <TopBar
-            windowWidth={windowWidth}
-            onBack={backHandler}
-            collectionName={collection?.title}
-            collectionDesc={
-              collection?.description
-            }
-            noOfLinks={collection.timelines?.length}
-            image={collection?.image}
-            isLoggedIn={user.isLoggedIn}
-            isOwner={visitedUser.isOwner}
-            searchHnadeler={searchHnadeler}
+        {windowWidth > 800 && (
+          <div className="flex-1">
+            <Sidebar user={visitedUser} handleSetUser={handleSetUser} />
+          </div>
+        )}
+        <div className="flex flex-col w-full h-screen overflow-y-hidden">
+          <Modal
             isOpen={isOpen}
-            close={close}
-            open={open}
+            setIsOpen={setIsOpen}
+            inputHandler={onInput}
+            imageHandler={onInputFile}
+            image={image}
+            data={data}
+            onSubmit={handleEditCollection}
+            loading={loading}
+            windowWidth={windowWidth}
           />
-        </div>
-        <div className="w-full h-[65%] mx-auto">
-          {isLoading ? (
-            <div className="flex items-center justify-center w-full h-full">
-              <PageLoader />
-            </div>
-          ) : collection.timelines && collection.timelines.length > 0 ? (
-            <div className="w-full h-full py-4 mx-auto overflow-y-scroll scrollbar-hide">
-              <div className="w-[90%] mx-auto space-y-2">
-                {filteredCollection.timelines.map((timeline) => (
-                  <BookmarkItems
-                    key={timeline._id}
-                    id={timeline._id}
-                    name={timeline.title}
-                    url={timeline.link}
-                    favicon={timeline.favicon}
-                    windowWidth={windowWidth}
-                    updatedAt={timeline.updatedAt}
-                    user={visitedUser}
-                  />
-                ))}
+          <div className="flex items-center justify-center w-full pt-2 mx-auto bg-bgPrimary ">
+            <TopBar
+              windowWidth={windowWidth}
+              onBack={backHandler}
+              collectionName={collection?.title}
+              collectionDesc={
+                collection?.description
+              }
+              noOfLinks={collection.timelines?.length}
+              image={collection?.image}
+              isLoggedIn={user.isLoggedIn}
+              isOwner={visitedUser.isOwner}
+              searchHnadeler={searchHnadeler}
+              isOpen={isOpen}
+              close={close}
+              open={open}
+            />
+          </div>
+          <div className="w-full h-[65%] mx-auto">
+            {isLoading ? (
+              <div className="flex items-center justify-center w-full h-full">
+                <PageLoader />
               </div>
-            </div>
-          ) : (
-            <div className="flex flex-col items-center justify-center w-full h-full">
-              <p className="mb-5 text-5xl text-textPrimary">
-                No bookmarks Found
-              </p>
-              <p className="text-textPrimary">You can add it from extension</p>
-            </div>
-          )}
+            ) : collection.timelines && collection.timelines.length > 0 ? (
+              <div className="w-full h-full py-4 mx-auto overflow-y-scroll scrollbar-hide">
+                <div className="w-[90%] mx-auto space-y-2">
+                  {filteredCollection.timelines.map((timeline) => (
+                    <BookmarkItems
+                      key={timeline._id}
+                      id={timeline._id}
+                      name={timeline.title}
+                      url={timeline.link}
+                      favicon={timeline.favicon}
+                      windowWidth={windowWidth}
+                      updatedAt={timeline.updatedAt}
+                      user={visitedUser}
+                    />
+                  ))}
+                </div>
+              </div>
+            ) : (
+              <div className="flex flex-col items-center justify-center w-full h-full">
+                <p className="mb-5 text-5xl text-textPrimary">
+                  No bookmarks Found
+                </p>
+                <p className="text-textPrimary">You can add it from extension</p>
+              </div>
+            )}
+          </div>
         </div>
       </div>
-    </div>
   );
 };
 
