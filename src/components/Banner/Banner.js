@@ -6,7 +6,7 @@ import { motion, AnimatePresence } from "framer-motion";
 
 const Banner = () => {
   const [text, setText] = useState('');
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const [currentIndex, setCurrentIndex] = useState(1);
 
   const allTexts = [
     `Stay organized, save your web links 🔖`,
@@ -17,7 +17,7 @@ const Banner = () => {
   useEffect(() => {
     const intervalId = setInterval(() => {
       setCurrentIndex((prevIndex) => (prevIndex + 1) % allTexts.length);
-    }, 3000);
+    }, 2000);
 
     return () => clearInterval(intervalId);
   }, []);
@@ -48,7 +48,7 @@ const Banner = () => {
                 animate={{ y: 0, opacity: 1 }}
                 exit={{ y: -20, opacity: 0 }}
                 transition={{ duration: 0.4, type: 'spring' }}
-                className="lg:w-[65%] md:w-5/6 h-24 lexend font-bold text-[28px] xl:text-[40px] lg:text-[35px] lg:leading-[40px] xl:leading-[50px] md:text-[35px] md:leading-[50px]"
+                className="lg:w-[69%] xl:w-[75%] 2xl:w-[65%] md:w-5/6 h-24 lexend font-bold text-[28px] xl:text-[40px] lg:text-[35px] lg:leading-[40px] xl:leading-[50px] md:text-[35px] md:leading-[50px]"
               >
                 {text}
               </motion.h1>
