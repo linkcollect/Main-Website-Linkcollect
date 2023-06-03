@@ -60,7 +60,7 @@ const Login = ({ handleSetUser, windowWidth }) => {
         <div className="flex flex-col items-center justify-evenly min-h-screen gap-0 sm:flex-wrap lg:flex-nowrap sm:flex-row md:justify-center md:gap-12 lg:justify-evenly max-w-[3000px] mx-auto">
 
 
-          {windowWidth > 600 &&
+          {windowWidth > 1024 &&
             <div className="flex items-center justify-center w-full h-[80vh] lg:min-h-screen lg:w-1/2 "
             >
               <Banner />
@@ -72,9 +72,9 @@ const Login = ({ handleSetUser, windowWidth }) => {
               <img src={mainLogo} alt="" className="h-16 w-36" />
             </div>
           } */}
-          <div className="flex items-center justify-center w-full h-screen sm:py-10 lg:py-0 sm:h-auto lg:h-screen sm:items-start lg:w-1/2 lg:items-center bg-bgPrimary">
-            <div className=" flex items-center justify-center w-[90%] sm:w-2/3  lg:mt-0 md:w-3/4 lg:w-2/3 max-w-[420px] sm:max-w-[600px] md:max-w-[420px] ">
-              <div className="rounded-2xl bg-bgPrimary  px-10 pt-[40p]  pb-[60px] w-full md:w-[410px]">
+          <div className="flex items-center justify-center w-full h-screen sm:py-0 sm:h-screen lg:w-1/2 sm:items-center bg-bgPrimary">
+            <div className=" flex items-center justify-center w-[90%] sm:w-2/3  lg:mt-0 md:w-3/4 lg:w-2/3 max-w-[420px] sm:max-w-[600px] lg:max-w-[420px] ">
+              <div className="rounded-2xl bg-bgPrimary  px-10  w-full sm:w-5/6 lg:w-[410px]">
                 <div>
                   <Link to={'/'}>
                     <img
