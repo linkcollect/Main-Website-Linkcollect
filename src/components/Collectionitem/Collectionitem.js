@@ -34,8 +34,6 @@ const Collectionitem = ({
     setDisplay(prev => !prev);
     console.log(display)
   };
-  console.log(display)
-
   //collection Popup stuff
   const menuRef = useRef()
   const popupRef = useRef()
