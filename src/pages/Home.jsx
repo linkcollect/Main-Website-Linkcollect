@@ -14,6 +14,7 @@ import approve from '../assets/approve.svg'
 import { useRef } from "react";
 import paste from '../assets/paste.svg'
 import { Helmet } from "react-helmet";
+import CollectionitemV2 from "../components/Collectionitem/CollectionCardV2";
 
 const Home = ({user,handleSetUser,windowWidth}) => {
   const [tab, setTab] = useState(1);
@@ -229,7 +230,21 @@ const Home = ({user,handleSetUser,windowWidth}) => {
             <div className="w-full h-full py-4 mx-auto overflow-y-scroll">
               <div className="w-[95%] mx-auto flex flex-wrap gap-2">
                 {filteredCollection.map((collections) => (
-                  <Collectionitem
+                  // <Collectionitem
+                  //   id={collections._id}
+                  //   image={collections.image}
+                  //   title={collections.title}
+                  //   links={collections.timelines.length}
+                  //   type={collections.isPublic}
+                  //   description={collections.description}
+                  //   username={collections.username}
+                  //   windowWidth={windowWidth}
+                  //   onDelete={deleteHandler}
+                  //   isOwner={vistiedUser.isOwner}
+                  //   vistiedUser={vistiedUser}
+                    
+                  // />
+                  <CollectionitemV2
                     id={collections._id}
                     image={collections.image}
                     title={collections.title}
@@ -241,7 +256,8 @@ const Home = ({user,handleSetUser,windowWidth}) => {
                     onDelete={deleteHandler}
                     isOwner={vistiedUser.isOwner}
                     vistiedUser={vistiedUser}
-                    
+                    votes={collections.votes}
+                    views = {collections.views}
                   />
                 ))}
               </div>
