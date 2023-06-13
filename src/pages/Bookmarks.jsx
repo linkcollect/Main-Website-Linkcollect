@@ -10,6 +10,7 @@ import Modal from "../components/EditCollection/Modal";
 import { updateCollection } from "../api-services/collectionService";
 import { Helmet } from "react-helmet";
 import defaultCollectionImage from '../assets/defaultCollectio.png'
+import BookmarkItemsV2 from "../components/BookmarkItem/BookmarkItemsV2";
 const Bookmarks = ({ user, handleSetUser, windowWidth }) => {
   const navigation = useNavigate();
   const { collectionId, username } = useParams();
@@ -19,6 +20,9 @@ const Bookmarks = ({ user, handleSetUser, windowWidth }) => {
   const [visitedUser, setVisitedUser] = useState({});
   const [isOpen, setIsOpen] = useState(false);
   const [loading, setLoading] = useState(false)
+  const [isOneChecked, setIsOneChecked] = useState(false)
+  const[checkedItems,setCheckedItems]=useState(0)
+
   //edit collection
   const [data, setData] = useState({
     title: '',
@@ -214,7 +218,17 @@ const Bookmarks = ({ user, handleSetUser, windowWidth }) => {
               <div className="w-full h-full py-4 mx-auto overflow-y-scroll scrollbar-hide">
                 <div className="w-[90%] mx-auto space-y-2">
                   {filteredCollection.timelines.map((timeline) => (
-                    <BookmarkItems
+                    // <BookmarkItems
+                    //   key={timeline._id}
+                    //   id={timeline._id}
+                    //   name={timeline.title}
+                    //   url={timeline.link}
+                    //   favicon={timeline.favicon}
+                    //   windowWidth={windowWidth}
+                    //   updatedAt={timeline.updatedAt}
+                    //   user={visitedUser}
+                    // />
+                    <BookmarkItemsV2
                       key={timeline._id}
                       id={timeline._id}
                       name={timeline.title}
@@ -223,6 +237,10 @@ const Bookmarks = ({ user, handleSetUser, windowWidth }) => {
                       windowWidth={windowWidth}
                       updatedAt={timeline.updatedAt}
                       user={visitedUser}
+                      isOneChecked={isOneChecked}
+                      setIsOneChecked={setIsOneChecked}
+                      checkedItems={checkedItems}
+                      setCheckedItems={setCheckedItems}
                     />
                   ))}
                 </div>
