@@ -24,6 +24,8 @@ module.exports = {
       editOptionBackground: "#E6E6FF",
       bookmarkItemBG: "#E8E8FC",
       lightGrey: "#6B6C80",
+      lightGrey2: "#F3F3F6",
+     
       
     }
   },
