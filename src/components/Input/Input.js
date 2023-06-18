@@ -20,11 +20,11 @@ const Input = ({ id, type, name, placeholder, onInput, value }) => {
         placeholder={placeholder}
         onChange={onInput}
         value={value}
-        className="block w-full px-3 py-4 text-base border-2 rounded-lg border-secondary placeholder-textSecondary focus:outline-none"
+        className="block w-full px-3 py-4 text-base border-2 rounded-lg text-neutral-900 border-primary-100 placeholder-neutral-400 focus:outline-none"
       />
 
       {type === "password" && value.length > 0 && (
-        <span className="absolute top-2 right-4 p-2 text-2xl text-[#5B5B5B] cursor-pointer">
+        <span className="absolute p-2 cursor-pointer top-2 right-4">
           {showPassword ? (
             <img src={OpenEye} className="" onClick={() => setShowPassword(!showPassword)} />
           ) : (

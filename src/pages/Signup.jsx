@@ -60,7 +60,7 @@ const Signup = ({ windowWidth }) => {
 
 
           {!verifying ?
-            <div className="flex items-center justify-center w-full h-screen sm:py-10 lg:py-0 lg:w-1/2 lg:items-center bg-bgPrimary">
+            <div className="flex items-center justify-center w-full h-screen bg-white sm:py-10 lg:py-0 lg:w-1/2 lg:items-center">
               <div className=" flex items-center justify-center w-[90%] sm:w-2/3  lg:mt-0 md:w-3/4 lg:w-2/3 max-w-[420px] sm:max-w-[600px] md:max-w-[420px] ">
                 <div className="rounded-2xl bg-bgPrimary  px-10 pb-[60px] w-full md:w-[410px]">
                   <div>
@@ -119,12 +119,12 @@ const Signup = ({ windowWidth }) => {
                   Forget Your Password?
                 </p> */}
 
-                      <button className={`flex items-center justify-center w-full py-3 font-bold rounded-lg ${data.name.length > 1 && data.email.length > 1 && data.password.length > 1 ? 'bg-primary' : 'bg-textSecondary'} text-bgPrimary`}>
+                      <button className={`flex items-center justify-center w-full py-3 font-bold rounded-lg ${data.name.length > 1 && data.email.length > 1 && data.password.length > 1 ? 'bg-primary-500' : 'bg-neutral-400'} text-white`}>
                         {!isSiging ? "Sign Up" : <Loader />}
                       </button>
-                      <p className="mt-1 font-light text-left text-textSecondary">
+                      <p className="mt-1 font-light text-left text-neutral-400">
                         Already have an account?{" "}
-                        <Link to="/login" className="font-bold text-primary">
+                        <Link to="/login" className="font-bold text-primary-500">
                           Log in
                         </Link>
                       </p>
@@ -136,7 +136,7 @@ const Signup = ({ windowWidth }) => {
               </div>
             </div>
             :
-            <div className="flex items-center justify-center w-full h-screen sm:py-10 lg:py-0 lg:w-1/2 lg:items-center bg-bgPrimary">
+            <div className="flex items-center justify-center w-full h-screen bg-white sm:py-10 lg:py-0 lg:w-1/2 lg:items-center">
               <Emailsent/>
             </div>
           }
