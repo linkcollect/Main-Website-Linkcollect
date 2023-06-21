@@ -72,7 +72,7 @@ const Login = ({ handleSetUser, windowWidth }) => {
               <img src={mainLogo} alt="" className="h-16 w-36" />
             </div>
           } */}
-          <div className="flex items-center justify-center w-full h-screen sm:py-0 sm:h-screen lg:w-1/2 sm:items-center bg-bgPrimary">
+          <div className="flex items-center justify-center w-full h-screen bg-white sm:py-0 sm:h-screen lg:w-1/2 sm:items-center">
             <div className=" flex items-center justify-center w-[90%] sm:w-2/3  lg:mt-0 md:w-3/4 lg:w-2/3 max-w-[420px] sm:max-w-[600px] lg:max-w-[420px] ">
               <div className="rounded-2xl bg-bgPrimary  px-10  w-full sm:w-5/6 lg:w-[410px]">
                 <div>
@@ -118,15 +118,15 @@ const Login = ({ handleSetUser, windowWidth }) => {
                     </div>
 
                     {/* Need to add link after adding the api for forget pass */}
-                    {/* <p className="mb-4 font-light text-left text-textSecondary">
+                    {/* <p className="mb-4 font-light text-left text-neutral-400">
                   Forget Your Password?
                 </p> */}
-                    <button className={`flex justify-center w-full py-3 font-bold rounded-lg ${data.email.length > 1 && data.password.length > 0 ? 'bg-primary' : 'bg-textSecondary'} text-bgPrimary`}>
+                    <button className={`flex justify-center w-full py-3 font-bold rounded-lg ${data.email.length > 1 && data.password.length > 0 ? 'bg-primary-500' : 'bg-neutral-400'} text-white`}>
                       {!isLogging ? "Login" : <Loader />}
                     </button>
-                    <p className="mt-1 font-light text-left whitespace-break-spaces text-textSecondary">
+                    <p className="mt-1 font-light text-left whitespace-break-spaces text-neutral-400">
                       Don't have an account?{" "}
-                      <Link to="/signup" className="font-bold text-primary">
+                      <Link to="/signup" className="font-bold text-primary-400">
                         Sign Up
                       </Link>
                     </p>

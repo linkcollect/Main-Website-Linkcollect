@@ -48,12 +48,12 @@ const Banner = () => {
                 animate={{ y: 0, opacity: 1 }}
                 exit={{ y: -20, opacity: 0 }}
                 transition={{ duration: 0.4, type: 'spring' }}
-                className="lg:w-[69%] xl:w-[75%] 2xl:w-[65%] md:w-5/6 h-24 lexend font-bold text-[28px] xl:text-[40px] lg:text-[35px] lg:leading-[40px] xl:leading-[50px] md:text-[35px] md:leading-[50px]"
+                className="lg:w-[69%] xl:w-[75%] 2xl:w-[65%] md:w-5/6 h-24 lexend font-bold text-[28px] xl:text-[40px] lg:text-[35px] lg:leading-[40px] xl:leading-[50px] md:text-[35px] md:leading-[50px] text-neutral-900"
               >
                 {text}
               </motion.h1>
             </AnimatePresence>
-            <p className="text-textPrimary text-[18px] md:text-[18px] xl:text-[18px] leading-[23px] md:leading-[33px] lg:text-[18px] xl:leading-[22px] text-center w-[373px] lg:w-[73%] xl:w-1/2 max-w-xl h-12 font-normal">
+            <p className="text-neutral-800 text-[18px] md:text-[18px] xl:text-[18px] leading-[23px] md:leading-[33px] lg:text-[18px] xl:leading-[22px] text-center w-[373px] lg:w-[73%] xl:w-1/2 max-w-xl h-12 font-normal">
               linkcollect is the simplest way to save & share web links from
               anywhere to anyone
             </p>

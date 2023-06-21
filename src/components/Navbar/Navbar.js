@@ -6,7 +6,7 @@ const Navbar = ({ windowWidth }) => {
     return (
         <div className='flex items-center justify-around w-full lexend'>
             <div>
-                <img src={Logo} alt="" className='w-36 sm:w-[241px] sm:h-[109.82px]' />
+                <img src={Logo} alt="" className='w-36 sm:w-[180px] sm:h-[109.82px]' />
             </div>
             {windowWidth > 700 ?
                 <div>
