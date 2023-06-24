@@ -38,7 +38,7 @@ const Profile = () => {
         <div className='w-11/12 mx-auto sm:w-full flex flex-col items-center sm:items-start justify-center gap-3 max-w-[824px]'>
 
             {/* First section of profile settings (name, email, username etc) */}
-            <div className="flex flex-col items-center justify-center w-full gap-6 pt-5 sm:items-start pb-14">
+            <div className="flex flex-col items-center justify-center w-full gap-6 pt-5 pb-6 sm:items-start sm:pb-14">
                 {/* Profile Image */}
                 <div className="flex items-center justify-start w-full gap-6">
                     <img src={uploadedFile ? uploadedFile : profile} alt="" className='rounded-full w-20 sm:w-[100px] h-20 sm:h-[100px]' />
@@ -112,7 +112,7 @@ const Profile = () => {
             <hr className='w-full border border-neutral-300' />
 
             {/* Social Links */}
-            <div className="flex flex-col items-start justify-center w-full gap-6 py-14 sm:items-start ">
+            <div className="flex flex-col items-start justify-center w-full gap-6 py-6 sm:py-14 sm:items-start ">
                 <div className="flex flex-col items-start justify-between gap-1">
                     <span className='text-sm font-normal text-neutral-700 sm:text-base '>Social links</span>
                     <span className='text-xs font-normal capitalize text-neutral-400 sm:text-sm'>Note: You only need to add your username.</span>
@@ -137,7 +137,7 @@ const Profile = () => {
             <hr className='w-full border border-neutral-300' />
 
             {/* theme switch */}
-            <div className="flex flex-row items-start justify-between w-full gap-3 md:gap-0 py-14">
+            <div className="flex flex-row items-start justify-between w-full gap-3 py-6 md:gap-0 sm:py-14">
                 <div className="flex flex-col items-start justify-between gap-1">
                     <span className='text-sm font-normal text-neutral-700 sm:text-base '>Theme</span>
                     <span className='text-xs font-normal capitalize text-neutral-400 sm:text-sm'>Select website color theme.</span>
@@ -162,7 +162,7 @@ const Profile = () => {
             <hr className='w-full border border-neutral-300' />
 
             {/* Delete my account */}
-            <div className="flex flex-col items-start justify-between gap-6">
+            <div className="flex flex-col items-start justify-between gap-6 py-6 sm:py-14">
                 
                 <span className='text-sm font-medium leading-6 text-neutral-700 sm:text-lg '>Delete my account</span>
                 
