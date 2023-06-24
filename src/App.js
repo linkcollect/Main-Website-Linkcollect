@@ -13,6 +13,7 @@ import Privacy from "./components/PrivacyPolicy/Privacy";
 import Bookmarks from "./pages/Bookmarks";
 import Home from "./pages/Home";
 import jwt from "jsonwebtoken"
+import Settings from './components/Settings/Settings'
 import { setJwtInRequestHeader } from "./api-services/httpService";
 function App() {
   const [user,setUser] = useState({})
@@ -75,6 +76,7 @@ function App() {
             element={<Home user={user} windowWidth={windowWidth} handleSetUser={handleSetUser}/> }
           />
           <Route path="/privacy" element={<Privacy />} />
+          <Route path="/settings" element={<Settings />} />
           <Route path="/:username/c/:collectionId" element={<Bookmarks user={user} handleSetUser={handleSetUser}  windowWidth={windowWidth}/>} />
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
