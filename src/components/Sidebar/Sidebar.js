@@ -7,7 +7,7 @@ import AddIcon from "../../assets/add-tab.svg";
 import LinkIcon from "../../assets/link.svg";
 import Logout from "../../assets/logout.svg";
 import approve from "../../assets/approve.svg";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import LinkCopied from "../../assets/LinkCopied.svg";
 import defaultImage from "../../assets/defaultImage.svg";
@@ -55,18 +55,19 @@ const Sidebar = ({ user, handleSetUser, windowWidth }) => {
       >
         {/* Profile Info */}
         <div className="flex flex-col gap-8">
-          <Link to="/">
-            <img src={mainlogo} alt="" className="w-40 mx-auto" />
+          <Link to="/" className="flex items-center justify-center w-full py-4 ">
+            <img src={mainlogo} alt="" className="w-40 h-10 mx" />
           </Link>
           <div className="w-full border-2  border-[#D1D1DB] rounded-lg py-3 px-3 ">
             <div className=" h-[100px] w-[100px] mx-auto mb-2 overflow-hidden">
               <img
                 src={defaultImage}
-                className="h-full w-full rounded-full object-cover"
+                className="object-cover w-full h-full rounded-full"
               />
             </div>
             <p className="font-bold text-[16px]">
-              {user.isLoggedIn && user.isOwner ? user.username : user.name}
+              {/* {user.isLoggedIn && user.isOwner ? user.username : user.name} */}
+              Harsh Singh
             </p>
             {/* {user.email && <p className="font-light text-[16px] pt-1">{user.email}</p>} */}
 
@@ -74,11 +75,12 @@ const Sidebar = ({ user, handleSetUser, windowWidth }) => {
               <div className="flex flex-row justify-between items-center gap-[118px] text-xs">
                 <p>Link Saved</p>
                 <p className="ml-1">
-                  {user.link?.privateCollection + user.link?.publicCollection ||
-                    0}
+                  {/* {user.link?.privateCollection + user.link?.publicCollection ||
+                    0} */}
+                    24
                 </p>
               </div>
-              <div className="flex flex-row justify-between items-center gap-24 text-xs whitespace-nowrap">
+              <div className="flex flex-row items-center justify-between gap-24 text-xs whitespace-nowrap">
                 <p>Total Collection</p>
                 <p>50</p>
               </div>
@@ -86,19 +88,19 @@ const Sidebar = ({ user, handleSetUser, windowWidth }) => {
           </div>
 
           {/* Tabs */}
-          <div className="flex justify-start flex-col items-start gap-4">
-            <div className="flex flex-row justify-start gap-3 items-center w-full bg-[#DADBFF] cursor-pointer border-1 rounded-md py-3 px-2 ">
+          <div className="flex flex-col items-start justify-start gap-4">
+            <div className="flex flex-row items-center justify-start w-full gap-3 px-2 py-3 rounded-md cursor-pointer bg-primary-50 border-1 ">
               <img src={home} /> <span className="text-base text-[#6166F1] ">Home </span> 
             </div>
-            <div className="flex flex-row justify-start gap-3 items-center w-full hover:bg-[#DADBFF] cursor-pointer border-1 rounded-md py-3 px-2 ">
+            <div className="flex flex-row items-center justify-start w-full gap-3 px-2 py-3 rounded-md cursor-pointer hover:bg-primary-50 border-1 ">
               <img src={navigation} /> Explore{" "}
             </div>
-            <div className="flex flex-row justify-start gap-3 items-center w-full hover:bg-[#DADBFF] cursor-pointer border-1 rounded-md py-3 px-2 ">
+            <div className="flex flex-row items-center justify-start w-full gap-3 px-2 py-3 rounded-md cursor-pointer hover:bg-primary-50 border-1 ">
               <img src={bookmark} /> Saved Collection
             </div>
-            <div className="flex flex-row justify-start gap-3 items-center w-full hover:bg-[#DADBFF] cursor-pointer border-1 rounded-md py-3 px-2 ">
+            <NavLink to={'/settings'} className={`flex flex-row justify-start gap-3 items-center w-full ${({isActive})=>isActive? 'bg-primary-50': ''} hover:bg-[#DADBFF] cursor-pointer border-1 rounded-md py-3 px-2 `}>
               <img src={settings} /> Settings
-            </div>
+            </NavLink>
           </div>
 
           {/* Collection priavaci info */}
@@ -178,9 +180,9 @@ const Sidebar = ({ user, handleSetUser, windowWidth }) => {
 
         {/* Upgrade button */}
 
-        <div className="flex justify-start items-center my-5 mx-5">
+        <div className="flex items-center justify-center w-full mx-5 my-5">
           <button
-            className={` font-normal  text-[#fff] outline-none px-20 py-3   bg-primary  rounded-lg  flex justify-start items-center gap-4  ${
+            className={` font-normal  text-white outline-none px-4 py-3  bg-primary-500  rounded-lg  flex justify-start items-center gap-2 w-11/12  ${
               windowWidth < 700 ? "hidden" : ""
             } relative`}
           >
