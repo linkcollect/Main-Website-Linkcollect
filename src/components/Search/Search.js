@@ -14,7 +14,7 @@ const SearchBox = ({onSearch}) => {
         <input
           type="text"
           id="simple-search"
-          className="bg-bgPrimary border border-secondary text-textSecondary text-sm rounded-lg block w-full p-3 pl-10 focus:outline-none"
+          className="block w-full p-[0.638rem] pl-10 text-base font-normal border rounded-lg bg-bgPrimary border-neutral-300 text-neutral-800 placeholder:text-neutral-500 focus:outline-none"
           placeholder="Search for collection or links"
           onChange={onSearch}
         />
@@ -22,7 +22,7 @@ const SearchBox = ({onSearch}) => {
         {/* onchange to be added in the above line
           onChange={(e)=>onChnageHandler(e.target.value)}
         */}
-        {/* <div className="absolute right-3 inset-y-0 flex items-center">
+        {/* <div className="absolute inset-y-0 flex items-center right-3">
           <button onClick={onSearch}><img src={searchIcon}/></button>
         </div> */}
       </div>
