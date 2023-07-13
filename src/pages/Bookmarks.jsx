@@ -1,16 +1,14 @@
 import React, { useState, useEffect } from "react";
 import Sidebar from "../components/Sidebar/Sidebar";
-import BookmarkItems from "../components/BookmarkItem/BookmarkItems";
 import TopBar from "../components/Topbar/TopBar";
 import { useParams, useNavigate } from "react-router-dom";
 import { getCollection } from "../api-services/collectionService";
 import PageLoader from "../components/Loader/PageLoader";
 import { getByUsername } from "../api-services/userService";
-import Modal from "../components/EditCollection/Modal";
+import  CollectionModal from "../components/EditCollection/CollectionModal";
 import { updateCollection } from "../api-services/collectionService";
 import { Helmet } from "react-helmet";
-import defaultCollectionImage from '../assets/defaultCollectio.png'
-import BookmarkItemsV2 from "../components/BookmarkItem/BookmarkItemsV2";
+import BookmarkItem from "../components/BookmarkItem/BookmarkItem";
 const Bookmarks = ({ user, handleSetUser, windowWidth }) => {
   const navigation = useNavigate();
   const { collectionId, username } = useParams();
@@ -21,7 +19,9 @@ const Bookmarks = ({ user, handleSetUser, windowWidth }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [loading, setLoading] = useState(false)
   const [isOneChecked, setIsOneChecked] = useState(false)
-  const[checkedItems,setCheckedItems]=useState(0)
+  const[checkedItems,setCheckedItems]=useState(0);
+  //For handiling click event
+  const [clickedId,setClickedId] = useState(null);
 
   //edit collection
   const [data, setData] = useState({
@@ -110,8 +110,11 @@ const Bookmarks = ({ user, handleSetUser, windowWidth }) => {
     })
   }, [collection])
   //edit collection
-  const close = () => setIsOpen(false)
-  const open = () => setIsOpen(true)
+  
+  const editCollectionModalOpener = () => {
+    setIsOpen(prev=>!prev)
+  } 
+
   const handleEditCollection = async () => {
     if (data.title === "" || data.title.length > 40 || data.description.length > 240) return
     setLoading(true)
@@ -127,8 +130,6 @@ const Bookmarks = ({ user, handleSetUser, windowWidth }) => {
       }
       const response = await updateCollection(collectionId, form);
       setCollection(response.data.data)
-      // Checking for collections
-      // console.log(response.data.data)
     } catch (error) {
 
     }
@@ -161,6 +162,7 @@ const Bookmarks = ({ user, handleSetUser, windowWidth }) => {
 
   // For helmet purposes
   const {title, description} = collection
+  
   return (
     
       <div className="flex w-full min-h-screen bg-bgSecondary">
@@ -180,7 +182,7 @@ const Bookmarks = ({ user, handleSetUser, windowWidth }) => {
           </div>
         )}
         <div className="flex flex-col w-full h-screen overflow-y-hidden">
-          <Modal
+          <CollectionModal
             isOpen={isOpen}
             setIsOpen={setIsOpen}
             inputHandler={onInput}
@@ -204,9 +206,7 @@ const Bookmarks = ({ user, handleSetUser, windowWidth }) => {
               isLoggedIn={user.isLoggedIn}
               isOwner={visitedUser.isOwner}
               searchHnadeler={searchHnadeler}
-              isOpen={isOpen}
-              close={close}
-              open={open}
+              editCollectionModalOpener={editCollectionModalOpener}
             />
           </div>
           <div className="w-full h-[65%] mx-auto">
@@ -218,17 +218,7 @@ const Bookmarks = ({ user, handleSetUser, windowWidth }) => {
               <div className="w-full h-full py-4 mx-auto overflow-y-scroll scrollbar-hide">
                 <div className="w-[90%] mx-auto space-y-2">
                   {filteredCollection.timelines.map((timeline) => (
-                    // <BookmarkItems
-                    //   key={timeline._id}
-                    //   id={timeline._id}
-                    //   name={timeline.title}
-                    //   url={timeline.link}
-                    //   favicon={timeline.favicon}
-                    //   windowWidth={windowWidth}
-                    //   updatedAt={timeline.updatedAt}
-                    //   user={visitedUser}
-                    // />
-                    <BookmarkItemsV2
+                    <BookmarkItem
                       key={timeline._id}
                       id={timeline._id}
                       name={timeline.title}
@@ -241,6 +231,8 @@ const Bookmarks = ({ user, handleSetUser, windowWidth }) => {
                       setIsOneChecked={setIsOneChecked}
                       checkedItems={checkedItems}
                       setCheckedItems={setCheckedItems}
+                      setClickedId={setClickedId}
+                      clickedId={clickedId}
                     />
                   ))}
                 </div>

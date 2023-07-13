@@ -13,7 +13,7 @@ import defultCollectionImage from "../../assets/defaultCollectio.svg";
 import editIcon from "../../assets/edit.svg";
 import addIcon from "../../assets/add.svg";
 import deleteIcon from "../../assets/delete2.svg";
-import Tag from "../Tag/Tag";
+import Tag from "../UI/Tag/Tag";
 import SortByIcon from '../../assets/sortBy.svg'
 
 // Utilites/Fuctions Import
@@ -28,10 +28,8 @@ const TopBar = ({
   image,
   isLoggedIn,
   searchHnadeler,
-  isOpen,
   isOwner,
-  close,
-  open,
+  editCollectionModalOpener
 }) => {
   const [showDropdown, setShowDropdown] = useState(false);
 
@@ -104,11 +102,11 @@ const TopBar = ({
                   {noOfLinks} links
                 </h1>
                 <button
-                  onClick={onBack}
+                  // onClick={onBack}
                   className="flex items-center justify-center w-[76x] h-[24px] bg-neutral-200 border border-primary-500 rounded-[40px] p-2"
                 >
                   <img src={share} className="w-[20px] h-[20px] mr-1" alt="" />
-                  <p className="text-[14px] text-neutral-700 ">Back</p>
+                  <p className="text-[14px] text-neutral-700 ">Share</p>
                 </button>
               </div>
               {/* Tags */}
@@ -134,7 +132,7 @@ const TopBar = ({
                 <img src={addIcon} />
               </button>
               {/* Edit */}
-              <button className="flex">
+              <button className="flex" onClick={editCollectionModalOpener}>
                 <img src={editIcon} />
               </button>
               {/* Delete */}
