@@ -21,35 +21,41 @@ const BookmarkItem = ({
   user,
   clickedId,
   setClickedId,
-  setSelectedBookmarks,
   isAllBookmarksSeleted,
   isStillOneBookmarkSelected,
-
+  isSelectedAlready,
+  onSelectedBookmark,
+  onUnSelectBookamrk
 }) => {
   // to see if checked or not
   const [checked, setChecked] = useState(false);
-
   useEffect(()=>{
-    if(!checked && isAllBookmarksSeleted){
+    if(isSelectedAlready>=0 && !checked){
       setChecked(true);
-    }else 
-    // If all items get unselected there is no items is remaining
-    if(checked && !isStillOneBookmarkSelected){
-      setChecked(false);
-    }
+    }else
+      if(!checked && isAllBookmarksSeleted){
+        console.log("hello")
+        setChecked(true);
+      }else 
+      // If all items get unselected there is no items is remaining
+      if(checked && !isStillOneBookmarkSelected){
+        console.log("Hello")
+        setChecked(false);
+      }
   },[isAllBookmarksSeleted])
 
 
   const copyRef = useRef();
 
-  const handleCheck = () => {
-    setChecked(!checked);
-    if (!checked) setSelectedBookmarks(prev=>[...prev,id])
+  const handleCheck = (e) => {
+    
+    if (e.target.checked) {
+      setChecked(true);
+      onSelectedBookmark(id);
+    }
     else {
-
-      setSelectedBookmarks(prevData=>prevData.filter(prevId=>id!=prevId)) ; 
-      // ifOneGetUnSelectedHandler();
-      
+      setChecked(false);
+      onUnSelectBookamrk(id)
     }
   };
   

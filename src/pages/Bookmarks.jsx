@@ -18,7 +18,11 @@ const Bookmarks = ({ user, handleSetUser, windowWidth }) => {
   const [visitedUser, setVisitedUser] = useState({});
   const [isOpen, setIsOpen] = useState(false);
   const [loading, setLoading] = useState(false);
+
   const [selectedBookmarks, setSelectedBookmarks] = useState([]);
+  const [isAllBookmarksSeleted,setIsAllBookmarksSeleted] = useState(false);
+  // this is for when i will search something and have selected some bookmarks;
+  // const [searchedSelectedBookmarks,setSearchedBookmarks] = useState([]);
   //For handiling click event
   const [clickedId, setClickedId] = useState(null);
 
@@ -156,21 +160,61 @@ const Bookmarks = ({ user, handleSetUser, windowWidth }) => {
         collection.title.toLowerCase().includes(e.target.value.toLowerCase())
       );
       newfilteredCollection.timelines = newfilteredBookmarks;
+      // if anythng is selcted or not if yes add it to the filteredSeletedBookmarks
     }
+    // addToFilterSelectedBookmarks(newfilteredBookmarks);
     setFilteredCollection(newfilteredCollection);
+    //may be after search user has selected something
+    checkIfAllBookmarskIsSelected();
   };
 
+  
+
   // All bookmarks selected handler
-  const isAllBookmarksSeleted = collection.timelines ? selectedBookmarks.length === filteredCollection?.timelines.length : false;
   const isStillOneBookmarkSelected = selectedBookmarks.length>0;
   const allBookmarksSelelectHandler = (e) =>{
     console.log(e.target.checked);
+    setIsAllBookmarksSeleted(true);
     if(e.target.checked){
     let allSelectedBookMarksId = []
     filteredCollection.timelines.map(timeline=>allSelectedBookMarksId.push(timeline._id))
     setSelectedBookmarks(allSelectedBookMarksId);
+  }else{
+    setIsAllBookmarksSeleted(false);
+    setSelectedBookmarks([]);
+  }
+}
+
+
+  // Bookmark Select handler
+  const addSelectedBookmarks = (id) =>{
+    // Not searched anyththg
+    if(filteredCollection.timelines.length===collection.timelines.length){
+      let newSelectedBookmarks = [...selectedBookmarks];
+      newSelectedBookmarks.push(id);
+      setSelectedBookmarks(newSelectedBookmarks);
+      // console.log(newSelectedBookmarks);
     }else{
-      setSelectedBookmarks([]);
+
+    }
+    checkIfAllBookmarskIsSelected();
+  }
+
+  // Bookmark Unselect Handler
+  const removeBookBarkFromSelectedList = (id) =>{
+    // For example all the bookamarks is seletected then after
+    // unselecting one bookmark, all bookamarks is no selected to make it false
+    if(isAllBookmarksSeleted) setIsAllBookmarksSeleted(false);
+    setSelectedBookmarks(prevData=>prevData.filter(prevId=>id!=prevId)) ; 
+  }
+
+  const checkIfAllBookmarskIsSelected = () =>{
+    console.log(selectedBookmarks.length,selectedBookmarks);
+    if(selectedBookmarks.length + 1 === collection.timelines.length){
+      setIsAllBookmarksSeleted(true);
+    }else{
+      console.log("hello");
+      setIsAllBookmarksSeleted(false);
     }
   }
  
@@ -247,8 +291,8 @@ const Bookmarks = ({ user, handleSetUser, windowWidth }) => {
               <PageLoader />
             </div>
           ) : collection.timelines && collection.timelines.length > 0 ? (
-            <div className="w-full h-[calc(100%-20px)] py-4 overflow-y-scroll scrollbar-hide">
-              <div className="w-[90%] h-[calc(100%-18px)] mx-auto space-y-2">
+            <div className="w-full h-[calc(100%-16px)] py-4 overflow-y-scroll scrollbar-hide">
+              <div className="w-[90%] h-[calc(100%-16px)] mx-auto space-y-2">
                 {filteredCollection.timelines.map((timeline) => (
                   <BookmarkItem
                     key={timeline._id}
@@ -261,9 +305,11 @@ const Bookmarks = ({ user, handleSetUser, windowWidth }) => {
                     user={visitedUser}
                     clickedId={clickedId}
                     setClickedId={setClickedId}
-                    setSelectedBookmarks={setSelectedBookmarks}
                     isAllBookmarksSeleted={isAllBookmarksSeleted}
                     isStillOneBookmarkSelected = {isStillOneBookmarkSelected}
+                    isSelectedAlready={selectedBookmarks.findIndex(selectedBookmark => selectedBookmark === timeline._id)}
+                    onSelectedBookmark={addSelectedBookmarks}
+                    onUnSelectBookamrk={removeBookBarkFromSelectedList}
                   />
                 ))}
               </div>
