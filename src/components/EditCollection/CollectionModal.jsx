@@ -3,7 +3,7 @@ import { Dialog } from "@headlessui/react";
 import { motion, AnimatePresence } from "framer-motion";
 import Input, { Select } from "./InputEditCollection";
 import Loader from "../Loader/Loader";
-import Modal from "../UI/Modal/Modal";
+import Modal from "../Modal/Modal";
 export const CollectionModal = ({
   isOpen,
   setIsOpen,

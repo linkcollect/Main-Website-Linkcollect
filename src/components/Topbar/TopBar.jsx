@@ -13,7 +13,7 @@ import defultCollectionImage from "../../assets/defaultCollectio.svg";
 import editIcon from "../../assets/edit.svg";
 import addIcon from "../../assets/add.svg";
 import deleteIcon from "../../assets/delete2.svg";
-import Tag from "../UI/Tag/Tag";
+import Tag from "../Tag/Tag";
 import SortByIcon from '../../assets/sortBy.svg'
 
 // Utilites/Fuctions Import
