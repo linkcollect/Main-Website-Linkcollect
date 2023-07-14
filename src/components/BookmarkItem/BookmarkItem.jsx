@@ -5,7 +5,6 @@ import React, { useRef, useState, useEffect } from "react";
 import copyIcon from "../../assets/copyIcon.svg";
 import menuIcon from "../../assets/3dot.svg";
 import redirectIcon from "../../assets/redirectIcon.svg";
-import noteIcon from "../../assets/note.svg";
 import approveIcon from "../../assets/approve.svg";
 import bookmarkDefalutIcon from "../../assets/bookmarkDefault.svg";
 
@@ -20,28 +19,40 @@ const BookmarkItem = ({
   windowWidth,
   updatedAt,
   user,
-  isOneChecked,
-  setIsOneChecked,
-  checkedItems,
-  setCheckedItems,
-  setClickedId,
   clickedId,
+  setClickedId,
+  setSelectedBookmarks,
+  isAllBookmarksSeleted,
+  isStillOneBookmarkSelected,
+
 }) => {
   // to see if checked or not
   const [checked, setChecked] = useState(false);
+
+  useEffect(()=>{
+    if(!checked && isAllBookmarksSeleted){
+      setChecked(true);
+    }else 
+    // If all items get unselected there is no items is remaining
+    if(checked && !isStillOneBookmarkSelected){
+      setChecked(false);
+    }
+  },[isAllBookmarksSeleted])
 
 
   const copyRef = useRef();
 
   const handleCheck = () => {
     setChecked(!checked);
-    setIsOneChecked(true);
-    if (!checked) setCheckedItems(checkedItems + 1);
-    else setCheckedItems(checkedItems - 1);
+    if (!checked) setSelectedBookmarks(prev=>[...prev,id])
+    else {
+
+      setSelectedBookmarks(prevData=>prevData.filter(prevId=>id!=prevId)) ; 
+      // ifOneGetUnSelectedHandler();
+      
+    }
   };
-  useEffect(() => {
-    if (checkedItems === 0) setIsOneChecked(false);
-  }, [checkedItems, setIsOneChecked]);
+  
 
   const onCopy = () => {
     if (copyRef) copyRef.current.src = approveIcon;
@@ -51,17 +62,16 @@ const BookmarkItem = ({
     }, 1500);
   };
 
-  console.log(clickedId,id);
-
   return (
     <div className="cursor-pointer relative flex items-center justify-between w-full h-[60px] rounded-xl bg-neutral-100 border border-neutral-200  duration-200 transition-all group">
       {/* Note this below input is to be shown to owner only after  implementing state mangement resolve it */}
+      <div className="flex">
       <input
         type="checkbox"
-        className={` cursor-pointer custom-checkbox rounded-md  ${
-          isOneChecked
+        className={` cursor-pointer custom-checkbox rounded-md ${
+          isStillOneBookmarkSelected 
             ? "ml-2"
-            : "opacity-0 group-hover:opacity-100  absolute top-0 -left-1"
+            : "opacity-0 group-hover:opacity-100 absolute top-0 -left-1"
         } `}
         checked={checked}
         onChange={handleCheck}
@@ -97,6 +107,7 @@ const BookmarkItem = ({
               : nameShortner(getOrigin(url), 30)}
           </p>
         </div>
+      </div>
       </div>
 
       {/* Timestamp, Actions: Note, Open Link, Popup menu */}

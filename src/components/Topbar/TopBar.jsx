@@ -36,7 +36,7 @@ const TopBar = ({
 
   return (
     <>
-      <div className="w-full px-[5rem] mt-2 bg-bgPrimary sm:py-4">
+      <div className="w-full mt-2 bg-bgPrimary sm:py-4">
         {/* Actions : Back ,Login , SignUp */}
         <div className="flex justify-between mb-5 bg-bgPrimary sm:mb-2 md:mb-10">
           <div className="flex items-center">
