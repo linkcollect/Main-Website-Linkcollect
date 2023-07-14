@@ -89,15 +89,15 @@ const Sidebar = ({ user, handleSetUser, windowWidth }) => {
 
           {/* Tabs */}
           <div className="flex flex-col items-start justify-start gap-4">
-            <div className="flex flex-row items-center justify-start w-full gap-3 px-2 py-3 rounded-md cursor-pointer bg-primary-50 border-1 ">
+            <NavLink to={'/johndoe'} className="flex flex-row items-center justify-start w-full gap-3 px-2 py-3 rounded-md cursor-pointer bg-primary-50 border-1 ">
               <img src={home} /> <span className="text-base text-[#6166F1] ">Home </span> 
-            </div>
-            <div className="flex flex-row items-center justify-start w-full gap-3 px-2 py-3 rounded-md cursor-pointer hover:bg-primary-50 border-1 ">
-              <img src={navigation} /> Explore{" "}
-            </div>
-            <div className="flex flex-row items-center justify-start w-full gap-3 px-2 py-3 rounded-md cursor-pointer hover:bg-primary-50 border-1 ">
+            </NavLink>
+            <NavLink to={'/explore'} className="flex flex-row items-center justify-start w-full gap-3 px-2 py-3 rounded-md cursor-pointer hover:bg-primary-50 border-1 ">
+              <img src={navigation} /> Explore
+            </NavLink>
+            <NavLink to={'/saved'} className="flex flex-row items-center justify-start w-full gap-3 px-2 py-3 rounded-md cursor-pointer hover:bg-primary-50 border-1 ">
               <img src={bookmark} /> Saved Collection
-            </div>
+            </NavLink>
             <NavLink to={'/settings'} className={`flex flex-row justify-start gap-3 items-center w-full ${({isActive})=>isActive? 'bg-primary-50': ''} hover:bg-[#DADBFF] cursor-pointer border-1 rounded-md py-3 px-2 `}>
               <img src={settings} /> Settings
             </NavLink>

@@ -15,6 +15,9 @@ import Home from "./pages/Home";
 import jwt from "jsonwebtoken"
 import Settings from './components/Settings/Settings'
 import { setJwtInRequestHeader } from "./api-services/httpService";
+import Explore from "./pages/Explore";
+import SavedCollection from './pages/SavedCollection';
+
 function App() {
   const [user,setUser] = useState({})
   //for responsiveness
@@ -75,6 +78,9 @@ function App() {
             path="/:username"
             element={<Home user={user} windowWidth={windowWidth} handleSetUser={handleSetUser}/> }
           />
+           <Route path="/explore" element={<Explore/>} />
+           <Route path="/saved" element={<SavedCollection/>} />
+           
           <Route path="/privacy" element={<Privacy />} />
           <Route path="/settings" element={<Settings />} />
           <Route path="/:username/c/:collectionId" element={<Bookmarks user={user} handleSetUser={handleSetUser}  windowWidth={windowWidth}/>} />
