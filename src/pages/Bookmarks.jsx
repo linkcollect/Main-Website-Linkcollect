@@ -9,6 +9,11 @@ import CollectionModal from "../components/EditCollection/CollectionModal";
 import { updateCollection } from "../api-services/collectionService";
 import { Helmet } from "react-helmet";
 import BookmarkItem from "../components/BookmarkItem/BookmarkItem";
+import deleteIcon from "../assets/delete2.svg";
+import moveIcon from "../assets/move.svg";
+import { Delete } from "../components/DeleteModal/Delete";
+import Move from "../components/MoveModal/Move";
+import EcBookamrkModal from "../components/ECBookmarkModal/EcBookamrkModal";
 const Bookmarks = ({ user, handleSetUser, windowWidth }) => {
   const navigation = useNavigate();
   const { collectionId, username } = useParams();
@@ -18,11 +23,9 @@ const Bookmarks = ({ user, handleSetUser, windowWidth }) => {
   const [visitedUser, setVisitedUser] = useState({});
   const [isOpen, setIsOpen] = useState(false);
   const [loading, setLoading] = useState(false);
-
-  const [selectedBookmarks, setSelectedBookmarks] = useState([]);
-  const [isAllBookmarksSeleted, setIsAllBookmarksSeleted] = useState(false);
-  // this is for when i will search something and have selected some bookmarks;
-  const [searchedSelectedBookmarks, setSearchedSelectedBookmarks] = useState(0);
+  const [numberOfSelectedLinkes, setNumberOfSelectedLinks] = useState(0);
+  const [openDeleteModal, setOpenDeleteModal] = useState(false);
+  const [openMoveModal, setOpenMoveModal] = useState(false);
   //For handiling click event
   const [clickedId, setClickedId] = useState(null);
 
@@ -52,6 +55,20 @@ const Bookmarks = ({ user, handleSetUser, windowWidth }) => {
         res.data.data.collections.map((data) =>
           data.isPublic ? publicCollection++ : privateCollection++
         );
+        // Adding isSeleceted filed to the data to manage the data
+        // console.log(collection.data.data);
+        const timeLineWithIsSelectedData = [];
+        // const data = collection.data.data
+        collection.data.data.timelines.map((timeline) => {
+          const newTimeLine = {
+            ...timeline,
+            isSelected: false,
+          };
+          timeLineWithIsSelectedData.push(newTimeLine);
+        });
+
+        collection.data.data.timelines = timeLineWithIsSelectedData;
+
         setCollection(collection.data.data);
         setFilteredCollection(collection.data.data);
         if (user.isLoggedIn) {
@@ -117,6 +134,16 @@ const Bookmarks = ({ user, handleSetUser, windowWidth }) => {
     setIsOpen((prev) => !prev);
   };
 
+  // Delete Modal Open/CLose
+  const deleteModalHandler = () => {
+    setOpenDeleteModal((prev) => !prev);
+  };
+
+  // Move Modal Open/Close
+  const moveModalHandler = () => {
+    setOpenMoveModal((prev) => !prev);
+  };
+
   const handleEditCollection = async () => {
     if (
       data.title === "" ||
@@ -160,78 +187,86 @@ const Bookmarks = ({ user, handleSetUser, windowWidth }) => {
         collection.title.toLowerCase().includes(e.target.value.toLowerCase())
       );
       newfilteredCollection.timelines = newfilteredBookmarks;
-      // if anythng is selcted or not if yes add it to the filteredSeletedBookmarks
     }
-    addToFilterSelectedBookmarks(newfilteredBookmarks);
     setFilteredCollection(newfilteredCollection);
-    //may be after search user has selected something
-    checkIfAllBookmarskIsSelected();
   };
-
-  const addToFilterSelectedBookmarks = (filteredBookmarks) => {
-    let newSearhedSelectedList = 0;
-    console.log(newSearhedSelectedList);
-    if (filteredBookmarks.length > 0) {
-      for (let i = 0; i < filteredBookmarks.length; i++) {
-        for (let j = 0; j < selectedBookmarks.length; j++) {
-          if (filteredBookmarks[i]._id === selectedBookmarks[j])
-            newSearhedSelectedList++;
-        }
-      }
-      setSearchedSelectedBookmarks(newSearhedSelectedList);
-    } else {
-      setSearchedSelectedBookmarks(0);
-    }
-  };
-
   // All bookmarks selected handler
-  const isStillOneBookmarkSelected = selectedBookmarks.length > 0;
   const allBookmarksSelelectHandler = (e) => {
-    console.log(e.target.checked);
-    setIsAllBookmarksSeleted(true);
+    // need to update the filtered list;
+    const newSelectedFilteredTimelines = { ...filteredCollection };
+    const newSelectedCollectionTimlines = { ...collection };
+    let newNumberOfSeletecedLinks = numberOfSelectedLinkes;
     if (e.target.checked) {
-      let allSelectedBookMarksId = [];
-      filteredCollection.timelines.map((timeline) =>
-        allSelectedBookMarksId.push(timeline._id)
-      );
-      setSelectedBookmarks(allSelectedBookMarksId);
+      newSelectedFilteredTimelines.timelines.map((tl) => {
+        if (!tl.isSelected) {
+          tl.isSelected = true;
+          newNumberOfSeletecedLinks++;
+        }
+      });
     } else {
-      setIsAllBookmarksSeleted(false);
-      setSelectedBookmarks([]);
+      newSelectedFilteredTimelines.timelines.map((tl) => {
+        tl.isSelected = false;
+        newNumberOfSeletecedLinks--;
+      });
     }
+    setNumberOfSelectedLinks(newNumberOfSeletecedLinks);
+    newSelectedCollectionTimlines.timelines.map((tlFil) => {
+      const timeLineIndex = newSelectedCollectionTimlines.timelines.findIndex(
+        (tlCol) => tlCol._id === tlFil._id
+      );
+      newSelectedCollectionTimlines.timelines[timeLineIndex].isSelected =
+        tlFil.isSelected;
+    });
+    setFilteredCollection(newSelectedFilteredTimelines);
+    // setCollection(newSelectedCollectionTimlines);
   };
+
+  // Unselect all bookmarks
+  const unSelectAllBookamrks = () => {};
 
   // Bookmark Select handler
   const addSelectedBookmarks = (id) => {
-    let newSelectedBookmarks = [...selectedBookmarks];
-    newSelectedBookmarks.push(id);
-    setSelectedBookmarks(newSelectedBookmarks);
-    // console.log(newSelectedBookmarks);
-    filteredCollection.timelines.length < collection.timelines.length &&
-      setSearchedSelectedBookmarks((prev) => prev + 1);
-    checkIfAllBookmarskIsSelected();
+    setNumberOfSelectedLinks((prev) => prev + 1);
+    toogleSelectBookmarks(id);
   };
 
   // Bookmark Unselect Handler
   const removeBookBarkFromSelectedList = (id) => {
-    // For example all the bookamarks is seletected then after
-    // unselecting one bookmark, all bookamarks is no selected to make it false
-    if (isAllBookmarksSeleted) setIsAllBookmarksSeleted(false);
-    setSelectedBookmarks((prevData) =>
-      prevData.filter((prevId) => id != prevId)
-    );
-    filteredCollection.timelines.length < collection.timelines.length &&
-      setSearchedSelectedBookmarks((prev) => prev - 1);
+    toogleSelectBookmarks(id);
+    setNumberOfSelectedLinks((prev) => prev - 1);
   };
 
-  const checkIfAllBookmarskIsSelected = () => {
-    // console.log(selectedBookmarks.length,selectedBookmarks);
-    if (selectedBookmarks.length + 1 === collection.timelines.length) {
-      setIsAllBookmarksSeleted(true);
-    } else {
-      setIsAllBookmarksSeleted(false);
-    }
+  // Bookamrk select/unselect toggler
+  const toogleSelectBookmarks = (id) => {
+    let newCollection = { ...collection };
+    let newfilteredCollection = { ...filteredCollection };
+    let indexToBeSelected = newfilteredCollection.timelines.findIndex(
+      (timeline) => timeline._id === id
+    );
+    newfilteredCollection.timelines[indexToBeSelected].isSelected =
+      newfilteredCollection.timelines[indexToBeSelected].isSelected
+        ? false
+        : true;
+
+    let indexToBeSelectedInOriginal = newCollection.timelines.findIndex(
+      (timeline) => timeline._id === id
+    );
+    newCollection.timelines[indexToBeSelectedInOriginal].isSelected =
+      newfilteredCollection.timelines[indexToBeSelected].isSelected;
+
+    setFilteredCollection(newfilteredCollection);
+    setCollection(newCollection);
   };
+
+  const getNumberOfFilterdSelectedList = () => {
+    let cnt = 0;
+    collection.timelines &&
+      filteredCollection.timelines.map((tl) => {
+        if (tl.isSelected) cnt++;
+      });
+    return cnt;
+  };
+  const numberOfSelectedLinksFromFilter = getNumberOfFilterdSelectedList();
 
   // For helmet purposes
   const { title, description } = collection;
@@ -258,7 +293,25 @@ const Bookmarks = ({ user, handleSetUser, windowWidth }) => {
         loading={loading}
         windowWidth={windowWidth}
       />
+      {/* Delete Modal */}
+      <Delete
+        isOpen={openDeleteModal}
+        onClose={deleteModalHandler}
+        numberOfSelectedLinkes={numberOfSelectedLinkes}
+        nameOfTheCollection={collection?.title}
+      />
 
+      {/* Move Modal */}
+
+      <Move
+        isOpen={openMoveModal}
+        onClose={moveModalHandler}
+        numberOfSelectedLinkes={numberOfSelectedLinkes}
+        nameOfTheCollection={collection?.title}
+      />
+
+      {/* Edit Bookamrk */}
+      {/* <EcBookamrkModal /> */}
       {windowWidth > 800 && (
         <div className="flex-1">
           <Sidebar user={visitedUser} handleSetUser={handleSetUser} />
@@ -283,29 +336,50 @@ const Bookmarks = ({ user, handleSetUser, windowWidth }) => {
             />
           </div>
 
-          {/* Checked Items : Number of CheckItems, Action Select All and Uncheck All */}
-          {selectedBookmarks.length > 0 && (
-            <div className="flex items-center gap-5">
-              {/* Number items and uncheck all */}
-              <div>
-                <input type="checkbox" checked={isStillOneBookmarkSelected} />
-                <span className="ml-1 text-neutral-800">{`${
-                  filteredCollection.timelines?.length ===
-                  collection.timelines.length
-                    ? selectedBookmarks.length
-                    : searchedSelectedBookmarks
-                }/${
-                  filteredCollection.timelines?.length
-                } Links Selected`}</span>
+          {/* Checked Items : Number of CheckItems, Action Select All and Uncheck All, Move and Delete */}
+          {numberOfSelectedLinkes > 0 && (
+            <div className="flex justify-between w-full">
+              {/*  Checked Items : Number of CheckItems, Action Select All and Uncheck All*/}
+              <div className="flex items-center gap-5">
+                {/* Number items and uncheck all */}
+                <div>
+                  <input
+                    type="checkbox"
+                    checked={numberOfSelectedLinkes > 0}
+                    onClick={unSelectAllBookamrks}
+                  />
+                  <span className="ml-1 text-neutral-800">{`${numberOfSelectedLinkes}/${collection.timelines.length}`}</span>
+                </div>
+                {/* Select All */}
+                <div>
+                  <input
+                    type="checkbox"
+                    checked={
+                      numberOfSelectedLinksFromFilter ===
+                      filteredCollection.timelines.length
+                    }
+                    onClick={allBookmarksSelelectHandler}
+                  />
+                  <span className="ml-1 text-neutral-800">Select All</span>
+                </div>
               </div>
-              {/* Select All */}
-              <div>
-                <input
-                  type="checkbox"
-                  checked={isAllBookmarksSeleted}
-                  onClick={allBookmarksSelelectHandler}
-                />
-                <span className="ml-1 text-neutral-800">Select All</span>
+
+              {/* Actions: Move and Delete  */}
+              <div className="flex items-center gap-5">
+                <button
+                  onClick={deleteModalHandler}
+                  className="w-auto px-[7px] py-[6px] flex items-center justify-center bg-neutral-200 border border-neutral-300 rounded-md gap-1"
+                >
+                  <img src={deleteIcon} alt="delete" />
+                  <span>Delete</span>
+                </button>
+                <button
+                  onClick={moveModalHandler}
+                  className="w-auto px-[7px] py-[6px] flex items-center justify-center bg-neutral-200 border border-neutral-300 rounded-md gap-1"
+                >
+                  <img src={moveIcon} alt="move" />
+                  <span>Move</span>
+                </button>
               </div>
             </div>
           )}
@@ -332,11 +406,8 @@ const Bookmarks = ({ user, handleSetUser, windowWidth }) => {
                     user={visitedUser}
                     clickedId={clickedId}
                     setClickedId={setClickedId}
-                    isAllBookmarksSeleted={isAllBookmarksSeleted}
-                    isStillOneBookmarkSelected={isStillOneBookmarkSelected}
-                    isSelectedAlready={selectedBookmarks.findIndex(
-                      (selectedBookmark) => selectedBookmark === timeline._id
-                    )}
+                    isSelected={timeline.isSelected}
+                    isStillOneBookmarkSelected={numberOfSelectedLinkes > 0}
                     onSelectedBookmark={addSelectedBookmarks}
                     onUnSelectBookamrk={removeBookBarkFromSelectedList}
                   />

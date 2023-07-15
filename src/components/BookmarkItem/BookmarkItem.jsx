@@ -21,35 +21,26 @@ const BookmarkItem = ({
   user,
   clickedId,
   setClickedId,
-  isAllBookmarksSeleted,
+  isSelected,
   isStillOneBookmarkSelected,
-  isSelectedAlready,
   onSelectedBookmark,
   onUnSelectBookamrk
 }) => {
   // to see if checked or not
   const [checked, setChecked] = useState(false);
   useEffect(()=>{
-    if(isSelectedAlready>=0 && !checked){
+    if(isSelected){
       setChecked(true);
-    }else
-      if(!checked && isAllBookmarksSeleted){
-        console.log("hello")
-        setChecked(true);
-      }else 
-      // If all items get unselected there is no items is remaining
-      if(checked && !isStillOneBookmarkSelected){
-        console.log("Hello")
-        setChecked(false);
-      }
-  },[isAllBookmarksSeleted])
+    }else{
+      setChecked(false);
+    }
+  },[isSelected])
 
 
   const copyRef = useRef();
 
   const handleCheck = (e) => {
-    
-    if (e.target.checked) {
+    if (!checked) {
       setChecked(true);
       onSelectedBookmark(id);
     }
@@ -58,6 +49,29 @@ const BookmarkItem = ({
       onUnSelectBookamrk(id)
     }
   };
+
+  const handleSelectOnItemClick = (e) =>{
+    // Further operation will work only if any one lick is selected
+    if( !isStillOneBookmarkSelected ){
+      return
+    }
+    //if it is a click from check box should be return
+    if(e.target.type === "checkbox"){
+      return;
+    }
+
+    // Now means it is clicked on the item itself
+    if (!checked) {
+      setChecked(true);
+      onSelectedBookmark(id);
+    }
+    else {
+      setChecked(false);
+      onUnSelectBookamrk(id)
+    }
+  }
+
+  
   
 
   const onCopy = () => {
@@ -69,7 +83,7 @@ const BookmarkItem = ({
   };
 
   return (
-    <div className="cursor-pointer relative flex items-center justify-between w-full h-[60px] rounded-xl bg-neutral-100 border border-neutral-200  duration-200 transition-all group">
+    <div className={`cursor-pointer relative flex items-center justify-between w-full h-[60px] rounded-xl ${checked ? "bg-neutral-300" : "bg-neutral-100"} border border-neutral-200  duration-200 transition-all group`} onClick={handleSelectOnItemClick} >
       {/* Note this below input is to be shown to owner only after  implementing state mangement resolve it */}
       <div className="flex">
       <input
@@ -88,7 +102,7 @@ const BookmarkItem = ({
         <div className="w-[48px] h-[48px] flex items-center justify-center">
           <img
             src={
-              favicon !== "undefined" && favicon != undefined
+              favicon !== "undefined" && favicon !== undefined
                 ? favicon
                 : bookmarkDefalutIcon
             }
@@ -117,14 +131,15 @@ const BookmarkItem = ({
       </div>
 
       {/* Timestamp, Actions: Note, Open Link, Popup menu */}
-      <div className="flex items-center gap-20">
+     <div className="flex items-center gap-[4rem]">
         {/* Timestamp */}
-        <p className="text-xs font-medium whitespace-nowrap  text-neutral-500 ">
+        <p className="text-xs font-medium whitespace-nowrap  text-neutral-500 mr-5">
           Added {fromNow(updatedAt)}
         </p>
 
         {/* Actions: Note, Open Link, Popup menu */}
-        <div className="flex gap-4 mr-2">
+        {/* All actions should work only when all links is not selected */}
+        {!isStillOneBookmarkSelected && <div className="flex gap-4 mr-2">
           <button
             onClick={onCopy}
             className="flex items-center justify-center "
@@ -144,14 +159,14 @@ const BookmarkItem = ({
             />
           </button>
           <div className="relative">
-          <button className="flex items-center" onClick={()=>setClickedId(prev => prev==id ? null : id)}>
+           <button className="flex items-center" onClick={()=>setClickedId(prev => prev===id ? null : id)}>
             <img
               src={menuIcon}
               alt=""
               className="block mx-auto cursor-pointer"
             />
           </button>
-          {clickedId == id &&
+          {clickedId === id  &&
                   <div className="w-[188px] rounded border absolute z-[9990] bottom-[-184px] transition-all duration-500 right-0 border-neutral-300 p-3 flex items-start justify-center flex-col gap-2 bg-neutral-100 ">
                     <p className="text-base font-normal text-neutral-800" onClick={()=>setClickedId(null)}>Edit</p>
                     <hr className="w-full border border-neutral-300" />
@@ -163,7 +178,7 @@ const BookmarkItem = ({
                   </div>
                 }
           </div>
-        </div>
+        </div>}
       </div>
     </div>
   );
