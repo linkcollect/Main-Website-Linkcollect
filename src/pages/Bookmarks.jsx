@@ -13,7 +13,7 @@ import deleteIcon from "../assets/delete2.svg";
 import moveIcon from "../assets/move.svg";
 import { Delete } from "../components/DeleteModal/Delete";
 import Move from "../components/MoveModal/Move";
-// import EcBookamrkModal from "../components/ECBookmarkModal/EcBookamrkModal";
+import EcBookamrkModal from "../components/ECBookmarkModal/EcBookamrkModal";
 const Bookmarks = ({ user, handleSetUser, windowWidth }) => {
   const navigation = useNavigate();
   const { collectionId, username } = useParams();
@@ -311,7 +311,7 @@ const Bookmarks = ({ user, handleSetUser, windowWidth }) => {
       />
 
       {/* Edit Bookamrk */}
-      {/* <EcBookamrkModal /> */}
+      <EcBookamrkModal isOpen={false} onClose={()=>{}} isEditing={false} name={"Hello"} link="hello"/>
       {windowWidth > 800 && (
         <div className="flex-1">
           <Sidebar user={visitedUser} handleSetUser={handleSetUser} />
