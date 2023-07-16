@@ -1,42 +1,48 @@
 import React, { useState, useEffect } from "react";
 import Sidebar from "../components/Sidebar/Sidebar";
-import BookmarkItems from "../components/BookmarkItem/BookmarkItems";
 import TopBar from "../components/Topbar/TopBar";
 import { useParams, useNavigate } from "react-router-dom";
 import { getCollection } from "../api-services/collectionService";
 import PageLoader from "../components/Loader/PageLoader";
 import { getByUsername } from "../api-services/userService";
-import Modal from "../components/EditCollection/Modal";
+import CollectionModal from "../components/EditCollection/CollectionModal";
 import { updateCollection } from "../api-services/collectionService";
 import { Helmet } from "react-helmet";
-import defaultCollectionImage from '../assets/defaultCollectio.png'
-import BookmarkItemsV2 from "../components/BookmarkItem/BookmarkItemsV2";
+import BookmarkItem from "../components/BookmarkItem/BookmarkItem";
+import deleteIcon from "../assets/delete2.svg";
+import moveIcon from "../assets/move.svg";
+import { Delete } from "../components/DeleteModal/Delete";
+import Move from "../components/MoveModal/Move";
+import EcBookamrkModal from "../components/ECBookmarkModal/EcBookamrkModal";
 const Bookmarks = ({ user, handleSetUser, windowWidth }) => {
   const navigation = useNavigate();
   const { collectionId, username } = useParams();
   const [collection, setCollection] = useState([]);
-  const [filteredCollection, setFilteredCollection] = useState([])
+  const [filteredCollection, setFilteredCollection] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [visitedUser, setVisitedUser] = useState({});
   const [isOpen, setIsOpen] = useState(false);
-  const [loading, setLoading] = useState(false)
-  const [isOneChecked, setIsOneChecked] = useState(false)
-  const[checkedItems,setCheckedItems]=useState(0)
+  const [loading, setLoading] = useState(false);
+  const [numberOfSelectedLinkes, setNumberOfSelectedLinks] = useState(0);
+  const [openDeleteModal, setOpenDeleteModal] = useState(false);
+  const [openMoveModal, setOpenMoveModal] = useState(false);
+  //For handiling click event
+  const [clickedId, setClickedId] = useState(null);
 
   //edit collection
   const [data, setData] = useState({
-    title: '',
-    privacy: '',
-    description: ''
-  })
+    title: "",
+    privacy: "",
+    description: "",
+  });
   const [image, setImage] = useState();
   const onInput = (e) => {
     e.preventDefault();
-    setData(state => ({ ...state, [e.target.name]: e.target.value }));
+    setData((state) => ({ ...state, [e.target.name]: e.target.value }));
   };
   const onInputFile = (e) => {
     e.preventDefault();
-    setImage(e.target.files[0])
+    setImage(e.target.files[0]);
   };
   useEffect(() => {
     setIsLoading(true);
@@ -46,9 +52,25 @@ const Bookmarks = ({ user, handleSetUser, windowWidth }) => {
         const collection = await getCollection(collectionId);
         let publicCollection = 0;
         let privateCollection = 0;
-        res.data.data.collections.map((data) => (data.isPublic ? publicCollection++ : privateCollection++));
+        res.data.data.collections.map((data) =>
+          data.isPublic ? publicCollection++ : privateCollection++
+        );
+        // Adding isSeleceted filed to the data to manage the data
+        // console.log(collection.data.data);
+        const timeLineWithIsSelectedData = [];
+        // const data = collection.data.data
+        collection.data.data.timelines.map((timeline) => {
+          const newTimeLine = {
+            ...timeline,
+            isSelected: false,
+          };
+          timeLineWithIsSelectedData.push(newTimeLine);
+        });
+
+        collection.data.data.timelines = timeLineWithIsSelectedData;
+
         setCollection(collection.data.data);
-        setFilteredCollection(collection.data.data)
+        setFilteredCollection(collection.data.data);
         if (user.isLoggedIn) {
           if (username === user.username) {
             //Means Loggedin user visintig their own profile so no need of fetching the data of the user
@@ -60,8 +82,8 @@ const Bookmarks = ({ user, handleSetUser, windowWidth }) => {
               link: {
                 publicCollection,
                 privateCollection,
-              }
-            })
+              },
+            });
           } else {
             // Loggedin user has Vistied others profile so need to get the user info
             // api call
@@ -72,8 +94,8 @@ const Bookmarks = ({ user, handleSetUser, windowWidth }) => {
               link: {
                 publicCollection,
                 privateCollection,
-              }
-            })
+              },
+            });
           }
         }
         // Not loogedIn
@@ -85,19 +107,16 @@ const Bookmarks = ({ user, handleSetUser, windowWidth }) => {
             link: {
               publicCollection,
               privateCollection,
-            }
-          })
+            },
+          });
         }
 
         setIsLoading(false);
-
       } catch (error) {
         setIsLoading(false);
       }
-
-    }
+    };
     getData();
-
   }, []);
 
   // Setting initial values to edit collection
@@ -106,15 +125,33 @@ const Bookmarks = ({ user, handleSetUser, windowWidth }) => {
       ...data,
       title: collection.title,
       description: collection.description,
-      privacy: collection.isPublic ? 'public' : 'private'
-    })
-  }, [collection])
+      privacy: collection.isPublic ? "public" : "private",
+    });
+  }, [collection]);
   //edit collection
-  const close = () => setIsOpen(false)
-  const open = () => setIsOpen(true)
+
+  const editCollectionModalOpener = () => {
+    setIsOpen((prev) => !prev);
+  };
+
+  // Delete Modal Open/CLose
+  const deleteModalHandler = () => {
+    setOpenDeleteModal((prev) => !prev);
+  };
+
+  // Move Modal Open/Close
+  const moveModalHandler = () => {
+    setOpenMoveModal((prev) => !prev);
+  };
+
   const handleEditCollection = async () => {
-    if (data.title === "" || data.title.length > 40 || data.description.length > 240) return
-    setLoading(true)
+    if (
+      data.title === "" ||
+      data.title.length > 40 ||
+      data.description.length > 240
+    )
+      return;
+    setLoading(true);
     try {
       const form = new FormData();
       form.append("title", data.title);
@@ -126,17 +163,13 @@ const Bookmarks = ({ user, handleSetUser, windowWidth }) => {
         form.append("image", image);
       }
       const response = await updateCollection(collectionId, form);
-      setCollection(response.data.data)
-      // Checking for collections
-      // console.log(response.data.data)
-    } catch (error) {
-
-    }
-    setImage(undefined)
-    setData(data => ({ ...data, title: '', description: '', privacy: '' }))
-    setIsOpen(false)
-    setLoading(false)
-  }
+      setCollection(response.data.data);
+    } catch (error) {}
+    setImage(undefined);
+    setData((data) => ({ ...data, title: "", description: "", privacy: "" }));
+    setIsOpen(false);
+    setLoading(false);
+  };
 
   const backHandler = (e) => {
     e.preventDefault();
@@ -148,22 +181,98 @@ const Bookmarks = ({ user, handleSetUser, windowWidth }) => {
     // As we need to search in global collections
     const tempCollection = { ...collection };
     let newfilteredCollection = tempCollection;
-    let newfilteredBookmarks = []
+    let newfilteredBookmarks = [];
     if (e.target.value !== "") {
       newfilteredBookmarks = tempCollection.timelines.filter((collection) =>
         collection.title.toLowerCase().includes(e.target.value.toLowerCase())
       );
       newfilteredCollection.timelines = newfilteredBookmarks;
     }
-    setFilteredCollection(newfilteredCollection)
+    setFilteredCollection(newfilteredCollection);
+  };
+  // All bookmarks selected handler
+  const allBookmarksSelelectHandler = (e) => {
+    // need to update the filtered list;
+    const newSelectedFilteredTimelines = { ...filteredCollection };
+    const newSelectedCollectionTimlines = { ...collection };
+    let newNumberOfSeletecedLinks = numberOfSelectedLinkes;
+    if (e.target.checked) {
+      newSelectedFilteredTimelines.timelines.map((tl) => {
+        if (!tl.isSelected) {
+          tl.isSelected = true;
+          newNumberOfSeletecedLinks++;
+        }
+      });
+    } else {
+      newSelectedFilteredTimelines.timelines.map((tl) => {
+        tl.isSelected = false;
+        newNumberOfSeletecedLinks--;
+      });
+    }
+    setNumberOfSelectedLinks(newNumberOfSeletecedLinks);
+    newSelectedCollectionTimlines.timelines.map((tlFil) => {
+      const timeLineIndex = newSelectedCollectionTimlines.timelines.findIndex(
+        (tlCol) => tlCol._id === tlFil._id
+      );
+      newSelectedCollectionTimlines.timelines[timeLineIndex].isSelected =
+        tlFil.isSelected;
+    });
+    setFilteredCollection(newSelectedFilteredTimelines);
+    // setCollection(newSelectedCollectionTimlines);
   };
 
+  // Unselect all bookmarks
+  const unSelectAllBookamrks = () => {};
+
+  // Bookmark Select handler
+  const addSelectedBookmarks = (id) => {
+    setNumberOfSelectedLinks((prev) => prev + 1);
+    toogleSelectBookmarks(id);
+  };
+
+  // Bookmark Unselect Handler
+  const removeBookBarkFromSelectedList = (id) => {
+    toogleSelectBookmarks(id);
+    setNumberOfSelectedLinks((prev) => prev - 1);
+  };
+
+  // Bookamrk select/unselect toggler
+  const toogleSelectBookmarks = (id) => {
+    let newCollection = { ...collection };
+    let newfilteredCollection = { ...filteredCollection };
+    let indexToBeSelected = newfilteredCollection.timelines.findIndex(
+      (timeline) => timeline._id === id
+    );
+    newfilteredCollection.timelines[indexToBeSelected].isSelected =
+      newfilteredCollection.timelines[indexToBeSelected].isSelected
+        ? false
+        : true;
+
+    let indexToBeSelectedInOriginal = newCollection.timelines.findIndex(
+      (timeline) => timeline._id === id
+    );
+    newCollection.timelines[indexToBeSelectedInOriginal].isSelected =
+      newfilteredCollection.timelines[indexToBeSelected].isSelected;
+
+    setFilteredCollection(newfilteredCollection);
+    setCollection(newCollection);
+  };
+
+  const getNumberOfFilterdSelectedList = () => {
+    let cnt = 0;
+    collection.timelines &&
+      filteredCollection.timelines.map((tl) => {
+        if (tl.isSelected) cnt++;
+      });
+    return cnt;
+  };
+  const numberOfSelectedLinksFromFilter = getNumberOfFilterdSelectedList();
 
   // For helmet purposes
-  const {title, description} = collection
+  const { title, description } = collection;
+
   return (
-    
-      <div className="flex w-full min-h-screen bg-bgSecondary">
+    <div className="flex w-full min-h-screen ">
       <Helmet>
         <title>{collection.title}</title>
 
@@ -172,90 +281,150 @@ const Bookmarks = ({ user, handleSetUser, windowWidth }) => {
         <meta property="og:title" content={title}/>
         <meta property="og:description" content={description}/> */}
       </Helmet>
+      {/* Collection Edit Modal */}
+      <CollectionModal
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
+        inputHandler={onInput}
+        imageHandler={onInputFile}
+        image={image}
+        data={data}
+        onSubmit={handleEditCollection}
+        loading={loading}
+        windowWidth={windowWidth}
+      />
+      {/* Delete Modal */}
+      <Delete
+        isOpen={openDeleteModal}
+        onClose={deleteModalHandler}
+        numberOfSelectedLinkes={numberOfSelectedLinkes}
+        nameOfTheCollection={collection?.title}
+      />
 
+      {/* Move Modal */}
 
-        {windowWidth > 800 && (
-          <div className="flex-1">
-            <Sidebar user={visitedUser} handleSetUser={handleSetUser} />
-          </div>
-        )}
-        <div className="flex flex-col w-full h-screen overflow-y-hidden">
-          <Modal
-            isOpen={isOpen}
-            setIsOpen={setIsOpen}
-            inputHandler={onInput}
-            imageHandler={onInputFile}
-            image={image}
-            data={data}
-            onSubmit={handleEditCollection}
-            loading={loading}
-            windowWidth={windowWidth}
-          />
-          <div className="flex items-center justify-center w-full pt-2 mx-auto bg-bgPrimary ">
+      <Move
+        isOpen={openMoveModal}
+        onClose={moveModalHandler}
+        numberOfSelectedLinkes={numberOfSelectedLinkes}
+        nameOfTheCollection={collection?.title}
+      />
+
+      {/* Edit Bookamrk */}
+      <EcBookamrkModal isOpen={false} onClose={()=>{}} isEditing={false} name={"Hello"} link="hello"/>
+      {windowWidth > 800 && (
+        <div className="flex-1">
+          <Sidebar user={visitedUser} handleSetUser={handleSetUser} />
+        </div>
+      )}
+
+      <div className="flex flex-col w-full h-screen overflow-y-hidden mx-auto">
+        <div className="px-[5rem]">
+          {/* Header : Collection Details , Actions */}
+          <div className="flex items-center justify-center w-full pt-2 mx-auto">
             <TopBar
               windowWidth={windowWidth}
               onBack={backHandler}
               collectionName={collection?.title}
-              collectionDesc={
-                collection?.description
-              }
+              collectionDesc={collection?.description}
               noOfLinks={collection.timelines?.length}
               image={collection?.image}
               isLoggedIn={user.isLoggedIn}
               isOwner={visitedUser.isOwner}
               searchHnadeler={searchHnadeler}
-              isOpen={isOpen}
-              close={close}
-              open={open}
+              editCollectionModalOpener={editCollectionModalOpener}
             />
           </div>
-          <div className="w-full h-[65%] mx-auto">
-            {isLoading ? (
-              <div className="flex items-center justify-center w-full h-full">
-                <PageLoader />
-              </div>
-            ) : collection.timelines && collection.timelines.length > 0 ? (
-              <div className="w-full h-full py-4 mx-auto overflow-y-scroll scrollbar-hide">
-                <div className="w-[90%] mx-auto space-y-2">
-                  {filteredCollection.timelines.map((timeline) => (
-                    // <BookmarkItems
-                    //   key={timeline._id}
-                    //   id={timeline._id}
-                    //   name={timeline.title}
-                    //   url={timeline.link}
-                    //   favicon={timeline.favicon}
-                    //   windowWidth={windowWidth}
-                    //   updatedAt={timeline.updatedAt}
-                    //   user={visitedUser}
-                    // />
-                    <BookmarkItemsV2
-                      key={timeline._id}
-                      id={timeline._id}
-                      name={timeline.title}
-                      url={timeline.link}
-                      favicon={timeline.favicon}
-                      windowWidth={windowWidth}
-                      updatedAt={timeline.updatedAt}
-                      user={visitedUser}
-                      isOneChecked={isOneChecked}
-                      setIsOneChecked={setIsOneChecked}
-                      checkedItems={checkedItems}
-                      setCheckedItems={setCheckedItems}
-                    />
-                  ))}
+
+          {/* Checked Items : Number of CheckItems, Action Select All and Uncheck All, Move and Delete */}
+          {numberOfSelectedLinkes > 0 && (
+            <div className="flex justify-between w-full">
+              {/*  Checked Items : Number of CheckItems, Action Select All and Uncheck All*/}
+              <div className="flex items-center gap-5">
+                {/* Number items and uncheck all */}
+                <div>
+                  <input
+                    type="checkbox"
+                    checked={numberOfSelectedLinkes > 0}
+                    onClick={unSelectAllBookamrks}
+                  />
+                  <span className="ml-1 text-neutral-800">{`${numberOfSelectedLinkes}/${collection.timelines.length}`}</span>
+                </div>
+                {/* Select All */}
+                <div>
+                  <input
+                    type="checkbox"
+                    checked={
+                      numberOfSelectedLinksFromFilter ===
+                      filteredCollection.timelines.length
+                    }
+                    onClick={allBookmarksSelelectHandler}
+                  />
+                  <span className="ml-1 text-neutral-800">Select All</span>
                 </div>
               </div>
-            ) : (
-              <div className="flex flex-col items-center justify-center w-full h-full">
-                <p className="mb-5 text-5xl text-textPrimary">
-                  No bookmarks Found
-                </p>
-                <p className="text-textPrimary">You can add it from extension</p>
+
+              {/* Actions: Move and Delete  */}
+              <div className="flex items-center gap-5">
+                <button
+                  onClick={deleteModalHandler}
+                  className="w-auto px-[7px] py-[6px] flex items-center justify-center bg-neutral-200 border border-neutral-300 rounded-md gap-1"
+                >
+                  <img src={deleteIcon} alt="delete" />
+                  <span>Delete</span>
+                </button>
+                <button
+                  onClick={moveModalHandler}
+                  className="w-auto px-[7px] py-[6px] flex items-center justify-center bg-neutral-200 border border-neutral-300 rounded-md gap-1"
+                >
+                  <img src={moveIcon} alt="move" />
+                  <span>Move</span>
+                </button>
               </div>
-            )}
-          </div>
+            </div>
+          )}
+        </div>
+
+        {/* Bookmarks Container */}
+        <div className="w-full h-[65%] mx-auto">
+          {isLoading ? (
+            <div className="flex items-center justify-center w-full h-full">
+              <PageLoader />
+            </div>
+          ) : collection.timelines && collection.timelines.length > 0 ? (
+            <div className="w-full h-[calc(100%-16px)] py-4 overflow-y-scroll scrollbar-hide">
+              <div className="w-[90%] h-[calc(100%-16px)] mx-auto space-y-2">
+                {filteredCollection.timelines.map((timeline) => (
+                  <BookmarkItem
+                    key={timeline._id}
+                    id={timeline._id}
+                    name={timeline.title}
+                    url={timeline.link}
+                    favicon={timeline.favicon}
+                    windowWidth={windowWidth}
+                    updatedAt={timeline.updatedAt}
+                    user={visitedUser}
+                    clickedId={clickedId}
+                    setClickedId={setClickedId}
+                    isSelected={timeline.isSelected}
+                    isStillOneBookmarkSelected={numberOfSelectedLinkes > 0}
+                    onSelectedBookmark={addSelectedBookmarks}
+                    onUnSelectBookamrk={removeBookBarkFromSelectedList}
+                  />
+                ))}
+              </div>
+            </div>
+          ) : (
+            <div className="flex flex-col items-center justify-center w-full h-full">
+              <p className="mb-5 text-5xl text-textPrimary">
+                No bookmarks Found
+              </p>
+              <p className="text-textPrimary">You can add it from extension</p>
+            </div>
+          )}
         </div>
       </div>
+    </div>
   );
 };
 

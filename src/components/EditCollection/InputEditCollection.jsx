@@ -1,7 +1,7 @@
 import React from "react";
 
 const classMapper = {
-    fileClass: `block w-full text-sm text-textPrimary bg-bgSecodary border border-bgGrey rounded-md py-2 px-3
+    fileClass: `block w-full text-sm border-2 border-primary-300 rounded-md py-2 px-3
     file:mr-4 file:py-0 file:px-4 file:py-1
     file:rounded-md file:border-0
     file:text-[16px] file:font-light
@@ -10,7 +10,7 @@ const classMapper = {
     file:cursor-pointer
     `,
     textClass:
-    'w-full h-auto px-4 py-2  bg-inputBackground border-solid border-[1px] border-inputBorder rounded-[10px] font-normal text-base text-textPrimary focus:outline-none'
+    'block w-full p-[0.638rem] text-base font-normal border-2 rounded-lg border-primary-300 text-neutral-800 focus:outline-none placeholder:text-neutral-400'
 };
 
 const Input = ({
@@ -25,7 +25,7 @@ const Input = ({
 }) => {
     return (
         <label className="block">
-            <span className="text-textSecondary flex justify-between items-end  text-[16px] font-light mb-[3px]">
+            <span className="text-neutral-700 flex justify-between items-end  text-[16px] font-light mb-[3px]">
                 <p>{label}</p>
                 {type !== "file" && <small className="text-xs"><span className={`${value?.length > required ? "text-danger" : ""}`}>{value?.length}</span>/{required}</small>}
             </span>
