@@ -1,39 +1,39 @@
 
 import React, { useEffect, useState } from "react";
 import Collectionitem from "../components/Collectionitem/Collectionitem";
-import Search from "../components/Search/Search";
-import Sidebar from "../components/Sidebar/Sidebar";
-import PageLoader from "../components/Loader/PageLoader";
-import { Link, useParams } from "react-router-dom";
-import { dataSortByType } from "../utils/utils";
-import { getByUsername } from "../api-services/userService";
-import jwt from "jsonwebtoken"
-import BookmarkItems from "../components/BookmarkItem/BookmarkItems";
-import { deleteCollection } from "../api-services/collectionService";
-import approve from '../assets/approve.svg'
-import { useRef } from "react";
-import paste from '../assets/paste.svg'
-import { Helmet } from "react-helmet";
-import CollectionitemV2 from "../components/Collectionitem/CollectionCardV2";
-import SortBy from '../assets/sortBy.svg'
-import Plus from '../assets/plus.svg'
-import NavbarV2 from "../components/NavbarV2/NavbarV2";
-const Home = ({ user, handleSetUser, windowWidth }) => {
-  const [tab, setTab] = useState(1);
-  const { username } = useParams();
+  import Search from "../components/Search/Search";
+  import Sidebar from "../components/Sidebar/Sidebar";
+  import PageLoader from "../components/Loader/PageLoader";
+  import { Link, useParams } from "react-router-dom";
+  import { dataSortByType } from "../utils/utils";
+  import { getByUsername } from "../api-services/userService";
+  import jwt from "jsonwebtoken"
+  import BookmarkItems from "../components/BookmarkItem/BookmarkItems";
+  import { deleteCollection } from "../api-services/collectionService";
+  import approve from '../assets/approve.svg'
+  import { useRef } from "react";
+  import paste from '../assets/paste.svg'
+  import { Helmet } from "react-helmet";
+  import CollectionitemV2 from "../components/Collectionitem/CollectionCardV2";
+  import SortBy from '../assets/sortBy.svg'
+  import Plus from '../assets/plus.svg'
+  import NavbarV2 from "../components/NavbarV2/NavbarV2";
+  const Home = ({ user, handleSetUser, windowWidth }) => {
+    const [tab, setTab] = useState(1);
+    const { username } = useParams();
 
-  const [vistiedUser, setVisitiedUser] = useState({})
-  // sort by dropdown
-  const [showDropdown, setShowDropdown] = useState(false)
+    const [vistiedUser, setVisitiedUser] = useState({})
+    // sort by dropdown
+    const [showDropdown, setShowDropdown] = useState(false)
 
-  // gloabl collections
-  const [collections, SetCollections] = useState([]);
+    // gloabl collections
+    const [collections, SetCollections] = useState([]);
 
-  // Filterd/search collection that will be shown
-  const [filteredCollection, setFiltererdCollection] = useState([]);
+    // Filterd/search collection that will be shown
+    const [filteredCollection, setFiltererdCollection] = useState([]);
 
-  // Name of User
-  const [nameOfUser, setNameofUser] = useState('')
+    // Name of User
+    const [nameOfUser, setNameofUser] = useState('')
 
   const [loading, setLoading] = useState(true);
   const copyImageRef = useRef()
