@@ -13,7 +13,7 @@ import Privacy from "./components/PrivacyPolicy/Privacy";
 import Bookmarks from "./pages/Bookmarks";
 import Home from "./pages/Home";
 import jwt from "jsonwebtoken"
-import Settings from './components/Settings/Settings'
+import Settings from './pages/Settings'
 import { setJwtInRequestHeader } from "./api-services/httpService";
 import Explore from "./pages/Explore";
 import SavedCollection from './pages/SavedCollection';
