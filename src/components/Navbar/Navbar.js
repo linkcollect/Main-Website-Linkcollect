@@ -44,7 +44,7 @@ const Navbar = ({ windowWidth }) => {
                 <div className='flex items-center justify-center w-1/2 sm:w-auto'>
                     <div className="flex items-center justify-between w-full gap-3 sm:justify-center sm:w-max md:gap-4 xl:gap-6">
                         <Link to="/login " className='w-[40%]'>
-                            <div className=" w-full max-w-[8.625rem] h-10 cursor-pointer border-solid border-[0.5px] border-primary text-primary flex items-center justify-center md:w-[100px] md:h-[53px] xl:h-[63px] xl:w-[138px]">
+                            <div className=" w-full max-w-[8.625rem] h-10 cursor-pointer border-solid border-[0.5px] border-primary-500 text-primary-500 flex items-center justify-center md:w-[100px] md:h-[53px] xl:h-[63px] xl:w-[138px]">
                                 <button className='w-full text-center mx-auto  sm:w-[161.94px] sm:h-[26px] font-medium md:text-[16px] md:leading-[20px] xl:text-[20.61px] xl:leading-[26px]'>Login</button>
                             </div>
                         </Link>
@@ -54,8 +54,8 @@ const Navbar = ({ windowWidth }) => {
                             </Link>
                         }
                         {windowWidth > 700 &&
-                            <a href='https://chrome.google.com/webstore/detail/linkcollect/knekpacpcgkieomkhhngenjeeokddkif/' target='_blank' rel='noreferrer' className=" w-[110px] h-[53.31px] cursor-pointer  bg-primary flex items-center justify-center md:w-[110px] md:h-[53.31px] xl:h-[63.31px] xl:w-[190px]">
-                                <p id='NavBtn' className='text-center  h-[26px] text-bgPrimary md:text-[16px] xl:text-[17.61px] font-medium'  >Install</p>
+                            <a href='https://chrome.google.com/webstore/detail/linkcollect/knekpacpcgkieomkhhngenjeeokddkif/' target='_blank' rel='noreferrer' className=" w-[110px] h-[53.31px] cursor-pointer  bg-primary-500 flex items-center justify-center md:w-[110px] md:h-[53.31px] xl:h-[63.31px] xl:w-[190px]">
+                                <p id='NavBtn' className='text-center  h-[26px] text-white  md:text-[16px] xl:text-[17.61px] font-medium'  >Install</p>
                             </a>
                         }
                     </div>
