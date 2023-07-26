@@ -15,16 +15,16 @@ const HeroSection = () => {
             <a href='https://chrome.google.com/webstore/detail/linkcollect/knekpacpcgkieomkhhngenjeeokddkif/' 
             target='_blank' 
             rel='noreffer' 
-            className='lexend font-medium text-2xl leading-[2.2rem] text-bgPrimary text-center w-[80%] max-w-[18rem] h-[4.02rem] mx-auto bg-primary flex items-center justify-center my-44 cursor-pointer xl:my-4 xl:text-[28px] xl:leading-[35px] xl:w-[288px] xl:h-[86px]' style={{ boxShadow: `-5px 5px 0px #ADAEFF` }}>
+            className='lexend font-medium text-2xl leading-[2.2rem] text-white text-center w-[80%] max-w-[18rem] h-[4.02rem] mx-auto bg-primary-500 flex items-center justify-center my-44 cursor-pointer xl:my-4 xl:text-[28px] xl:leading-[35px] xl:w-[288px] xl:h-[86px]' style={{ boxShadow: `-5px 5px 0px #ADAEFF` }}>
                 Install Extension
             </a>
             <div className="w-full my-36 relative xl:my-56">
                 <img src={BG} alt="" className='w-full h-full' />
                 {/*will change it to video later*/}
                 <div className='w-[277px] h-[179px] left-[12.5%] top-[-40px]  sm:mx-auto md:w-[450px] md:h-[300px] md:left-[25%] lg:w-[600px] lg:h-[500px] xl:top-[-100px] xl:left-0 xl:w-full xl:h-[620px] flex justify-center absolute'>
-                    <div className='w-[1000px] overflow-hidden block '>
-                    <video src={Vid} className='border-[20px] block border-secondary border-b-0 sm:hidden' autoPlay muted loop/>
-                    <video src={DekstopVid} className='border-[20px] hidden border-secondary border-b-0 sm:block' autoPlay muted loop/>
+                    <div className='w-[1000px] border-[20px] border-primary-200  overflow-hidden block '>
+                    <video src={Vid} className=' block sm:hidden w-[70%]' autoPlay muted loop/>
+                    <video src={DekstopVid} className=' hidden sm:block' autoPlay muted loop/>
                     </div>
                 </div>
             </div>
