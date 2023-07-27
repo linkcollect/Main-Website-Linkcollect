@@ -1,16 +1,40 @@
-import React, { useRef, useState } from "react";
+import React from "react";
 import mainlogo from "../../../assets/mainLogo.svg";
-import { NavLink, useNavigate } from "react-router-dom";
+import { useLocation} from "react-router-dom";
 import { Link } from "react-router-dom";
 import defaultImage from "../../../assets/defaultImage.svg";
 import home from "../../../assets/homeSidebar.svg";
-import bookmark from "../../../assets/bmSidebar.svg";
 import settings from "../../../assets/settingsSidebar.svg";
 import navigation from "../../../assets/navSidebar.svg";
 import energy from "../../../assets/energy.svg";
+import NavbarItem from "./NavbarItem";
 
 const Sidebar = ({ user, handleSetUser, windowWidth }) => {
-  const [showCollections, setShowCollections] = useState(false);
+  const state = useLocation();
+  console.log(state);
+  const menuItem = [
+    {
+      name: "Home",
+      link: "/jhondoe",
+      icon: home,
+    },
+    {
+      name: "Explore",
+      link: "/exlore",
+      icon: navigation,
+    },
+    {
+      name: "Saved Collectoion",
+      link: "/saved",
+      icon: navigation,
+    },
+    {
+      name: "Settings",
+      link: "/settings",
+      icon: settings,
+    },
+  ];
+
   return (
     <aside
       className={` bg-[#F3F3F6] border-r-[1px] border-[#D1D1DB] ${
@@ -24,7 +48,10 @@ const Sidebar = ({ user, handleSetUser, windowWidth }) => {
       >
         {/* Profile Info */}
         <div className="flex flex-col gap-8">
-          <Link to="/" className="flex items-center justify-center w-full py-4 ">
+          <Link
+            to="/"
+            className="flex items-center justify-center w-full py-4 "
+          >
             <img src={mainlogo} alt="" className="w-40 h-10 mx" />
           </Link>
           <div className="w-full border-2  border-[#D1D1DB] rounded-lg py-3 px-3 ">
@@ -34,16 +61,12 @@ const Sidebar = ({ user, handleSetUser, windowWidth }) => {
                 className="object-cover w-full h-full rounded-full"
               />
             </div>
-            <p className="font-bold text-[16px]">
-              Harsh Singh
-            </p>
+            <p className="font-bold text-[16px]">Harsh Singh</p>
 
             <div className="flex flex-col justify-evenly items-start text-base font-normal text-[#4B4C63] gap-2 pt-8">
               <div className="flex flex-row justify-between items-center gap-[118px] text-xs">
                 <p>Link Saved</p>
-                <p className="ml-1">
-                    24
-                </p>
+                <p className="ml-1">24</p>
               </div>
               <div className="flex flex-row items-center justify-between gap-24 text-xs whitespace-nowrap">
                 <p>Total Collection</p>
@@ -54,18 +77,14 @@ const Sidebar = ({ user, handleSetUser, windowWidth }) => {
 
           {/* Tabs */}
           <div className="flex flex-col items-start justify-start gap-4">
-            <NavLink to={'/johndoe'} className="flex flex-row items-center justify-start w-full gap-3 px-2 py-3 rounded-md cursor-pointer bg-primary-50 border-1 ">
-              <img src={home} /> <span className="text-base text-[#6166F1] ">Home </span> 
-            </NavLink>
-            <NavLink to={'/explore'} className="flex flex-row items-center justify-start w-full gap-3 px-2 py-3 rounded-md cursor-pointer hover:bg-primary-50 border-1 ">
-              <img src={navigation} /> Explore
-            </NavLink>
-            <NavLink to={'/saved'} className="flex flex-row items-center justify-start w-full gap-3 px-2 py-3 rounded-md cursor-pointer hover:bg-primary-50 border-1 ">
-              <img src={bookmark} /> Saved Collection
-            </NavLink>
-            <NavLink to={'/settings'} className={`flex flex-row justify-start gap-3 items-center w-full ${({isActive})=>isActive? 'bg-primary-50': ''} hover:bg-[#DADBFF] cursor-pointer border-1 rounded-md py-3 px-2 `}>
-              <img src={settings} /> Settings
-            </NavLink>
+            {menuItem.map(({ name, link, icon }) => (
+              <NavbarItem
+                name={name}
+                link={link}
+                icon={icon}
+                isActive={link === state.pathname}
+              />
+            ))}
           </div>
         </div>
 
