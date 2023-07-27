@@ -1,10 +1,8 @@
 // Package Imports
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-
 // Components Imports
 import Search from "../Search/Search";
-
 // Assets imports
 import backarrow from "../../assets/back-arrow.svg";
 import share from "../../assets/share.svg";
@@ -32,13 +30,11 @@ const TopBar = ({
   editCollectionModalOpener
 }) => {
   const [showDropdown, setShowDropdown] = useState(false);
-
-
   return (
     <>
-      <div className="w-full mt-2 bg-bgPrimary sm:py-4">
-        {/* Actions : Back ,Login , SignUp */}
-        <div className="flex justify-between mb-5 bg-bgPrimary sm:mb-2 md:mb-10">
+      <div className="w-full bg-bgPrimary pb-4">
+        {/* Actions : Back */}
+        <div className="flex justify-between bg-bgPrimary mb-5">
           <div className="flex items-center">
             <button
               onClick={onBack}
@@ -55,24 +51,9 @@ const TopBar = ({
               </Link>
             </div>
           )}
-          {windowWidth > 600 && !isLoggedIn && (
-            <div className="flex space-x-2">
-              <Link
-                to="/login"
-                className="px-3 py-2 text-base border-2 rounded-lg lexend text-primary border-primary sm:px-7 sm:py-2"
-              >
-                Log in
-              </Link>
-              <Link
-                to="/signup"
-                className="px-3 py-2 text-base border-2 rounded-lg lexend bg-primary border-primary sm:px-7 sm:py-2 text-bgPrimary"
-              >
-                Sign up
-              </Link>
-            </div>
-          )}
         </div>
 
+        {/* Collection Inormation */}
         <div className="flex justify-between sm:mt-2 gap-10">
           {/* Collection Details Section */}
           <div className="flex">

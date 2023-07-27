@@ -1,21 +1,10 @@
 import React from 'react'
 import CollectionHeader from '../components/Header/CollectionHeader'
-import Sidebar from '../components/Sidebar/Sidebar'
-import NavbarV2 from '../components/NavbarV2/NavbarV2'
-
-import PageLoader from '../components/Loader/PageLoader'
-import CollectionitemV2 from '../components/Collectionitem/CollectionCardV2'
+import BaseLayout from '../components/Layout/BaseLayout/BaseLayout'
 
 const SavedCollection = () => {
   return (
-    <div>
-    <div className={`flex bg-neutral-50 }`}>
-       <div className={`flex-1`}>
-        <Sidebar/>
-       </div>
-
-        <div className='w-full gap-5 overflow-y-hidden flex-2 max-h-none sm:h-screen'>
-        <NavbarV2/>
+    <BaseLayout>
         <CollectionHeader name={'Saved Collections'}  />
     
     {/* Collection Items */}
@@ -70,9 +59,7 @@ const SavedCollection = () => {
             </div>
           )}
         </div> */}
-        </div>
-    </div>
-    </div>
+        </BaseLayout>
   )
 }
 

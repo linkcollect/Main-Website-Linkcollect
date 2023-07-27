@@ -1,9 +1,8 @@
 import React, { useState } from 'react'
 import Profile from '../components/Settings/Profile';
-import Sidebar from '../components/Sidebar/Sidebar';
-import NavbarV2 from '../components/NavbarV2/NavbarV2';
 import Tab from '../components/Settings/Tab';
 import TabContent from '../components/Settings/TabContent';
+import BaseLayout from '../components/Layout/BaseLayout/BaseLayout';
 const Settings = () => {
   const [activeTab, setActiveTab] = useState('profile');
 
@@ -51,13 +50,7 @@ const Settings = () => {
   ]
 
   return (
-    <div className="flex bg-neutral-50">
-      <div className={`flex-1`}>
-        <Sidebar
-        />
-      </div>
-      <div className='flex flex-col items-start justify-start w-full'>
-        <NavbarV2 />
+    <BaseLayout>
         <div className='flex flex-col items-start justify-start w-full pl-16 gap-y-4'>
           <div className="flex flex-col items-start justify-center w-full gap-6">
             <h1 className="w-36 h-10 font-medium text-[28px] sm:text-[30px]  text-neutral-700 pl-4 sm:pl-0 text-start">Settings,</h1>
@@ -97,8 +90,7 @@ const Settings = () => {
             </div>
           </div>
         </div>
-      </div >
-    </div>
+      </BaseLayout>
   )
 }
 
