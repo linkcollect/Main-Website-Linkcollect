@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import Sidebar from "../components/Sidebar/Sidebar";
 import TopBar from "../components/Topbar/TopBar";
 import { useParams, useNavigate } from "react-router-dom";
 import { getCollection } from "../api-services/collectionService";
@@ -14,6 +13,7 @@ import moveIcon from "../assets/move.svg";
 import { Delete } from "../components/DeleteModal/Delete";
 import Move from "../components/MoveModal/Move";
 import EcBookamrkModal from "../components/ECBookmarkModal/EcBookamrkModal";
+import BaseLayout from "../components/Layout/BaseLayout/BaseLayout";
 const Bookmarks = ({ user, handleSetUser, windowWidth }) => {
   const navigation = useNavigate();
   const { collectionId, username } = useParams();
@@ -272,15 +272,8 @@ const Bookmarks = ({ user, handleSetUser, windowWidth }) => {
   const { title, description } = collection;
 
   return (
-    <div className="flex w-full min-h-screen ">
-      <Helmet>
-        <title>{collection.title}</title>
-
-        {/* below is not working yet but above is !! */}
-        {/* <meta property="og:image" content={defaultCollectionImage} />
-        <meta property="og:title" content={title}/>
-        <meta property="og:description" content={description}/> */}
-      </Helmet>
+    <BaseLayout>
+    <div className="flex w-full min-h-screen">
       {/* Collection Edit Modal */}
       <CollectionModal
         isOpen={isOpen}
@@ -312,16 +305,11 @@ const Bookmarks = ({ user, handleSetUser, windowWidth }) => {
 
       {/* Edit Bookamrk */}
       <EcBookamrkModal isOpen={false} onClose={()=>{}} isEditing={false} name={"Hello"} link="hello"/>
-      {windowWidth > 800 && (
-        <div className="flex-1">
-          <Sidebar user={visitedUser} handleSetUser={handleSetUser} />
-        </div>
-      )}
 
-      <div className="flex flex-col w-full h-screen overflow-y-hidden mx-auto">
-        <div className="px-[5rem]">
+      <div className="flex flex-col w-full h-screen overflow-y-hidden">
+        <div className="px-10">
           {/* Header : Collection Details , Actions */}
-          <div className="flex items-center justify-center w-full pt-2 mx-auto">
+          <div className="flex items-center justify-center w-full pt-2 mx-auto ">
             <TopBar
               windowWidth={windowWidth}
               onBack={backHandler}
@@ -386,14 +374,14 @@ const Bookmarks = ({ user, handleSetUser, windowWidth }) => {
         </div>
 
         {/* Bookmarks Container */}
-        <div className="w-full h-[65%] mx-auto">
+        <div className="w-full h-[60%] mx-auto">
           {isLoading ? (
             <div className="flex items-center justify-center w-full h-full">
               <PageLoader />
             </div>
           ) : collection.timelines && collection.timelines.length > 0 ? (
-            <div className="w-full h-[calc(100%-16px)] py-4 overflow-y-scroll scrollbar-hide">
-              <div className="w-[90%] h-[calc(100%-16px)] mx-auto space-y-2">
+            <div className="w-full h-[calc(100%-55px)] py-4 overflow-y-scroll scrollbar-hide">
+              <div className="w-[100%] h-[calc(100%-65px)] space-y-2 px-10">
                 {filteredCollection.timelines.map((timeline) => (
                   <BookmarkItem
                     key={timeline._id}
@@ -425,6 +413,7 @@ const Bookmarks = ({ user, handleSetUser, windowWidth }) => {
         </div>
       </div>
     </div>
+    </BaseLayout>
   );
 };
 
