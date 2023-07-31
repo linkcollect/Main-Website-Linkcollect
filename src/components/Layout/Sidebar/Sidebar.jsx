@@ -20,7 +20,7 @@ const Sidebar = ({ user, handleSetUser, windowWidth }) => {
     },
     {
       name: "Explore",
-      link: "/exlore",
+      link: "/explore",
       icon: navigation,
     },
     {
