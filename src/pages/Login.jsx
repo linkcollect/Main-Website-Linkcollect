@@ -1,19 +1,19 @@
 import React, { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import jwt from "jsonwebtoken";
 import Banner from "../components/Banner/Banner";
 import mainLogo from "../assets/mainLogo.svg";
 import Input from "../components/Input/Input";
 import GoogleAuthBtn from "../components/GoogleAuthBtn";
 import Loader from "../components/Loader/Loader";
-import { login } from "../api-services/authService";
 import { setJwtInRequestHeader } from "../api-services/httpService";
-import { fileURLToPath } from "url";
-
-const Login = ({ handleSetUser, windowWidth }) => {
+import { useDispatch, useSelector } from "react-redux";
+import { setLoggedInUser } from "../store/Slices/user.slice";
+import { loginAction } from "../store/actions/user.action";
+const Login = ({ windowWidth }) => {
   const location = useLocation();
   const navigate = useNavigate();
-  const [isLogging, setIsLogging] = useState(false);
+  const dispatch  = useDispatch();
+  const auth = useSelector(state=>state.auth);
   const [data, setData] = useState({
     email: '',
     password: ''
@@ -26,32 +26,21 @@ const Login = ({ handleSetUser, windowWidth }) => {
   };
   // For google auth redirect and email verification redirect from server with token in query
   useEffect(() => {
-
     let token = new URLSearchParams(location.search).get("token");
-    setUserAndRedirect(token)
+    if(token){
+      dispatch(setLoggedInUser({token}))
+    }
   }, [])
 
   // To handle login
   const handleLogin = async (e) => {
     e.preventDefault();
-    setIsLogging(true);
-    try {
-      const { email, password } = e.target;
-      const { data } = await login(email.value, password.value.trim());
-      const token = data.data.token;
-      await setUserAndRedirect(token)
-    } catch (error) {
-      setIsLogging(false);
+    const { email, password } = e.target;
+    dispatch(loginAction({email:email.value,password:password.value}));
+    if(auth.isLoggedIn){
+      setJwtInRequestHeader(auth.token);
+      navigate(`/${auth.username}`)
     }
-  }
-
-  const setUserAndRedirect = async (token) => {
-    if (!token) return;
-    const { userId, username } = jwt.decode(token);
-    setJwtInRequestHeader(token);
-    localStorage.setItem("token", token);
-    handleSetUser(userId, username, true)
-    navigate(`/${username}`);
   }
 
   return (
@@ -122,7 +111,7 @@ const Login = ({ handleSetUser, windowWidth }) => {
                   Forget Your Password?
                 </p> */}
                     <button className={`flex justify-center w-full py-3 font-bold rounded-lg ${data.email.length > 1 && data.password.length > 0 ? 'bg-primary-500' : 'bg-neutral-400'} text-white`}>
-                      {!isLogging ? "Login" : <Loader />}
+                      {!auth.isLogging ? "Login" : <Loader />}
                     </button>
                     <p className="mt-1 font-light text-left whitespace-break-spaces text-neutral-400">
                       Don't have an account?{" "}

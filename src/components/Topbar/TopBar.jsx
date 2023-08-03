@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 // Components Imports
-import Search from "../Search/Search";
+import Search from "../Common/Search";
 // Assets imports
 import backarrow from "../../assets/back-arrow.svg";
 import share from "../../assets/share.svg";

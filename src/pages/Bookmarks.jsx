@@ -4,7 +4,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { getCollection } from "../api-services/collectionService";
 import PageLoader from "../components/Loader/PageLoader";
 import { getByUsername } from "../api-services/userService";
-import CollectionModal from "../components/EditCollection/CollectionModal";
+import CollectionModal from "../components/Common/CollectionModal";
 import { updateCollection } from "../api-services/collectionService";
 import { Helmet } from "react-helmet";
 import BookmarkItem from "../components/BookmarkItem/BookmarkItem";

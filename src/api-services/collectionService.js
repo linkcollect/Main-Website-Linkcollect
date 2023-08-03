@@ -40,3 +40,8 @@ export function getAllByUsername(username) {
 export function checkLinkExist(collectionId, link) {
   return http.post(`${apiEndpoint}/${collectionId}/check-duplicate-link`, { link });
 }
+
+export function getExplore() {
+  console.log(`${apiEndpoint}/page/explore`)
+  return http.get(`${apiEndpoint}/page/explore`);
+}

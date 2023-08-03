@@ -9,63 +9,24 @@ import defultCollectionImage from "../../assets/defaultCollectio.svg";
 import { nameShortner } from "../../utils/utils";
 import approve from "../../assets/approve.svg";
 import bmSidebar from "../../assets/bmSidebar.svg";
+import Chip from "../UI/Chip/Chip";
 const CollectionitemV2 = ({
   id,
   image,
   title,
   links,
+  isPublic,
+  upvotes,
+  isPinned,
+  tags,
   username,
-  type,
-  upVote,
   windowWidth,
   isOwner,
-  vistiedUser,
   views,
   isSavedOptionVisible
 }) => {
-  const copyImageRef = useRef();
-  const [copyText, setCopyText] = useState("Copy Link");
-  const [display, setDisplay] = useState(false);
-  const [isPublic, setIsPublic] = useState(true);
-  const [isPinned, setIsPinned] = useState(false);
-  const menuhandler = () => {
-    setDisplay((prev) => !prev);
-  };
-  //collection Popup stuff
-  const menuRef = useRef();
-  const popupRef = useRef();
-
-  // Popup menu close functiinality if users clocked outside of it
-  window.addEventListener("click", (e) => {
-    if (
-      e.target !== popupRef.current &&
-      e.target !== menuRef.current &&
-      display
-    ) {
-      setDisplay(false);
-    }
-  });
-
-  const handleCopy = (collectionId) => {
-    setCopyText("Copied!");
-    if (copyImageRef) {
-      copyImageRef.current.src = approve;
-    }
-
-    navigator.clipboard.writeText(
-      `http://linkcollect.io/${vistiedUser.username}/c/${collectionId}`
-    );
-
-    setTimeout(() => {
-      copyImageRef.current.src = paste;
-
-      setCopyText("Copy Link");
-    }, 2500);
-  };
-  // Privacy handler
-  const handlePrivacy = () => {
-    setIsPublic(!isPublic);
-  };
+console.log(tags,isPublic)
+ 
   return (
     <>
       <div
@@ -74,10 +35,10 @@ const CollectionitemV2 = ({
       >
         {isOwner && (
           <div
-            className="absolute p-1 transition-all duration-500 rounded-sm opacity-0 cursor-pointer bg-black/[0.20] top-2 left-2 group-hover:opacity-100"
-            onClick={() => {
-              setIsPinned(!isPinned);
-            }}
+            className={`absolute p-1 transition-all duration-500 rounded-sm cursor-pointer bg-black/[0.20] top-2 left-2 ${!isPinned ? "group-hover:opacity-100 opacity-0" : "opacity-1"}`}
+            // onClick={() => {
+            //   setIsPinned(!isPinned);
+            // }}
           >
             {isPinned ? (
               <img src={filledPinSvg} alt="pin" />
@@ -112,14 +73,9 @@ const CollectionitemV2 = ({
         <div className="flex items-start justify-between pt-2.5 px-1.5 gap-2 flex-col">
           <div className="flex flex-wrap items-center gap-2">
             <p className=" px-2 bg-neutral-200  text-neutral-500 border border-neutral-300  rounded-[24px] text-[10px] sm:text-xs  font-normal">
-              {type ? "Public" : "Private"}
+              {isPublic ? "Public" : "Private"}
             </p>
-            <p className="px-2  bg-neutral-200  text-neutral-500 border border-neutral-300  rounded-[24px] text-[10px] sm:text-xs  font-normal">
-              Design
-            </p>
-            <p className=" px-2 bg-neutral-200  text-neutral-500 border border-neutral-300  rounded-[24px] text-[10px] sm:text-xs  font-normal">
-              Product
-            </p>
+            {tags?.length > 0 && tags?.map(tag=> <Chip name={tag}/> )}
           </div>
           <div className="flex items-center w-full justify-between ">
             <div className="flex items-center ">
@@ -135,17 +91,17 @@ const CollectionitemV2 = ({
                 <img src={upvote} alt="upvote" className="w-4 h-4 mr-1" />
 
                 <p className="text-sm font-normal text-neutral-500 ">
-                  {upVote ? upVote : 0}
+                  {upvotes ? upvotes.length : 0}
                 </p>
               </div>
             </div>
 
             {/* Saved  */}
           { isSavedOptionVisible &&
-            <div className="flex items-center justify-between gap-1">
+            <button className="flex items-center justify-between gap-1">
               <img src={bmSidebar}  />
               <p className="text-neutral-500 text-[14px]" >save</p>
-            </div>
+            </button>
           }
           </div>
         </div>

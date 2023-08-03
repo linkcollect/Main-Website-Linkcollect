@@ -1,5 +1,5 @@
 import React from 'react'
-import CollectionHeader from '../components/Header/CollectionHeader'
+import CollectionHeader from '../components/Common/CollectionHeader'
 import BaseLayout from '../components/Layout/BaseLayout/BaseLayout'
 
 const Explore = () => {

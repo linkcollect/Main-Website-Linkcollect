@@ -1,15 +1,10 @@
 import React from "react";
-import Search from "../../components/Search/Search";
-
-import { Link, useParams } from "react-router-dom";
-
-import { useEffect, useRef, useState } from "react";
-
+import Search from "./Search";
+import { useState } from "react";
 import SortBy from "../../assets/sortBy.svg";
-import { deleteCollection } from "../../api-services/collectionService";
 import Plus from "../../assets/plus.svg";
 
-const CollectionHeader = ({ name,isOwner,searchHnadeler,windowWidth,}) => {
+const CollectionHeader = ({ name,isOwner,windowWidth,setQuery}) => {
   // sort by dropdown
   const [showDropdown, setShowDropdown] = useState(false);
 
@@ -41,9 +36,7 @@ const CollectionHeader = ({ name,isOwner,searchHnadeler,windowWidth,}) => {
             }`}
           >
             <div className=" w-[calc(100%-212px)]">
-              <form onSubmit={searchHnadeler}>
-                <Search onSearch={searchHnadeler} />
-              </form>
+              <Search setQuery={setQuery}/>
             </div>
 
             {/* sort by */}

@@ -1,6 +1,6 @@
 import React from "react";
 import searchIcon from "../../assets/SearchVector.svg"
-const SearchBox = ({onSearch}) => {
+const SearchBox = ({onSearch,setQuery}) => {
 
   return (
     <div className="flex items-center w-full">
@@ -16,7 +16,7 @@ const SearchBox = ({onSearch}) => {
           id="simple-search"
           className="block w-full p-[0.638rem] pl-10 text-base font-normal border rounded-lg bg-bgPrimary border-neutral-300 text-neutral-800 placeholder:text-neutral-500 focus:outline-none"
           placeholder="Search for collection or links"
-          onChange={onSearch}
+          onChange={(e)=>setQuery(e.target.value)}
         />
 
         {/* onchange to be added in the above line

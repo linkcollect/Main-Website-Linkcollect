@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Dialog } from "@headlessui/react";
 import { motion, AnimatePresence } from "framer-motion";
-import Input, { Select } from "./InputEditCollection";
+import Input from "../EditCollection/InputEditCollection";
 import Loader from "../Loader/Loader";
 import Modal from "../Modal/Modal";
 export const CollectionModal = ({
