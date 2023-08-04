@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import mainlogo from "../../../assets/mainLogo.svg";
 import { useLocation} from "react-router-dom";
 import { Link } from "react-router-dom";
@@ -8,14 +8,15 @@ import settings from "../../../assets/settingsSidebar.svg";
 import navigation from "../../../assets/navSidebar.svg";
 import energy from "../../../assets/energy.svg";
 import NavbarItem from "./NavbarItem";
+import { useSelector } from "react-redux";
 
 const Sidebar = ({ user, handleSetUser, windowWidth }) => {
   const state = useLocation();
-  console.log(state);
+  const auth = useSelector(state=>state.auth);
   const menuItem = [
     {
       name: "Home",
-      link: "/jhondoe",
+      link: `/${auth.username}`,
       icon: home,
     },
     {
@@ -61,16 +62,16 @@ const Sidebar = ({ user, handleSetUser, windowWidth }) => {
                 className="object-cover w-full h-full rounded-full"
               />
             </div>
-            <p className="font-bold text-[16px]">Harsh Singh</p>
+            <p className="font-bold text-[16px]">{auth.userData.name}</p>
 
             <div className="flex flex-col justify-evenly items-start text-base font-normal text-[#4B4C63] gap-2 pt-8">
               <div className="flex flex-row justify-between items-center gap-[118px] text-xs">
                 <p>Link Saved</p>
-                <p className="ml-1">24</p>
+                <p className="ml-1">{auth.userData.totalLinks}</p>
               </div>
               <div className="flex flex-row items-center justify-between gap-24 text-xs whitespace-nowrap">
                 <p>Total Collection</p>
-                <p>50</p>
+                <p>{auth.userData.totalCollections}</p>
               </div>
             </div>
           </div>

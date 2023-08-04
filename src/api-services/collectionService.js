@@ -45,3 +45,19 @@ export function getExplore() {
   console.log(`${apiEndpoint}/page/explore`)
   return http.get(`${apiEndpoint}/page/explore`);
 }
+
+export function upvoteCollection(id){
+  return http.post(`${apiEndpoint}/${id}/upvote`);
+}
+
+export function downvoteCollection(id){
+  return http.post(`${apiEndpoint}/${id}/downvote`);
+}
+
+export function saveCollection(id){
+  return http.post(`${apiEndpoint}/${id}/save`)
+}
+
+export function unsaveCollection(id){
+  return http.post(`${apiEndpoint}/${id}/unsave`)
+}

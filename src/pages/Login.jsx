@@ -8,7 +8,8 @@ import Loader from "../components/Loader/Loader";
 import { setJwtInRequestHeader } from "../api-services/httpService";
 import { useDispatch, useSelector } from "react-redux";
 import { setLoggedInUser } from "../store/Slices/user.slice";
-import { loginAction } from "../store/actions/user.action";
+import { getUserDetails, loginAction } from "../store/actions/user.action";
+import Button from "../components/UI/Button/Button";
 const Login = ({ windowWidth }) => {
   const location = useLocation();
   const navigate = useNavigate();
@@ -27,16 +28,17 @@ const Login = ({ windowWidth }) => {
   // For google auth redirect and email verification redirect from server with token in query
   useEffect(() => {
     let token = new URLSearchParams(location.search).get("token");
-    if(token){
-      dispatch(setLoggedInUser({token}))
+    if(token && !auth.isLoggedIn){
+      setJwtInRequestHeader(token)
+      dispatch(setLoggedInUser({token}));
+      dispatch(getUserDetails({token}))
     }
   }, [])
 
   // To handle login
   const handleLogin = async (e) => {
     e.preventDefault();
-    const { email, password } = e.target;
-    dispatch(loginAction({email:email.value,password:password.value}));
+    dispatch(loginAction({email:data.email,password:data.password}));
     if(auth.isLoggedIn){
       setJwtInRequestHeader(auth.token);
       navigate(`/${auth.username}`)
@@ -110,9 +112,9 @@ const Login = ({ windowWidth }) => {
                     {/* <p className="mb-4 font-light text-left text-neutral-400">
                   Forget Your Password?
                 </p> */}
-                    <button className={`flex justify-center w-full py-3 font-bold rounded-lg ${data.email.length > 1 && data.password.length > 0 ? 'bg-primary-500' : 'bg-neutral-400'} text-white`}>
+                    <Button variant="primary" disabled={(data.email.length <= 0 || data.password.length <= 0)} onClick={handleLogin} isLoading={auth.isLoading}>
                       {!auth.isLogging ? "Login" : <Loader />}
-                    </button>
+                    </Button>
                     <p className="mt-1 font-light text-left whitespace-break-spaces text-neutral-400">
                       Don't have an account?{" "}
                       <Link to="/signup" className="font-bold text-primary-400">
@@ -140,3 +142,5 @@ const Login = ({ windowWidth }) => {
 };
 
 export default Login;
+
+// ${data.email.length > 1 && data.password.length > 0

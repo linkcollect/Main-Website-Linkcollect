@@ -14,6 +14,16 @@ const collectionDefaultState = {
 const userCollectionSlice = createSlice({
     name:"collection",
     initialState:collectionDefaultState,
+    reducers:{
+        upvote:(state,action)=>{
+            const cIdx = state.collections.findIndex(coll=>coll._id===action.payload.collectionId);
+            state.collections[cIdx].upvotes.push(action.payload.userId);
+        },
+        downvote:(state,action)=>{
+            const cIdx = state.collections.findIndex(coll=>coll._id===action.payload.collectionId);
+            state.collections[cIdx].upvotes = state.collections[cIdx].upvotes.filter(upvoted=>upvoted!==action.payload.userId);
+        },
+    },
     extraReducers:(builder) =>{
         builder.addCase(getUserCollection.fulfilled,(state,action)=>{
             const {data} = action.payload;
@@ -38,5 +48,7 @@ const userCollectionSlice = createSlice({
 
     }
 })
+
+export const {upvote,downvote} = userCollectionSlice.actions;
 
 export default userCollectionSlice;

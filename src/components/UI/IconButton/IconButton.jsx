@@ -1,18 +1,12 @@
 import React, { forwardRef } from 'react'
 import { classMerge } from '../../../utils/utils'
 
-const IconButton = forwardRef((icon,className,iconClass,onClick,iconRef) => {
+const IconButton = forwardRef(({className,onClick,...props}) => {
+  console.log(className)
     return (
-        <button className={classMerge("flex items-center",className)} onClick={onClick}>
-        <img
-          src={icon}
-          alt=""
-          ref={ref}
-          className={classMerge("block mx-auto cursor-pointer",iconClass)}
-        />
-        </button>
+        <button className={classMerge("flex items-center",className)} onClick={onClick} {...props}/>
     )
-  })
+})
 
 export default IconButton
 

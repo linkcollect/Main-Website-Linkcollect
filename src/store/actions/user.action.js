@@ -5,11 +5,22 @@ import jwt from "jsonwebtoken"
 
 export const loginAction = createAsyncThunk(
     'login',
-    async (payload) =>{
-        console.log(payload.email,payload.password)
+    async (payload) =>{ 
+        console.log(payload)
         const res = await login(payload.email,payload.password);
         const token = res.data.data.token;
+        const userData = res.data.data.userData;
         const { userId, username } = jwt.decode(token);
-        return {userId,username,token};
+        return {userId,username,token,userData};
+    }
+)
+
+export const getUserDetails = createAsyncThunk(
+    'getUserDetails',
+    async (payload) => {
+        console.log("hello")
+        const { userId, username } = jwt.decode(payload.token);
+        const res = await getByUsername(username);
+        return {userId,username,token:payload.token,userData:res.data.data};
     }
 )

@@ -1,15 +1,18 @@
 import React, { useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import upvote from "../../assets/Upvote.svg";
-import paste from "../../assets/paste.svg";
 import pinSvg from "../../assets/pinSvg.svg";
 import filledPinSvg from "../../assets/filledPinSvg.svg";
 import viewsSvg from "../../assets/views.svg";
 import defultCollectionImage from "../../assets/defaultCollectio.svg";
 import { nameShortner } from "../../utils/utils";
-import approve from "../../assets/approve.svg";
 import bmSidebar from "../../assets/bmSidebar.svg";
+import upvoted from "../../assets/upvoted.svg"
+import saved from "../../assets/saved.svg"
 import Chip from "../UI/Chip/Chip";
+import IconButton from "../UI/IconButton/IconButton";
+import { useDispatch, useSelector } from "react-redux";
+import { downvoteAction, saveAction, upvoteAction } from "../../store/actions/collection.action";
 const CollectionitemV2 = ({
   id,
   image,
@@ -25,7 +28,26 @@ const CollectionitemV2 = ({
   views,
   isSavedOptionVisible
 }) => {
-console.log(tags,isPublic)
+  const auth = useSelector(state=>state.auth)
+  const isUpvoted = upvotes.findIndex(userId=>auth.userId===userId)>=0;
+  const isSaved = auth.userData.savedCollections.findIndex(saveId=>saveId===id)>=0;
+  const dispatch = useDispatch();
+
+  const upvoteHandler = ()=>{
+    if(!isUpvoted){
+      dispatch(upvoteAction(id,auth.userId));
+    }else{
+      dispatch(downvoteAction(id,auth.userId));
+    }
+  }
+
+  const saveHandler = () =>{
+    if(!isSaved){
+      dispatch(saveAction(id));
+    }else{
+      // dispatch()
+    }
+  }
  
   return (
     <>
@@ -87,21 +109,17 @@ console.log(tags,isPublic)
                 </p>
               </div>
               {/* votes */}
-              <div className="flex items-center m-1">
-                <img src={upvote} alt="upvote" className="w-4 h-4 mr-1" />
-
-                <p className="text-sm font-normal text-neutral-500 ">
+              <IconButton className="m-1 text-sm font-normal text-neutral-500 " onClick={upvoteHandler}>
+                <img src={isUpvoted ? upvoted : upvote} alt="upvote" className="w-4 h-4 mr-1" />
                   {upvotes ? upvotes.length : 0}
-                </p>
-              </div>
+              </IconButton>
             </div>
 
             {/* Saved  */}
           { isSavedOptionVisible &&
-            <button className="flex items-center justify-between gap-1">
-              <img src={bmSidebar}  />
-              <p className="text-neutral-500 text-[14px]" >save</p>
-            </button>
+            <IconButton className={`gap-1 ${isSaved? 'text-primary-500':"text-neutral-500"}  text-[14px]`} onClick={saveHandler}>
+              <img src={isSaved ? saved : bmSidebar}/>{isSaved ? "saved":"save"}
+            </IconButton>
           }
           </div>
         </div>
