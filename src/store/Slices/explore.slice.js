@@ -15,6 +15,7 @@ const exploreCollectionSlice = createSlice({
         },
         downvote:(state,action)=>{
             const cIdx = state.collections.findIndex(coll=>coll._id===action.payload.collectionId);
+            console.log(cIdx)
             state.collections[cIdx].upvotes = state.collections[cIdx].upvotes.filter(upvoted=>upvoted!==action.payload.userId);
         },
     },
