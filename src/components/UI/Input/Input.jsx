@@ -1,4 +1,4 @@
-import React, { forwardRef } from "react";
+import React, { forwardRef,useState,useMemo } from "react";
 import { cva } from "class-variance-authority";
 import { classMerge } from "../../../utils/utils";
 import OpenEye from '../../../assets/openEye.svg'
@@ -24,7 +24,8 @@ const inputVariants = cva(
 );
 
 const Input = forwardRef(({ isFocused, hasError,className,type,value,...props }) => {
-  const variant = hasError && !isFocused  ? "default" : "primary"   
+  const variant = hasError && !isFocused  ? "default" : "primary"
+  console.log(variant)
   const [showPassword, setShowPassword] = useState(false);
   useMemo(() => {
     if (value.length === 0 && type === "password") {
@@ -41,7 +42,7 @@ const Input = forwardRef(({ isFocused, hasError,className,type,value,...props })
         required
         value={value}
         {...props}
-        className={classMerge(inputVariants(variant,className))}
+        className={classMerge(inputVariants({variant,className}))}
       />
 
       {type === "password" && value.length > 0 && (

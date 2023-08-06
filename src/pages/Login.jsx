@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import Banner from "../components/Banner/Banner";
 import mainLogo from "../assets/mainLogo.svg";
-import Input from "../components/Input/Input";
+import Input from "../components/UI/Input/Input";
 import GoogleAuthBtn from "../components/GoogleAuthBtn";
 import Loader from "../components/Loader/Loader";
 import { setJwtInRequestHeader } from "../api-services/httpService";
@@ -39,11 +39,14 @@ const Login = ({ windowWidth }) => {
   const handleLogin = async (e) => {
     e.preventDefault();
     dispatch(loginAction({email:data.email,password:data.password}));
-    if(auth.isLoggedIn){
-      setJwtInRequestHeader(auth.token);
-      navigate(`/${auth.username}`)
-    }
+    // // if(auth.isLoggedIn){
+    //   console.log(auth.token)
+    //   setJwtInRequestHeader(auth.token);
+    //   navigate(`/${auth.username}`)
+    // // }
   }
+
+  
 
   return (
     <>
@@ -94,7 +97,7 @@ const Login = ({ windowWidth }) => {
                         type="email"
                         placeholder="homelander@gmail.com"
                         value={data.email}
-                        onInput={onInput}
+                        onChange={onInput}
                       />
                     </div>
                     <div className="mb-4">
@@ -104,7 +107,7 @@ const Login = ({ windowWidth }) => {
                         type="password"
                         placeholder="password"
                         value={data.password}
-                        onInput={onInput}
+                        onChange={onInput}
                       />
                     </div>
 
