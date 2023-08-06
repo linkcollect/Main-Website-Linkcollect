@@ -1,26 +1,53 @@
-import React, { useEffect,useMemo,useState } from 'react'
+import React, { useEffect, useMemo, useState } from "react";
 import { dataSortByType } from "../../../utils/utils";
 import CollectionitemV2 from "../../Common/CollectionCard";
 import BaseLayout from "../../Layout/BaseLayout/BaseLayout";
 import CollectionHeader from "../../Common/CollectionHeader";
-import { useDispatch, useSelector } from 'react-redux';
-import { getUserCollection } from '../../../store/actions/collection.action';
-import PageLoader from "../../UI/Loader/PageLoader"
-const OwnerProfile = ({username,windowWidth}) => {
-    const dispatch  = useDispatch();
-    const [query,setQuery] = useState("");
-    const collection  = useSelector(state=>state.collection);
-    useEffect(()=>{
-      dispatch(getUserCollection({username}));
-    },[])
-  const filteredCollection = useMemo(()=>{
-    return !collection.isFetching && collection.collections.filter(cItem=>cItem.title.toLowerCase().includes(query.toLowerCase()));
-  },[query,collection.collections])
+import { useDispatch, useSelector } from "react-redux";
+import { getByUsername } from "../../../api-services/userService";
+import {
+  collectionFetchingFailed,
+  collectionFetchingSuccess,
+  collectionFething,
+} from "../../../store/Slices/collection.slice";
+import PageLoader from "../../UI/Loader/PageLoader";
+import { downvoteAction, upvoteAction } from "../../../store/actions/collection.action";
+const OwnerProfile = ({ username, windowWidth }) => {
+  const dispatch = useDispatch();
+  const [query, setQuery] = useState("");
+  const collection = useSelector((state) => state.collection);
+  useEffect(() => {
+    // dispatch(getUserCollection({username}));
+    async function getCollectionOfTheUser() {
+      dispatch(collectionFething());
+      try {
+        const res = await getByUsername(username);
+        dispatch(collectionFetchingSuccess({ data: res.data.data }));
+      } catch {
+        dispatch(collectionFetchingFailed());
+      }
+    }
+    getCollectionOfTheUser();
+  }, [dispatch,username]);
+
+  const filteredCollection = useMemo(() => {
+    return (
+      !collection.isFetching &&
+      collection.collections.filter((cItem) =>
+        cItem.title.toLowerCase().includes(query.toLowerCase())
+      )
+    );
+  }, [query, collection.collections]);
 
   return (
     <BaseLayout>
       {/* Top bar */}
-      <CollectionHeader windowWidth={windowWidth} isOwner={true} name={`Oyo ${username}`} setQuery={setQuery}/>
+      <CollectionHeader
+        windowWidth={windowWidth}
+        isOwner={true}
+        name={`Oyo ${username}`}
+        setQuery={setQuery}
+      />
       {/* Collections */}
       <div className=" w-full h-[70%]">
         {collection.isFetching ? (
@@ -32,7 +59,7 @@ const OwnerProfile = ({username,windowWidth}) => {
             <div className="w-full justify-start flex flex-wrap gap-2 2xl:gap-6 max-w-[1500px]">
               {filteredCollection.map((collections) => (
                 <CollectionitemV2
-                key={collection._id}
+                  key={collection._id}
                   id={collections._id}
                   image={collections.image}
                   title={collections.title}
@@ -45,6 +72,8 @@ const OwnerProfile = ({username,windowWidth}) => {
                   isOwner={true}
                   upvotes={collections.upvotes}
                   views={collections.views}
+                  onUpvote={upvoteAction}
+                  onDownVote={downvoteAction}
                 />
               ))}
             </div>
@@ -59,7 +88,7 @@ const OwnerProfile = ({username,windowWidth}) => {
         )}
       </div>
     </BaseLayout>
-  )
-}
+  );
+};
 
-export default OwnerProfile
+export default OwnerProfile;

@@ -12,7 +12,7 @@ import saved from "../../assets/saved.svg"
 import Chip from "../UI/Chip/Chip";
 import IconButton from "../UI/IconButton/IconButton";
 import { useDispatch, useSelector } from "react-redux";
-import { downvoteAction, saveAction, upvoteAction } from "../../store/actions/collection.action";
+
 const CollectionitemV2 = ({
   id,
   image,
@@ -26,26 +26,30 @@ const CollectionitemV2 = ({
   windowWidth,
   isOwner,
   views,
-  isSavedOptionVisible
+  isSavedOptionVisible,
+  onUpvote,
+  onDownVote,
+  onSave,
+  onUnsave
 }) => {
   const auth = useSelector(state=>state.auth)
-  const isUpvoted = upvotes.findIndex(userId=>auth.userId===userId)>=0;
-  const isSaved = auth.userData.savedCollections.findIndex(saveId=>saveId===id)>=0;
+  const isUpvoted = upvotes?.findIndex(userId=>auth.userId===userId)>=0;
+  const isSaved = auth.userData.savedCollections?.findIndex(saveId=>saveId===id)>=0;
   const dispatch = useDispatch();
 
   const upvoteHandler = ()=>{
     if(!isUpvoted){
-      dispatch(upvoteAction(id,auth.userId));
+      dispatch(onUpvote(id,auth.userId));
     }else{
-      dispatch(downvoteAction(id,auth.userId));
+      dispatch(onDownVote(id,auth.userId));
     }
   }
 
   const saveHandler = () =>{
     if(!isSaved){
-      dispatch(saveAction(id));
+      dispatch(onSave(id));
     }else{
-      // dispatch()
+      dispatch(onUnsave(id));
     }
   }
  
@@ -94,10 +98,8 @@ const CollectionitemV2 = ({
         </Link>
         <div className="flex items-start justify-between pt-2.5 px-1.5 gap-2 flex-col">
           <div className="flex flex-wrap items-center gap-2">
-            <p className=" px-2 bg-neutral-200  text-neutral-500 border border-neutral-300  rounded-[24px] text-[10px] sm:text-xs  font-normal">
-              {isPublic ? "Public" : "Private"}
-            </p>
-            {tags?.length > 0 && tags?.map(tag=> <Chip name={tag}/> )}
+            {isOwner && <Chip name={isPublic ? "Public" :  "Private"}/>}
+            {tags?.length > 0 ? tags?.map(tag=> <Chip name={tag}/> ) : <Chip name={`by ${username}`}/>}
           </div>
           <div className="flex items-center w-full justify-between ">
             <div className="flex items-center ">

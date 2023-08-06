@@ -1,7 +1,15 @@
-import { upvote,downvote } from "../Slices/collection.slice";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { upvote,downvote, removeSave } from "../Slices/save.slice";
 import { save,unsave } from "../Slices/user.slice";
-import { downvoteCollection, saveCollection, unsaveCollection, upvoteCollection } from "../../api-services/collectionService";
+import { downvoteCollection, getSavedCollection, saveCollection, unsaveCollection, upvoteCollection } from "../../api-services/collectionService";
 
+export const getSaveCollectionOfUser = createAsyncThunk(
+    'getSaveCollection',
+    async function (userId){
+        const res =await getSavedCollection(userId);
+        return {data:{collections:res.data.data}}
+    }
+)
 
 //Upvote
 export const upvoteAction = (collectionId,userId) =>{
@@ -40,21 +48,6 @@ export const downvoteAction = (collectionId,userId)=>{
     }
 }
 
-// Save
-export const saveAction = (collectionId)=>{
-    return async dispatch=>{
-        dispatch(save({
-            collectionId
-        }))
-        try{
-            await saveCollection(collectionId)
-        }catch{
-            dispatch(unsave({
-                collectionId
-            }))
-        }
-    }
-}
 
 // Unsave
 export const unsaveAction = (collectionId)=>{
@@ -63,6 +56,10 @@ export const unsaveAction = (collectionId)=>{
         dispatch(unsave({
             collectionId
         }))
+
+        // to remove from the save collection state and instan ui Update
+        dispatch(removeSave({collectionId}));
+
         try{
             await unsaveCollection(collectionId)
         }catch{
@@ -72,5 +69,4 @@ export const unsaveAction = (collectionId)=>{
         }
     }
 }
-
 // Create

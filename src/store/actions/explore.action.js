@@ -1,7 +1,16 @@
-import { upvote,downvote } from "../Slices/collection.slice";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { upvote,downvote, remove } from "../Slices/collection.slice";
 import { save,unsave } from "../Slices/user.slice";
-import { downvoteCollection, saveCollection, unsaveCollection, upvoteCollection } from "../../api-services/collectionService";
+import { downvoteCollection, getExplore, saveCollection, unsaveCollection, upvoteCollection } from "../../api-services/collectionService";
 
+export const getAllExplore = createAsyncThunk(
+    'getAllExplore',
+     async function (){
+        const res =await getExplore();
+        console.log(res)
+        return {data:{collections:res.data.data}};
+     }
+)
 
 //Upvote
 export const upvoteAction = (collectionId,userId) =>{
@@ -63,6 +72,7 @@ export const unsaveAction = (collectionId)=>{
         dispatch(unsave({
             collectionId
         }))
+
         try{
             await unsaveCollection(collectionId)
         }catch{
@@ -72,5 +82,4 @@ export const unsaveAction = (collectionId)=>{
         }
     }
 }
-
 // Create

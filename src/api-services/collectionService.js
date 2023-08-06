@@ -42,7 +42,6 @@ export function checkLinkExist(collectionId, link) {
 }
 
 export function getExplore() {
-  console.log(`${apiEndpoint}/page/explore`)
   return http.get(`${apiEndpoint}/page/explore`);
 }
 
@@ -54,6 +53,10 @@ export function downvoteCollection(id){
   return http.post(`${apiEndpoint}/${id}/downvote`);
 }
 
+export function getSavedCollection(userId){
+  return http.get(`${apiEndpoint}/${userId}/getsaved`);
+}
+
 export function saveCollection(id){
   return http.post(`${apiEndpoint}/${id}/save`)
 }
@@ -61,3 +64,4 @@ export function saveCollection(id){
 export function unsaveCollection(id){
   return http.post(`${apiEndpoint}/${id}/unsave`)
 }
+

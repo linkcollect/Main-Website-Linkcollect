@@ -6,14 +6,35 @@ import { dataSortByType } from "../../../utils/utils";
 import { getByUsername } from "../../../api-services/userService";
 import BaseLayout from "../../Layout/BaseLayout/BaseLayout";
 import { useDispatch, useSelector } from "react-redux";
-import { getUserCollection } from "../../../store/actions/collection.action";
-
+import { collectionFetchingFailed, collectionFetchingSuccess, collectionFething } from "../../../store/Slices/collection.slice";
+import { downvoteAction, saveAction, unsaveAction, upvoteAction } from "../../../store/actions/collection.action";
 const UserProfile = ({ username,windowWidth }) => {
   const dispatch = useDispatch();
   const collection = useSelector((state) => state.collection);
+  const [user,setUser] = useState({});
   useEffect(() => {
-    dispatch(getUserCollection({ username}));
-  },[]);
+    // dispatch(getUserCollection({ username}));
+    async function getCollectionOfTheUser() {
+      dispatch(collectionFething());
+      try{
+        const res = await getByUsername(username);
+        const data = res.data.data;
+        const user = {
+          name:data.name,
+          socials:data.socials?data.socials : [],
+          totalViews:data.totalViews?data.totalViews:0,
+          totalCollections:data.collections.length,
+        }
+        setUser(user)
+        dispatch(collectionFetchingSuccess({data:data}));
+
+      }catch(e){
+        console.log(e)
+        dispatch(collectionFetchingFailed());
+      }
+    }
+    getCollectionOfTheUser();
+  },[dispatch,username]);
   return (
     <BaseLayout>
       {collection.isFetching ? (
@@ -24,9 +45,10 @@ const UserProfile = ({ username,windowWidth }) => {
         <div className="w-full">
           <ProfileHeader
             username={username}
-            name={collection.user.name}
-            totalViews={collection.user.totalViews}
-            totalCollections={collection.user.totalCollections}
+            name={user.name}
+            socials={user.socials}
+            totalViews={user.totalViews}
+            totalCollections={user.totalCollections}
           />
            <div className=" w-full h-[70%]">
           {collection.collections.length > 0 ? (
@@ -34,7 +56,7 @@ const UserProfile = ({ username,windowWidth }) => {
               <div className="w-full justify-start flex flex-wrap gap-2 2xl:gap-6 max-w-[1500px]">
                 {collection.collections.map((collections) => (
                   <CollectionitemV2
-                  key={collection._id}
+                    key={collection._id}
                     id={collections._id}
                     image={collections.image}
                     title={collections.title}
@@ -48,6 +70,10 @@ const UserProfile = ({ username,windowWidth }) => {
                     upvotes={collections.upvotes}
                     views={collections.views}
                     isSavedOptionVisible={true}
+                    onUpvote={upvoteAction}
+                    onDownVote={downvoteAction}
+                    onSave={saveAction}
+                    onUnsave={unsaveAction}
                   />
                 ))}
               </div>
