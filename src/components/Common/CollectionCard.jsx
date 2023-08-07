@@ -77,7 +77,7 @@ const CollectionitemV2 = ({
           <div className="w-full h-[109px]">
             <img
               src={
-                image !== "undefined" && image !== undefined
+                image !== "undefined" && image !== undefined && image !== "null" && image !== null
                   ? image
                   : defultCollectionImage
               }
