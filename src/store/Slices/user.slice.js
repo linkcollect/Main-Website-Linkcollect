@@ -45,7 +45,7 @@ const AuthSlicer = createSlice({
             state.userData.savedCollections.push(action.payload.collectionId);
         },
         unsave:(state,action)=>{
-            state.userData.savedCollections = state.userData.savedCollections.filter(saveItem=>saveItem!=action.payload.collectionId);
+            state.userData.savedCollections = state.userData.savedCollections.filter(saveItem=>saveItem!==action.payload.collectionId);
         }
 
     },
