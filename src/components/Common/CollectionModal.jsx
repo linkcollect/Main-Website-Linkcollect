@@ -1,84 +1,194 @@
-import * as React from "react";
-import { Dialog } from "@headlessui/react";
-import { motion, AnimatePresence } from "framer-motion";
-import Input from "../EditCollection/InputEditCollection";
+import React, { useEffect, useState } from "react";
+import Input, { Label, TextArea } from "../UI/Input/Input";
 import Loader from "../Loader/Loader";
-import Modal from "../Modal/Modal";
+import Modal from "../UI/Modal/Modal";
+import { useDispatch } from "react-redux";
+import cancelIcon from "../../assets/cancel.svg";
+import IconButton from "../UI/IconButton/IconButton";
+import Button from "../UI/Button/Button";
+import { createCollection } from "../../api-services/collectionService";
+import { addCollection } from "../../store/Slices/collection.slice";
+
 export const CollectionModal = ({
   isOpen,
-  setIsOpen,
-  imageHandler,
-  inputHandler,
-  data,
-  onSubmit,
-  loading,
+  modalCloseHandler,
+  originalCollectionData = {}, // it will be only availble if we edit a collection
   isEditing,
+  collectionId = null, // it will be only availble if we edit a collection
 }) => {
-  const [isPublic,setIsPublic] = React.useState(true);
+  const [isLoading, setIsLoding] = React.useState(false);
 
-  const handleSwitchPrivacy = (isPublic)=>{
-    setIsPublic(isPublic);
+  const [collectionData, setCollectionData] = useState({
+    title: "",
+    description: "",
+    tags: [],
+    image: null,
+    isPublic: false,
+  });
+  const dispatch = useDispatch();
+  useEffect(() => {
+    // If we are editing the data then only we need to set the data as default collection data
+    if (isEditing) {
+      setCollectionData({ ...originalCollectionData });
+    }
+  }, []);
+
+  // Privacy Handler
+  const handleSwitchPrivacy = (privacy) => {
+    setCollectionData((prevData) => ({ ...prevData, isPublic: privacy }));
+  };
+
+  // Collection title, desc handler
+  const onChangeHandler = (e) => {
+    console.log(e.target.name)
+    setCollectionData((prevCollectionData) => ({
+      ...prevCollectionData,
+      [e.target.name]: e.target.value,
+    }));
+  };
+
+  const onFileUploadHandler = (e) => {
+    setCollectionData((prevData) => ({
+      ...prevData,
+      image: e.target.files[0],
+    }));
+  };
+
+  // Data validation
+  const isValidName = collectionData.title.length >= 3 && collectionData.title.length <= 30;
+  const isValidDescription = collectionData.description.length <= 240;
+  const isValidTags = collectionData.tags.length <= 3;
+  // File max size
+  const MAXED_ALLOWED_SIZE = 3 * 1024 * 1024;
+  // if no file is selected that means iamge is null so it will be always true as image is not mandatory data
+  const isValidFileSize = !collectionData.image ? true : collectionData.image.size <= MAXED_ALLOWED_SIZE;
+  const isCorrectData = isValidName && isValidDescription && isValidTags && isValidFileSize;
+  const onSubmit = async () => {
+    console.log(isCorrectData)
+    // If the data is not correct form will be not submitted
+    if (!isCorrectData) {
+      return;
+    }
+    
+    setIsLoding(true);
+    try {
+      // Preparing form data
+      const { title, description, tags, image, isPublic } = collectionData;
+      const collectionFormData = new FormData();
+      console.log("hello")
+      collectionFormData.append("title", title);
+      collectionFormData.append("description", description);
+      collectionFormData.append("isPublic", isPublic);
+      image && collectionFormData.append("image", image);
+      tags.length > 0 && collectionFormData.append("tags", tags);
+      // As the model is taking care of both edit and new collection addition
+      // that is why we need to send the request to different request-> according to that condition
+      let res = {};
+      if (isEditing) {
+        // res = await
+      } else {
+        res = await createCollection(collectionFormData);
+        dispatch(addCollection({collection:res.data.data}))
+      }
+      
+      resetDataAndClose();
+    } catch (e) {
+      setIsLoding(false);
+    }
+  };
+
+  // Before closing the modal we should reset all the data and then close
+  // this function will colse the modal, before that it will reset all the state
+  const resetDataAndClose = () =>{
+    setCollectionData({
+      title: "",
+      description: "",
+      tags: [],
+      image: null,
+      isPublic: false,
+    })
+    setIsLoding(false);
+    modalCloseHandler();
   }
+
   return (
-    <Modal isOpen={isOpen} onClose={setIsOpen}>
+    <Modal isOpen={isOpen} onClose={modalCloseHandler}>
       <div className="px-3 flex flex-col justify-between items-center h-full gap-3">
         {/* Heading */}
-        <div className="flex justify-start  w-full">
+        <div className="flex justify-between  w-full">
           <h1 className="text-start font-medium text-[20px]  text-textPrimary ">
             {isEditing ? "Edit Collection" : "Create Collection"}
           </h1>
+          <IconButton onClick={resetDataAndClose}>
+            <img src={cancelIcon} name="cancel" />
+          </IconButton>
         </div>
         <hr className="w-[97%] border border-neutral-300" />
         {/* Data */}
         <div className="flex flex-col items-center justify-center gap-3 w-full">
           {/* Collection Name Input */}
           <div className="w-[100%]">
+            <div className="flex w-full justify-between items-center">
+              <Label name="Collection Title" htmlFor="title" />
+              <small className="text-xs">
+                <span
+                  className={`${
+                    collectionData.title.length > 30 ? "text-error-500" : ""
+                  }`}
+                >
+                  {collectionData.title.length}
+                </span>
+                /{30}
+              </small>
+            </div>
             <Input
-              type={"text"}
-              value={data.title}
-              label={"Collection Name"}
-              inputClass={"textClass"}
-              onInputHandler={inputHandler}
-              required={30}
-              name={"title"}
+              type="text"
+              name="title"
+              onChange={onChangeHandler}
+              value={collectionData.title}
             />
           </div>
           {/* Collection Description Input */}
           <div className="w-full">
-            <label className="block">
-              <span className="text-neutral-700 flex justify-between items-end  text-[16px] font-light mb-[3px] w-full">
-                <p>Description</p>
-                <small className="text-xs">
-                  <span
-                    className={`${
-                      data.description?.length > 250 ? "text-danger" : ""
-                    }`}
-                  >
-                    {data.description?.length}
-                  </span>
-                  /250
-                </small>
-              </span>
-              <textarea
-                value={data.description}
-                onChange={inputHandler}
-                name="description"
-                className="w-full h-28 px-4 py-2  border-solid border-2 border-primary-300 rounded-[10px] font-normal text-base text-textPrimary resize-none focus:outline-none	"
-              ></textarea>
-            </label>
+            <div className="flex w-full justify-between items-center">
+              <Label name="Description" htmlFor="description" />
+              <small className="text-xs">
+                <span
+                  className={`${
+                    collectionData.description.length > 240
+                      ? "text-error-500"
+                      : ""
+                  }`}
+                >
+                  {collectionData.description.length}
+                </span>
+                /{240}
+              </small>
+            </div>
+            <TextArea
+              onChange={onChangeHandler}
+              name="description"
+              value={collectionData.description}
+            />
           </div>
 
           {/* Collection Tag */}
 
           {/* Collection Thumbnail Input */}
           <div className="w-full">
+            <Label name="Upload Thumnail" htmlFor="image" />
             <Input
               type={"file"}
+              name="image"
               placeholder="Upload image"
-              label={"Collection Thumbnail (Optional)"}
-              inputClass={"fileClass"}
-              onInputHandler={imageHandler}
+              onChange={onFileUploadHandler}
+              accept="image/*"
             />
+            {!isValidFileSize && (
+              <small className="text-xs text-error-500">
+                image should be at most 3MB
+              </small>
+            )}
           </div>
 
           {/* Collection Privacy Input */}
@@ -89,48 +199,52 @@ export const CollectionModal = ({
               className={`flex relative items-start justify-center gap-1.5 p-1 w-40 sm:w-40 h-[32px]  border-neutral-300 bg-neutral-300 border-2 rounded-[100px]`}
             >
               <div
-                className={`relative z-10 rounded w-1/2 h-full cursor-pointer transition-all duration-300 py-1.5 px-2.5 flex items-center justify-center ${!isPublic ? "text-white" : "text-black"} text-sm sm:text-base font-normal`}
+                className={`relative z-10 rounded w-1/2 h-full cursor-pointer transition-all duration-300 py-1.5 px-2.5 flex items-center justify-center ${
+                  !collectionData.isPublic ? "text-white" : "text-black"
+                } text-sm sm:text-base font-normal`}
                 onClick={() => handleSwitchPrivacy(false)}
               >
                 <span>Private</span>
               </div>
               <div
-                className={`relative z-10 rounded text-sm sm:text-base w-1/2 h-full cursor-pointer transition-all duration-300 py-1.5 px-2.5 flex items-center justify-center ${isPublic ? "text-white" : "text-black"}  font-normal`}
+                className={`relative z-10 rounded text-sm sm:text-base w-1/2 h-full cursor-pointer transition-all duration-300 py-1.5 px-2.5 flex items-center justify-center ${
+                  collectionData.isPublic ? "text-white" : "text-black"
+                }  font-normal`}
                 onClick={() => handleSwitchPrivacy(true)}
               >
                 <span>Public</span>
               </div>
               <div
                 className={`absolute w-[49%] h-[85%] transition-transform duration-200 top-1/2 -translate-y-1/2 left-0 rounded-[102px] z-[1]  bg-primary-500 ${
-                  !isPublic
+                  !collectionData.isPublic
                     ? "translate-x-[5%]"
                     : "translate-x-[100%]"
                 }`}
               ></div>
             </div>
           </div>
-
-
         </div>
         {/* Actions */}
         <div className="flex w-full sm:justify-between justify-evenly items-center">
-          <button
-            className="flex w-full items-center justify-center h-12 rounded-xl bg-primary-500 px-3 py-6 font-medium text-[16px] text-white cursor-pointer"
+          <Button
+            variant="primary"
+            disabled={!isCorrectData} // button will be disabled untli all required data is correct
             onClick={onSubmit}
+            isLoading={isLoading}
           >
-            {loading ? (
+            {isLoading ? (
               <Loader />
             ) : (
               <span>{isEditing ? "Save" : "Create"}</span>
             )}
-          </button>
+          </Button>
           {isEditing && (
-            <button
-              className="flex items-center justify-center w-full h-12 rounded-xl bg-neutral-200 border border-neutral-300 px-3 py-6 font-medium text-[16px] text-textDark cursor-pointer"
-              onClick={() => setIsOpen(false)}
+            <Button
+              variant="secondaryOutline"
+              onClick={resetDataAndClose}
             >
               <span>Cancel</span>
-            </button>
+            </Button>
           )}
         </div>
       </div>

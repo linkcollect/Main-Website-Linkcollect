@@ -33,10 +33,14 @@ const collectionSlice = createSlice({
 
         remove:(state,action)=>{
             state.collections = state.collections.filter(collectionItem=>collectionItem._id!==action.payload.collectionId);
+        },
+
+        addCollection:(state,action) =>{
+            state.collections.push(action.payload.collection);
         }
     },
 })
 
-export const {upvote,downvote,remove,collectionFething,collectionFetchingSuccess,collectionFetchingFailed} = collectionSlice.actions;
+export const {upvote,downvote,remove,collectionFething,collectionFetchingSuccess,collectionFetchingFailed,addCollection} = collectionSlice.actions;
 
 export default collectionSlice;

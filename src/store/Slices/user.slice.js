@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import jwt from "jsonwebtoken";
 import { getUserDetails, loginAction } from "../actions/user.action";
+import { addCollection } from "./collection.slice";
 const authDefaultState = {
     username:"",
     userId:"",
@@ -57,7 +58,7 @@ const AuthSlicer = createSlice({
             state.token=action.payload.token;
             state.userData=action.payload.userData;
             state.userData.totalCollections=action.payload.userData.collections.length;
-            const totalLinks = 0;
+            let totalLinks = 0;
             action.payload.userData.collections.map(col=>totalLinks+=col.timelines.length);
             state.userData.totalLinks = totalLinks;
             localStorage.setItem("token",action.payload.token);
@@ -73,7 +74,7 @@ const AuthSlicer = createSlice({
             state.isLoading=false;
             state.userData=action.payload.userData;
             state.userData.totalCollections=action.payload.userData.collections.length;
-            const totalLinks = 0;
+            let totalLinks = 0;
             action.payload.userData.collections.map(col=>totalLinks+=col.timelines.length);
             state.userData.totalLinks = totalLinks;
             localStorage.setItem("token",action.payload.token);
@@ -83,6 +84,14 @@ const AuthSlicer = createSlice({
         })
         builder.addCase(getUserDetails.rejected,(state,action)=>{
             state.isLoading=false;
+        })
+
+        // when ever we will creat the new collection we are gonna dispacth a action from collectionSlice and it will update the store
+        // so we alse need to catch that action from user slice so that we can update the total collection as well as add the collection id to userinfo for data consistancy
+        builder.addCase(addCollection.type,(state,action)=>{
+            console.log(action,state)
+            state.userData.totalCollections+=1;
+            state.userData.collections.push(action.payload.collection)
         })
     }
 })

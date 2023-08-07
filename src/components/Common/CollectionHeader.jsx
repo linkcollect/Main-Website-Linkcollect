@@ -3,15 +3,24 @@ import Search from "./Search";
 import { useState } from "react";
 import SortBy from "../../assets/sortBy.svg";
 import Plus from "../../assets/plus.svg";
-
+import Button from "../UI/Button/Button"
+import CollectionModal from "./CollectionModal";
 const CollectionHeader = ({ name,isOwner,windowWidth,setQuery}) => {
   // sort by dropdown
   const [showDropdown, setShowDropdown] = useState(false);
+  const [openModal,setOpenModal] = useState(false);
+
+  // To handle modal open and close
+  const createModalHandler = () =>{
+    setOpenModal(prev=>!prev);
+  }
+
 
 
   return (
     <div className="flex flex-col items-start justify-center w-full gap-8 mx-auto 3xl:px-0 px-8 max-w-[1500px]">
         {/* Search bar , add collection , sort by */}
+        <CollectionModal isOpen={openModal} modalCloseHandler={createModalHandler}/>
         <div className="flex flex-col items-start justify-center w-full gap-4 ">
           {/* Modify this */}
           <div className="flex items-center justify-between w-full ">
@@ -22,12 +31,12 @@ const CollectionHeader = ({ name,isOwner,windowWidth,setQuery}) => {
             >
               {name}
             </p>
-            {isOwner && <div className="w-48 cursor-pointer h-[46px] relative p-4 flex items-center justify-center rounded-lg  bg-primary-500 gap-2 ">
+            {isOwner && 
+            <Button variant="primary" className="w-48 h-[46px]" onClick={createModalHandler}>
               <img src={Plus} alt="" />
-              <span className="text-sm font-medium text-white">
                 Add collection
-              </span>
-            </div>}
+            </Button>
+            }
           </div>
 
           <div
