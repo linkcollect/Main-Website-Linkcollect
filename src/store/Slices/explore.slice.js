@@ -5,17 +5,35 @@ const exploreCollectionDefaultState = {
     isFetching:false,
     isFailed:false,
 }
+const getStructuredCollection = (collectionItem) => {
+    const defaultStructure = {
+        title:"",
+        image:null,
+        timelines:[],
+        username:"",
+        tags:[],
+        upvotes:[],
+        views:0,
+        isPinned:false,
+        isPublic:false,
+    }
+    return {
+        ...defaultStructure,
+        ...collectionItem
+    }
+}
+
 const exploreCollectionSlice = createSlice({
     name:"exploreCollections",
     initialState:exploreCollectionDefaultState,
     reducers:{
         upvote:(state,action)=>{
+            console.log(action)
             const cIdx = state.collections.findIndex(coll=>coll._id===action.payload.collectionId);
             state.collections[cIdx].upvotes.push(action.payload.userId);
         },
         downvote:(state,action)=>{
             const cIdx = state.collections.findIndex(coll=>coll._id===action.payload.collectionId);
-            console.log(cIdx)
             state.collections[cIdx].upvotes = state.collections[cIdx].upvotes.filter(upvoted=>upvoted!==action.payload.userId);
         },
     },
@@ -25,8 +43,7 @@ const exploreCollectionSlice = createSlice({
         })
         builder.addCase(getAllExplore.fulfilled,(state,action)=>{
             const data = action.payload.data;
-            console.log(data)
-            state.collections = data.collections
+            state.collections = data.collections.map(getStructuredCollection);
             state.isFetching=false
             state.isFailed=false
         })

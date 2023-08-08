@@ -4,6 +4,24 @@ const collectionDefaultState = {
     isFetching:false,
     isFailed:false,
 }
+
+const getStructuredCollection = (collectionItem) => {
+    const defaultStructure = {
+        title:"",
+        image:null,
+        timelines:[],
+        username:"",
+        tags:[],
+        upvotes:[],
+        views:0,
+        isPinned:false,
+        isPublic:false,
+    }
+    return {
+        ...defaultStructure,
+        ...collectionItem
+    }
+}
 const collectionSlice = createSlice({
     name:"collection",
     initialState:collectionDefaultState,
@@ -13,7 +31,7 @@ const collectionSlice = createSlice({
         },
         collectionFetchingSuccess:(state,action)=>{
             const data = action.payload.data;
-            state.collections = data.collections
+            state.collections = data.collections.map(getStructuredCollection)
             state.isFetching=false
             state.isFailed=false
         },

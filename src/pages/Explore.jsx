@@ -1,19 +1,20 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import CollectionHeader from '../components/Common/CollectionHeader'
 import BaseLayout from '../components/Layout/BaseLayout/BaseLayout'
 import { useDispatch, useSelector } from 'react-redux'
 import CollectionitemV2 from '../components/Common/CollectionCard'
 import PageLoader from '../components/UI/Loader/PageLoader'
-import { downvoteAction, getAllExplore, saveAction, unsaveAction } from '../store/actions/explore.action'
-import { upvote } from '../store/Slices/explore.slice'
+import { upvoteAction,downvoteAction, getAllExplore, saveAction, unsaveAction } from '../store/actions/explore.action'
 const Explore = ({windowWidth}) => {
   const dispatch = useDispatch();
+  const scrollRef = useRef();
   const collection = useSelector(state=>state.explore);
+  const [page,setPage] = useState(1);
   useEffect(()=>{
     dispatch(getAllExplore());
   },[dispatch])
 
-
+  
 
   return (
      <BaseLayout>
@@ -26,7 +27,7 @@ const Explore = ({windowWidth}) => {
               <PageLoader />
             </div>
           ) : collection.collections.length > 0 ? (
-            <div className="flex items-start justify-start w-full h-full pl-8 mx-auto overflow-y-scroll 3xl:pl-0 3xl:justify-center">
+            <div className="flex items-start justify-start w-full h-full pl-8 mx-auto overflow-y-scroll 3xl:pl-0 3xl:justify-center" ref={scrollRef}>
               <div className="w-full justify-start flex flex-wrap gap-2 2xl:gap-6 max-w-[1500px]">
                 {collection.collections.map((collectionItem) => (
                   <CollectionitemV2
@@ -44,7 +45,7 @@ const Explore = ({windowWidth}) => {
                   upvotes={collectionItem.upvotes}
                   views={collectionItem.views}
                   isSavedOptionVisible={true}
-                  onUpvote={upvote}
+                  onUpvote={upvoteAction}
                   onDownVote={downvoteAction}
                   onSave={saveAction}
                   onUnsave={unsaveAction}
