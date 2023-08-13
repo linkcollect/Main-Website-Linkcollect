@@ -5,13 +5,14 @@ import OpenEye from "../../../assets/openEye.svg";
 import CloseEye from "../../../assets/hiddenEye.svg";
 
 const inputVariants = cva(
-  " block focus:outline-none text-base placeholder-neutral-400 text-neutral-900 ",
+  " block focus:outline-none text-base placeholder:text-neutral-500 text-neutral-900 border-2 rounded-lg",
   {
     variants: {
       variant: {
-        default: " border-2 rounded-lg border-primary-100 ",
-        primary: " border-2 rounded-lg border-primary-200 ",
-        file: `block w-full text-sm border-2 border-primary-200 rounded-md
+        default: "border-primary-100 ",
+        primary: "border-primary-200 ",
+        secondary: "border-neutral-300",
+        file: `text-sm border-2 border-primary-200 rounded-md
                file:mr-4 file:py-0 file:px-4 file:py-1
                 file:rounded-full file:border-2 file:border-nutral-900
                 file:text-[16px] file:font-light
@@ -32,11 +33,22 @@ const inputVariants = cva(
 );
 
 const Input = forwardRef(
-  ({ isFocused, hasError, className, type, value, ...props }) => {
+  ({
+    isFocused,
+    hasError,
+    className,
+    type,
+    value,
+    variant: InputVariant,
+    ...props
+  }) => {
+    
     const variant =
       type !== "file"
         ? hasError && !isFocused
           ? "default"
+          : InputVariant
+          ? InputVariant
           : "primary"
         : "file";
     const [showPassword, setShowPassword] = useState(false);
@@ -90,7 +102,7 @@ export const Label = ({ name, htmlFor }) => {
   );
 };
 
-export const TextArea = ({className, ...props}) => {
+export const TextArea = ({ className, ...props }) => {
   return (
     <textarea
       className={classMerge(
