@@ -4,6 +4,7 @@ const exploreCollectionDefaultState = {
     collections:[],
     isFetching:false,
     isFailed:false,
+    page:1
 }
 const getStructuredCollection = (collectionItem) => {
     const defaultStructure = {
@@ -43,7 +44,8 @@ const exploreCollectionSlice = createSlice({
         })
         builder.addCase(getAllExplore.fulfilled,(state,action)=>{
             const data = action.payload.data;
-            state.collections = data.collections.map(getStructuredCollection);
+            state.collections = action.payload.page > 1 ? [...state.collections,...data.collections.map(getStructuredCollection)] : data.collections.map(getStructuredCollection);
+            state.page=action.payload.page;
             state.isFetching=false
             state.isFailed=false
         })

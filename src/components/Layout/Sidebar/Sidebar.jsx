@@ -84,6 +84,7 @@ const Sidebar = ({ user, handleSetUser, windowWidth }) => {
                 link={link}
                 icon={icon}
                 isActive={link === state.pathname}
+                key={name}
               />
             ))}
           </div>

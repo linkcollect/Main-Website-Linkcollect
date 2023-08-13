@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import upvote from "../../assets/Upvote.svg";
 import pinSvg from "../../assets/pinSvg.svg";
@@ -13,7 +13,7 @@ import Chip from "../UI/Chip/Chip";
 import IconButton from "../UI/IconButton/IconButton";
 import { useDispatch, useSelector } from "react-redux";
 
-const CollectionitemV2 = ({
+const CollectionitemV2 = React.forwardRef(({
   id,
   image,
   title,
@@ -30,25 +30,48 @@ const CollectionitemV2 = ({
   onUpvote,
   onDownVote,
   onSave,
-  onUnsave
-}) => {
+  onUnsave,
+},ref) => {
   const auth = useSelector(state=>state.auth)
-  const isUpvoted = upvotes?.findIndex(userId=>auth.userId===userId)>=0;
-  const isSaved = auth.userData.savedCollections?.findIndex(saveId=>saveId===id)>=0;
+  // LOCAL STATE WILL HELP TO MUTATE THE ITEM SO QUICKLY WHEN IT COMES TO LARGE DATA
+  const [isSaved,setIsSaved] = useState(false);
+  const [isUpvoted,setIsUpvoted] = useState({
+    isClicked:false,
+    number:0,
+  });
+  useEffect(()=>{
+    const isUpvoted = upvotes?.findIndex(userId=>auth.userId===userId)>=0;
+    const isSaved = auth.userData.savedCollections?.findIndex(saveId=>saveId===id)>=0;
+    setIsSaved(isSaved);
+    setIsUpvoted({
+      isClicked:isUpvoted,
+      number:upvotes.length,
+    });
+  },[])
   const dispatch = useDispatch();
 
   const upvoteHandler = ()=>{
-    if(!isUpvoted){
+    if(!isUpvoted.isClicked){
+      setIsUpvoted(prev=>({
+        isClicked:true,
+        number:prev.number+1
+      }));
       dispatch(onUpvote(id,auth.userId));
     }else{
+      setIsUpvoted(prev=>({
+        isClicked:false,
+        number:prev.number-1
+      }));
       dispatch(onDownVote(id,auth.userId));
     }
   }
 
   const saveHandler = () =>{
     if(!isSaved){
+      setIsSaved(true);
       dispatch(onSave(id));
     }else{
+      setIsSaved(false);
       dispatch(onUnsave(id));
     }
   }
@@ -58,6 +81,7 @@ const CollectionitemV2 = ({
       <div
         className="relative bg-bgPrimary border  border-neutral-300 rounded-lg w-[48%] md:w-[calc(100%/2-24px)] lg:w-[calc(100%/3-24px)] xl:w-[calc(100%/4-24px)] 3xl:w-[calc(100%/5-20px)] group 
         hover:shadow-md h-[210px] transition duration-300 ease-in-out"
+        ref={ref}
       >
         {isOwner && (
           <div
@@ -112,8 +136,8 @@ const CollectionitemV2 = ({
               </div>
               {/* votes */}
               <IconButton className="m-1 text-sm font-normal text-neutral-500 " onClick={upvoteHandler}>
-                <img src={isUpvoted ? upvoted : upvote} alt="upvote" className="w-4 h-4 mr-1" />
-                  {upvotes ? upvotes.length : 0}
+                <img src={isUpvoted.isClicked ? upvoted : upvote} alt="upvote" className="w-4 h-4 mr-1" />
+                  {isUpvoted.number}
               </IconButton>
             </div>
 
@@ -128,6 +152,6 @@ const CollectionitemV2 = ({
       </div>
     </>
   );
-};
+})
 
 export default CollectionitemV2;

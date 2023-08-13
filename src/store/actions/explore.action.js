@@ -5,24 +5,33 @@ import { downvoteCollection, getExplore, saveCollection, unsaveCollection, upvot
 
 export const getAllExplore = createAsyncThunk(
     'getAllExplore',
-     async function (){
-        const res =await getExplore();
+     async function (page=1){
+        const res =await getExplore(page);
         console.log(res)
-        return {data:{collections:res.data.data}};
+        return {data:{collections:res.data.data},page};
      }
+)
+
+// Need to implement
+export const getSearchCollections = createAsyncThunk(
+    'getSearchedCollection',
+    async function (){
+        // const res = 
+    }
 )
 
 //Upvote
 export const upvoteAction = (collectionId,userId) =>{
     return async (dispatch) =>{
-        dispatch(upvote({
-            collectionId:collectionId,
-            userId:userId
-        }))
-
+        
         try{
+            dispatch(upvote({
+                collectionId:collectionId,
+                userId:userId
+            }))
           await upvoteCollection(collectionId);
-        }catch{
+        }catch(e){
+            console.log(e)
             dispatch(downvote({
                 collectionId:collectionId,
                 userId:userId
@@ -34,13 +43,14 @@ export const upvoteAction = (collectionId,userId) =>{
 // downvote
 export const downvoteAction = (collectionId,userId)=>{
     return async dispatch =>{
-        dispatch(downvote({
-            collectionId,
-            userId,
-        }))
         try{
+            dispatch(downvote({
+                collectionId,
+                userId,
+            }))
             await downvoteCollection(collectionId);
-        }catch{
+        }catch(e){
+            console.log(e);
             dispatch(downvote({
                 collectionId,
                 userId,
@@ -52,12 +62,13 @@ export const downvoteAction = (collectionId,userId)=>{
 // Save
 export const saveAction = (collectionId)=>{
     return async dispatch=>{
-        dispatch(save({
-            collectionId
-        }))
         try{
+            dispatch(save({
+                collectionId
+            }))
             await saveCollection(collectionId)
-        }catch{
+        }catch(e){
+            console.log(e);
             dispatch(unsave({
                 collectionId
             }))
@@ -69,13 +80,14 @@ export const saveAction = (collectionId)=>{
 export const unsaveAction = (collectionId)=>{
     return async dispatch=>{
         // To romve the id from user data in redux store
-        dispatch(unsave({
-            collectionId
-        }))
-
+        
         try{
+            dispatch(unsave({
+                collectionId
+            }))
             await unsaveCollection(collectionId)
-        }catch{
+        }catch(e){
+            console.log(e)
             dispatch(save({
                 collectionId
             }))

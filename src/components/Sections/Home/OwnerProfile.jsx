@@ -5,17 +5,41 @@ import BaseLayout from "../../Layout/BaseLayout/BaseLayout";
 import CollectionHeader from "../../Common/CollectionHeader";
 import { useDispatch, useSelector } from "react-redux";
 import { getByUsername } from "../../../api-services/userService";
+import Search from "../../Common/Search";
 import {
   collectionFetchingFailed,
   collectionFetchingSuccess,
   collectionFething,
 } from "../../../store/Slices/collection.slice";
 import PageLoader from "../../UI/Loader/PageLoader";
-import { downvoteAction, upvoteAction } from "../../../store/actions/collection.action";
+import {
+  downvoteAction,
+  upvoteAction,
+} from "../../../store/actions/collection.action";
+import { SortActions } from "../../Common/ActiondropDown";
 const OwnerProfile = ({ username, windowWidth }) => {
   const dispatch = useDispatch();
   const [query, setQuery] = useState("");
   const collection = useSelector((state) => state.collection);
+
+  const menuItem = [
+    {
+      name: "Recently Updated",
+      onClick: "",
+      tag: "RECENETLY_UPDATED",
+    },
+    {
+      name: "Most Upvotes",
+      onClick: "",
+      tag: "RECENETLY_UPDATED",
+    },
+    {
+      name: "Most Links",
+      onClick: "",
+      tag: "RECENETLY_UPDATED",
+    },
+  ];
+
   useEffect(() => {
     // dispatch(getUserCollection({username}));
     async function getCollectionOfTheUser() {
@@ -28,7 +52,7 @@ const OwnerProfile = ({ username, windowWidth }) => {
       }
     }
     getCollectionOfTheUser();
-  }, [dispatch,username]);
+  }, [dispatch, username]);
 
   const filteredCollection = useMemo(() => {
     return (
@@ -42,12 +66,25 @@ const OwnerProfile = ({ username, windowWidth }) => {
   return (
     <BaseLayout>
       {/* Top bar */}
-      <CollectionHeader
-        windowWidth={windowWidth}
-        isOwner={true}
-        name={`Oyo ${username}`}
-        setQuery={setQuery}
-      />
+      <div className="flex flex-col items-start justify-center w-full gap-4 mx-auto 3xl:px-0 px-8 max-w-[1500px]">
+        <CollectionHeader
+          windowWidth={windowWidth}
+          isOwner={true}
+          name="My Collection"
+        />
+        <div
+          className={`w-full flex items-start justify-between gap-6 ${
+            windowWidth < 700 ? "hidden" : ""
+          }`}
+        >
+          <div className=" w-[calc(100%-212px)]">
+            <Search query={query} setQuery={setQuery} />
+          </div>
+
+          {/* sort by */}
+          <SortActions name="Sort By" menuItems={menuItem} />
+        </div>
+      </div>
       {/* Collections */}
       <div className=" w-full h-[70%]">
         {collection.isFetching ? (
