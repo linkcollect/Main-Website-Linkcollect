@@ -26,20 +26,38 @@ const Signup = ({ windowWidth }) => {
     setData((state) => ({ ...state, [e.target.name]: e.target.value }));
   };
 
+  const isValidName = data.name.length > 3;
+  const emailPattern = /^\S+@\S+\.\S+$/;
+  const isValidEmail = emailPattern.test(data.email);
+  const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d@$!%*?&#]{8,}$/
+  const isValidPassword = passwordPattern.test(data.password);
+  const isValidInput = isValidName && isValidEmail && isValidPassword;
+
+
+  console.log(isValidName,isValidEmail,isValidPassword,isValidInput);
+
+  console.log(data)
   const handleRegister = async (e) => {
     e.preventDefault();
+    console.log("Hleo")
+    if(!isValidInput){
+      console.log("Hello")
+      return
+    }
     setIsSigning(true);
+    const { name, email, password } = data;
     try {
-      const { name, email, password } = e.target;
-
+      console.log("hello")
       const { data } = await register(
-        name.value,
-        email.value,
-        password.value.trim()
+        name,
+        email,
+        password.trim()
       );
+      console.log(data);
       setIsSigning(false);
       setVerifying(true);
     } catch (error) {
+      console.log(error)
       setIsSigning(false);
     }
   };
@@ -126,15 +144,11 @@ const Signup = ({ windowWidth }) => {
 
                       <Button
                         variant="primary"
-                        disabled={
-                          data.name.length <= 0 ||
-                          data.email.length <= 0 ||
-                          data.password.length <= 0
-                        }
+                        disabled={!isValidInput}
                         onClick={handleRegister}
                         isLoading={isSiging}
                       >
-                        {!isSiging ? "Login" : <Loader />}
+                        {!isSiging ? "Sign In" : <Loader />}
                       </Button>
                       <p className="mt-1 font-light text-left text-neutral-400">
                         Already have an account?{" "}
