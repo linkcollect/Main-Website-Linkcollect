@@ -1,16 +1,28 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { upvote,downvote } from "../Slices/explore.slice";
+import { upvote,downvote,startFetching,fetchSuccess,fetchFailed } from "../Slices/explore.slice";
 import { save,unsave } from "../Slices/user.slice";
 import { downvoteCollection, getExplore, saveCollection, unsaveCollection, upvoteCollection } from "../../api-services/collectionService";
 
-export const getAllExplore = createAsyncThunk(
-    'getAllExplore',
-     async function (page=1){
+// export const getAllExplore = createAsyncThunk(
+//     'getAllExplore',
+//     async function (page=1){
+//         const res =await getExplore(page);
+//         console.log(res)
+//         return {data:{collections:res.data.data},page};
+//     }
+// )
+
+export const getAllExplore = (page=1) =>{
+  return async dispatch =>{
+    dispatch(startFetching({page}));
+    try{
         const res =await getExplore(page);
-        console.log(res)
-        return {data:{collections:res.data.data},page};
-     }
-)
+        dispatch(fetchSuccess({data:{collections:res.data.data},page}));
+    }catch(e){
+        dispatch(fetchFailed());
+    }
+  }
+}
 
 // Need to implement
 export const getSearchCollections = createAsyncThunk(
@@ -94,4 +106,4 @@ export const unsaveAction = (collectionId)=>{
         }
     }
 }
-// Create
+

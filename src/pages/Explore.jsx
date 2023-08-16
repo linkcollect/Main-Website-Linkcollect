@@ -14,12 +14,22 @@ import {
 import Search from "../components/Common/Search";
 import { FilterActions } from "../components/Common/ActiondropDown";
 import Loader from "../components/Loader/Loader";
+import { getSearch } from "../api-services/collectionService";
+import { useSearchParams } from "react-router-dom";
+import { searchedCollection } from "../store/Slices/explore.slice";
+
 const Explore = ({ windowWidth }) => {
   const dispatch = useDispatch();
   const [query, setQuery] = useState("");
+  const [searchParams,setSearcParams] = useSearchParams();
+  const [isSearching,setIsSearching] = useState(false);
+  const [isSearchingMore,setIsSearchingMore] = useState(false);
   const collection = useSelector((state) => state.explore);
   useEffect(() => {
-    collection.collections.length == 0 && dispatch(getAllExplore());
+    // collection.isSearched && !searchParams.get("queryFor") may user has navigate away after searhing something in this case we should do reload the original data
+    if((collection.isSearched && !searchParams.get("queryFor")) || collection.collections.length == 0){
+      dispatch(getAllExplore());
+    }
   }, []);
 
   
@@ -28,20 +38,58 @@ const Explore = ({ windowWidth }) => {
     if (collection.isFetching) return
     if (observer.current) observer.current.disconnect()
     observer.current = new IntersectionObserver(entries => {
-      if (entries[0].isIntersecting) {
-        dispatch(getAllExplore(collection.page+1));
+      if (entries[0].isIntersecting && collection.hasMore) {
+        searchParams.get("queryFor") ? fethingMoreSearchResult() : fetchMoreExploreDataData();
       }
     })
     if (node) observer.current.observe(node)
-  }, [collection.isFetching])
-  const fetchMoreData = () =>{
-    dispatch(getAllExplore(collection.page+1))
+  }, [collection.isFetching,collection.hasMore])
+
+  const fetchMoreExploreDataData = () =>{
+    dispatch(getAllExplore(collection.page+1));
   }
 
+  
 
-  const getSearchResult = (e) =>{
+  // Logic for searching like useGlobalSearch() ==> may be later on we can implememt hook for this while optimazation (if it is really necessary)
+  
+  const getSearchResult = async (e) =>{
     e.preventDefault();
     
+    setIsSearching(true);
+    setSearcParams({queryFor:query})
+    try{
+      const res = await getSearch(query);
+      dispatch(searchedCollection({data:{collections:res.data.data},page:1}));
+    }catch(e){
+      console.log(e);
+    }finally{
+      setIsSearching(false);
+    }
+  }
+
+  const fethingMoreSearchResult = async () => {
+    setIsSearchingMore(true);
+    try{
+      const res = await getSearch(query);
+      dispatch(searchedCollection({data:{collections:res.data.data},page:collection.page+1}));
+    }catch(e){
+      console.log(e);
+    }finally{
+      setIsSearchingMore(false);
+    }
+  }
+
+  const onCancelSerchedHandler = (e) =>{
+    e.preventDefault();
+    setQuery("")
+    // If the user searched anything then we will reset the set otherwise no need to reset it
+    if(!searchParams.get("queryFor")){
+      return
+    }
+    searchParams.delete("queryFor");
+    setSearcParams(searchParams);
+    dispatch(getAllExplore());
   }
 
   return (
@@ -49,17 +97,15 @@ const Explore = ({ windowWidth }) => {
       <div className="flex flex-col items-start justify-center w-full gap-4 mx-auto 3xl:px-0 px-8 max-w-[1500px]">
         <CollectionHeader
           windowWidth={windowWidth}
-          name="Explore"
+          name={searchParams.get("queryFor") ? `Searched ${searchParams.get("queryFor")}` : "Explore"}
         />
         <div
           className={`w-full flex items-start justify-between gap-6 ${
             windowWidth < 700 ? "hidden" : ""
           }`}
         >
-          <div className=" w-[calc(100%-212px)]">
-            <form onSubmit={getSearchResult}>
-            <Search query={query} setQuery={setQuery} />
-            </form>
+          <div className=" w-[100%]">
+              <Search query={query} setQuery={setQuery} onCancel={onCancelSerchedHandler} onSubmit={getSearchResult}/>
           </div>
 
           {/* Filter By*/}
@@ -70,8 +116,8 @@ const Explore = ({ windowWidth }) => {
 
       {/* Collection Items */}
       <div className=" w-full h-[70%]">
-        {/* At fisrt reandering when I am going to get first page loading */}
-        {collection.collections.length == 0 && collection.isFetching ? (
+        {/* At fisrt reandering when I am going to get first page loading or if we will get search result for the first time*/}
+        {(collection.collections.length == 0 && collection.isFetching) || isSearching ? (
           <div className="flex items-center justify-center w-full h-full">
             <PageLoader />
           </div>
@@ -87,9 +133,7 @@ const Explore = ({ windowWidth }) => {
                   id={collectionItem._id}
                   image={collectionItem.image}
                   title={collectionItem.title}
-                  links={collectionItem.timelines.length}
-                  isPublic={collectionItem.isPublic}
-                  isPinned={collectionItem.isPinned}
+                  links={collectionItem.countOfLinks}
                   tags={collectionItem.tags}
                   username={collectionItem.username}
                   windowWidth={windowWidth}
@@ -105,7 +149,7 @@ const Explore = ({ windowWidth }) => {
                 />
               ))}
 
-              {collection.isFetching && collection.page>1 && 
+              {((collection.isFetching && collection.page>1) || isSearchingMore) && 
               <div className="flex w-full justify-center items-center my-3">
 
               <Loader/>

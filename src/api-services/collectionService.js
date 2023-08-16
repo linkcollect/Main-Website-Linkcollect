@@ -48,6 +48,16 @@ export function getExplore(page = 1, pageSize = 20) {
   }});
 }
 
+
+export function getSearch(queryFor,page=1,pageSize=20){
+  return http.get(`${apiEndpoint}/explore/search`,{ params:{  
+    queryFor,
+    page,
+    pageSize
+  }
+  })
+}
+
 export function upvoteCollection(id){
   return http.post(`${apiEndpoint}/${id}/upvote`);
 }
