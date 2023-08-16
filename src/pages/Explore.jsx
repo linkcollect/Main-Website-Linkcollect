@@ -122,6 +122,7 @@ const Explore = ({ windowWidth }) => {
             <PageLoader />
           </div>
         ) : collection.collections.length > 0 ? (
+          <>
           <div
             id="scrollableDiv"
             className="flex items-start justify-start w-full h-full pl-8 mx-auto overflow-y-scroll 3xl:pl-0 3xl:justify-center"
@@ -149,14 +150,20 @@ const Explore = ({ windowWidth }) => {
                 />
               ))}
 
-              {((collection.isFetching && collection.page>1) || isSearchingMore) && 
-              <div className="flex w-full justify-center items-center my-3">
-
-              <Loader/>
-              </div>}
+          
 
             </div>
+            
           </div>
+          {((collection.isFetching && collection.page>1) || isSearchingMore) && 
+              
+          <div className="flex w-full justify-center items-center my-3">
+
+          <Loader/>
+
+          </div>
+        }
+          </>
         ) : (
           <div className="flex flex-col items-center justify-center w-full h-full">
             <p className="mb-5 text-5xl text-textPrimary">
