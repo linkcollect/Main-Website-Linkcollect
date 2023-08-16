@@ -44,7 +44,6 @@ export function checkLinkExist(collectionId, link) {
 export function getExplore(page = 1) {
   return http.get(`${apiEndpoint}/page/explore`,{params: {
     page,
-    pageSize
   }});
 }
 
@@ -53,7 +52,6 @@ export function getSearch(queryFor,page=1){
   return http.get(`${apiEndpoint}/explore/search`,{ params:{  
     queryFor,
     page,
-    pageSize
   }
   })
 }
