@@ -41,7 +41,7 @@ export function checkLinkExist(collectionId, link) {
   return http.post(`${apiEndpoint}/${collectionId}/check-duplicate-link`, { link });
 }
 
-export function getExplore(page = 1, pageSize = 20) {
+export function getExplore(page = 1) {
   return http.get(`${apiEndpoint}/page/explore`,{params: {
     page,
     pageSize
@@ -49,7 +49,7 @@ export function getExplore(page = 1, pageSize = 20) {
 }
 
 
-export function getSearch(queryFor,page=1,pageSize=20){
+export function getSearch(queryFor,page=1){
   return http.get(`${apiEndpoint}/explore/search`,{ params:{  
     queryFor,
     page,
