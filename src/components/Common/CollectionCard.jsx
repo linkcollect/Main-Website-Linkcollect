@@ -31,6 +31,7 @@ const CollectionitemV2 = React.forwardRef(({
   onDownVote,
   onSave,
   onUnsave,
+  onPin
 },ref) => {
   const auth = useSelector(state=>state.auth)
   // LOCAL STATE WILL HELP TO MUTATE THE ITEM SO QUICKLY WHEN IT COMES TO LARGE DATA
@@ -75,6 +76,7 @@ const CollectionitemV2 = React.forwardRef(({
       dispatch(onUnsave(id));
     }
   }
+
  
   return (
     <>
@@ -84,18 +86,16 @@ const CollectionitemV2 = React.forwardRef(({
         ref={ref}
       >
         {isOwner && (
-          <div
-            className={`absolute p-1 transition-all duration-500 rounded-sm cursor-pointer bg-black/[0.20] top-2 left-2 ${!isPinned ? "group-hover:opacity-100 opacity-0" : "opacity-1"}`}
-            // onClick={() => {
-            //   setIsPinned(!isPinned);
-            // }}
+          <IconButton
+            className={`absolute p-1 transition-all duration-500 rounded-sm bg-black/[0.20] top-2 left-2 ${!isPinned ? "group-hover:opacity-100 opacity-0" : "opacity-1"}`}
+            onClick={()=>onPin(id)}
           >
             {isPinned ? (
               <img src={filledPinSvg} alt="pin" />
             ) : (
               <img src={pinSvg} alt="pin" />
             )}
-          </div>
+          </IconButton>
         )}
         <Link to={`/${username}/c/${id}`}>
           <div className="w-full h-[109px]">

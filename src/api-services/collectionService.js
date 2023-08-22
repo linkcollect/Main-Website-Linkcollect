@@ -76,3 +76,7 @@ export function unsaveCollection(id){
   return http.post(`${apiEndpoint}/${id}/unsave`)
 }
 
+export function togglePin(collectionId) {
+  return http.post(`${apiEndpoint}/togglePin/${collectionId}`)
+}
+

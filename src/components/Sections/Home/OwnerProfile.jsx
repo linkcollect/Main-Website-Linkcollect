@@ -11,6 +11,7 @@ import {
   collectionFetchingSuccess,
   collectionFething,
   sortCollectionByType,
+  pinCollectionToggle
 } from "../../../store/Slices/collection.slice";
 import PageLoader from "../../UI/Loader/PageLoader";
 import {
@@ -18,11 +19,12 @@ import {
   upvoteAction,
 } from "../../../store/actions/collection.action";
 import { SortActions } from "../../Common/ActiondropDown";
+import { togglePin } from "../../../api-services/collectionService";
 const OwnerProfile = ({ username, windowWidth }) => {
   const dispatch = useDispatch();
   const [query, setQuery] = useState("");
   const collection = useSelector((state) => state.collection);
-  
+  const [sortingType,setSortingType] = useState("RECENETLY_UPDATED")
 
   useEffect(() => {
     // dispatch(getUserCollection({username}));
@@ -49,6 +51,7 @@ const OwnerProfile = ({ username, windowWidth }) => {
 
   // Sort actions
   const sortdata = (sortType)=>{
+    setSortingType(sortType);
     dispatch(sortCollectionByType({sortType}));
   }
   const menuItem = [
@@ -68,6 +71,16 @@ const OwnerProfile = ({ username, windowWidth }) => {
       sortType: "MOST_BOOKMARKED",
     },
   ];
+
+  const onPin = async (collectionId) =>{
+    dispatch(pinCollectionToggle({ collectionId }))
+    dispatch(sortCollectionByType({sortType:sortingType}))
+    try {
+      const res = await togglePin(collectionId);
+    } catch (error) {
+        console.error(error)
+    }
+  }
 
   return (
     <BaseLayout>
@@ -117,6 +130,7 @@ const OwnerProfile = ({ username, windowWidth }) => {
                   views={collections.views}
                   onUpvote={upvoteAction}
                   onDownVote={downvoteAction}
+                  onPin={onPin}
                 />
               ))}
             </div>

@@ -20,14 +20,14 @@ export const dataSortByType = (data,sortingType)=>{
   const pins = data.filter(collection => collection.isPinned === true).sort((data1, data2) =>new Date(data2.pinnedTime) - new Date(data1.pinnedTime));
   switch(sortingType){
       case "MOST_BOOKMARKED":
-          const sorteDataByNumberOfBookmarks = data.sort((data1,data2)=>data2.timelines.length-data1.timelines.length);
-          return sorteDataByNumberOfBookmarks;
+          const sorteDataByNumberOfBookmarks = data.filter(collection => collection.isPinned === false).sort((data1,data2)=>data2.timelines.length-data1.timelines.length);
+          return [...pins, ...sorteDataByNumberOfBookmarks];
       case "MOST_UPVOTES":
-          const sortedDataByMostUpvotes = data.sort((data1,data2)=>data1.upvotes.length - data2.upvotes.length);
-          return sortedDataByMostUpvotes;  
+          const sortedDataByMostUpvotes = data.filter(collection => collection.isPinned === false).sort((data1,data2)=>data1.upvotes.length - data2.upvotes.length);
+          return [...pins, ...sortedDataByMostUpvotes];
       default:
-          const sorteDataByUpdated = data.sort((data1,data2)=>new Date(data2.updatedAt)-new Date(data1.updatedAt));
-          return sorteDataByUpdated;
+          const sorteDataByUpdated = data.filter(collection => collection.isPinned === false).sort((data1,data2)=>new Date(data2.updatedAt)-new Date(data1.updatedAt));
+          return [...pins, ...sorteDataByUpdated];
   }
 
 }

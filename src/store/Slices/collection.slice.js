@@ -17,6 +17,7 @@ const getStructuredCollection = (collectionItem) => {
         views:0,
         isPinned:false,
         isPublic:false,
+        pinnedTime:null
     }
     return {
         ...defaultStructure,
@@ -60,10 +61,18 @@ const collectionSlice = createSlice({
 
         sortCollectionByType:(state,action)=>{
             state.collections = dataSortByType(state.collections,action.payload.sortType);
-        }
+        },
+
+        pinCollectionToggle: (state, action ) => {
+            const  collectionIndex = state.collections.findIndex(
+              (collection) => collection._id === action.payload.collectionId
+            );
+            state.collections[collectionIndex].isPinned = !state.collections[collectionIndex].isPinned
+            state.collections[collectionIndex].pinnedTime =  Date.now()
+        },
     },
 })
 
-export const {upvote,downvote,remove,collectionFething,collectionFetchingSuccess,collectionFetchingFailed,addCollection,sortCollectionByType} = collectionSlice.actions;
+export const {upvote,downvote,remove,collectionFething,collectionFetchingSuccess,collectionFetchingFailed,addCollection,sortCollectionByType,pinCollectionToggle} = collectionSlice.actions;
 
 export default collectionSlice;
