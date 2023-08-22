@@ -1,0 +1,1 @@
+// "baseUrl": "https://api.linkcollect.io/api/v1"

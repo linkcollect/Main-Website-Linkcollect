@@ -4,7 +4,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { getCollection } from "../api-services/collectionService";
 import PageLoader from "../components/Loader/PageLoader";
 import { getByUsername } from "../api-services/userService";
-import CollectionModal from "../components/EditCollection/CollectionModal";
+import CollectionModal from "../components/Common/CollectionModal";
 import { updateCollection } from "../api-services/collectionService";
 import { Helmet } from "react-helmet";
 import BookmarkItem from "../components/BookmarkItem/BookmarkItem";
@@ -71,7 +71,7 @@ const Bookmarks = ({ user, handleSetUser, windowWidth }) => {
 
         setCollection(collection.data.data);
         setFilteredCollection(collection.data.data);
-        if (user.isLoggedIn) {
+        if (user?.isLoggedIn) {
           if (username === user.username) {
             //Means Loggedin user visintig their own profile so no need of fetching the data of the user
             setVisitedUser({
@@ -317,7 +317,7 @@ const Bookmarks = ({ user, handleSetUser, windowWidth }) => {
               collectionDesc={collection?.description}
               noOfLinks={collection.timelines?.length}
               image={collection?.image}
-              isLoggedIn={user.isLoggedIn}
+              // isLoggedIn={user.isLoggedIn}
               isOwner={visitedUser.isOwner}
               searchHnadeler={searchHnadeler}
               editCollectionModalOpener={editCollectionModalOpener}

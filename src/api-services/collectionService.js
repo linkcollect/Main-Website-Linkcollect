@@ -40,3 +40,43 @@ export function getAllByUsername(username) {
 export function checkLinkExist(collectionId, link) {
   return http.post(`${apiEndpoint}/${collectionId}/check-duplicate-link`, { link });
 }
+
+export function getExplore(page = 1) {
+  return http.get(`${apiEndpoint}/page/explore`,{params: {
+    page,
+  }});
+}
+
+
+export function getSearch(queryFor,page=1){
+  return http.get(`${apiEndpoint}/explore/search`,{ params:{  
+    queryFor,
+    page,
+  }
+  })
+}
+
+export function upvoteCollection(id){
+  return http.post(`${apiEndpoint}/${id}/upvote`);
+}
+
+export function downvoteCollection(id){
+  return http.post(`${apiEndpoint}/${id}/downvote`);
+}
+
+export function getSavedCollection(userId){
+  return http.get(`${apiEndpoint}/${userId}/getsaved`);
+}
+
+export function saveCollection(id){
+  return http.post(`${apiEndpoint}/${id}/save`)
+}
+
+export function unsaveCollection(id){
+  return http.post(`${apiEndpoint}/${id}/unsave`)
+}
+
+export function togglePin(collectionId) {
+  return http.post(`${apiEndpoint}/togglePin/${collectionId}`)
+}
+
