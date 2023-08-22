@@ -37,6 +37,7 @@ export const SortActions = ({ name, menuItems }) => {
               name={menItem.name}
               onClick={menItem.onClick}
               sortType={menItem.sortType}
+              key={menItem.sortType}
             />
             {index !== lastIndex && (
               <hr className="w-full border border-neutral-300" />

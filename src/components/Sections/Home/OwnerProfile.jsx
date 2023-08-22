@@ -32,13 +32,17 @@ const OwnerProfile = ({ username, windowWidth }) => {
       dispatch(collectionFething());
       try {
         const res = await getByUsername(username);
-        dispatch(collectionFetchingSuccess({ data: res.data.data }));
-      } catch {
+        const sortedData = dataSortByType(res.data.data.collections,sortingType)
+        console.log("sortedData",sortedData)
+        dispatch(collectionFetchingSuccess({ data: {collections:sortedData} }));
+      } catch(e) {
+        console.log(e)
         dispatch(collectionFetchingFailed());
       }
     }
+    console.log("hello")
     getCollectionOfTheUser();
-  }, [dispatch, username]);
+  }, []);
 
   const filteredCollection = useMemo(() => {
     return (
@@ -47,7 +51,7 @@ const OwnerProfile = ({ username, windowWidth }) => {
         cItem.title.toLowerCase().includes(query.toLowerCase())
       )
     );
-  }, [query, collection.collections]);
+  }, [query, collection.collections,collection.isFetching]);
 
   // Sort actions
   const sortdata = (sortType)=>{
@@ -81,6 +85,7 @@ const OwnerProfile = ({ username, windowWidth }) => {
         console.error(error)
     }
   }
+  console.log(collection.collections)
 
   return (
     <BaseLayout>

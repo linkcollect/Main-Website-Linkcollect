@@ -18,6 +18,7 @@ export const getOrigin = (weblink) =>{
 
 export const dataSortByType = (data,sortingType)=>{
   const pins = data.filter(collection => collection.isPinned === true).sort((data1, data2) =>new Date(data2.pinnedTime) - new Date(data1.pinnedTime));
+  console.log(pins);
   switch(sortingType){
       case "MOST_BOOKMARKED":
           const sorteDataByNumberOfBookmarks = data.filter(collection => collection.isPinned === false).sort((data1,data2)=>data2.timelines.length-data1.timelines.length);
