@@ -6,8 +6,9 @@ import { useDispatch } from "react-redux";
 import cancelIcon from "../../assets/cancel.svg";
 import IconButton from "../UI/IconButton/IconButton";
 import Button from "../UI/Button/Button";
-import { createCollection } from "../../api-services/collectionService";
+import { createCollection , updateCollection} from "../../api-services/collectionService";
 import { addCollection } from "../../store/Slices/collection.slice";
+import { updateCollectionData } from "../../store/Slices/bookmarks.slice";
 
 export const CollectionModal = ({
   isOpen,
@@ -16,6 +17,7 @@ export const CollectionModal = ({
   isEditing,
   collectionId = null, // it will be only availble if we edit a collection
 }) => {
+  console.log(collectionId)
   const [isLoading, setIsLoding] = React.useState(false);
 
   const [collectionData, setCollectionData] = useState({
@@ -29,9 +31,9 @@ export const CollectionModal = ({
   useEffect(() => {
     // If we are editing the data then only we need to set the data as default collection data
     if (isEditing) {
-      setCollectionData({ ...originalCollectionData });
+      setCollectionData({ ...originalCollectionData,image:null });
     }
-  }, []);
+  }, [isOpen]);
 
   // Privacy Handler
   const handleSwitchPrivacy = (privacy) => {
@@ -40,7 +42,6 @@ export const CollectionModal = ({
 
   // Collection title, desc handler
   const onChangeHandler = (e) => {
-    console.log(e.target.name)
     setCollectionData((prevCollectionData) => ({
       ...prevCollectionData,
       [e.target.name]: e.target.value,
@@ -63,10 +64,19 @@ export const CollectionModal = ({
   // if no file is selected that means iamge is null so it will be always true as image is not mandatory data
   const isValidFileSize = !collectionData.image ? true : collectionData.image.size <= MAXED_ALLOWED_SIZE;
   const isCorrectData = isValidName && isValidDescription && isValidTags && isValidFileSize;
+  
+  // it will be checked only when we are gonna edit the collection otherwise default value will be false
+  const sameObjectChecker = () => {
+    return originalCollectionData.title === collectionData.title &&
+    originalCollectionData.description === collectionData.description &&
+    originalCollectionData.tags.map(tag=>collectionData.tags.findIndex(tItem=>tItem==tag)>=0) &&
+    originalCollectionData.isPublic === collectionData.isPublic && 
+    !collectionData.image
+  }
+  const isSameData = isEditing ? sameObjectChecker() : false;
   const onSubmit = async () => {
-    console.log(isCorrectData)
     // If the data is not correct form will be not submitted
-    if (!isCorrectData) {
+    if (!isCorrectData || isSameData) {
       return;
     }
     
@@ -75,7 +85,6 @@ export const CollectionModal = ({
       // Preparing form data
       const { title, description, tags, image, isPublic } = collectionData;
       const collectionFormData = new FormData();
-      console.log("hello")
       collectionFormData.append("title", title);
       collectionFormData.append("description", description);
       collectionFormData.append("isPublic", isPublic);
@@ -85,7 +94,8 @@ export const CollectionModal = ({
       // that is why we need to send the request to different request-> according to that condition
       let res = {};
       if (isEditing) {
-        // res = await
+        res = await updateCollection(collectionId,collectionFormData);
+        dispatch(updateCollectionData({updatedCollection:res.data.data}));
       } else {
         res = await createCollection(collectionFormData);
         dispatch(addCollection({collection:res.data.data}))
@@ -93,11 +103,12 @@ export const CollectionModal = ({
       
       resetDataAndClose();
     } catch (e) {
+      console.log(e)
       setIsLoding(false);
     }
   };
 
-  // Before closing the modal we should reset all the data and then close
+  // Before closing the modal we should reset all the data and then close if it is not in Editing mode
   // this function will colse the modal, before that it will reset all the state
   const resetDataAndClose = () =>{
     setCollectionData({
@@ -225,10 +236,10 @@ export const CollectionModal = ({
           </div>
         </div>
         {/* Actions */}
-        <div className="flex w-full sm:justify-between justify-evenly items-center">
+        <div className={`flex w-full sm:justify-between justify-evenly items-center ${isEditing && "gap-1"}`}>
           <Button
             variant="primary"
-            disabled={!isCorrectData} // button will be disabled untli all required data is correct
+            disabled={!isCorrectData || isSameData} // button will be disabled untli all required data is correct
             onClick={onSubmit}
             isLoading={isLoading}
           >

@@ -1,4 +1,5 @@
 import clsx from "clsx";
+import _ from "lodash";
 import { twMerge } from "tailwind-merge";
 
 export const nameShortner = (name,length) => {
@@ -64,5 +65,9 @@ export const fromNow = (date)=>{
 
   export const classMerge = (...inputs) =>{
     return twMerge(clsx(inputs));
+  }
+
+  export const sameObjectChecker = (objectA,objectB) =>{
+    
   }
 

@@ -1,15 +1,14 @@
 // Package Imports
 import React, { useRef, useState, useEffect } from "react";
-
 // Assets Imports
-import copyIcon from "../../assets/copyIcon.svg";
-import menuIcon from "../../assets/3dot.svg";
-import redirectIcon from "../../assets/redirectIcon.svg";
-import approveIcon from "../../assets/approve.svg";
-import bookmarkDefalutIcon from "../../assets/bookmarkDefault.svg";
+import copyIcon from "../../../assets/copyIcon.svg";
+import menuIcon from "../../../assets/3dot.svg";
+import redirectIcon from "../../../assets/redirectIcon.svg";
+import approveIcon from "../../../assets/approve.svg";
+import bookmarkDefalutIcon from "../../../assets/bookmarkDefault.svg";
 
 // Utils Imports
-import { nameShortner, getOrigin, fromNow } from "../../utils/utils";
+import { nameShortner, getOrigin, fromNow } from "../../../utils/utils";
 
 const BookmarkItem = ({
   id,
@@ -18,7 +17,7 @@ const BookmarkItem = ({
   favicon,
   windowWidth,
   updatedAt,
-  user,
+  isOwner,
   clickedId,
   setClickedId,
   isSelected,

@@ -1,38 +1,36 @@
 // Package Imports
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-// Components Imports
-import Search from "../Common/Search";
+
 // Assets imports
-import backarrow from "../../assets/back-arrow.svg";
-import share from "../../assets/share.svg";
-import MainLogo from "../../assets/mainLogo.svg";
-import defultCollectionImage from "../../assets/defaultCollectio.svg";
-import editIcon from "../../assets/edit.svg";
-import addIcon from "../../assets/add.svg";
-import deleteIcon from "../../assets/delete2.svg";
-import Tag from "../Tag/Tag";
-import SortByIcon from '../../assets/sortBy.svg'
+import backarrow from "../../../assets/back-arrow.svg";
+import share from "../../../assets/share.svg";
+import MainLogo from "../../../assets/mainLogo.svg";
+import defultCollectionImage from "../../../assets/defaultCollectio.svg";
+import editIcon from "../../../assets/edit.svg";
+import addIcon from "../../../assets/add.svg";
+import deleteIcon from "../../../assets/delete2.svg";
 
 // Utilites/Fuctions Import
-import { nameShortner } from "../../utils/utils";
+import { nameShortner } from "../../../utils/utils";
+import Chip from "../../UI/Chip/Chip";
 
-const TopBar = ({
+const CollectionInfoHeader = ({
   windowWidth,
   onBack,
   collectionName,
   collectionDesc,
   noOfLinks,
   image,
-  isLoggedIn,
-  searchHnadeler,
   isOwner,
-  editCollectionModalOpener
+  editCollectionModalOpener,
+  tags,
+  isPublic
 }) => {
-  const [showDropdown, setShowDropdown] = useState(false);
+  
   return (
     <>
-      <div className="w-full bg-bgPrimary pb-4">
+      <div className="w-full bg-bgPrimary pb-2">
         {/* Actions : Back */}
         <div className="flex justify-between bg-bgPrimary mb-5">
           <div className="flex items-center">
@@ -92,9 +90,8 @@ const TopBar = ({
               </div>
               {/* Tags */}
               <div className="flex flex-wrap gap-1">
-                <Tag name="public" />
-                <Tag name="Design" />
-                <Tag name="UI/UX" />
+                <Chip name={isPublic ? "Public" : "Private"}/>
+                {tags?.length>0 && tags.map(tag=>(<Chip name={tag} />))}
               </div>
 
               <p className="w-full mt-2 text-sm ">
@@ -124,26 +121,10 @@ const TopBar = ({
           )}
         </div>
 
-        {/* Search Bar and Filter */}
-        <div className="flex mt-5 gap-2">
-          <Search onSearch={searchHnadeler} />
-          <div onClick={() => setShowDropdown(!showDropdown)} className="w-48  cursor-pointer h-[46px] relative p-4 flex items-center justify-center rounded-lg border-neutral-300 bg-neutral-200 gap-2 border">
-                <img src={SortByIcon} alt="" />
-                <span className="text-sm font-medium">Sort by</span>
-
-                {/* dropdown */}
-                {showDropdown &&
-                  <div className="w-[188px] rounded border absolute z-50 bottom-[-105px] transition-all duration-500 right-0 border-neutral-300 p-3 flex items-start justify-center flex-col gap-2 bg-neutral-100 ">
-                    <p className="text-base font-normal text-neutral-800">Recently Added</p>
-                    <hr className="w-full border border-neutral-300" />
-                    <p className="text-base font-normal text-neutral-800">Alphabetically</p>
-                  </div>
-                }
-              </div>
-        </div>
+       
       </div>
     </>
   );
 };
 
-export default TopBar;
+export default CollectionInfoHeader;
