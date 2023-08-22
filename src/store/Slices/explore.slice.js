@@ -9,7 +9,7 @@ const exploreCollectionDefaultState = {
     isSearched: false // to maintain wheather we have searched value or not
 
 }
-const COLLECTION_PER_FETCH = 100 // Threshold value for collections => After fething the collections if the no of results per fetch is is equeal to 20 that menas it can have more collections so that we can fetch more 
+const COLLECTION_PER_FETCH = 200 // Threshold value for collections => After fething the collections if the no of results per fetch is is equeal to 20 that menas it can have more collections so that we can fetch more 
 const SEARCH_PER_FETCH = 20
 const getStructuredCollection = (collectionItem) => {
     const defaultStructure = {
@@ -60,9 +60,10 @@ const exploreCollectionSlice = createSlice({
             state.collections[cIdx].upvotes = state.collections[cIdx].upvotes.filter(upvoted=>upvoted!==action.payload.userId);
         },
         searchedCollection:(state,action)=>{
+            console.log(action.payload.page)
             const data = action.payload.data;
             state.collections = action.payload.page > 1 ? [...state.collections,...data.collections.map(getStructuredCollection)] : data.collections.map(getStructuredCollection);
-            state.page=action.payload.page;
+            state.page=state.page+1;
             state.hasMore=data.collections.length === SEARCH_PER_FETCH;
             state.isSearched=true;
         }
