@@ -16,6 +16,7 @@ const getStructuredCollection = (collectionItem) => {
         views:0,
         isPinned:false,
         isPublic:false,
+        pinningTime:null
     }
     return {
         ...defaultStructure,
