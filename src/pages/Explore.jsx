@@ -21,18 +21,18 @@ import { searchedCollection } from "../store/Slices/explore.slice";
 const Explore = ({ windowWidth }) => {
   const dispatch = useDispatch();
   const [query, setQuery] = useState("");
-  const [searchParams,setSearcParams] = useSearchParams();
-  const [isSearching,setIsSearching] = useState(false);
-  const [isSearchingMore,setIsSearchingMore] = useState(false);
+  const [searchParams, setSearcParams] = useSearchParams();
+  const [isSearching, setIsSearching] = useState(false);
+  const [isSearchingMore, setIsSearchingMore] = useState(false);
   const collection = useSelector((state) => state.explore);
   useEffect(() => {
     // collection.isSearched && !searchParams.get("queryFor") may user has navigate away after searhing something in this case we should do reload the original data
-    if((collection.isSearched && !searchParams.get("queryFor")) || collection.collections.length == 0){
+    if ((collection.isSearched && !searchParams.get("queryFor")) || collection.collections.length == 0) {
       dispatch(getAllExplore());
     }
   }, []);
 
-  
+
   const observer = useRef()
   const lastCollectionElementRef = useCallback(node => {
     if (collection.isFetching) return
@@ -43,48 +43,47 @@ const Explore = ({ windowWidth }) => {
       }
     })
     if (node) observer.current.observe(node)
-  }, [collection.isFetching,collection.hasMore])
+  }, [collection.isFetching, collection.hasMore])
 
-  const fetchMoreExploreDataData = () =>{
-    dispatch(getAllExplore(collection.page+1));
+  const fetchMoreExploreDataData = () => {
+    dispatch(getAllExplore(collection.page + 1));
   }
 
-  
+
 
   // Logic for searching like useGlobalSearch() ==> may be later on we can implememt hook for this while optimazation (if it is really necessary)
-  
-  const getSearchResult = async (e) =>{
+
+  const getSearchResult = async (e) => {
     e.preventDefault();
-    
     setIsSearching(true);
-    setSearcParams({queryFor:query})
-    try{
+    setSearcParams({ queryFor: query })
+    try {
       const res = await getSearch(query);
-      dispatch(searchedCollection({data:{collections:res.data.data},page:1}));
-    }catch(e){
+      dispatch(searchedCollection({ data: { collections: res.data.data }, page: 1 }));
+    } catch (e) {
       console.log(e);
-    }finally{
+    } finally {
       setIsSearching(false);
     }
   }
 
   const fethingMoreSearchResult = async () => {
     setIsSearchingMore(true);
-    try{
-      const res = await getSearch(query);
-      dispatch(searchedCollection({data:{collections:res.data.data},page:collection.page+1}));
-    }catch(e){
+    try {
+      const res = await getSearch(query, collection.page + 1);
+      dispatch(searchedCollection({ data: { collections: res.data.data }, page: collection.page + 1 }));
+    } catch (e) {
       console.log(e);
-    }finally{
+    } finally {
       setIsSearchingMore(false);
     }
   }
 
-  const onCancelSerchedHandler = (e) =>{
+  const onCancelSerchedHandler = (e) => {
     e.preventDefault();
     setQuery("")
     // If the user searched anything then we will reset the set otherwise no need to reset it
-    if(!searchParams.get("queryFor")){
+    if (!searchParams.get("queryFor")) {
       return
     }
     searchParams.delete("queryFor");
@@ -100,12 +99,11 @@ const Explore = ({ windowWidth }) => {
           name={searchParams.get("queryFor") ? `Searched ${searchParams.get("queryFor")}` : "Explore"}
         />
         <div
-          className={`w-full flex items-start justify-between gap-6 ${
-            windowWidth < 700 ? "hidden" : ""
-          }`}
+          className={`w-full flex items-start justify-between gap-6 ${windowWidth < 700 ? "hidden" : ""
+            }`}
         >
           <div className=" w-[100%]">
-              <Search query={query} setQuery={setQuery} onCancel={onCancelSerchedHandler} onSubmit={getSearchResult}/>
+            <Search query={query} setQuery={setQuery} onCancel={onCancelSerchedHandler} onSubmit={getSearchResult} />
           </div>
 
           {/* Filter By*/}
@@ -123,46 +121,46 @@ const Explore = ({ windowWidth }) => {
           </div>
         ) : collection.collections.length > 0 ? (
           <>
-          <div
-            id="scrollableDiv"
-            className="flex items-start justify-start w-full h-full pl-8 mx-auto overflow-y-scroll 3xl:pl-0 3xl:justify-center"
-          >
-            <div className="w-full justify-start flex flex-wrap gap-2 2xl:gap-6 max-w-[1500px]">
-              {collection.collections.map((collectionItem,index) => (
-                <CollectionitemV2
-                  key={collectionItem._id+"-"+index}
-                  id={collectionItem._id}
-                  image={collectionItem.image}
-                  title={collectionItem.title}
-                  links={collectionItem.countOfLinks}
-                  tags={collectionItem.tags}
-                  username={collectionItem.username}
-                  windowWidth={windowWidth}
-                  isOwner={false}
-                  upvotes={collectionItem.upvotes}
-                  views={collectionItem.views}
-                  isSavedOptionVisible={true}
-                  onUpvote={upvoteAction}
-                  onDownVote={downvoteAction}
-                  onSave={saveAction}
-                  onUnsave={unsaveAction}
-                  ref={index!==collection.collections.length -1 ? lastCollectionElementRef : null}
-                />
-              ))}
+            <div
+              id="scrollableDiv"
+              className="flex items-start justify-start w-full h-full pl-8 mx-auto overflow-y-scroll 3xl:pl-0 3xl:justify-center"
+            >
+              <div className="w-full justify-start flex flex-wrap gap-2 2xl:gap-6 max-w-[1500px]">
+                {collection.collections.map((collectionItem, index) => (
+                  <CollectionitemV2
+                    key={collectionItem._id + "-" + index}
+                    id={collectionItem._id}
+                    image={collectionItem.image}
+                    title={collectionItem.title}
+                    links={collectionItem.countOfLinks}
+                    tags={collectionItem.tags}
+                    username={collectionItem.username}
+                    windowWidth={windowWidth}
+                    isOwner={false}
+                    upvotes={collectionItem.upvotes}
+                    views={collectionItem.views}
+                    isSavedOptionVisible={true}
+                    onUpvote={upvoteAction}
+                    onDownVote={downvoteAction}
+                    onSave={saveAction}
+                    onUnsave={unsaveAction}
+                    ref={index !== collection.collections.length - 1 ? lastCollectionElementRef : null}
+                  />
+                ))}
 
-          
+
+
+              </div>
 
             </div>
-            
-          </div>
-          {((collection.isFetching && collection.page>1) || isSearchingMore) && 
-              
-          <div className="flex w-full justify-center items-center my-3">
+            {((collection.isFetching && collection.page > 1) || isSearchingMore) &&
 
-          <Loader/>
+              <div className="flex w-full justify-center items-center my-3">
 
-          </div>
-        }
+                <Loader />
+
+              </div>
+            }
           </>
         ) : (
           <div className="flex flex-col items-center justify-center w-full h-full">

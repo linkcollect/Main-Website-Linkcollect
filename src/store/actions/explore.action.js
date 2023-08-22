@@ -3,14 +3,6 @@ import { upvote,downvote,startFetching,fetchSuccess,fetchFailed } from "../Slice
 import { save,unsave } from "../Slices/user.slice";
 import { downvoteCollection, getExplore, saveCollection, unsaveCollection, upvoteCollection } from "../../api-services/collectionService";
 
-// export const getAllExplore = createAsyncThunk(
-//     'getAllExplore',
-//     async function (page=1){
-//         const res =await getExplore(page);
-//         console.log(res)
-//         return {data:{collections:res.data.data},page};
-//     }
-// )
 
 export const getAllExplore = (page=1) =>{
   return async dispatch =>{

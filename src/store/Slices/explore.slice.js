@@ -9,7 +9,8 @@ const exploreCollectionDefaultState = {
     isSearched: false // to maintain wheather we have searched value or not
 
 }
-const COLLECTION_PER_FETCH = 20 // Threshold value for collections => After fething the collections if the no of results per fetch is is equeal to 20 that menas it can have more collections so that we can fetch more 
+const COLLECTION_PER_FETCH = 100 // Threshold value for collections => After fething the collections if the no of results per fetch is is equeal to 20 that menas it can have more collections so that we can fetch more 
+const SEARCH_PER_FETCH = 20
 const getStructuredCollection = (collectionItem) => {
     const defaultStructure = {
         title:"",
@@ -62,7 +63,7 @@ const exploreCollectionSlice = createSlice({
             const data = action.payload.data;
             state.collections = action.payload.page > 1 ? [...state.collections,...data.collections.map(getStructuredCollection)] : data.collections.map(getStructuredCollection);
             state.page=action.payload.page;
-            state.hasMore=data.collections.length === COLLECTION_PER_FETCH;
+            state.hasMore=data.collections.length === SEARCH_PER_FETCH;
             state.isSearched=true;
         }
     },
