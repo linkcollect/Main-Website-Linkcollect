@@ -10,6 +10,7 @@ import {
   collectionFetchingFailed,
   collectionFetchingSuccess,
   collectionFething,
+  sortCollectionByType,
 } from "../../../store/Slices/collection.slice";
 import PageLoader from "../../UI/Loader/PageLoader";
 import {
@@ -21,24 +22,7 @@ const OwnerProfile = ({ username, windowWidth }) => {
   const dispatch = useDispatch();
   const [query, setQuery] = useState("");
   const collection = useSelector((state) => state.collection);
-
-  const menuItem = [
-    {
-      name: "Recently Updated",
-      onClick: "",
-      tag: "RECENETLY_UPDATED",
-    },
-    {
-      name: "Most Upvotes",
-      onClick: "",
-      tag: "RECENETLY_UPDATED",
-    },
-    {
-      name: "Most Links",
-      onClick: "",
-      tag: "RECENETLY_UPDATED",
-    },
-  ];
+  
 
   useEffect(() => {
     // dispatch(getUserCollection({username}));
@@ -62,6 +46,28 @@ const OwnerProfile = ({ username, windowWidth }) => {
       )
     );
   }, [query, collection.collections]);
+
+  // Sort actions
+  const sortdata = (sortType)=>{
+    dispatch(sortCollectionByType({sortType}));
+  }
+  const menuItem = [
+    {
+      name: "Recently Updated",
+      onClick: sortdata,
+      sortType: "RECENETLY_UPDATED",
+    },
+    {
+      name: "Most Upvotes",
+      onClick: sortdata,
+      sortType: "MOST_UPVOTES",
+    },
+    {
+      name: "Most Links",
+      onClick: sortdata,
+      sortType: "MOST_BOOKMARKED",
+    },
+  ];
 
   return (
     <BaseLayout>

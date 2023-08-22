@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import SortBy from "../../assets/sortBy.svg";
 
-const MenuItem = ({ name, onClick, index, lastIndex, tag, selectedFilters }) => {
+const MenuItem = ({ name, onClick, sortType, selectedFilters }) => {
   const isSelected = selectedFilters && selectedFilters.findIndex(sfItem => sfItem===name) > 0; 
   return (
     <React.Fragment>
@@ -9,13 +9,10 @@ const MenuItem = ({ name, onClick, index, lastIndex, tag, selectedFilters }) => 
         className={`text-base font-normal text-neutral-800 ${
           isSelected && "border-neutral-200"
         }`}
-        onClick={() => onClick(tag)}
+        onClick={() => onClick(sortType)}
       >
         {name}
       </p>
-      {index !== lastIndex && (
-        <hr className="w-full border border-neutral-300" />
-      )}
     </React.Fragment>
   );
 };
@@ -33,14 +30,18 @@ export const SortActions = ({ name, menuItems }) => {
 
       {/* dropdown */}
       {showDropdown && (
-        <div className="w-[188px] rounded border absolute z-50 bottom-[-140px] transition-all duration-500 right-0 border-white p-3 flex items-start justify-center flex-col gap-2 bg-neutral-100 ">
+        <div className="w-[188px] rounded border absolute z-50 bottom-[-140px] right-0 border-white p-3 flex items-start justify-center flex-col gap-2 bg-neutral-100 drop-shadow">
           {menuItems.map((menItem, index) => (
+            <>
             <MenuItem
               name={menItem.name}
               onClick={menItem.onClick}
-              lastIndex={lastIndex}
-              tag={menItem.tag}
+              sortType={menItem.sortType}
             />
+            {index !== lastIndex && (
+              <hr className="w-full border border-neutral-300" />
+            )}
+            </>
           ))}
         </div>
       )}

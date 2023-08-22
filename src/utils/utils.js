@@ -17,15 +17,18 @@ export const getOrigin = (weblink) =>{
 
 
 export const dataSortByType = (data,sortingType)=>{
-    
-    switch(sortingType){
-        case "MOST_BOOKMARKED":
-            const sorteDataByNumberOfBookmarks = data.sort((data1,data2)=>data2.timelines.length-data1.timelines.length);
-            return sorteDataByNumberOfBookmarks;
-        default:
-            const sorteDataByUpdated = data.sort((data1,data2)=>new Date(data2.updatedAt)-new Date(data1.updatedAt));
-            return sorteDataByUpdated;
-    }
+  const pins = data.filter(collection => collection.isPinned === true).sort((data1, data2) =>new Date(data2.pinnedTime) - new Date(data1.pinnedTime));
+  switch(sortingType){
+      case "MOST_BOOKMARKED":
+          const sorteDataByNumberOfBookmarks = data.sort((data1,data2)=>data2.timelines.length-data1.timelines.length);
+          return sorteDataByNumberOfBookmarks;
+      case "MOST_UPVOTES":
+          const sortedDataByMostUpvotes = data.sort((data1,data2)=>data1.upvotes.length - data2.upvotes.length);
+          return sortedDataByMostUpvotes;  
+      default:
+          const sorteDataByUpdated = data.sort((data1,data2)=>new Date(data2.updatedAt)-new Date(data1.updatedAt));
+          return sorteDataByUpdated;
+  }
 
 }
   
@@ -61,3 +64,4 @@ export const fromNow = (date)=>{
   export const classMerge = (...inputs) =>{
     return twMerge(clsx(inputs));
   }
+

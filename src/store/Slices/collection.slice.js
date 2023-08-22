@@ -1,4 +1,5 @@
 import { createSlice} from "@reduxjs/toolkit";
+import { dataSortByType } from "../../utils/utils";
 const collectionDefaultState = {
     collections:[],
     isFetching:false,
@@ -55,10 +56,14 @@ const collectionSlice = createSlice({
 
         addCollection:(state,action) =>{
             state.collections.push(action.payload.collection);
+        },
+
+        sortCollectionByType:(state,action)=>{
+            state.collections = dataSortByType(state.collections,action.payload.sortType);
         }
     },
 })
 
-export const {upvote,downvote,remove,collectionFething,collectionFetchingSuccess,collectionFetchingFailed,addCollection} = collectionSlice.actions;
+export const {upvote,downvote,remove,collectionFething,collectionFetchingSuccess,collectionFetchingFailed,addCollection,sortCollectionByType} = collectionSlice.actions;
 
 export default collectionSlice;
