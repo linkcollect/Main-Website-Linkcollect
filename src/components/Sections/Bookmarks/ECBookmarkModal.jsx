@@ -3,11 +3,12 @@ import Modal from "../../UI/Modal/Modal";
 import cancelIcon from "../../../assets/cancel.svg";
 import Input, { Label } from "../../UI/Input/Input"
 import Loader from "../../UI/Loader/Loader"
-import { createTimeline } from "../../../api-services/timelineService";
+import { createTimeline, updateTimeline } from "../../../api-services/timelineService";
 import { useDispatch } from "react-redux";
-import { createBookmark } from "../../../store/Slices/bookmarks.slice";
+import { createBookmark, updateBookmark } from "../../../store/Slices/bookmarks.slice";
+import Button from "../../UI/Button/Button";
 
-const EcBookamrkModal = ({ isOpen, onClose, isEditing, originalData = {}, bookamrkID = null, collectionID = null }) => {
+const EcBookamrkModal = ({ isOpen, onClose, isEditing, originalData = {}, collectionID = null, bookmarkID = null }) => {
     const [data, setData] = useState({
         title: "",
         link: "",
@@ -19,7 +20,7 @@ const EcBookamrkModal = ({ isOpen, onClose, isEditing, originalData = {}, bookam
         if (isEditing) {
             setData({ ...originalData });
         }
-    },[])
+    }, [])
     const onChangeHandler = (e) => {
         setData(prevData => ({
             ...prevData,
@@ -50,7 +51,8 @@ const EcBookamrkModal = ({ isOpen, onClose, isEditing, originalData = {}, bookam
         let res = {};
         try {
             if (isEditing) {
-
+                res = await updateTimeline(collectionID, bookmarkID, timeline);
+                dispatch(updateBookmark({ updatedBookmark: res.data.data }));
             } else {
                 // If we are creating a new bookmark then need to add time in the timeline object
                 timeline.time = new Date();
@@ -62,15 +64,16 @@ const EcBookamrkModal = ({ isOpen, onClose, isEditing, originalData = {}, bookam
             setIsLoading(false);
             console.log(e);
         }
+
     }
-    const resetDataAndClose = () =>{
+    const resetDataAndClose = () => {
         setData({
-          title:"",
-          link:""
+            title: "",
+            link: ""
         })
         setIsLoading(false);
         onClose();
-      }
+    }
     return (
         <Modal isOpen={isOpen} onClose={onClose}>
             <div className="px-3 flex flex-col gap-5">
@@ -121,18 +124,26 @@ const EcBookamrkModal = ({ isOpen, onClose, isEditing, originalData = {}, bookam
                 </div>
                 {/* Actions */}
                 <div className="flex w-full sm:justify-between justify-evenly items-center gap-2">
-                    <button
-                        className="flex w-full items-center justify-center h-12 rounded-xl bg-primary-500 px-3 py-6 font-medium text-[16px] text-white cursor-pointer"
+                    <Button
+                        variant="primary"
+                        disabled={!isValidData || isSameData} // button will be disabled untli all required data is correct
                         onClick={onSubmit}
+                        isLoading={isLoading}
                     >
-                        {isLoading ? <Loader /> : <span>{isEditing ? "Save" : "Create"}</span>}
-                    </button>
-                    {isEditing && <button
-                        className="flex w-full items-center justify-center h-12 rounded-xl bg-neutral-200 border border-neutral-300 px-3 py-6 font-medium text-[16px] text-textDark cursor-pointer"
-                        onClick={onClose}
-                    >
-                        <span>Cancel</span>
-                    </button>}
+                        {isLoading ? (
+                            <Loader />
+                        ) : (
+                            <span>{isEditing ? "Update" : "Add Bookbark"}</span>
+                        )}
+                    </Button>
+                    {isEditing && (
+                        <Button
+                            variant="secondaryOutline"
+                            onClick={resetDataAndClose}
+                        >
+                            <span>Cancel</span>
+                        </Button>
+                    )}
                 </div>
             </div>
         </Modal>

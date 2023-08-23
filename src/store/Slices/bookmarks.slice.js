@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit"
 import { getBookmarks } from "../actions/bookmarks.action"
+import { dataSortByType } from "../../utils/utils"
 
 const initialCollectionData ={
    collectionData:{},
@@ -18,13 +19,31 @@ const collectionDataSlice = createSlice({
               state.collectionData = { timelines:[...originaltimelines],...data };
         },
         createBookmark:(state,action) =>{
-            state.collectionData.timelines.push(action.payload.bookmarkData);
+            state.collectionData.timelines.unishift(action.payload.bookmarkData);
         },
         updateBookmark:(state,action) => {
-
+            const bookmarkIndexToUpdate = state.collectionData.timelines.findIndex(tIdx=>tIdx._id === action.payload.updatedBookmark._id);
+            if(bookmarkIndexToUpdate<0){
+                throw Error('Sorry! unable to update. Try again later')
+            }
+            state.collectionData.timelines[bookmarkIndexToUpdate] = action.payload.updatedBookmark
         },
         deleteBookMark:(state,action) => {
             
+        },
+        setTogglePinBookmark:(state,action)=>{
+            const bookmarkToTogglePinIndex = state.collectionData.timelines.findIndex(tIdx=>tIdx._id===action.payload.bookmarkID);
+            if(bookmarkToTogglePinIndex<0){
+                throw Error('Sorry! unable to update. Try again later')
+            }
+            const bookmarksdata = state.collectionData.timelines;
+            bookmarksdata[bookmarkToTogglePinIndex].isPinned = !state.collectionData.timelines[bookmarkToTogglePinIndex].isPinned
+            bookmarksdata[bookmarkToTogglePinIndex].pinnedTime = Date.now(); 
+            console.log("Slice",action.payload.sortType);
+            state.collectionData.timelines = dataSortByType([...bookmarksdata],action.payload.sortType);
+        },
+        sortBookmarksByType:(state,action)=>{
+            state.collectionData.timelines =  dataSortByType([...state.collectionData.timelines],action.payload.sortType);
         }
     },
     extraReducers:(builder)=>{
@@ -33,7 +52,8 @@ const collectionDataSlice = createSlice({
             state.collectionData={}
         });
         builder.addCase(getBookmarks.fulfilled,(state,action)=>{
-            state.collectionData = action.payload.collectionData;
+            const soretedBookmarks = dataSortByType([...action.payload.collectionData.timelines],"RECENETLY_UPDATED");
+            state.collectionData = {...action.payload.collectionData,timelines:soretedBookmarks};
             state.isFetching=false;
             state.isFailed=false
         });
@@ -43,5 +63,5 @@ const collectionDataSlice = createSlice({
         })
     }
 })
-export const {updateCollectionData,createBookmark} = collectionDataSlice.actions
+export const {updateCollectionData,createBookmark,updateBookmark,setTogglePinBookmark,sortBookmarksByType} = collectionDataSlice.actions
 export default collectionDataSlice

@@ -1,15 +1,14 @@
 import React, { useState } from "react";
 import SortBy from "../../assets/sortBy.svg";
 
-const MenuItem = ({ name, onClick, sortType, selectedFilters }) => {
-  const isSelected = selectedFilters && selectedFilters.findIndex(sfItem => sfItem===name) > 0; 
+export const MenuItem = ({ name, onClick, type, isSelected }) => {
   return (
     <React.Fragment>
       <p
         className={`text-base font-normal text-neutral-800 ${
           isSelected && "border-neutral-200"
         }`}
-        onClick={() => onClick(sortType)}
+        onClick={() => onClick(type)}
       >
         {name}
       </p>
@@ -30,14 +29,14 @@ export const SortActions = ({ name, menuItems }) => {
 
       {/* dropdown */}
       {showDropdown && (
-        <div className="w-[188px] rounded border absolute z-50 bottom-[-140px] right-0 border-white p-3 flex items-start justify-center flex-col gap-2 bg-neutral-100 drop-shadow">
+        <div className="w-[188px] rounded border absolute z-50 top-[50px] right-0 border-white p-3 flex items-start justify-center flex-col gap-2 bg-neutral-100 drop-shadow">
           {menuItems.map((menItem, index) => (
             <>
             <MenuItem
               name={menItem.name}
               onClick={menItem.onClick}
-              sortType={menItem.sortType}
-              key={menItem.sortType}
+              type={menItem.type}
+              key={menItem.type}
             />
             {index !== lastIndex && (
               <hr className="w-full border border-neutral-300" />
@@ -65,12 +64,18 @@ export const FilterActions = ({ menuItems,selectedFilters }) => {
       {showDropdown && (
         <div className="w-[188px] rounded border absolute z-50 bottom-[-140px] transition-all duration-500 right-0 border-neutral-300 p-3 flex items-start justify-center flex-col gap-2 bg-neutral-100 ">
           {menuItems.map((menItem, index) => (
+            <>
             <MenuItem
               name={menItem.name}
               onClick={menItem.onClick}
               lastIndex={lastIndex}
               tag={menItem.tag}
+              isSelected={selectedFilters.findIndex(sfItem => sfItem===menItem.name) > 0}
             />
+            {index !== lastIndex && (
+              <hr className="w-full border border-neutral-300" />
+            )}
+            </>
           ))}
         </div>
       )}

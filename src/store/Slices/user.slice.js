@@ -15,14 +15,14 @@ const authDefaultState = {
     isPublic: false,
     totalCollections: 0,
     totalLinks: 0,
-    // collections: [], for now no need to store collections info , in future we will see
+    collections: [], 
     savedCollections: [],
   },
 };
 
 // userData saving utility
 const setUserData = (state,action) =>{
-  const {email,isPremium,isPublic,savedCollections} = action.payload.userData;
+  const {email,isPremium,isPublic,savedCollections,collections} = action.payload.userData;
       state.userData = {...state.userData,email,isPremium,isPublic,savedCollections};
       state.userData.totalCollections =
         action.payload.userData.collections.length;
@@ -30,6 +30,7 @@ const setUserData = (state,action) =>{
       action.payload.userData.collections.map(
         (col) => (totalLinks += col.timelines.length)
       );
+      state.userData.collections = collections.map(collectionItem=> ({collectionId:collectionItem._id,name:collectionItem.name}))
       state.userData.totalLinks = totalLinks;
 }
 

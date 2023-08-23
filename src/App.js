@@ -94,7 +94,7 @@ function App() {
           <Route path="/saved" element={<SavedCollection />} />
 
           <Route path="/privacy" element={<Privacy />} />
-          <Route path="/settings" element={<Settings />} />
+          {/* <Route path="/settings" element={<Settings />} /> */}
           <Route
             path="/:username/c/:collectionId"
             element={<Bookmarks windowWidth={windowWidth} />}

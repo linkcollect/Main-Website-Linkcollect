@@ -62,17 +62,17 @@ const OwnerProfile = ({ username, windowWidth }) => {
     {
       name: "Recently Updated",
       onClick: sortdata,
-      sortType: "RECENETLY_UPDATED",
+      type: "RECENETLY_UPDATED",
     },
     {
       name: "Most Upvotes",
       onClick: sortdata,
-      sortType: "MOST_UPVOTES",
+      type: "MOST_UPVOTES",
     },
     {
       name: "Most Links",
       onClick: sortdata,
-      sortType: "MOST_BOOKMARKED",
+      type: "MOST_BOOKMARKED",
     },
   ];
 

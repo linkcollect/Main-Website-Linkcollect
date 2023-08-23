@@ -1,5 +1,4 @@
 import clsx from "clsx";
-import _ from "lodash";
 import { twMerge } from "tailwind-merge";
 
 export const nameShortner = (name,length) => {
@@ -27,6 +26,9 @@ export const dataSortByType = (data,sortingType)=>{
       case "MOST_UPVOTES":
           const sortedDataByMostUpvotes = data.filter(collection => collection.isPinned === false).sort((data1,data2)=>data1.upvotes.length - data2.upvotes.length);
           return [...pins, ...sortedDataByMostUpvotes];
+      case "ALPHABETICAlLY":
+          const sortedDataByAlphabetically = data.filter(collection => collection.isPinned === false).sort((data1,data2)=>data1.title.localeCompare(data2.title))
+          return [...pins,...sortedDataByAlphabetically];
       default:
           const sorteDataByUpdated = data.filter(collection => collection.isPinned === false).sort((data1,data2)=>new Date(data2.updatedAt)-new Date(data1.updatedAt));
           return [...pins, ...sorteDataByUpdated];

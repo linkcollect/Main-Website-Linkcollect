@@ -14,6 +14,9 @@ import deleteIcon from "../../../assets/delete2.svg";
 // Utilites/Fuctions Import
 import { nameShortner } from "../../../utils/utils";
 import Chip from "../../UI/Chip/Chip";
+import EcBookamrkModal from "./ECBookmarkModal";
+import Button from "../../UI/Button/Button";
+import IconButton from "../../UI/IconButton/IconButton";
 
 const CollectionInfoHeader = ({
   windowWidth,
@@ -26,8 +29,11 @@ const CollectionInfoHeader = ({
   editCollectionModalOpener,
   createBookmarkModalOpener,
   tags,
-  isPublic
+  isPublic,
+  collectionId
 }) => {
+
+  
   
   return (
     <>
@@ -35,13 +41,14 @@ const CollectionInfoHeader = ({
         {/* Actions : Back */}
         <div className="flex justify-between bg-bgPrimary mb-5">
           <div className="flex items-center">
-            <button
+            <Button
               onClick={onBack}
-              className="flex items-center justify-center w-[106px] h-[44px] bg-neutral-200 border border-neutral-300 rounded-md"
+              variant="secondaryOutline"
+              className="bg-white"
             >
               <img src={backarrow} className="w-[20px] h-[20px] mr-1" alt="" />
               <p>Back</p>
-            </button>
+            </Button>
           </div>
           {windowWidth < 600 && (
             <div className="flex items-center justify-end w-32 h-10">
@@ -105,19 +112,19 @@ const CollectionInfoHeader = ({
 
           {/* Collection Actions */}
           {windowWidth > 600 &&   (
-            <div className="flex justify-center gap-2">
+            <div className="flex justify-center gap-2 items-start">
               {/* Add bookmark */}
-              <button className="flex" onClick={createBookmarkModalOpener}>
+              <IconButton onClick={createBookmarkModalOpener}>
                 <img src={addIcon} />
-              </button>
+              </IconButton>
               {/* Edit */}
-              <button className="flex" onClick={editCollectionModalOpener}>
+              <IconButton onClick={editCollectionModalOpener}>
                 <img src={editIcon} />
-              </button>
+              </IconButton>
               {/* Delete */}
-              <button className="flex">
+              <IconButton>
                 <img src={deleteIcon} />
-              </button>
+              </IconButton>
             </div>
           )}
         </div>
