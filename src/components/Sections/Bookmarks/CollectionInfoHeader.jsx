@@ -24,6 +24,7 @@ const CollectionInfoHeader = ({
   image,
   isOwner,
   editCollectionModalOpener,
+  createBookmarkModalOpener,
   tags,
   isPublic
 }) => {
@@ -103,10 +104,10 @@ const CollectionInfoHeader = ({
           </div>
 
           {/* Collection Actions */}
-          {windowWidth > 600 && (
+          {windowWidth > 600 &&   (
             <div className="flex justify-center gap-2">
               {/* Add bookmark */}
-              <button className="flex">
+              <button className="flex" onClick={createBookmarkModalOpener}>
                 <img src={addIcon} />
               </button>
               {/* Edit */}

@@ -7,7 +7,7 @@ import deleteIcon from "../assets/delete2.svg";
 import moveIcon from "../assets/move.svg";
 import { Delete } from "../components/DeleteModal/Delete";
 import Move from "../components/MoveModal/Move";
-import EcBookamrkModal from "../components/ECBookmarkModal/EcBookamrkModal";
+import EcBookamrkModal from "../components/Sections/Bookmarks/ECBookmarkModal";
 import BaseLayout from "../components/Layout/BaseLayout/BaseLayout";
 import Search from "../components/Common/Search";
 import CollectionInfoHeader from "../components/Sections/Bookmarks/CollectionInfoHeader";
@@ -24,16 +24,19 @@ const Bookmarks = ({ user, handleSetUser, windowWidth }) => {
   // Number Selected bookmarks
   const [numberOfSelectedLinkes, setNumberOfSelectedLinks] = useState(0);
 
-  // Modal State
-  const [editModalOpen, setEditModalOpen] = useState(false);
+  // Modal State: Collection
+  const [editCollectionModalOpen, setEditCollectionModalOpen] = useState(false);
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
-  const [openMoveModal, setOpenMoveModal] = useState(false);
+
+  // Modal State: Bookmarks
+  const [openCreateBookmarkModal, setOpenCreateBookmarkModal] = useState(false);
 
   // Sorting Dropdown State
   const [showDropdown, setShowDropdown] = useState(false)
   const [query, setQuery] = useState("");
-  //For handiling click event
+  //For handiling click event on the bookmarkItem
   const [clickedId, setClickedId] = useState(null);
+
   const auth = useSelector(state => state.auth);
   const collectionData = useSelector(state => state.collectionData)
   const dispatch = useDispatch();
@@ -43,20 +46,25 @@ const Bookmarks = ({ user, handleSetUser, windowWidth }) => {
 
 
   const editCollectionModalHandler = () => {
-    setEditModalOpen((prev) => !prev);
+    setEditCollectionModalOpen((prev) => !prev);
   };
+
+  const bookmarkCreateModalHandler = () => {
+    console.log("hhelo")
+    setOpenCreateBookmarkModal(prev => !prev);
+  }
 
 
 
   // Delete Modal Open/CLose
-  const deleteModalHandler = () => {
-    setOpenDeleteModal((prev) => !prev);
-  };
+  // const deleteModalHandler = () => {
+  //   setOpenDeleteModal((prev) => !prev);
+  // };
 
-  // Move Modal Open/Close
-  const moveModalHandler = () => {
-    setOpenMoveModal((prev) => !prev);
-  };
+  // // Move Modal Open/Close
+  // const moveModalHandler = () => {
+  //   setOpenMoveModal((prev) => !prev);
+  // };
 
 
   const backHandler = (e) => {
@@ -151,15 +159,15 @@ const Bookmarks = ({ user, handleSetUser, windowWidth }) => {
       <div className="flex w-full min-h-screen">
         {/* Collection Edit Modal */}
         {!collectionData.isFetching && <CollectionModal
-          isOpen={editModalOpen}
+          isOpen={editCollectionModalOpen}
           modalCloseHandler={editCollectionModalHandler}
           isEditing={true}
           originalCollectionData={{
-            title: collectionData.collectionData?.title ,
+            title: collectionData.collectionData?.title,
             description: collectionData.collectionData?.description,
             tags: collectionData.collectionData?.tags,
             isPublic: collectionData.collectionData?.isPublic,
-            image:collectionData.collectionData?.image
+            image: collectionData.collectionData?.image
           }}
           collectionId={collectionId}
         />}
@@ -180,8 +188,9 @@ const Bookmarks = ({ user, handleSetUser, windowWidth }) => {
         nameOfTheCollection={collection?.title}
       /> */}
 
-        {/* Edit Bookamrk */}
-        {/* <EcBookamrkModal isOpen={false} onClose={()=>{}} isEditing={false} name={"Hello"} link="hello"/> */}
+        {/* Bookmarks */}
+        {/* Create Bookamrk */}
+        <EcBookamrkModal isOpen={openCreateBookmarkModal} onClose={bookmarkCreateModalHandler} isEditing={false} collectionID={collectionId}/>
 
         <div className="flex flex-col w-full h-screen overflow-y-hidden">
           <div className="px-10">
@@ -198,6 +207,7 @@ const Bookmarks = ({ user, handleSetUser, windowWidth }) => {
                 isPublic={collectionData.collectionData?.isPublic}
                 isOwner={username == auth.username}
                 editCollectionModalOpener={editCollectionModalHandler}
+                createBookmarkModalOpener={bookmarkCreateModalHandler}
               />
               {/* Search Bar and Filter */}
               <div className=" w-[100%]">
@@ -251,14 +261,14 @@ const Bookmarks = ({ user, handleSetUser, windowWidth }) => {
                 {/* Actions: Move and Delete  */}
                 <div className="flex items-center gap-5">
                   <button
-                    onClick={deleteModalHandler}
+                    // onClick={deleteModalHandler}
                     className="w-auto px-[7px] py-[6px] flex items-center justify-center bg-neutral-200 border border-neutral-300 rounded-md gap-1"
                   >
                     <img src={deleteIcon} alt="delete" />
                     <span>Delete</span>
                   </button>
                   <button
-                    onClick={moveModalHandler}
+                    // onClick={moveModalHandler}
                     className="w-auto px-[7px] py-[6px] flex items-center justify-center bg-neutral-200 border border-neutral-300 rounded-md gap-1"
                   >
                     <img src={moveIcon} alt="move" />

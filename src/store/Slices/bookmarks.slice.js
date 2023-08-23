@@ -16,6 +16,15 @@ const collectionDataSlice = createSlice({
               const originaltimelines = state.collectionData.timelines
               const {timelines,...data} = action.payload.updatedCollection
               state.collectionData = { timelines:[...originaltimelines],...data };
+        },
+        createBookmark:(state,action) =>{
+            state.collectionData.timelines.push(action.payload.bookmarkData);
+        },
+        updateBookmark:(state,action) => {
+
+        },
+        deleteBookMark:(state,action) => {
+            
         }
     },
     extraReducers:(builder)=>{
@@ -34,5 +43,5 @@ const collectionDataSlice = createSlice({
         })
     }
 })
-export const {updateCollectionData} = collectionDataSlice.actions
+export const {updateCollectionData,createBookmark} = collectionDataSlice.actions
 export default collectionDataSlice
