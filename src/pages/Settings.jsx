@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
-import Profile from '../components/Settings/Profile';
-import Tab from '../components/Settings/Tab';
-import TabContent from '../components/Settings/TabContent';
+import Profile from '../components/Sections/Settings/Profile';
+import Tab from '../components/Sections/Settings/Tab';
+import TabContent from '../components/Sections/Settings/TabContent';
 import BaseLayout from '../components/Layout/BaseLayout/BaseLayout';
 const Settings = () => {
   const [activeTab, setActiveTab] = useState('profile');

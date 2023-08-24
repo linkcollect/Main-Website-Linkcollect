@@ -1,8 +1,8 @@
 import React, { useRef, useState } from 'react'
-import Upload from '../../assets/upload.svg'
-import profile from '../../assets/defaultProfile.svg'
-import twitter from '../../assets/twitterBlue.svg'
-import websiteIcon from '../../assets/websiteIcon.svg'
+import Upload from '../../../assets/upload.svg'
+import profile from '../../../assets/defaultProfile.svg'
+import twitter from '../../../assets/twitterBlue.svg'
+import websiteIcon from '../../../assets/websiteIcon.svg'
 const Profile = () => {
     const fileInputRef = useRef(null);
     // profile privacy
