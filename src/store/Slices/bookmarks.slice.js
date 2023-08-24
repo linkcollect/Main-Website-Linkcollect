@@ -45,7 +45,7 @@ const collectionDataSlice = createSlice({
             state.collectionData.timelines[bookmarkIndexToUpdate] = action.payload.updatedBookmark
         },
         deleteBookMark:(state,action) => {
-            
+            state.collectionData.timelines = state.collectionData.timelines.filter(tItem=>tItem._id!==action.payload.bookmarkID);
         },
         setTogglePinBookmark:(state,action)=>{
             const bookmarkToTogglePinIndex = state.collectionData.timelines.findIndex(tIdx=>tIdx._id===action.payload.bookmarkID);
@@ -80,5 +80,5 @@ const collectionDataSlice = createSlice({
         })
     }
 })
-export const {updateCollectionData,createBookmark,updateBookmark,setTogglePinBookmark,sortBookmarksByType} = collectionDataSlice.actions
+export const {updateCollectionData,createBookmark,updateBookmark,setTogglePinBookmark,sortBookmarksByType,deleteBookMark} = collectionDataSlice.actions
 export default collectionDataSlice

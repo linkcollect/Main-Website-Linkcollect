@@ -3,8 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import PageLoader from "../components/Loader/PageLoader";
 import CollectionModal from "../components/Common/CollectionModal";
 import BookmarkItem from "../components/Sections/Bookmarks/BookmarkItem";
-import deleteIcon from "../assets/delete2.svg";
-import { Delete } from "../components/DeleteModal/Delete";
+import Delete from "../components/Sections/Bookmarks/DeleteModal";
 import EcBookamrkModal from "../components/Sections/Bookmarks/ECBookmarkModal";
 import BaseLayout from "../components/Layout/BaseLayout/BaseLayout";
 import Search from "../components/Common/Search";
@@ -19,8 +18,11 @@ const Bookmarks = ({ windowWidth }) => {
   const { collectionId, username } = useParams();
   // Modal State: Collection
   const [editCollectionModalOpen, setEditCollectionModalOpen] = useState(false);
+  const [deleteCollectionModal,setDeleteCollectionModal] = useState(false);
   // Modal State: Bookmarks
   const [openCreateBookmarkModal, setOpenCreateBookmarkModal] = useState(false);
+
+  
   // Sorting State
   const [sortingType,setSortingType] = useState("RECENETLY_UPDATED")
   
@@ -41,9 +43,15 @@ const Bookmarks = ({ windowWidth }) => {
     setEditCollectionModalOpen((prev) => !prev);
   };
 
+  const deleteCollectionModalHandler = () =>{
+    setDeleteCollectionModal((prev)=>!prev);
+  }
+
   const bookmarkCreateModalHandler = () => {
     setOpenCreateBookmarkModal(prev => !prev);
   }
+
+  
 
 
   const backHandler = (e) => {
@@ -86,6 +94,14 @@ const Bookmarks = ({ windowWidth }) => {
 
 
   // Logic for search 
+  const filteredBookmarks = useMemo(() => {
+    return (
+      !collectionData.isFetching && collectionData.collectionData.timelines?.length > 0 ? 
+      collectionData.collectionData.timelines.filter((tItem) =>
+        tItem.title.toLowerCase().includes(query.toLowerCase())
+      ) : []
+    );
+  }, [query, collectionData.collectionData,collectionData.isFetching]);
 
 
   return (
@@ -105,10 +121,12 @@ const Bookmarks = ({ windowWidth }) => {
           }}
           collectionId={collectionId}
         />}
+        {!collectionData.isFetching && <Delete isOpen={deleteCollectionModal} onClose={deleteCollectionModalHandler} collectionID={collectionId} heading="Delete Collection" subheading={`Delete the collection - ${collectionData.collectionData?.title}`} mode="collectionDelete" />}
 
         {/* Bookmarks */}
         {/* Create Bookamrk */}
-        <EcBookamrkModal isOpen={openCreateBookmarkModal} onClose={bookmarkCreateModalHandler} isEditing={false} collectionID={collectionId}/>
+        {collectionData.isFetching && <EcBookamrkModal isOpen={openCreateBookmarkModal} onClose={bookmarkCreateModalHandler} isEditing={false} collectionID={collectionId}/>}
+        
 
         <div className="flex flex-col w-full h-screen overflow-y-hidden">
           <div className="px-10">
@@ -119,13 +137,14 @@ const Bookmarks = ({ windowWidth }) => {
                 onBack={backHandler}
                 collectionName={collectionData.collectionData?.title}
                 collectionDesc={collectionData.collectionData?.description}
-                noOfLinks={collectionData.collectionData?.length}
+                noOfLinks={collectionData.collectionData?.timelines?.length}
                 image={collectionData.collectionData?.image}
                 tags={collectionData.collectionData?.tags}
                 isPublic={collectionData.collectionData?.isPublic}
                 isOwner={username === auth.username}
                 editCollectionModalOpener={editCollectionModalHandler}
                 createBookmarkModalOpener={bookmarkCreateModalHandler}
+                deleteCollectionModalHandler={deleteCollectionModalHandler}
                 collectionId = {collectionId}
               />
               {/* Search Bar and Filter */}
@@ -150,10 +169,10 @@ const Bookmarks = ({ windowWidth }) => {
               <div className="flex items-center justify-center w-full h-full">
                 <PageLoader />
               </div>
-            ) : collectionData.collectionData && collectionData.collectionData.timelines?.length > 0 ? (
+            ) : collectionData.collectionData && filteredBookmarks?.length > 0 ? (
               <div className="w-full h-[calc(100%-55px)] py-4 overflow-y-scroll scrollbar-hide">
                 <div className="w-[100%] h-[calc(100%-65px)] space-y-2 px-10">
-                  {collectionData.collectionData.timelines.map((timeline) => (
+                  {filteredBookmarks.map((timeline) => (
                     <BookmarkItem
                       key={timeline._id}
                       id={timeline._id}
@@ -169,6 +188,7 @@ const Bookmarks = ({ windowWidth }) => {
                       collectionId = {collectionId}
                       toggleBookmarkPin={toggleBookmarkPin}
                       isPinned={timeline.isPinned}
+                      collectionName={collectionData.collectionData.title}
                     />
                   ))}
                 </div>

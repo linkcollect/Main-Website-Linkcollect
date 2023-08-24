@@ -14,6 +14,8 @@ import { nameShortner, getOrigin, fromNow } from "../../../utils/utils";
 // Components
 import EcBookamrkModal from "./ECBookmarkModal";
 import { MenuItem } from "../../Common/ActiondropDown";
+import Delete from "./DeleteModal";
+
 
 const BookmarkItem = ({
   id,
@@ -34,11 +36,16 @@ const BookmarkItem = ({
   movebokmark,
   deleteBookmark,
   toggleBookmarkPin,
+  collectionName
 }) => {
   // to see if checked or not
   const [checked, setChecked] = useState(false);
   const [openEditBookmarkModal, setOpenEditBookmarkModal] = useState(false);
   const [hovered, setHovered] = useState(false);
+  const [bookmarkDeleteModal,setBookmarkDeleteModal] = useState(false);
+  const bookmarkDeleteModalHandler = () =>{
+    setBookmarkDeleteModal(prev=>!prev);
+  }
   useEffect(() => {
     if (isSelected) {
       setChecked(true);
@@ -69,8 +76,8 @@ const BookmarkItem = ({
         bookmarkEditModalHandler();
         setClickedId(null);
         return;
-      case "MOVE":
-        // moveBookmark(id)
+      case "DELETE":
+        bookmarkDeleteModalHandler();
         setClickedId(null);
         return;
       case "PIN":
@@ -112,6 +119,7 @@ const BookmarkItem = ({
         link: url
       }} bookmarkID={id}
       />
+      <Delete onClose={bookmarkDeleteModalHandler} isOpen={bookmarkDeleteModal} collectionID={collectionId} bookmarkID={id} heading="Delete Bookmark" subheading={`Delete ${name} from ${collectionName}`}/>
 
       <div className={`cursor-pointer relative flex items-center justify-between w-full h-[60px] rounded-xl ${checked ? "bg-neutral-300" : "bg-neutral-100"} border border-neutral-200  duration-200 transition-all group`} onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)} >
         {/* Note this below input is to be shown to owner only after  implementing state mangement resolve it */}
@@ -205,15 +213,15 @@ const BookmarkItem = ({
                 />
               </button>
               {clickedId === id &&
-                <div className="w-[135px] rounded border absolute z-[9990] top-[20px] transition-all duration-500 right-0 border-neutral-300 p-3 flex items-start justify-center flex-col gap-2 bg-neutral-100 ">
+                <ul className="w-[135px] rounded border absolute z-[9990] top-[28px] p-1 right-0 border-neutral-300 bg-neutral-100 ">
                   {popupActionMenu.map((menuItem, index) => (
                     <>
                       <MenuItem name={menuItem.name} onClick={menuItem.onClick} type={menuItem.type} key={menuItem.type}/>
-                      {(index !== popupActionMenu.length - 1) && <div className="w-full h-[1px] bg-neutral-300" />}
+                      {(index !== popupActionMenu.length - 1) && <div className="w-full h-[1px] bg-neutral-300 mt-1 mb-1" />}
                     </>
                   ))}
 
-                </div>
+                </ul>
               }
             </div>
           </div>

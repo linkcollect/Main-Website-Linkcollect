@@ -28,6 +28,7 @@ const CollectionInfoHeader = ({
   isOwner,
   editCollectionModalOpener,
   createBookmarkModalOpener,
+  deleteCollectionModalHandler,
   tags,
   isPublic,
   collectionId
@@ -122,7 +123,7 @@ const CollectionInfoHeader = ({
                 <img src={editIcon} />
               </IconButton>
               {/* Delete */}
-              <IconButton>
+              <IconButton onClick={deleteCollectionModalHandler}>
                 <img src={deleteIcon} />
               </IconButton>
             </div>

@@ -5,8 +5,8 @@ export const MenuItem = ({ name, onClick, type, isSelected }) => {
   return (
     <React.Fragment>
       <p
-        className={`text-base font-normal text-neutral-800 ${
-          isSelected && "border-neutral-200"
+        className={`text-base font-normal text-neutral-800 hover:bg-neutral-200 text-start rounded-lg px-2 py-1 ${
+          isSelected && "bg-neutral-200"
         }`}
         onClick={() => onClick(type)}
       >
@@ -29,7 +29,7 @@ export const SortActions = ({ name, menuItems }) => {
 
       {/* dropdown */}
       {showDropdown && (
-        <div className="w-[188px] rounded border absolute z-50 top-[50px] right-0 border-white p-3 flex items-start justify-center flex-col gap-2 bg-neutral-100 drop-shadow">
+        <div className="w-[188px] rounded border absolute z-50 top-[50px] right-0 border-white p-1 bg-neutral-100 drop-shadow">
           {menuItems.map((menItem, index) => (
             <>
             <MenuItem

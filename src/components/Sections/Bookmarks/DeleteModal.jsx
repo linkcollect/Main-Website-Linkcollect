@@ -1,0 +1,71 @@
+import React , {useState} from "react";
+import Modal from "../../UI/Modal/Modal";
+import cancelIcon from "../../../assets/cancel.svg"
+import Button from "../../UI/Button/Button";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { deleteCollection } from "../../../api-services/collectionService";
+import { deleteBookMark } from "../../../store/Slices/bookmarks.slice";
+import { deleteTimeline } from "../../../api-services/timelineService";
+export const Delete = ({ isOpen, onClose, heading , subheading, mode, collectionID, bookmarkID}) => {
+  const [loading,setIsLoadig] = useState(false);
+  const auth  = useSelector(state=>state.auth);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const onDelete = async () =>{
+    try{
+      if(mode==="collectionDelete"){
+        // call api for delete
+        setIsLoadig(true);
+        await deleteCollection(collectionID);
+        setIsLoadig(false);
+        onClose();
+        navigate("/"+auth.username);
+      }else{
+        dispatch(deleteBookMark({bookmarkID}));
+        // for instatant UI response we are not awaiting for the response to be fullfilled
+        deleteTimeline(collectionID,bookmarkID);
+        onClose();
+      }
+    }catch(e){
+      console.log(e);
+      setIsLoadig(false);
+    }
+  }
+  return (
+    <Modal isOpen={isOpen} onClose={onClose}>
+      <div className="px-3 flex flex-col gap-5">
+      {/* Header  */}
+        <div className="flex justify-between  w-full">
+          <h1 className="text-start font-medium text-[20px]  text-textPrimary ">
+            {heading}
+          </h1>
+          <button className="flex" onClick={onClose}>
+                <img src={cancelIcon} />
+           </button>
+        </div>
+
+        {/* Content  */}
+        <div>
+          <p>{subheading}</p>
+          <small className="text-xs text-error-500">
+          *Note that this action is irreversible. All links and data will be lost
+        </small>
+
+          
+        </div>
+        {/* Actions */}
+        <div className="w-full">
+          <Button
+            variant="error"
+            onClick={onDelete}
+          >
+            Delete
+          </Button>
+        </div>
+      </div>
+    </Modal>
+  );
+};
+export default Delete;
