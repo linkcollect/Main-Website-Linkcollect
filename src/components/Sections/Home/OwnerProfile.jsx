@@ -113,7 +113,7 @@ const OwnerProfile = ({ username, windowWidth }) => {
             <PageLoader />
           </div>
         ) : filteredCollection.length > 0 ? (
-          <div className="flex items-start justify-start w-full h-full pl-8 mx-auto overflow-y-scroll 3xl:pl-0 3xl:justify-center">
+          <div className="flex items-start justify-start w-full h-[68%] pl-8 mx-auto overflow-y-scroll 3xl:pl-0 3xl:justify-center pb-5">
             <div className="w-full justify-start flex flex-wrap gap-2 2xl:gap-6 max-w-[1500px]">
               {filteredCollection.map((collections) => (
                 <CollectionitemV2
