@@ -51,7 +51,6 @@ const exploreCollectionSlice = createSlice({
             state.isFailed=true;
         },
         upvote:(state,action)=>{
-            console.log(action)
             const cIdx = state.collections.findIndex(coll=>coll._id===action.payload.collectionId);
             state.collections[cIdx].upvotes.push(action.payload.userId);
         },

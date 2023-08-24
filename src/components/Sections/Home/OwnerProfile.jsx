@@ -33,14 +33,12 @@ const OwnerProfile = ({ username, windowWidth }) => {
       try {
         const res = await getByUsername(username);
         const sortedData = dataSortByType(res.data.data.collections,sortingType)
-        console.log("sortedData",sortedData)
         dispatch(collectionFetchingSuccess({ data: {collections:sortedData} }));
       } catch(e) {
         console.log(e)
         dispatch(collectionFetchingFailed());
       }
     }
-    console.log("hello")
     getCollectionOfTheUser();
   }, []);
 
@@ -85,7 +83,6 @@ const OwnerProfile = ({ username, windowWidth }) => {
         console.error(error)
     }
   }
-  console.log(collection.collections)
 
   return (
     <BaseLayout>

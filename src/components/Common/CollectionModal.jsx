@@ -17,7 +17,6 @@ export const CollectionModal = ({
   isEditing,
   collectionId = null, // it will be only availble if we edit a collection
 }) => {
-  console.log(collectionId)
   const [isLoading, setIsLoding] = React.useState(false);
 
   const [collectionData, setCollectionData] = useState({

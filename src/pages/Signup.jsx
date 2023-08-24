@@ -33,27 +33,19 @@ const Signup = ({ windowWidth }) => {
   const isValidPassword = passwordPattern.test(data.password);
   const isValidInput = isValidName && isValidEmail && isValidPassword;
 
-
-  console.log(isValidName,isValidEmail,isValidPassword,isValidInput);
-
-  console.log(data)
   const handleRegister = async (e) => {
     e.preventDefault();
-    console.log("Hleo")
     if(!isValidInput){
-      console.log("Hello")
       return
     }
     setIsSigning(true);
     const { name, email, password } = data;
     try {
-      console.log("hello")
       const { data } = await register(
         name,
         email,
         password.trim()
       );
-      console.log(data);
       setIsSigning(false);
       setVerifying(true);
     } catch (error) {

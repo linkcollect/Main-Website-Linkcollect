@@ -37,9 +37,8 @@ const saveCollectionSlice = createSlice({
         },
         // If we unsave it we need to remove it from the state also
         removeSave:(state,action)=>{
-            console.log(action.payload.collectionId)
             state.collections = [...state.collections.filter(collectionItem=> collectionItem._id!==action.payload.collectionId)];
-            console.log(state.collections)
+
         }
     },
     extraReducers:(builder)=>{

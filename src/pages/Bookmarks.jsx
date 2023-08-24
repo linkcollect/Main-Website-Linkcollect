@@ -65,7 +65,6 @@ const Bookmarks = ({ windowWidth }) => {
 
   // Bookmark Toggle Pin
   const toggleBookmarkPin = async (bookmarkID) => {
-    console.log(bookmarkID);
     dispatch(setTogglePinBookmark({ bookmarkID,sortType:sortingType }))
     // console.log(collection);
     try {

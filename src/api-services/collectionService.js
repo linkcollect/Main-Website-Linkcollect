@@ -20,7 +20,6 @@ export function createCollection(collectionData) {
 }
 
 export function updateCollection(collectionId, collectionData) {
-  console.log(collectionId,collectionData)
   return http.patch(`${apiEndpoint}/${collectionId}`, collectionData);
 }
 

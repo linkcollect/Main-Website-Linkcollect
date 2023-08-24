@@ -55,7 +55,6 @@ const collectionDataSlice = createSlice({
             const bookmarksdata = state.collectionData.timelines;
             bookmarksdata[bookmarkToTogglePinIndex].isPinned = !state.collectionData.timelines[bookmarkToTogglePinIndex].isPinned
             bookmarksdata[bookmarkToTogglePinIndex].pinnedTime = Date.now(); 
-            console.log("Slice",action.payload.sortType);
             state.collectionData.timelines = dataSortByType([...bookmarksdata],action.payload.sortType);
         },
         sortBookmarksByType:(state,action)=>{
