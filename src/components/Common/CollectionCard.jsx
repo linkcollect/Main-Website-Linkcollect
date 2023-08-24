@@ -129,7 +129,7 @@ const CollectionitemV2 = React.forwardRef(({
           <div className="flex items-center justify-between pt-2.5 px-1.5 ">
             <p className="text-sm font-normal text-neutral-900">
               {windowWidth > 700
-                ? nameShortner(title, 40)
+                ? nameShortner(title, 30)
                 : nameShortner(title, 10)}
             </p>
             <p className="text-sm font-normal text-neutral-600">
