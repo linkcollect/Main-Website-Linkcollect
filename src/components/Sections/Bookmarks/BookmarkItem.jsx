@@ -145,7 +145,7 @@ const BookmarkItem = ({
           }
 
 
-        <div className="flex">
+        <a className="flex" href={url} target="_blank">
           {/* Bookamrk Info: Name , Link, Image */}
           <div className="flex items-center">
             {/* Bookmark Image */}
@@ -178,7 +178,7 @@ const BookmarkItem = ({
               </p>
             </div>
           </div>
-        </div>
+        </a>
 
 
         {/* Timestamp, Actions: Note, Open Link, Popup menu */}
