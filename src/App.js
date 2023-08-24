@@ -91,7 +91,7 @@ function App() {
             element={<Home windowWidth={windowWidth} />}
           />
           <Route path="/explore" element={<Explore windowWidth={windowWidth}/>} />
-          <Route path="/saved" element={<SavedCollection windowWidth={}/>} />
+          <Route path="/saved" element={<SavedCollection windowWidth={windowWidth}/>} />
 
           <Route path="/privacy" element={<Privacy />} />
           {/* <Route path="/settings" element={<Settings />} /> */}
