@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import SortBy from "../../assets/sortBy.svg";
-
+import { motion } from "framer-motion";
 export const MenuItem = ({ name, onClick, type, isSelected }) => {
   return (
     <React.Fragment>
@@ -29,7 +29,13 @@ export const SortActions = ({ name, menuItems }) => {
 
       {/* dropdown */}
       {showDropdown && (
-        <div className="w-[188px] rounded border absolute z-50 top-[50px] right-0 border-white p-1 bg-neutral-100 drop-shadow">
+        <motion.div
+        initial={{ opacity: 0, y: 10}}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: 10 }}
+        transition={{ duration: 0.2 }}
+        className={`w-[188px] rounded border absolute z-50 top-[50px] right-0 border-white p-1 bg-neutral-100 drop-shadow`}
+    >
           {menuItems.map((menItem, index) => (
             <>
             <MenuItem
@@ -43,7 +49,7 @@ export const SortActions = ({ name, menuItems }) => {
             )}
             </>
           ))}
-        </div>
+        </motion.div>
       )}
     </div>
   );

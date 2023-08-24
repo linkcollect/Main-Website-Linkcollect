@@ -1,5 +1,7 @@
 // Package Imports
 import React, { useRef, useState, useEffect, useMemo } from "react";
+import { useSelector } from "react-redux";
+import { motion } from "framer-motion";
 // Assets Imports
 import copyIcon from "../../../assets/copyIcon.svg";
 import menuIcon from "../../../assets/3dot.svg";
@@ -15,7 +17,9 @@ import { nameShortner, getOrigin, fromNow } from "../../../utils/utils";
 import EcBookamrkModal from "./ECBookmarkModal";
 import { MenuItem } from "../../Common/ActiondropDown";
 import Delete from "./DeleteModal";
-import { useSelector } from "react-redux";
+import IconButton from "../../UI/IconButton/IconButton";
+
+
 
 
 const BookmarkItem = ({
@@ -64,7 +68,6 @@ const BookmarkItem = ({
   }
 
   const onCopy = () => {
-    console.log(copyRef);
     if (copyRef) copyRef.current.src = approveIcon;
     navigator.clipboard.writeText(url);
     setTimeout(() => {
@@ -179,7 +182,7 @@ const BookmarkItem = ({
 
 
         {/* Timestamp, Actions: Note, Open Link, Popup menu */}
-        <div className="flex items-center gap-[4rem]">
+        <div className="flex items-center gap-[4rem] mr-2">
           {/* Timestamp */}
           <p className="text-xs font-medium whitespace-nowrap  text-neutral-500 mr-5">
             Added {fromNow(updatedAt)}
@@ -187,8 +190,8 @@ const BookmarkItem = ({
 
           {/* Actions: Note, Open Link, Popup menu */}
           {/* All actions should work only when all links is not selected */}
-          {!isStillOneBookmarkSelected && isOwner && <div className="flex gap-4 mr-2">
-            <button
+          {!isStillOneBookmarkSelected &&  <div className="flex gap-4 mr-2">
+            <IconButton
               onClick={onCopy}
               className="flex items-center justify-center "
             >
@@ -198,7 +201,7 @@ const BookmarkItem = ({
                 alt=""
                 className="block mx-auto cursor-pointer"
               />
-            </button>
+            </IconButton>
             <a className="flex items-center" href={url} target="_blank">
               <img
                 src={redirectIcon}
@@ -215,7 +218,14 @@ const BookmarkItem = ({
                 />
               </button>
               {clickedId === id &&
-                <ul className="w-[135px] rounded border absolute z-[9990] top-[28px] p-1 right-0 border-neutral-300 bg-neutral-100 ">
+                <motion.div
+                initial={{ opacity: 0, y: 10}}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: 10 }}
+                transition={{ duration: 0.2 }}
+                className={`w-[135px] rounded border absolute z-[9990] top-[28px] p-1 right-0 border-neutral-300 bg-neutral-100 `}
+            >
+
                   {popupActionMenu.map((menuItem, index) => (
                     <>
                       <MenuItem name={menuItem.name} onClick={menuItem.onClick} type={menuItem.type} key={menuItem.type}/>
@@ -223,7 +233,7 @@ const BookmarkItem = ({
                     </>
                   ))}
 
-                </ul>
+                </motion.div>
               }
             </div>}
           </div>
