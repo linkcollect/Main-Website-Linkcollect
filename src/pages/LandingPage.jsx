@@ -1,7 +1,7 @@
 import React from "react";
-import Navbar from "../components/Navbar/Navbar";
-import HeroSection from "../components/HeroSection/HeroSection";
-import Features from "../components/Features/Features";
+import Navbar from "../components/Sections/LandingPage/Navbar";
+import HeroSection from "../components/Sections/LandingPage/HeroSection";
+import Features from "../components/Sections/LandingPage/Features";
 import { Helmet } from "react-helmet";
 const LandingPage = ({ windowWidth }) => {
   return (

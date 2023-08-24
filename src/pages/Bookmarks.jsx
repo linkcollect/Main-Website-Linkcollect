@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import PageLoader from "../components/Loader/PageLoader";
+import PageLoader from "../components/UI/Loader/PageLoader";
 import CollectionModal from "../components/Common/CollectionModal";
 import BookmarkItem from "../components/Sections/Bookmarks/BookmarkItem";
 import Delete from "../components/Sections/Bookmarks/DeleteModal";

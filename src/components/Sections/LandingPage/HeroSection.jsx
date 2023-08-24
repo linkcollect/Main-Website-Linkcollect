@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
-import BG from '../../assets/Grill.svg'
+import BG from '../../../assets/Grill.svg'
 // import Vid from '../../assets/lC 1.svg'
-import Vid from '../../assets/screenrecdash.mp4'
-import DekstopVid from '../../assets/DekstopScreenrecdash.mp4'
+import Vid from '../../../assets/screenrecdash.mp4'
+import DekstopVid from '../../../assets/DekstopScreenrecdash.mp4'
 
 const HeroSection = () => {
    

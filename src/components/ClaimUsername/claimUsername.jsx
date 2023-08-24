@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import Input from '../Input/Input'
+import Input from '../UI/Input/Input'
 import mainLogo from '../../assets/mainLogo.svg'
 import Check from '../../assets/check-in-green.svg'
 const ClaimUsername = () => {

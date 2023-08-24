@@ -20,7 +20,7 @@ import Explore from "./pages/Explore";
 import SavedCollection from "./pages/SavedCollection";
 import { useDispatch, useSelector } from "react-redux";
 import { getUserDetails } from "./store/actions/user.action";
-import PageLoader from "./components/Loader/PageLoader";
+import PageLoader from "./components/UI/Loader/PageLoader";
 import { setLoggedInUser } from "./store/Slices/user.slice";
 
 function App() {

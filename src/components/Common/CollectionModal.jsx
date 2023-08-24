@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Input, { Label, TextArea } from "../UI/Input/Input";
-import Loader from "../Loader/Loader";
+import Loader from "../UI/Loader/Loader";
 import Modal from "../UI/Modal/Modal";
 import { useDispatch } from "react-redux";
 import cancelIcon from "../../assets/cancel.svg";

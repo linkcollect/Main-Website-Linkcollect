@@ -13,7 +13,7 @@ import {
 } from "../store/actions/explore.action";
 import Search from "../components/Common/Search";
 import { FilterActions } from "../components/Common/ActiondropDown";
-import Loader from "../components/Loader/Loader";
+import Loader from "../components/UI/Loader/Loader";
 import { getSearch } from "../api-services/collectionService";
 import { useSearchParams } from "react-router-dom";
 import { searchedCollection } from "../store/Slices/explore.slice";

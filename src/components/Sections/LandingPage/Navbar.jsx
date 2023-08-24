@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import Logo from '../../assets/mainLogo.svg'
+import Logo from '../../../assets/mainLogo.svg'
 import { Link } from 'react-router-dom';
 
 const Navbar = ({ windowWidth }) => {
