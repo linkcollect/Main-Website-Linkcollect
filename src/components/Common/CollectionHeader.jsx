@@ -5,8 +5,10 @@ import SortBy from "../../assets/sortBy.svg";
 import Plus from "../../assets/plus.svg";
 import Button from "../UI/Button/Button"
 import CollectionModal from "./CollectionModal";
+import { useSelector } from "react-redux";
 const CollectionHeader = ({ name,isOwner,windowWidth,setQuery}) => {
   // sort by dropdown
+  const auth = useSelector(state=>state.auth);
   const [showDropdown, setShowDropdown] = useState(false);
   const [openModal,setOpenModal] = useState(false);
 
@@ -30,7 +32,7 @@ const CollectionHeader = ({ name,isOwner,windowWidth,setQuery}) => {
             >
               {name}
             </p>
-            {isOwner && 
+            {auth.isLoggedIn && isOwner && 
             <Button variant="primary" className="w-48 h-[46px]" onClick={createModalHandler}>
               <img src={Plus} alt="" />
                 Add collection

@@ -15,6 +15,7 @@ import { nameShortner, getOrigin, fromNow } from "../../../utils/utils";
 import EcBookamrkModal from "./ECBookmarkModal";
 import { MenuItem } from "../../Common/ActiondropDown";
 import Delete from "./DeleteModal";
+import { useSelector } from "react-redux";
 
 
 const BookmarkItem = ({
@@ -43,6 +44,7 @@ const BookmarkItem = ({
   const [openEditBookmarkModal, setOpenEditBookmarkModal] = useState(false);
   const [hovered, setHovered] = useState(false);
   const [bookmarkDeleteModal,setBookmarkDeleteModal] = useState(false);
+  const auth = useSelector(state=>state.auth);
   const bookmarkDeleteModalHandler = () =>{
     setBookmarkDeleteModal(prev=>!prev);
   }
@@ -204,7 +206,7 @@ const BookmarkItem = ({
                 className="block mx-auto cursor-pointer "
               />
             </a>
-            <div className="relative">
+            {auth.isLoggedIn && isOwner && <div className="relative">
               <button className="flex items-center" onClick={() => setClickedId(prev => prev === id ? null : id)}>
                 <img
                   src={menuIcon}
@@ -223,7 +225,7 @@ const BookmarkItem = ({
 
                 </ul>
               }
-            </div>
+            </div>}
           </div>
           }
         </div>

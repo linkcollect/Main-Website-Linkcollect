@@ -17,6 +17,7 @@ import Chip from "../../UI/Chip/Chip";
 import EcBookamrkModal from "./ECBookmarkModal";
 import Button from "../../UI/Button/Button";
 import IconButton from "../../UI/IconButton/IconButton";
+import { useSelector } from "react-redux";
 
 const CollectionInfoHeader = ({
   windowWidth,
@@ -34,7 +35,7 @@ const CollectionInfoHeader = ({
   collectionId
 }) => {
 
-  
+  const auth = useSelector(state=>state.auth);
   
   return (
     <>
@@ -112,7 +113,7 @@ const CollectionInfoHeader = ({
           </div>
 
           {/* Collection Actions */}
-          {windowWidth > 600 &&  isOwner &&  (
+          {windowWidth > 600 && auth.isLoggedIn && isOwner &&  (
             <div className="flex justify-center gap-2 items-start">
               {/* Add bookmark */}
               <IconButton onClick={createBookmarkModalOpener}>
