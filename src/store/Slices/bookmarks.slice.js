@@ -8,6 +8,22 @@ const initialCollectionData ={
    isFailed:false
 }
 
+const getStructuredCollectionData = (data) => {
+    const defaultCollectionDataStructure = {
+        title:"",
+        description:"",
+        isPublic:false,
+        isPinned:false,
+        pinnedTime:null,
+        userId:"",
+        username:"",
+        tags:[],
+        timelines:[],
+    }
+    return {...defaultCollectionDataStructure,...data};
+}
+
+
 const collectionDataSlice = createSlice({
     name:"collectionData",
     initialState:initialCollectionData,
@@ -19,7 +35,7 @@ const collectionDataSlice = createSlice({
               state.collectionData = { timelines:[...originaltimelines],...data };
         },
         createBookmark:(state,action) =>{
-            state.collectionData.timelines.unishift(action.payload.bookmarkData);
+            state.collectionData.timelines=[{...action.payload.bookmarkData},...state.collectionData.timelines];
         },
         updateBookmark:(state,action) => {
             const bookmarkIndexToUpdate = state.collectionData.timelines.findIndex(tIdx=>tIdx._id === action.payload.updatedBookmark._id);
@@ -52,8 +68,9 @@ const collectionDataSlice = createSlice({
             state.collectionData={}
         });
         builder.addCase(getBookmarks.fulfilled,(state,action)=>{
-            const soretedBookmarks = dataSortByType([...action.payload.collectionData.timelines],"RECENETLY_UPDATED");
-            state.collectionData = {...action.payload.collectionData,timelines:soretedBookmarks};
+            const structuredCollectionData = getStructuredCollectionData(action.payload.collectionData);
+            const soretedBookmarks = dataSortByType([...structuredCollectionData.timelines],"RECENETLY_UPDATED");
+            state.collectionData = {...structuredCollectionData,timelines:soretedBookmarks};
             state.isFetching=false;
             state.isFailed=false
         });

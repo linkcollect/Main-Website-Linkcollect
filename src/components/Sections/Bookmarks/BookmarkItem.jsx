@@ -124,7 +124,7 @@ const BookmarkItem = ({
             checked={checked}
             onChange={handleCheck}
           />} */}
-          {isOwner && isPinned && <div className="absolute z-[9999] top-[22px] left-[-13px] cursor-pointer border border-neutral-300 bg-neutral-100 rouded" >
+          {isOwner && isPinned && <div className="w-[20px] h-[20px] absolute z-[9999] top-[20px] left-[-13px] cursor-pointer border border-neutral-300 bg-neutral-100 rounded-md" >
             <img key="pin-icon"
               className=""
               src={pinIcon} alt="" />

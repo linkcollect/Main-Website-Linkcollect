@@ -123,7 +123,7 @@ const Bookmarks = ({ windowWidth }) => {
                 image={collectionData.collectionData?.image}
                 tags={collectionData.collectionData?.tags}
                 isPublic={collectionData.collectionData?.isPublic}
-                isOwner={username == auth.username}
+                isOwner={username === auth.username}
                 editCollectionModalOpener={editCollectionModalHandler}
                 createBookmarkModalOpener={bookmarkCreateModalHandler}
                 collectionId = {collectionId}
@@ -162,7 +162,7 @@ const Bookmarks = ({ windowWidth }) => {
                       favicon={timeline.favicon}
                       windowWidth={windowWidth}
                       updatedAt={timeline.updatedAt}
-                      isOwner={username == auth.username}
+                      isOwner={username === auth.username}
                       clickedId={clickedId}
                       setClickedId={setClickedId}
                       isSelected={timeline.isSelected}

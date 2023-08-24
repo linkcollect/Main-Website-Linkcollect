@@ -44,7 +44,7 @@ const CollectionInfoHeader = ({
             <Button
               onClick={onBack}
               variant="secondaryOutline"
-              className="bg-white"
+              className="bg-white gap-0 px-4"
             >
               <img src={backarrow} className="w-[20px] h-[20px] mr-1" alt="" />
               <p>Back</p>
@@ -111,7 +111,7 @@ const CollectionInfoHeader = ({
           </div>
 
           {/* Collection Actions */}
-          {windowWidth > 600 &&   (
+          {windowWidth > 600 &&  isOwner &&  (
             <div className="flex justify-center gap-2 items-start">
               {/* Add bookmark */}
               <IconButton onClick={createBookmarkModalOpener}>
