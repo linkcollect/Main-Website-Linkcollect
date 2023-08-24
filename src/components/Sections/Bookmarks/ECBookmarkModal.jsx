@@ -29,7 +29,7 @@ const EcBookamrkModal = ({ isOpen, onClose, isEditing, originalData = {}, collec
     }
 
 
-    const isValidName = data.title.length >= 3 && data.title.length <= 40
+    const isValidName = data.title.length >= 3 && data.title.length <= 200
     const isValidURL = (() => { try { new URL(data.link); return true } catch { return false } })()
     const isValidData = isValidName && isValidURL
 
@@ -93,12 +93,12 @@ const EcBookamrkModal = ({ isOpen, onClose, isEditing, originalData = {}, collec
                         <Label name="Collection Title" htmlFor="title" />
                         <small className="text-xs">
                             <span
-                                className={`${data.title.length > 30 ? "text-error-500" : ""
+                                className={`${data.title.length > 200 ? "text-error-500" : ""
                                     }`}
                             >
                                 {data.title.length}
                             </span>
-                            /{30}
+                            /{200}
                         </small>
                     </div>
                     <Input

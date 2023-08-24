@@ -55,7 +55,7 @@ export const CollectionModal = ({
   };
 
   // Data validation
-  const isValidName = collectionData.title.length >= 3 && collectionData.title.length <= 30;
+  const isValidName = collectionData.title.length >= 3 && collectionData.title.length <= 40;
   const isValidDescription = collectionData.description.length <= 240;
   const isValidTags = collectionData.tags.length <= 3;
   // File max size
@@ -143,12 +143,12 @@ export const CollectionModal = ({
               <small className="text-xs">
                 <span
                   className={`${
-                    collectionData.title.length > 30 ? "text-error-500" : ""
+                    collectionData.title.length > 40 ? "text-error-500" : ""
                   }`}
                 >
                   {collectionData.title.length}
                 </span>
-                /{30}
+                /{40}
               </small>
             </div>
             <Input
