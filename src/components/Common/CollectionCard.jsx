@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import upvote from "../../assets/Upvote.svg";
 import pinSvg from "../../assets/pinSvg.svg";
 import filledPinSvg from "../../assets/filledPinSvg.svg";
@@ -34,6 +34,7 @@ const CollectionitemV2 = React.forwardRef(({
   onPin
 },ref) => {
   const auth = useSelector(state=>state.auth)
+  const navigate = useNavigate();
   // LOCAL STATE WILL HELP TO MUTATE THE ITEM SO QUICKLY WHEN IT COMES TO LARGE DATA
   const [isSaved,setIsSaved] = useState(false);
   const [isUpvoted,setIsUpvoted] = useState({
@@ -41,6 +42,14 @@ const CollectionitemV2 = React.forwardRef(({
     number:0,
   });
   useEffect(()=>{
+    if(!auth.isLoggedIn){
+      // in this case need to set the upvote length
+      setIsUpvoted({
+        isClicked:false,
+        number:upvotes.length,
+      });
+      return;
+    }
     const isUpvoted = upvotes?.findIndex(userId=>auth.userId===userId)>=0;
     const isSaved = auth.userData.savedCollections?.findIndex(saveId=>saveId===id)>=0;
     setIsSaved(isSaved);
@@ -52,6 +61,10 @@ const CollectionitemV2 = React.forwardRef(({
   const dispatch = useDispatch();
 
   const upvoteHandler = ()=>{
+    if(!auth.isLoggedIn){
+      navigate(-1);
+      return;
+    }
     if(!isUpvoted.isClicked){
       setIsUpvoted(prev=>({
         isClicked:true,
@@ -68,6 +81,10 @@ const CollectionitemV2 = React.forwardRef(({
   }
 
   const saveHandler = () =>{
+    if(!auth.isLoggedIn){
+      navigate(-1);
+      return;
+    }
     if(!isSaved){
       setIsSaved(true);
       dispatch(onSave(id));

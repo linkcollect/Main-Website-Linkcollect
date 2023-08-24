@@ -56,7 +56,11 @@ const Bookmarks = ({ windowWidth }) => {
 
   const backHandler = (e) => {
     e.preventDefault();
-    navigation(`/${username}`);
+    if(!auth.isLoggedIn){
+      navigation("/login");
+    }else{
+      navigation(-1);
+    }
   };
 
   // Bookmark Toggle Pin
