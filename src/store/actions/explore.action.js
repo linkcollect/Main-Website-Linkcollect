@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk } from "@reduxjs/toolkit";
 import { upvote,downvote,startFetching,fetchSuccess,fetchFailed } from "../Slices/explore.slice";
 import { save,unsave } from "../Slices/user.slice";
 import { downvoteCollection, getExplore, saveCollection, unsaveCollection, upvoteCollection } from "../../api-services/collectionService";

@@ -41,7 +41,7 @@ const Input = forwardRef(
     value,
     variant: InputVariant,
     ...props
-  }) => {
+  },ref) => {
     
     const variant =
       type !== "file"

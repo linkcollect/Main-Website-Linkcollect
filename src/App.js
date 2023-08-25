@@ -20,7 +20,7 @@ import Explore from "./pages/Explore";
 import SavedCollection from "./pages/SavedCollection";
 import { useDispatch, useSelector } from "react-redux";
 import { getUserDetails } from "./store/actions/user.action";
-import PageLoader from "./components/Loader/PageLoader";
+import PageLoader from "./components/UI/Loader/PageLoader";
 import { setLoggedInUser } from "./store/Slices/user.slice";
 
 function App() {
@@ -90,11 +90,11 @@ function App() {
             path="/:username"
             element={<Home windowWidth={windowWidth} />}
           />
-          <Route path="/explore" element={<Explore />} />
-          <Route path="/saved" element={<SavedCollection />} />
+          <Route path="/explore" element={<Explore windowWidth={windowWidth}/>} />
+          <Route path="/saved" element={<SavedCollection windowWidth={windowWidth}/>} />
 
           <Route path="/privacy" element={<Privacy />} />
-          <Route path="/settings" element={<Settings />} />
+          {/* <Route path="/settings" element={<Settings />} /> */}
           <Route
             path="/:username/c/:collectionId"
             element={<Bookmarks windowWidth={windowWidth} />}

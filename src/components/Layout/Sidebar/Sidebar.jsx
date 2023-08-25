@@ -9,10 +9,14 @@ import navigation from "../../../assets/navSidebar.svg";
 import energy from "../../../assets/energy.svg";
 import NavbarItem from "./NavbarItem";
 import { useSelector } from "react-redux";
+import { motion } from "framer-motion";
 
 const Sidebar = ({ user, handleSetUser, windowWidth }) => {
   const state = useLocation();
   const auth = useSelector(state=>state.auth);
+
+  const [isHovered,setIsHovered] = useState(false);
+
   const menuItem = [
     {
       name: "Home",
@@ -28,11 +32,6 @@ const Sidebar = ({ user, handleSetUser, windowWidth }) => {
       name: "Saved Collectoion",
       link: "/saved",
       icon: navigation,
-    },
-    {
-      name: "Settings",
-      link: "/settings",
-      icon: settings,
     },
   ];
 
@@ -87,6 +86,22 @@ const Sidebar = ({ user, handleSetUser, windowWidth }) => {
                 key={name}
               />
             ))}
+            {/* Temorary until setting page come */}
+            <p className={` relative flex flex-row items-center justify-start w-full gap-3 px-2 py-3 rounded-md cursor-pointer border-1 text-base text-neutarl-50 hover:bg-primary-50 hover:text-primary-500`} onMouseEnter={()=>setIsHovered(true)} onMouseLeave={()=>setIsHovered(false)}>
+              <img src={settings} /><span>Settings</span>
+              {isHovered && <motion.div
+                    initial={{ opacity: 0, y: 10}}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: 10 }}
+                    transition={{ duration: 0.2 }}
+                    className={`absolute bottom-4 right-0 z-10 w-[113px] bg-primary-500 rounded-xl rounded-bl-none  flex flex-col justify-center shadow-md`}
+                >
+                    <p
+                        className="px-4 py-2 text-xs font-medium text-center text-white ">
+                        Coming Soon
+                    </p>
+              </motion.div>}
+            </p>
           </div>
         </div>
 

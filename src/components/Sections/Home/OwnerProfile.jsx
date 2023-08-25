@@ -33,14 +33,12 @@ const OwnerProfile = ({ username, windowWidth }) => {
       try {
         const res = await getByUsername(username);
         const sortedData = dataSortByType(res.data.data.collections,sortingType)
-        console.log("sortedData",sortedData)
         dispatch(collectionFetchingSuccess({ data: {collections:sortedData} }));
       } catch(e) {
         console.log(e)
         dispatch(collectionFetchingFailed());
       }
     }
-    console.log("hello")
     getCollectionOfTheUser();
   }, []);
 
@@ -62,17 +60,17 @@ const OwnerProfile = ({ username, windowWidth }) => {
     {
       name: "Recently Updated",
       onClick: sortdata,
-      sortType: "RECENETLY_UPDATED",
+      type: "RECENETLY_UPDATED",
     },
     {
       name: "Most Upvotes",
       onClick: sortdata,
-      sortType: "MOST_UPVOTES",
+      type: "MOST_UPVOTES",
     },
     {
       name: "Most Links",
       onClick: sortdata,
-      sortType: "MOST_BOOKMARKED",
+      type: "MOST_BOOKMARKED",
     },
   ];
 
@@ -85,7 +83,6 @@ const OwnerProfile = ({ username, windowWidth }) => {
         console.error(error)
     }
   }
-  console.log(collection.collections)
 
   return (
     <BaseLayout>
@@ -116,11 +113,11 @@ const OwnerProfile = ({ username, windowWidth }) => {
             <PageLoader />
           </div>
         ) : filteredCollection.length > 0 ? (
-          <div className="flex items-start justify-start w-full h-full pl-8 mx-auto overflow-y-scroll 3xl:pl-0 3xl:justify-center">
+          <div className="flex items-start justify-start w-full h-[68%] pl-8 mx-auto overflow-y-scroll 3xl:pl-0 3xl:justify-center pb-5">
             <div className="w-full justify-start flex flex-wrap gap-2 2xl:gap-6 max-w-[1500px]">
               {filteredCollection.map((collections) => (
                 <CollectionitemV2
-                  key={collection._id}
+                  key={collections._id}
                   id={collections._id}
                   image={collections.image}
                   title={collections.title}

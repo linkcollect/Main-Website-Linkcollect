@@ -1,13 +1,25 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { upvote,downvote, removeSave } from "../Slices/save.slice";
+import { getCollection } from "../../api-services/collectionService";
 import { save,unsave } from "../Slices/user.slice";
-import { downvoteCollection, getSavedCollection, unsaveCollection, upvoteCollection } from "../../api-services/collectionService";
+import {upvote,downvote} from "../Slices/bookmarks.slice"
+import { downvoteCollection, saveCollection, unsaveCollection, upvoteCollection } from "../../api-services/collectionService";
 
-export const getSaveCollectionOfUser = createAsyncThunk(
-    'getSaveCollection',
-    async function (userId){
-        const res =await getSavedCollection(userId);
-        return {data:{collections:res.data.data}}
+
+// Asynchronus function to get bookmarks by collection ID
+export const getBookmarks = createAsyncThunk(
+    'getAllBookMarks',
+    async (payload) =>{ 
+        const res = await getCollection(payload.collectionId);
+        const timeLineWithIsSelectedData = [];
+        res.data.data.timelines.map((timeline) => {
+            const newTimeLine = {
+              ...timeline,
+              isSelected: false,
+            };
+            timeLineWithIsSelectedData.push(newTimeLine);
+        });
+        res.data.data.timelines = timeLineWithIsSelectedData;
+        return {collectionData:res.data.data};
     }
 )
 
@@ -15,7 +27,6 @@ export const getSaveCollectionOfUser = createAsyncThunk(
 export const upvoteAction = (collectionId,userId) =>{
     return async (dispatch) =>{
         dispatch(upvote({
-            collectionId:collectionId,
             userId:userId
         }))
 
@@ -34,7 +45,6 @@ export const upvoteAction = (collectionId,userId) =>{
 export const downvoteAction = (collectionId,userId)=>{
     return async dispatch =>{
         dispatch(downvote({
-            collectionId,
             userId,
         }))
         try{
@@ -48,6 +58,21 @@ export const downvoteAction = (collectionId,userId)=>{
     }
 }
 
+// Save
+export const saveAction = (collectionId)=>{
+    return async dispatch=>{
+        dispatch(save({
+            collectionId
+        }))
+        try{
+            await saveCollection(collectionId)
+        }catch{
+            dispatch(unsave({
+                collectionId
+            }))
+        }
+    }
+}
 
 // Unsave
 export const unsaveAction = (collectionId)=>{
@@ -56,10 +81,6 @@ export const unsaveAction = (collectionId)=>{
         dispatch(unsave({
             collectionId
         }))
-
-        // to remove from the save collection state and instan ui Update
-        dispatch(removeSave({collectionId}));
-
         try{
             await unsaveCollection(collectionId)
         }catch{
@@ -69,4 +90,3 @@ export const unsaveAction = (collectionId)=>{
         }
     }
 }
-// Create

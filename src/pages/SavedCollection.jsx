@@ -44,7 +44,7 @@ const SavedCollection = ({ windowWidth }) => {
         <CollectionHeader
           windowWidth={windowWidth}
           isOwner={true}
-          name="My Collection"
+          name="Saved Collections"
         />
         <div
           className={`w-full flex items-start justify-between gap-6 ${

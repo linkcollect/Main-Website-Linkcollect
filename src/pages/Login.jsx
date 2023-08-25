@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import Banner from "../components/Banner/Banner";
+import Banner from "../components/Sections/Authentication/Banner";
 import mainLogo from "../assets/mainLogo.svg";
 import Input from "../components/UI/Input/Input";
-import GoogleAuthBtn from "../components/GoogleAuthBtn";
-import Loader from "../components/Loader/Loader";
+import GoogleAuthBtn from "../components/Sections/Authentication/GoogleAuthBtn";
+import Loader from "../components/UI/Loader/Loader";
 import { setJwtInRequestHeader } from "../api-services/httpService";
 import { useDispatch, useSelector } from "react-redux";
 import { setLoggedInUser } from "../store/Slices/user.slice";
@@ -12,7 +12,7 @@ import { getUserDetails, loginAction } from "../store/actions/user.action";
 import Button from "../components/UI/Button/Button";
 const Login = ({ windowWidth }) => {
   const location = useLocation();
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const dispatch  = useDispatch();
   const auth = useSelector(state=>state.auth);
   const [data, setData] = useState({

@@ -52,8 +52,8 @@ const UserProfile = ({ username,windowWidth }) => {
           />
            <div className=" w-full h-[70%]">
           {collection.collections.length > 0 ? (
-            <div className="flex items-start justify-start w-full h-full pl-8 mx-auto overflow-y-scroll 3xl:pl-0 3xl:justify-center">
-              <div className="w-full justify-start flex flex-wrap gap-2 2xl:gap-6 max-w-[1500px]">
+            <div className="flex items-start justify-start w-full h-[68%] pl-8 mx-auto overflow-y-scroll 3xl:pl-0 3xl:justify-center">
+            <div className="w-full justify-start flex flex-wrap gap-2 2xl:gap-6 max-w-[1500px]">
                 {collection.collections.map((collections) => (
                   <CollectionitemV2
                     key={collection._id}

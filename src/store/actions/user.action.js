@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk } from "@reduxjs/toolkit";
 import { getByUsername } from "../../api-services/userService";
 import { login } from "../../api-services/authService";
 import jwt from "jsonwebtoken"
