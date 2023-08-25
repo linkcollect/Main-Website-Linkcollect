@@ -107,14 +107,14 @@ const OwnerProfile = ({ username, windowWidth }) => {
         </div>
       </div>
       {/* Collections */}
-      <div className=" w-full h-[70%]">
+      <div className="w-full pb-6 h-full overflow-y-scroll 3xl:px-0 px-8">
         {collection.isFetching ? (
-          <div className="flex items-center justify-center w-full h-full">
+          <div className="flex items-center justify-center w-full">
             <PageLoader />
           </div>
         ) : filteredCollection.length > 0 ? (
-          <div className="flex items-start justify-start w-full h-[68%] pl-8 mx-auto overflow-y-scroll 3xl:pl-0 3xl:justify-center pb-5">
-            <div className="w-full justify-start flex flex-wrap gap-2 2xl:gap-6 max-w-[1500px]">
+          <div className="flex items-start justify-start w-full mx-auto 3xl:pl-0 3xl:justify-center pb-5">
+            <div className="w-full justify-start grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-6 2xl:gap-6 max-w-[1500px]">
               {filteredCollection.map((collections) => (
                 <CollectionitemV2
                   key={collections._id}
@@ -138,7 +138,7 @@ const OwnerProfile = ({ username, windowWidth }) => {
             </div>
           </div>
         ) : (
-          <div className="flex flex-col items-center justify-center w-full h-full">
+          <div className="flex flex-col self-center items-center justify-center w-full h-full">
             <p className="mb-5 text-5xl text-textPrimary">
               No Collection Found
             </p>

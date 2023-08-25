@@ -113,19 +113,19 @@ const Explore = ({ windowWidth }) => {
       </div>
 
       {/* Collection Items */}
-      <div className=" w-full h-[70%]">
+      <div className=" w-full h-full pb-6 overflow-y-scroll 3xl:px-0 px-8">
         {/* At fisrt reandering when I am going to get first page loading or if we will get search result for the first time*/}
-        {(collection.collections.length == 0 && collection.isFetching) || isSearching ? (
-          <div className="flex items-center justify-center w-full h-full">
+        {(collection.collections.length === 0 && collection.isFetching) || isSearching ? (
+          <div className="flex items-center justify-center w-full">
             <PageLoader />
           </div>
         ) : collection.collections.length > 0 ? (
           <>
             <div
               id="scrollableDiv"
-              className="flex items-start justify-start w-full h-full pl-8 mx-auto overflow-y-scroll 3xl:pl-0 3xl:justify-center"
+              className="flex justify-center w-full"
             >
-              <div className="w-full justify-start flex flex-wrap gap-2 2xl:gap-6 max-w-[1500px]">
+              <div className="w-full h-max justify-start grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-6 2xl:gap-6 max-w-[1500px]">
                 {collection.collections.map((collectionItem, index) => (
                   <CollectionitemV2
                     key={collectionItem._id + "-" + index}
@@ -163,7 +163,7 @@ const Explore = ({ windowWidth }) => {
             }
           </>
         ) : (
-          <div className="flex flex-col items-center justify-center w-full h-full">
+          <div className="flex flex-col self-center items-center justify-center w-full h-full">
             <p className="mb-5 text-5xl text-textPrimary">
               No Collection Found
             </p>

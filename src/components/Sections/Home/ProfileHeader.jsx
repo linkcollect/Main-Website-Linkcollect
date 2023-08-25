@@ -8,7 +8,7 @@ import Button from '../../UI/Button/Button'
 import approve from "../../../assets/approve.svg"
 import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-const ProfileHeader = ({name,socials,totalViews,totalCollections,username}) => {
+const ProfileHeader = ({name,socials,imageUrl,totalViews,totalCollections,username}) => {
     const auth = useSelector(state=>state.auth);
     const navigate  = useNavigate();
     const copyRef = useRef();
@@ -43,7 +43,7 @@ const ProfileHeader = ({name,socials,totalViews,totalCollections,username}) => {
                 {/*visited user's details*/}
                 <div className="flex items-center justify-start w-full gap-5">
                     {/* Profile photo */}
-                    <img src={profile} alt="" className='w-20 h-20 rounded-full' />
+                    <img src={imageUrl ? imageUrl : profile} alt="" className='w-20 h-20 rounded-full' />
 
                     <div className="flex flex-col items-start justify-start gap-3">
                         {/* Name */}

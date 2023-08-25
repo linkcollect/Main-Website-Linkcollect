@@ -15,7 +15,7 @@ const BaseLayout = ({ windowWidth, children }) => {
       {auth.isLoggedIn && <div className={`flex-1`}>
        <Sidebar/>
       </div>}
-      <div className="flex flex-col items-center justify-start w-full gap-5 overflow-y-hidden flex-2 max-h-none sm:h-screen">
+      <div className="flex flex-col items-center justify-start w-full h-[100vh] gap-5 overflow-y-hidden flex-2 max-h-none sm:h-screen">
         {/* navbar */}
         <Navabar/>
         
