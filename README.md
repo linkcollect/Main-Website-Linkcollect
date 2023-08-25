@@ -1,4 +1,4 @@
-# LinkCollect
+# LinkCollect - V2
 
 LinkCollect is a web application that allows users to create and share collections of links. Whether you want to bookmark your favorite websites, save online resources for later, or curate a list of useful links, LinkCollect provides an intuitive and user-friendly platform for organizing and sharing your collections.
 

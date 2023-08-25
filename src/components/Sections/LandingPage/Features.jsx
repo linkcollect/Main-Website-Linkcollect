@@ -1,17 +1,18 @@
 import React from "react";
 import Card from "./Card";
-import BookmarkIcon from "../../../assets/Frame 40250.svg";
-import ShareIcon from "../../../assets/Frame 40250share.svg";
-import SearchIcon from "../../../assets/Frame 40250search.svg";
-import CommandIcon from "../../../assets/Frame 40250command.svg";
-import Card1 from "../../../assets/Card.mp4";
-import LCLogo from "../../../assets/LCLogo.svg";
-import mainlogoWhite from "../../../assets/mainlogoWhite.svg";
-import instagram from "../../../assets/instagram.svg";
-import medium from "../../../assets/medium.svg";
-import discord from "../../../assets/discord.svg";
-import twitter from "../../../assets/twitter.svg";
-import Vector from "../../../assets/Vector.png";
+import BookmarkIcon from "../../assets/Frame 40250.svg";
+import ShareIcon from "../../assets/Frame 40250share.svg";
+import SearchIcon from "../../assets/Frame 40250search.svg";
+import CommandIcon from "../../assets/Frame 40250command.svg";
+import Card1 from "../../assets/Card.mp4";
+import LCLogo from "../../assets/LCLogo.svg";
+import mainlogoWhite from "../../assets/mainlogoWhite.svg";
+import instagram from "../../assets/instagram.svg";
+import medium from "../../assets/medium.svg";
+import discord from "../../assets/discord.svg";
+import twitterx from "../../assets/twitterx.svg";
+import Grill from "../../assets/Grill.svg";
+import Vector from '../../assets/Vector.png'
 import { Link } from "react-router-dom";
 import FamewallEmbed from "react-famewall";
 
@@ -153,49 +154,45 @@ const Features = ({ windowWidth }) => {
         </div>
       </div>
 
-      <div className="mx-auto w-full">
-        <FamewallEmbed wallUrl="linkcollect" carouselMode={true} />
+      <div className='mx-auto w-full'>
+        <FamewallEmbed
+          wallUrl="linkcollect"
+          carouselMode={true}
+        />
       </div>
       {/* Footer */}
-      <div className="bg-primary-500 text-white w-full h-max py-5">
-        {/* Top */}
-        <div className="flex justify-start md:justify-around items-start h-full py-10 flex-wrap"  >
-          {/* Left : Logo Social Links */}
-            <div className="h-full">
-              {/* Logo */}
-                <img src={mainlogoWhite} alt="linkcollect" className="w-60"/> 
-              {/* Caption */}
-             
-              <p className="text-left  text-white font-light leading-4 xl:leading-[30px] ml-7 text-[12px]  md:text-[18px]">
-                When you find something you like on the internet,<br/> save it with
+      <img src={Grill} alt="" className="mt-16 xl:mt-32" />
+      <div className="main-footer bg-[#6166F1] h-max">
+        <div className="sub-footer flex flex-col items-center gap-0 xl:gap-12  py-2 xl:h-max w-[100%] bg-[#6166F1]">
+          <div className="flex xl:mt-8 sm:w-[80%] w-[75%] items-center justify-between">
+            <div className="flex flex-col">
+              <img src={mainlogoWhite} alt="logo" className="w-[5.3rem] mt-4 xl:w-60" />
+              <p className="text-left ml-2 w-[8.1rem] h-10 text-[#FFF] lexend font-light text-[8px] leading-3 xl:text-[18px] xl:leading-[30px] xl:w-[442px] xl:h-[28px] xl:ml-7 ">
+                When you find something you like on the internet, save it with
                 linkcollect before you forget
               </p>
-              {/* Socal Links mt-4 ml-3 xl:ml-7 xl:mt-14 */} 
-              <div  className="flex gap-4 items-center xl:gap-8 ml-7 mt-5 ">
-                
-               <a href="https://twitter.com/linkcollect_io" target="_blank" rel="noreferrer"  className="cursor-pointer flex justify-center items-center"><img src={twitter} alt="" /></a>
-                <a href="https://www.instagram.com/linkcollect/" target="_blank" rel="noreferrer" className="cursor-pointer flex justify-center items-center"><img src={instagram} alt="" /></a>
-                <a href="https://medium.com/@askwhyharsh" target="_blank" rel="noreferrer" className="cursor-pointer flex justify-center items-center"><img src={medium} alt="" /></a>
-                <a href="https://discord.gg/Pt9b4AefE9" target="_blank" rel="noreferrer" className="flex justify-center items-center cursor-pointer"><img src={discord} alt="" /></a>
+              <div className="loco-tray flex align-middle gap-4 mt-4 ml-3 cursor-pointer items-center xl:gap-7 xl:ml-7 xl:mt-14">
+                <a href="https://twitter.com/linkcollect_io" target="_blank" className="xl:w-auto w-[1rem] "><img src={twitterx} alt="" /></a>
+                <a href="https://www.instagram.com/linkcollect/" target="_blank" className="xl:w-auto w-[1rem] "><img src={instagram} alt="" /></a>
+                <a href="https://medium.com/@askwhyharsh" target="_blank" className="xl:w-auto w-[1rem]"><img src={medium} alt="" /></a>
+                <a href="https://discord.gg/UrWZdB3Jb7" target="_blank" className="xl:w-auto w-[1rem]"><img src={discord} alt="" /></a>
               </div>
             </div>
-          {/* Right : Info */}
-            <div className=" flex flex-col text-left mt-8 font-light gap-2 ml-7 md:ml-0">
-            <p>How it works</p>
-            <p>FAQs</p>
-            <p>Request demo</p>
-            <Link to="/privacy">
-              <p>Privacy Policy</p>
-            </Link>
-            <p>Contact us</p>
+
+            <div className="p-6 flex flex-col text-left space-y-2 text-[0.45rem] leading-[0.5rem] xl:gap-4 font-light xl:text-[18px] xl:leading-[22px] xl:text-left text-bgPrimary xl:mb-15 lexend">
+              <a href="#how-it-works">How it works</a>
+              <p>FAQs</p>
+              <a href="https://calendly.com/linkcollect/linkcollect-io">Request demo</a>
+              <Link to='/privacy'><p>Privacy Policy</p></Link>
+              <a href="https://twitter.com/linkcollect_io">Contact us</a>
             </div>
-        </div>
-        {/* Bottom */}
-        <div className="flex justify-around md:justify-evenly text-light text-[12px]">
-          <div></div>
-          {/* <div></div> */}
-          <p>2023 @linkcollect.io</p>
-          <p>Help@linkcollect.xyz</p>
+          </div>
+          <div className="sm:w-[80%] xl:w-[75%] mx-auto grid grid-cols-3 grid-flow-row justify-items-center text-[5px] pb-6 mt-8 leading-[6px] text-bgPrimary font-thin xl:text-xs">
+            <p></p>
+            <p>2023 @linkcollect.io</p>
+            <p className="justify-self-end">linkcollect.io@gmail.com</p>
+            <p></p>
+          </div>
         </div>
       </div>
     </>
