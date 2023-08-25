@@ -21,6 +21,7 @@ const UserProfile = ({ username,windowWidth }) => {
         const data = res.data.data;
         const user = {
           name:data.name,
+          profilePic:data.profilePic?data.profilePic:"",
           socials:data.socials?data.socials : [],
           totalViews:data.totalViews?data.totalViews:0,
           totalCollections:data.collections.length,
@@ -42,18 +43,19 @@ const UserProfile = ({ username,windowWidth }) => {
           <PageLoader />
         </div>
       ) : (
-        <div className="w-full">
+        <div className="w-full h-full pb-6 overflow-y-scroll">
           <ProfileHeader
             username={username}
             name={user.name}
+            imageUrl={user.profilePic}
             socials={user.socials}
             totalViews={user.totalViews}
             totalCollections={user.totalCollections}
           />
            <div className=" w-full h-[70%]">
           {collection.collections.length > 0 ? (
-            <div className="flex items-start justify-start w-full h-[68%] pl-8 mx-auto overflow-y-scroll 3xl:pl-0 3xl:justify-center">
-            <div className="w-full justify-start flex flex-wrap gap-2 2xl:gap-6 max-w-[1500px]">
+            <div className="flex items-start justify-start w-full pl-8 mx-auto 3xl:pl-0 3xl:justify-center">
+            <div className="w-full justify-start grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-6 2xl:gap-6 max-w-[1500px]">
                 {collection.collections.map((collections) => (
                   <CollectionitemV2
                     key={collection._id}
@@ -79,7 +81,7 @@ const UserProfile = ({ username,windowWidth }) => {
               </div>
             </div>
           ) : (
-            <div className="flex flex-col items-center justify-center w-full h-full">
+            <div className="flex flex-col self-center items-center justify-center w-full h-full">
               <p className="mb-5 text-5xl text-textPrimary">
                 No Collection Found
               </p>

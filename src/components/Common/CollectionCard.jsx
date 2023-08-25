@@ -98,7 +98,7 @@ const CollectionitemV2 = React.forwardRef(({
   return (
     <>
       <div
-        className="relative bg-bgPrimary border  border-neutral-300 rounded-lg w-[48%] md:w-[calc(100%/2-24px)] lg:w-[calc(100%/3-24px)] xl:w-[calc(100%/4-24px)] 3xl:w-[calc(100%/5-20px)] group 
+        className="relative bg-bgPrimary border  border-neutral-300 rounded-lg w-full group 
         hover:shadow-md h-[210px] transition duration-300 ease-in-out"
         ref={ref}
       >
@@ -128,9 +128,15 @@ const CollectionitemV2 = React.forwardRef(({
           </div>
           <div className="flex items-center justify-between pt-2.5 px-1.5 ">
             <p className="text-sm font-normal text-neutral-900">
-              {windowWidth > 700
-                ? nameShortner(title, 27)
-                : nameShortner(title, 10)}
+              {windowWidth > 640
+                ? windowWidth > 768 
+                  ? windowWidth > 1024 
+                    ? windowWidth > 1280 
+                      ? nameShortner(title, 25)
+                      : nameShortner(title, 27)
+                    : nameShortner(title, 20)
+                  : nameShortner(title, 17)
+                : nameShortner(title, 28)}
             </p>
             <p className="text-sm font-normal text-neutral-600">
               {links} Links

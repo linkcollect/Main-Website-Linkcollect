@@ -61,14 +61,14 @@ const SavedCollection = ({ windowWidth }) => {
       </div>
 
       {/* Collection Items */}
-      <div className=" w-full h-[70%]">
+      <div className=" w-full pb-6 h-full overflow-y-scroll">
         {collection.isFetching ? (
           <div className="flex items-center justify-center w-full h-full">
             <PageLoader />
           </div>
         ) : collection.collections.length > 0 ? (
           <div className="flex items-start justify-start w-full h-full pl-8 mx-auto overflow-y-scroll 3xl:pl-0 3xl:justify-center">
-            <div className="w-full justify-start flex flex-wrap gap-2 2xl:gap-6 max-w-[1500px]">
+            <div className="w-full justify-start pb-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-6 2xl:gap-6 max-w-[1500px]">
               {collection.collections.map((collectionItem,index) => (
                 
                 <CollectionitemV2
@@ -95,11 +95,11 @@ const SavedCollection = ({ windowWidth }) => {
             </div>
           </div>
         ) : (
-          <div className="flex flex-col items-center justify-center w-full h-full">
+          <div className="flex flex-col self-center items-center justify-center w-full h-full">
             <p className="mb-5 text-5xl text-textPrimary">
               No Collection Found
             </p>
-            <p className="text-textPrimary">You can add it from extension</p>
+            <p className="text-textPrimary">You can save from explore page</p>
           </div>
         )}
       </div>
