@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import Banner from "../components/Banner/Banner";
+import Banner from "../components/Sections/Authentication/Banner";
 import mainLogo from "../assets/mainLogo.svg";
 import Input from "../components/UI/Input/Input";
-import GoogleAuthBtn from "../components/GoogleAuthBtn";
+import GoogleAuthBtn from "../components/Sections/Authentication/GoogleAuthBtn";
 import Loader from "../components/UI/Loader/Loader";
 import { setJwtInRequestHeader } from "../api-services/httpService";
 import { useDispatch, useSelector } from "react-redux";

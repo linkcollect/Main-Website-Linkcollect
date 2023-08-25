@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
-import Input from '../UI/Input/Input'
-import mainLogo from '../../assets/mainLogo.svg'
-import Check from '../../assets/check-in-green.svg'
+import Input from '../../UI/Input/Input'
+import mainLogo from '../../../assets/mainLogo.svg'
+import Check from '../../../assets/check-in-green.svg'
 const ClaimUsername = () => {
     const [claimedUsername, setClaimedUsername] = useState('')
     const [isValid, setIsValid] = useState(false)
@@ -25,12 +25,11 @@ const ClaimUsername = () => {
                     </div>
                     <div className="flex flex-col items-center justify-center w-full gap-6">
                         <div className="relative w-full">
-                            <input
+                            <Input
                                 type={'text'}
                                 placeholder={'Enter username'}
-                                onInput={onInput}
+                                onChange={onInput}
                                 value={claimedUsername}
-                                className="block w-full px-3 py-4 text-base border-2 rounded-lg border-primary-100 placeholder-neutral-400 text-neutral-900 focus:outline-none"
                             />
                             {isValid && claimedUsername.length > 0 ? <>
                                 <span className="absolute top-2.5 transition-all duration-1000 right-4 p-2 text-2xl text-[#5B5B5B] cursor-pointer">

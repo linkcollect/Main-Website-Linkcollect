@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import Banner from "../components/Banner/Banner";
+import Banner from "../components/Sections/Authentication/Banner";
 import mainLogo from "../assets/mainLogo.svg";
 import Input from "../components/UI/Input/Input";
-import GoogleAuthBtn from "../components/GoogleAuthBtn";
+import GoogleAuthBtn from "../components/Sections/Authentication/GoogleAuthBtn";
 import { register } from "../api-services/authService";
-import Emailsent from "../components/EmialVerified/Emailsent";
+import Emailsent from "../components/Sections/Authentication/EmailSent";
 import Loader from "../components/UI/Loader/Loader";
-import ClaimUsername from "../components/ClaimUsername/claimUsername";
+import ClaimUsername from "../components/Sections/Authentication/ClaimUsername";
 import Button from "../components/UI/Button/Button";
 const Signup = ({ windowWidth }) => {
   const [verifying, setVerifying] = useState(false);

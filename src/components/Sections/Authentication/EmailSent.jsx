@@ -1,7 +1,7 @@
 import React from "react";
-import mainLogo from "../../assets/mainLogo.svg";
-import check from "../../assets/check.svg";
-const Emailsent = () => {
+import mainLogo from "../../../assets/mainLogo.svg";
+import check from "../../../assets/check.svg";
+const EmailSent = () => {
   return (
     <>
       <div className="flex flex-col items-center justify-center mt-[-32px]">
@@ -18,4 +18,4 @@ const Emailsent = () => {
   );
 };
 
-export default Emailsent;
+export default EmailSent;

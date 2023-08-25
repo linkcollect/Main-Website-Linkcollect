@@ -1,5 +1,5 @@
-import googleIcon from "../assets/googleIcon.svg";
-import { googleAuth } from '../api-services/authService'
+import googleIcon from "../../../assets/googleIcon.svg";
+import { googleAuth } from '../../../api-services/authService'
 
 const GoogleAuthBtn = () => {
 

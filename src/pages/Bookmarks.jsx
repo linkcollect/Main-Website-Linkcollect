@@ -149,6 +149,8 @@ const Bookmarks = ({ windowWidth }) => {
                 createBookmarkModalOpener={bookmarkCreateModalHandler}
                 deleteCollectionModalHandler={deleteCollectionModalHandler}
                 collectionId = {collectionId}
+                upvotes={collectionData.collectionData.upvotes}
+                collectionUsername ={collectionData.collectionData.username}
               />
               {/* Search Bar and Filter */}
               <div className=" w-[100%]">

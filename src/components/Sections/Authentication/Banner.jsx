@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import Vector from "../../assets/Vector.svg";
-import mainLogo from "../../assets/mainLogo.svg";
+import Vector from "../../../assets/Vector.svg";
+import mainLogo from "../../../assets/mainLogo.svg";
 import { Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 

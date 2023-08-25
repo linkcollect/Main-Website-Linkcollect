@@ -59,7 +59,13 @@ const collectionDataSlice = createSlice({
         },
         sortBookmarksByType:(state,action)=>{
             state.collectionData.timelines =  dataSortByType([...state.collectionData.timelines],action.payload.sortType);
-        }
+        },
+        upvote:(state,action)=>{
+            state.collectionData.upvotes.push(action.payload.userId);
+        },
+        downvote:(state,action)=>{
+            state.collectionData.upvotes = state.collectionData.upvotes.filter(upvoted=>upvoted!==action.payload.userId);
+        },
     },
     extraReducers:(builder)=>{
         builder.addCase(getBookmarks.pending,(state,action)=>{
@@ -79,5 +85,5 @@ const collectionDataSlice = createSlice({
         })
     }
 })
-export const {updateCollectionData,createBookmark,updateBookmark,setTogglePinBookmark,sortBookmarksByType,deleteBookMark} = collectionDataSlice.actions
+export const {updateCollectionData,createBookmark,updateBookmark,setTogglePinBookmark,sortBookmarksByType,deleteBookMark,upvote,downvote} = collectionDataSlice.actions
 export default collectionDataSlice

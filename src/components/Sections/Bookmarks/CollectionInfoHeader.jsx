@@ -1,6 +1,7 @@
 // Package Imports
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 
 // Assets imports
 import backarrow from "../../../assets/back-arrow.svg";
@@ -10,14 +11,25 @@ import defultCollectionImage from "../../../assets/defaultCollectio.svg";
 import editIcon from "../../../assets/edit.svg";
 import addIcon from "../../../assets/add.svg";
 import deleteIcon from "../../../assets/delete2.svg";
+import upvoteIcon from "../../../assets/Upvote.svg"
+import upvotedIcon from "../../../assets/upvoted.svg"
+import savedIcon from "../../../assets/saved.svg"
+import saveIcon from "../../../assets/bmSidebar.svg"
 
 // Utilites/Fuctions Import
 import { nameShortner } from "../../../utils/utils";
+
+// Components
 import Chip from "../../UI/Chip/Chip";
-import EcBookamrkModal from "./ECBookmarkModal";
 import Button from "../../UI/Button/Button";
 import IconButton from "../../UI/IconButton/IconButton";
-import { useSelector } from "react-redux";
+
+// Actions
+import { upvoteAction,downvoteAction,saveAction,unsaveAction } from "../../../store/actions/bookmarks.action";
+import SahreCollectionModal from "./SahreCollectionModal";
+
+
+
 
 const CollectionInfoHeader = ({
   windowWidth,
@@ -32,13 +44,61 @@ const CollectionInfoHeader = ({
   deleteCollectionModalHandler,
   tags,
   isPublic,
-  collectionId
+  upvotes,
+  collectionId,
+  collectionUsername,
 }) => {
+  const [isUpvoted,setIsUpvoted] = useState(false);
+  const [isSaved,setIsSaved] = useState(false);
+  const auth = useSelector(state => state.auth);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const [shareModelOpen,setShareMpdelOpen] = useState(false);
 
-  const auth = useSelector(state=>state.auth);
+  useEffect(()=>{
+    const isUpvoted = upvotes?.findIndex(userId=>auth.userId===userId)>=0;
+    const isSaved = auth.userData.savedCollections?.findIndex(saveId=>saveId===collectionId)>=0;
+    setIsSaved(isSaved);
+    setIsUpvoted(isUpvoted);
+  },[])
+
+  const upvoteHandler = ()=>{
+    if(!auth.isLoggedIn){
+      navigate(-1);
+      return;
+    }
+    if(!isUpvoted){
+      setIsUpvoted(true);
+      dispatch(upvoteAction(collectionId,auth.userId));
+    }else{
+      setIsUpvoted(false);
+      dispatch(downvoteAction(collectionId,auth.userId));
+    }
+  }
+
+  const saveHandler = () =>{
+    if(!auth.isLoggedIn){
+      navigate(-1);
+      return;
+    }
+    if(!isSaved){
+      setIsSaved(true);
+      dispatch(saveAction(collectionId));
+    }else{
+      setIsSaved(false);
+      dispatch(unsaveAction(collectionId));
+    }
+  }
+
+  const shareModalOpenHandler = () =>{
+    setShareMpdelOpen(prev=>!prev);
+  }
+
   
+
   return (
     <>
+      <SahreCollectionModal onClose={shareModalOpenHandler} isOpen={shareModelOpen} collectionName={collectionName} tags={tags}/>
       <div className="w-full bg-bgPrimary pb-2">
         {/* Actions : Back */}
         <div className="flex justify-between bg-bgPrimary mb-5">
@@ -90,18 +150,19 @@ const CollectionInfoHeader = ({
                 <h1 className="text-base text-neutral-500">
                   {noOfLinks} links
                 </h1>
-                <button
+                {isOwner?  <button
                   // onClick={onBack}
+                  onClick={shareModalOpenHandler}
                   className="flex items-center justify-center w-[76x] h-[24px] bg-neutral-200 border border-primary-500 rounded-[40px] p-2"
                 >
                   <img src={share} className="w-[20px] h-[20px] mr-1" alt="" />
                   <p className="text-[14px] text-neutral-700 ">Share</p>
-                </button>
+                </button> : <Link to={`/${collectionUsername}`}>by <span>{collectionUsername}</span></Link>}
               </div>
               {/* Tags */}
               <div className="flex flex-wrap gap-1">
-                <Chip name={isPublic ? "Public" : "Private"}/>
-                {tags?.length>0 && tags.map(tag=>(<Chip name={tag} />))}
+                <Chip name={isPublic ? "Public" : "Private"} />
+                {tags?.length > 0 && tags.map(tag => (<Chip name={tag} />))}
               </div>
 
               <p className="w-full mt-2 text-sm ">
@@ -112,9 +173,9 @@ const CollectionInfoHeader = ({
             </div>
           </div>
 
-          {/* Collection Actions */}
-          {windowWidth > 600 && auth.isLoggedIn && isOwner &&  (
-            <div className="flex justify-center gap-2 items-start">
+          {/* Collection Actions for logged In user*/}
+          {windowWidth > 600 && auth.isLoggedIn && isOwner ? (
+            <div className="flex justify-center gap-3 items-start">
               {/* Add bookmark */}
               <IconButton onClick={createBookmarkModalOpener}>
                 <img src={addIcon} />
@@ -128,10 +189,25 @@ const CollectionInfoHeader = ({
                 <img src={deleteIcon} />
               </IconButton>
             </div>
-          )}
+          ) :
+            <div className="flex justify-center gap-3 items-start">
+              {/* Add bookmark */}
+              <IconButton onClick={upvoteHandler}>
+                <img src={isUpvoted?upvotedIcon:upvoteIcon} className="w-[19px] h-[19px]"/>
+              </IconButton>
+              {/* Edit */}
+              <IconButton onClick={saveHandler}>
+                <img src={isSaved?savedIcon:saveIcon} className="w-[19px] h-[19px]"/>
+              </IconButton>
+              {/* Delete */}
+              <IconButton onClick={shareModalOpenHandler}>
+                <img src={share} className="w-[20px] h-[20px]"/>
+              </IconButton>
+            </div>
+          }
         </div>
 
-       
+
       </div>
     </>
   );
