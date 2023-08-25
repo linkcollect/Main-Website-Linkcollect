@@ -1,30 +1,26 @@
+
 import React from "react";
 import Card from "./Card";
-import BookmarkIcon from "../../assets/Frame 40250.svg";
-import ShareIcon from "../../assets/Frame 40250share.svg";
-import SearchIcon from "../../assets/Frame 40250search.svg";
-import CommandIcon from "../../assets/Frame 40250command.svg";
-import Card1 from "../../assets/Card.mp4";
-import LCLogo from "../../assets/LCLogo.svg";
-import mainlogoWhite from "../../assets/mainlogoWhite.svg";
-import instagram from "../../assets/instagram.svg";
-import medium from "../../assets/medium.svg";
-import discord from "../../assets/discord.svg";
-import twitterx from "../../assets/twitterx.svg";
-import Grill from "../../assets/Grill.svg";
-import Vector from '../../assets/Vector.png'
+import BookmarkIcon from "../../../assets/Frame_40250.svg";
+import ShareIcon from "../../../assets/Frame_40250share.svg";
+import SearchIcon from "../../../assets/Frame_40250search.svg";
+import CommandIcon from "../../../assets/Frame_40250command.svg";
+import Card1 from "../../../assets/Card.mp4";
+import LCLogo from "../../../assets/LCLogo.svg";
+import mainlogoWhite from "../../../assets/mainlogoWhite.svg";
+import instagram from "../../../assets/instagram.svg";
+import medium from "../../../assets/medium.svg";
+import discord from "../../../assets/discord.svg";
+import twitterx from "../../../assets/twitterx.svg";
+import Grill from "../../../assets/Grill.svg";
+import Vector from '../../../assets/Vector.png'
 import { Link } from "react-router-dom";
 import FamewallEmbed from "react-famewall";
 
 const Features = ({ windowWidth }) => {
   return (
     <>
-      <div
-        id="how-it-works"
-        className={`flex flex-wrap ${
-          windowWidth < 700 ? "flex-col" : ""
-        } w-[100%] gap-[26px] items-center justify-center mx-auto mt-[50px] lg:w-[800px] lg:mt-[200px] xl:w-[780px] xl:mt-[400px] 2xl:-[800px]`}
-      >
+      <div id="how-it-works" className={`flex flex-wrap ${windowWidth < 700 ? 'flex-col' : ""} w-[100%] gap-[26px] items-center justify-center mx-auto mt-[50px] lg:w-[800px] lg:mt-[200px] xl:w-[780px] xl:mt-[400px] 2xl:-[800px]`}>
         <Card
           img={BookmarkIcon}
           title={"Save from anywhere"}
@@ -46,26 +42,25 @@ const Features = ({ windowWidth }) => {
             "Explore what people are liking the most, upvote and save collections you like 💼"
           }
         />
-        {windowWidth > 700 && (
+        {windowWidth > 700 &&
           <Card
             img={CommandIcon}
             title={"Access bookmarks using commands"}
             details={
               "Use our commands and key shortcuts anywhere on your browser to save your time, do shit that matters instead 👀"
             }
-          />
-        )}
+          />}
       </div>
       {/* Card Animation Section  */}
+
 
       {/*Mobile design only*** */}
       <div className="flex  flex-col justify-center items-center mx-auto my-12  xl:ml-48 xl:flex-row">
         <div className="block sm:hidden">
           <div className="flex  flex-col items-center justify-center gap-2 mx-auto w-72">
-            <img src={Vector} alt="banner image" className="w-64 h-60" />
-            <h1 className="w-72 h-[3.4rem] lexend font-semibold text-center text-textPrimary mx-auto">
-              Stay organized, save your web links
-            </h1>
+            <img src={Vector} alt='banner image' className="w-64 h-60" />
+            <h1 className="w-72 h-[3.4rem] lexend font-semibold text-center text-textPrimary mx-auto">Stay organized, save
+              your web links</h1>
           </div>
           <div className="w-[21.8rem] h-44 mx-auto  py-6 flex flex-col items-center justify-cemter gap-2 rounded-md my-6 border-solid border-[1px] border-primary">
             <div className="flex items-center justify-start gap-2">
@@ -75,9 +70,7 @@ const Features = ({ windowWidth }) => {
               </h1>
             </div>
             <p className="text-textPrimary text-sm text-left lexend font-light mt-4  mx-auto w-[18.4rem] h-[5.32rem] flex items-center justify-center">
-              with anyone and they can view all your public collections that you
-              have created, do research and curate good collections and share
-              with the worlds
+              with anyone and they can view all your public collections that you have created, do research and curate good collections and share with the worlds
             </p>
           </div>
 
@@ -86,16 +79,14 @@ const Features = ({ windowWidth }) => {
             <div className="flex items-center justify-start gap-2">
               <img src={LCLogo} alt="" className="w-[1.3rem] h-[1.3rem] ml-4" />
               <h1 className="text-primary lexend text-[1.2rem] leading-5 w-[21.7rem] h-5 font-bold text-start">
-                Create awesome collections of links{" "}
-              </h1>
+                Create awesome collections of links                </h1>
             </div>
             <p className="text-textPrimary text-sm text-left lexend font-light mt-4  mx-auto w-[18.4rem] h-[5.32rem] flex items-center justify-center">
-              maybe your favourite videos, blogs, twitter threads, ai tools or
-              learning resources and share these collections with your friends
-              in just one click right from our browser extension, yes it's that
-              simple 😉
+              maybe your favourite videos, blogs, twitter threads, ai tools or learning resources and share these collections with your friends in just one click right from our browser extension, yes it's that simple 😉
+
             </p>
           </div>
+
         </div>
 
         {/* Dekstop Design*** */}
@@ -124,18 +115,14 @@ const Features = ({ windowWidth }) => {
               <p className="">
                 maybe your favourite videos, blogs, twitter threads, ai tools or
                 learning resources and share these collections with your friends
-                in just one click right from our browser extension, yes it's
-                that simple 😉{" "}
+                in just one click right from our browser extension, yes it's that
+                simple 😉{" "}
               </p>
             </div>
             <div className="main-div mt-8 ">
               <div className="sub-div flex ">
                 <div>
-                  <img
-                    src={LCLogo}
-                    alt=""
-                    className="sm:w-[20px] xl:w-[30px]"
-                  />
+                  <img src={LCLogo} alt="" className="sm:w-[20px] xl:w-[30px]" />
                 </div>
                 <div>
                   <h1 className="ml-5 text-[#6166F1] font-bold sm:text-2xl xl:text-4xl">
@@ -143,7 +130,7 @@ const Features = ({ windowWidth }) => {
                   </h1>
                 </div>
               </div>
-              <div className="w-3/5 text-left ml-9 leading-8 ">
+              <div className="w-3/5 text-left ml-9 leading-8">
                 <p>
                   with anyone and they can view all your public collections that
                   you have created or if you will create later{" "}
@@ -152,6 +139,7 @@ const Features = ({ windowWidth }) => {
             </div>
           </div>
         </div>
+
       </div>
 
       <div className='mx-auto w-full'>
