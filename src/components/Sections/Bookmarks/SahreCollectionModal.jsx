@@ -13,7 +13,6 @@ import IconButton from '../../UI/IconButton/IconButton'
 
 const SahreCollectionModal = ({ isOpen, onClose, collectionName, tags }) => {
     const location = useLocation()
-    console.log(location)
     const copyRef = useRef();
     const copyLinkHandler = () => {
         navigator.clipboard.writeText(`https://linkcollect.io${location.pathname}`)

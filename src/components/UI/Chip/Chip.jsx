@@ -1,7 +1,7 @@
 import React, { forwardRef } from "react";
 import { classMerge } from "../../../utils/utils";
 
-const Chip = forwardRef(({ className, name, ...props }) => {
+const Chip = forwardRef(({ className, name, ...props },ref) => {
   return (
     <div
       className={classMerge(

@@ -12,7 +12,7 @@ import { getUserDetails, loginAction } from "../store/actions/user.action";
 import Button from "../components/UI/Button/Button";
 const Login = ({ windowWidth }) => {
   const location = useLocation();
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const dispatch  = useDispatch();
   const auth = useSelector(state=>state.auth);
   const [data, setData] = useState({

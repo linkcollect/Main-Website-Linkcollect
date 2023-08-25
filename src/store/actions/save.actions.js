@@ -1,7 +1,7 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk } from "@reduxjs/toolkit";
 import { upvote,downvote, removeSave } from "../Slices/save.slice";
 import { save,unsave } from "../Slices/user.slice";
-import { downvoteCollection, getSavedCollection, saveCollection, unsaveCollection, upvoteCollection } from "../../api-services/collectionService";
+import { downvoteCollection, getSavedCollection, unsaveCollection, upvoteCollection } from "../../api-services/collectionService";
 
 export const getSaveCollectionOfUser = createAsyncThunk(
     'getSaveCollection',

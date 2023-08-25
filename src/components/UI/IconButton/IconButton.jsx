@@ -1,7 +1,7 @@
 import React, { forwardRef } from 'react'
 import { classMerge } from '../../../utils/utils'
 
-const IconButton = forwardRef(({className,onClick,...props}) => {
+const IconButton = forwardRef(({className,onClick,...props},ref) => {
     return (
         <button className={classMerge("flex items-center justify-center",className)} onClick={onClick} {...props}/>
     )

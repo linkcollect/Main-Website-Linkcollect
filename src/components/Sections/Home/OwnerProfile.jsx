@@ -117,7 +117,7 @@ const OwnerProfile = ({ username, windowWidth }) => {
             <div className="w-full justify-start flex flex-wrap gap-2 2xl:gap-6 max-w-[1500px]">
               {filteredCollection.map((collections) => (
                 <CollectionitemV2
-                  key={collection._id}
+                  key={collections._id}
                   id={collections._id}
                   image={collections.image}
                   title={collections.title}

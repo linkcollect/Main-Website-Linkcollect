@@ -7,7 +7,7 @@ import GoogleAuthBtn from "../components/Sections/Authentication/GoogleAuthBtn";
 import { register } from "../api-services/authService";
 import Emailsent from "../components/Sections/Authentication/EmailSent";
 import Loader from "../components/UI/Loader/Loader";
-import ClaimUsername from "../components/Sections/Authentication/ClaimUsername";
+// import ClaimUsername from "../components/Sections/Authentication/ClaimUsername";
 import Button from "../components/UI/Button/Button";
 const Signup = ({ windowWidth }) => {
   const [verifying, setVerifying] = useState(false);

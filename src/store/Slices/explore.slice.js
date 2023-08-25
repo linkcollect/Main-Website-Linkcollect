@@ -1,5 +1,5 @@
 import { createSlice} from "@reduxjs/toolkit";
-import { getAllExplore } from "../actions/explore.action";
+// import { getAllExplore } from "../actions/explore.action";
 const exploreCollectionDefaultState = {
     collections:[],
     isFetching:false,
@@ -33,7 +33,7 @@ const exploreCollectionSlice = createSlice({
     reducers:{
         startFetching:(state,action)=>{
             state.isFetching = true;
-            if(action.payload.page==1){
+            if(action.payload.page===1){
                 state.collections=[]
             }
         },
@@ -59,7 +59,6 @@ const exploreCollectionSlice = createSlice({
             state.collections[cIdx].upvotes = state.collections[cIdx].upvotes.filter(upvoted=>upvoted!==action.payload.userId);
         },
         searchedCollection:(state,action)=>{
-            console.log(action.payload.page)
             const data = action.payload.data;
             state.collections = action.payload.page > 1 ? [...state.collections,...data.collections.map(getStructuredCollection)] : data.collections.map(getStructuredCollection);
             state.page=state.page+1;
