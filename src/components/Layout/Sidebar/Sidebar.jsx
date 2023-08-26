@@ -15,6 +15,7 @@ import ActiveSaved from '../../../assets/outlinedSaved.svg'
 import NavbarItem from "./NavbarItem";
 import { useSelector } from "react-redux";
 import { motion } from "framer-motion";
+import { login } from "../../../api-services/authService";
 
 const Sidebar = ({ user, handleSetUser, windowWidth }) => {
   const state = useLocation();
@@ -22,6 +23,7 @@ const Sidebar = ({ user, handleSetUser, windowWidth }) => {
 
   const [isHovered, setIsHovered] = useState(false);
 
+//   console.log(auth);
   const menuItem = [
     {
       name: "Home",
@@ -63,7 +65,7 @@ const Sidebar = ({ user, handleSetUser, windowWidth }) => {
           <div className="w-full border-2  border-[#D1D1DB] rounded-lg py-3 px-3 ">
             <div className=" h-[100px] w-[100px] mx-auto mb-2 overflow-hidden">
               <img
-                src={defaultImage}
+                src={auth.userData.profilePic ? auth.userData.profilePic : defaultImage}
                 className="object-cover w-full h-full rounded-full"
               />
             </div>
