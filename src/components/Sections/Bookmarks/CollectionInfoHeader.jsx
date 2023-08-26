@@ -27,6 +27,7 @@ import IconButton from "../../UI/IconButton/IconButton";
 // Actions
 import { upvoteAction,downvoteAction,saveAction,unsaveAction } from "../../../store/actions/bookmarks.action";
 import ShareCollectionModal from "./ShareCollectionModal";
+import BackgroundGradient from "../../UI/BackgroundGraident/BackgroundGradient";
 
 
 
@@ -94,8 +95,6 @@ const CollectionInfoHeader = ({
     setShareMpdelOpen(prev=>!prev);
   }
 
-  
-
   return (
     <>
       <ShareCollectionModal onClose={shareModalOpenHandler} isOpen={shareModelOpen} collectionName={collectionName} tags={tags}/>
@@ -118,9 +117,9 @@ const CollectionInfoHeader = ({
         {/* Collection Inormation */}
         <div className="flex  justify-between sm:mt-2 gap-10">
           {/* Collection Details Section */}
-          <div className="flex gap-4 flex-col w-full sm:flex-row">
+          <div className="flex gap-4 flex-col w-full overflow-hidden sm:flex-row">
             {/* Collection Thumbnail */}
-            { <div className="flex justify-center rounded shadow-[inset_0_0_15px_5px_rgba(0,0,0,0.1)] items-center w-[100%] sm:w-[294px] sm:h-[137px]">
+            {image !== "undefined" && image !== undefined ? (<div className="flex justify-center rounded-sm items-center w-[100%] sm:w-[294px] sm:h-[137px]">
               <img
                 src={
                   image !== "undefined" && image !== undefined
@@ -130,10 +129,11 @@ const CollectionInfoHeader = ({
                 className="block rounded object-cover"
                 alt=""
               />
-            </div>}
+            </div>) : (<BackgroundGradient hashValue={collectionId} title={collectionName} className="sm:w-[294px] sm:h-[137px]" />)}
 
             {/* Collection Info */}
             <div className="flex flex-col text-left gap-2">
+            <div className="flex flex-col sm:flex-row align-center gap-2">
               {/* Collection Title, Links, Share */}
               <div className="flex justify-between sm:justify-start gap-2 items-baseline mb-1">
                 <h1 className="text-xl font-bold lexend text-neutral-700">
@@ -149,11 +149,13 @@ const CollectionInfoHeader = ({
               {isOwner?  <button
                   // onClick={onBack}
                   onClick={shareModalOpenHandler}
-                  className="flex items-center justify-center w-[76x] h-[24px] bg-neutral-200 border border-primary-500 rounded-[40px] p-2"
+                  className="flex items-center justify-center px-4 w-min h-[24px] bg-neutral-200 border border-primary-500 rounded-[40px] p-2"
                 >
                   <img src={share} className="w-[20px] h-[20px] mr-1" alt="" />
                   <p className="text-[14px] text-neutral-700 ">Share</p>
-                </button> : <Link to={`/${collectionUsername}`}>by <span>{collectionUsername}</span></Link>}
+                </button> : <Link to={`/${collectionUsername}`} className="sm:mt-[2px]">by <span>{collectionUsername}</span></Link>
+                }
+            </div>
               {/* Tags */}
               <div className="flex flex-wrap gap-1">
                 <Chip name={isPublic ? "Public" : "Private"} />
