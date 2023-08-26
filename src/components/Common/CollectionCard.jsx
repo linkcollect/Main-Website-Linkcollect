@@ -12,6 +12,7 @@ import saved from "../../assets/saved.svg"
 import Chip from "../UI/Chip/Chip";
 import IconButton from "../UI/IconButton/IconButton";
 import { useDispatch, useSelector } from "react-redux";
+import BackgroundGradient from "../UI/BackgroundGraident/BackgroundGradient";
 
 const CollectionitemV2 = React.forwardRef(({
   id,
@@ -21,6 +22,7 @@ const CollectionitemV2 = React.forwardRef(({
   isPublic,
   upvotes,
   isPinned,
+  description,
   tags,
   username,
   windowWidth,
@@ -35,8 +37,10 @@ const CollectionitemV2 = React.forwardRef(({
 },ref) => {
   const auth = useSelector(state=>state.auth)
   const navigate = useNavigate();
+  console.log(description);
   // LOCAL STATE WILL HELP TO MUTATE THE ITEM SO QUICKLY WHEN IT COMES TO LARGE DATA
   const [isSaved,setIsSaved] = useState(false);
+  const [hover, setHover] = useState(false)
   const [isUpvoted,setIsUpvoted] = useState({
     isClicked:false,
     number:0,
@@ -60,6 +64,15 @@ const CollectionitemV2 = React.forwardRef(({
   },[])
   const dispatch = useDispatch();
 
+//   const titleRef = useRef()
+
+//   useEffect(()=>{
+//       if (hover) {
+//         titleRef.current = title
+//       } else {
+//           titleRef.current = description
+//       }
+//   }, [hover])
   const upvoteHandler = ()=>{
     if(!auth.isLoggedIn){
       navigate(-1);
@@ -101,6 +114,7 @@ const CollectionitemV2 = React.forwardRef(({
         className="relative bg-bgPrimary border  border-neutral-300 rounded-lg w-full group 
         hover:shadow-md h-[210px] transition duration-300 ease-in-out"
         ref={ref}
+        onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}
       >
         {isOwner && (
           <IconButton
@@ -115,28 +129,33 @@ const CollectionitemV2 = React.forwardRef(({
           </IconButton>
         )}
         <Link to={`/${username}/c/${id}`}>
-          <div className="w-full h-[109px]">
-            <img
-              src={
-                image !== "undefined" && image !== undefined && image !== "null" && image !== null
-                  ? image
-                  : defultCollectionImage
-              }
-              className="object-cover w-full h-full rounded-t-md "
-              alt="collection img"
-            />
+          {image !== "undefined" && image !== undefined && image !== "null" && image !== null ? 
+          (<div className="w-full h-[109px] relative">
+          <img
+            src={
+              image !== "undefined" && image !== undefined && image !== "null" && image !== null
+                ? image
+                : defultCollectionImage
+            }
+            className="object-cover w-full h-full rounded-t-md"
+            alt="collection img"
+          />
+          <div className="absolute rounded-t-md top-0 left-0 w-full h-full z-5  shadow-[inset_0_0_15px_5px_rgba(0,0,0,0.1)]">
+
           </div>
+        </div>
+        ) : (<BackgroundGradient hashValue={id} title={!hover ? title : description ? description : title}/>)}
           <div className="flex items-center justify-between pt-2.5 px-1.5 ">
-            <p className="text-sm font-normal text-neutral-900">
+            <p className="text-sm font-normal text-neutral-800">
               {windowWidth > 640
                 ? windowWidth > 768 
                   ? windowWidth > 1024 
                     ? windowWidth > 1280 
-                      ? nameShortner(title, 25)
-                      : nameShortner(title, 27)
-                    : nameShortner(title, 20)
+                      ? nameShortner(title, 23)
+                      : nameShortner(title, 25)
+                    : nameShortner(title, 18)
                   : nameShortner(title, 17)
-                : nameShortner(title, 28)}
+                : nameShortner(title, 25)}
             </p>
             <p className="text-sm font-normal text-neutral-600">
               {links} Links

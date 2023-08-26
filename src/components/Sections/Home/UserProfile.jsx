@@ -65,6 +65,7 @@ const UserProfile = ({ username,windowWidth }) => {
                     links={collections.timelines.length}
                     isPublic={collections.isPublic}
                     isPinned={collections.isPinned}
+                    description={collections.description}
                     tags={collections.tags}
                     username={username}
                     windowWidth={windowWidth}
