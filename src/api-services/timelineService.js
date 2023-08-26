@@ -18,6 +18,10 @@ export function deleteTimeline(collectionId, timelineId) {
   return http.delete(`${apiEndpoint}/${collectionId}/timelines/${timelineId}`);
 }
 
+export function togglePin(collectionId, timelineId) {
+  return http.patch(`${apiEndpoint}/${collectionId}/timelines/togglePin/${timelineId}`)
+}
+
 // ---------------------------------- SPECIAL ROUTE -------------------------------------- //
 
 // for multiple timelines/links creation from left click

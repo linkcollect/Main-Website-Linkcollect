@@ -2,6 +2,7 @@ import axios from "axios";
 
 // For server internal error handling status-code(500)
 axios.interceptors.response.use(null, (error) => {
+  console.log(error)
   const expectedError =
     error.response &&
     error.response.status >= 400 &&

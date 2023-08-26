@@ -1,1 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" id="approve"><path fill="#6166f1" d="M18.71,7.21a1,1,0,0,0-1.42,0L9.84,14.67,6.71,11.53A1,1,0,1,0,5.29,13l3.84,3.84a1,1,0,0,0,1.42,0l8.16-8.16A1,1,0,0,0,18.71,7.21Z"></path></svg>
+<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Variant=tick-2, Size=16, Color=Black">
+<path id="Vector" d="M2.75 8.75L6.25 12.25L13.25 4.75" stroke="#141414" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+</svg>

@@ -1,220 +1,184 @@
-import React, { useState, useEffect } from "react";
-import Sidebar from "../components/Sidebar/Sidebar";
-import BookmarkItems from "../components/BookmarkItem/BookmarkItems";
-import TopBar from "../components/Topbar/TopBar";
+import React, { useState, useEffect, useMemo } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { getCollection } from "../api-services/collectionService";
-import PageLoader from "../components/Loader/PageLoader";
-import { getByUsername } from "../api-services/userService";
-import Modal from "../components/EditCollection/Modal";
-import { updateCollection } from "../api-services/collectionService";
-import { Helmet } from "react-helmet";
-import defaultCollectionImage from '../assets/defaultCollectio.png'
-const Bookmarks = ({ user, handleSetUser, windowWidth }) => {
+import PageLoader from "../components/UI/Loader/PageLoader";
+import CollectionModal from "../components/Common/CollectionModal";
+import BookmarkItem from "../components/Sections/Bookmarks/BookmarkItem";
+import Delete from "../components/Sections/Bookmarks/DeleteModal";
+import EcBookamrkModal from "../components/Sections/Bookmarks/ECBookmarkModal";
+import BaseLayout from "../components/Layout/BaseLayout/BaseLayout";
+import Search from "../components/Common/Search";
+import CollectionInfoHeader from "../components/Sections/Bookmarks/CollectionInfoHeader";
+import { useDispatch, useSelector } from "react-redux";
+import { getBookmarks } from "../store/actions/bookmarks.action";
+import { togglePin } from "../api-services/timelineService";
+import { setTogglePinBookmark, sortBookmarksByType } from "../store/Slices/bookmarks.slice";
+import { SortActions } from "../components/Common/ActiondropDown";
+const Bookmarks = ({ windowWidth }) => {
   const navigation = useNavigate();
   const { collectionId, username } = useParams();
-  const [collection, setCollection] = useState([]);
-  const [filteredCollection, setFilteredCollection] = useState([])
-  const [isLoading, setIsLoading] = useState(false);
-  const [visitedUser, setVisitedUser] = useState({});
-  const [isOpen, setIsOpen] = useState(false);
-  const [loading, setLoading] = useState(false)
-  //edit collection
-  const [data, setData] = useState({
-    title: '',
-    privacy: '',
-    description: ''
-  })
-  const [image, setImage] = useState();
-  const onInput = (e) => {
-    e.preventDefault();
-    setData(state => ({ ...state, [e.target.name]: e.target.value }));
-  };
-  const onInputFile = (e) => {
-    e.preventDefault();
-    setImage(e.target.files[0])
-  };
+  // Modal State: Collection
+  const [editCollectionModalOpen, setEditCollectionModalOpen] = useState(false);
+  const [deleteCollectionModal,setDeleteCollectionModal] = useState(false);
+  // Modal State: Bookmarks
+  const [openCreateBookmarkModal, setOpenCreateBookmarkModal] = useState(false);
+
+  
+  // Sorting State
+  const [sortingType,setSortingType] = useState("RECENETLY_UPDATED")
+  
+  // search query
+  const [query, setQuery] = useState("");
+  //For handiling click event on the bookmarkItem
+  const [clickedId, setClickedId] = useState(null);
+  const auth = useSelector(state => state.auth);
+  const collectionData = useSelector(state => state.collectionData)
+  const dispatch = useDispatch();
+
   useEffect(() => {
-    setIsLoading(true);
-    const getData = async () => {
-      try {
-        const res = await getByUsername(username);
-        const collection = await getCollection(collectionId);
-        let publicCollection = 0;
-        let privateCollection = 0;
-        res.data.data.collections.map((data) => (data.isPublic ? publicCollection++ : privateCollection++));
-        setCollection(collection.data.data);
-        setFilteredCollection(collection.data.data)
-        if (user.isLoggedIn) {
-          if (username === user.username) {
-            //Means Loggedin user visintig their own profile so no need of fetching the data of the user
-            setVisitedUser({
-              username: res.data.data.username,
-              name: res.data.data.name,
-              email: res.data.data.email,
-              isOwner: true,
-              link: {
-                publicCollection,
-                privateCollection,
-              }
-            })
-          } else {
-            // Loggedin user has Vistied others profile so need to get the user info
-            // api call
-            setVisitedUser({
-              username: res.data.data.username,
-              name: res.data.data.name,
-              isOwner: false,
-              link: {
-                publicCollection,
-                privateCollection,
-              }
-            })
-          }
-        }
-        // Not loogedIn
-        else {
-          setVisitedUser({
-            username: res.data.data.username,
-            name: res.data.data.name,
-            isOwner: false,
-            link: {
-              publicCollection,
-              privateCollection,
-            }
-          })
-        }
-
-        setIsLoading(false);
-
-      } catch (error) {
-        setIsLoading(false);
-      }
-
-    }
-    getData();
-
+    dispatch(getBookmarks({ collectionId }))
   }, []);
 
-  // Setting initial values to edit collection
-  useEffect(() => {
-    setData({
-      ...data,
-      title: collection.title,
-      description: collection.description,
-      privacy: collection.isPublic ? 'public' : 'private'
-    })
-  }, [collection])
-  //edit collection
-  const close = () => setIsOpen(false)
-  const open = () => setIsOpen(true)
-  const handleEditCollection = async () => {
-    if (data.title === "" || data.title.length > 40 || data.description.length > 240) return
-    setLoading(true)
-    try {
-      const form = new FormData();
-      form.append("title", data.title);
-      if (data.description !== "") {
-        form.append("description", data.description);
-      }
-      form.append("isPublic", data.privacy === "public" ? true : false);
-      if (image !== "") {
-        form.append("image", image);
-      }
-      const response = await updateCollection(collectionId, form);
-      setCollection(response.data.data)
-      // Checking for collections
-      // console.log(response.data.data)
-    } catch (error) {
 
-    }
-    setImage(undefined)
-    setData(data => ({ ...data, title: '', description: '', privacy: '' }))
-    setIsOpen(false)
-    setLoading(false)
+  const editCollectionModalHandler = () => {
+    setEditCollectionModalOpen((prev) => !prev);
+  };
+
+  const deleteCollectionModalHandler = () =>{
+    setDeleteCollectionModal((prev)=>!prev);
   }
+
+  const bookmarkCreateModalHandler = () => {
+    setOpenCreateBookmarkModal(prev => !prev);
+  }
+
+  
+
 
   const backHandler = (e) => {
     e.preventDefault();
-    navigation(`/${username}`);
-  };
-
-  const searchHnadeler = (e) => {
-    e.preventDefault();
-    // As we need to search in global collections
-    const tempCollection = { ...collection };
-    let newfilteredCollection = tempCollection;
-    let newfilteredBookmarks = []
-    if (e.target.value !== "") {
-      newfilteredBookmarks = tempCollection.timelines.filter((collection) =>
-        collection.title.toLowerCase().includes(e.target.value.toLowerCase())
-      );
-      newfilteredCollection.timelines = newfilteredBookmarks;
+    if(!auth.isLoggedIn){
+      navigation("/login");
+    }else{
+      navigation(-1);
     }
-    setFilteredCollection(newfilteredCollection)
   };
 
+  // Bookmark Toggle Pin
+  const toggleBookmarkPin = async (bookmarkID) => {
+    dispatch(setTogglePinBookmark({ bookmarkID,sortType:sortingType }))
+    // console.log(collection);
+    try {
+        const res = await togglePin(collectionId, bookmarkID);
+    } catch (error) {
+        console.error(error)
+    }
+  }
 
-  // For helmet purposes
-  const {title, description} = collection
+  const sortdata = (sortType)=>{
+    setSortingType(sortType);
+    dispatch(sortBookmarksByType({sortType}));
+  }
+
+  const menuItem = [
+    {
+      name: "Recently Updated",
+      onClick: sortdata,
+      type: "RECENETLY_UPDATED",
+    },
+    {
+      name: "Alphabetically",
+      onClick: sortdata,
+      type: "ALPHABETICAlLY",
+    },
+  ];
+
+
+
+
+
+  // Logic for search 
+  const filteredBookmarks = useMemo(() => {
+    return (
+      !collectionData.isFetching && collectionData.collectionData.timelines?.length > 0 ? 
+      collectionData.collectionData.timelines.filter((tItem) =>
+        tItem.title.toLowerCase().includes(query.toLowerCase())
+      ) : []
+    );
+  }, [query, collectionData.collectionData,collectionData.isFetching]);
+
+
   return (
-    
-      <div className="flex w-full min-h-screen bg-bgSecondary">
-      <Helmet>
-        <title>{collection.title}</title>
+    <BaseLayout>
+      <div className="flex mb-6 overflow-y-scroll sm:min-h-screen w-full">
+        {/* Collection Edit Modal */}
+        {!collectionData.isFetching && <CollectionModal
+          isOpen={editCollectionModalOpen}
+          modalCloseHandler={editCollectionModalHandler}
+          isEditing={true}
+          originalCollectionData={{
+            title: collectionData.collectionData?.title,
+            description: collectionData.collectionData?.description,
+            tags: collectionData.collectionData?.tags,
+            isPublic: collectionData.collectionData?.isPublic,
+            image: collectionData.collectionData?.image
+          }}
+          collectionId={collectionId}
+        />}
+        {!collectionData.isFetching && <Delete isOpen={deleteCollectionModal} onClose={deleteCollectionModalHandler} collectionID={collectionId} heading="Delete Collection" subheading={`Delete the collection - ${collectionData.collectionData?.title}`} mode="collectionDelete" />}
 
-        {/* below is not working yet but above is !! */}
-        {/* <meta property="og:image" content={defaultCollectionImage} />
-        <meta property="og:title" content={title}/>
-        <meta property="og:description" content={description}/> */}
-      </Helmet>
+        {/* Bookmarks */}
+        {/* Create Bookamrk */}
+        {collectionData.isFetching && <EcBookamrkModal isOpen={openCreateBookmarkModal} onClose={bookmarkCreateModalHandler} isEditing={false} collectionID={collectionId}/>}
+        
 
+        <div className="flex flex-col w-full">
+          <div className="px-5">
+            {/* Header : Collection Details , Actions */}
+            <div className="w-full pt-2 mx-auto ">
+              <CollectionInfoHeader
+                windowWidth={windowWidth}
+                onBack={backHandler}
+                collectionName={collectionData.collectionData?.title}
+                collectionDesc={collectionData.collectionData?.description}
+                noOfLinks={collectionData.collectionData?.timelines?.length}
+                image={collectionData.collectionData?.image}
+                tags={collectionData.collectionData?.tags}
+                isPublic={collectionData.collectionData?.isPublic}
+                isOwner={username === auth.username}
+                editCollectionModalOpener={editCollectionModalHandler}
+                createBookmarkModalOpener={bookmarkCreateModalHandler}
+                deleteCollectionModalHandler={deleteCollectionModalHandler}
+                collectionId = {collectionId}
+                upvotes={collectionData.collectionData.upvotes}
+                collectionUsername ={collectionData.collectionData.username}
+              />
+              {/* Search Bar and Filter */}
+              <div className="w-[100%] sticky z-50">
+                <div className="relative flex flex-row sm:flex-row items-end mt-5 gap-2">
+                  <Search query={query} setQuery={setQuery} />
 
-        {windowWidth > 800 && (
-          <div className="flex-1">
-            <Sidebar user={visitedUser} handleSetUser={handleSetUser} />
+                  {/* sort by */}
+                  <SortActions name="Sort By" menuItems={menuItem}/>
+                </div>
+
+              </div>
+            </div>
+
+            {/* Checked Items : Number of CheckItems, Action Select All and Uncheck All, Move and Delete */}
+            {/* Selecet Unslect Component will be shown here */}
           </div>
-        )}
-        <div className="flex flex-col w-full h-screen overflow-y-hidden">
-          <Modal
-            isOpen={isOpen}
-            setIsOpen={setIsOpen}
-            inputHandler={onInput}
-            imageHandler={onInputFile}
-            image={image}
-            data={data}
-            onSubmit={handleEditCollection}
-            loading={loading}
-            windowWidth={windowWidth}
-          />
-          <div className="flex items-center justify-center w-full pt-2 mx-auto bg-bgPrimary ">
-            <TopBar
-              windowWidth={windowWidth}
-              onBack={backHandler}
-              collectionName={collection?.title}
-              collectionDesc={
-                collection?.description
-              }
-              noOfLinks={collection.timelines?.length}
-              image={collection?.image}
-              isLoggedIn={user.isLoggedIn}
-              isOwner={visitedUser.isOwner}
-              searchHnadeler={searchHnadeler}
-              isOpen={isOpen}
-              close={close}
-              open={open}
-            />
-          </div>
-          <div className="w-full h-[65%] mx-auto">
-            {isLoading ? (
+
+          {/* Bookmarks Container */}
+          <div className="w-full h-[60%] mx-auto">
+            {collectionData.isFetching ? (
               <div className="flex items-center justify-center w-full h-full">
                 <PageLoader />
               </div>
-            ) : collection.timelines && collection.timelines.length > 0 ? (
-              <div className="w-full h-full py-4 mx-auto overflow-y-scroll scrollbar-hide">
-                <div className="w-[90%] mx-auto space-y-2">
-                  {filteredCollection.timelines.map((timeline) => (
-                    <BookmarkItems
+            ) : collectionData.collectionData && filteredBookmarks?.length > 0 ? (
+              <div className="w-full h-[calc(100%-55px)] py-4 scrollbar-hide">
+                <div className="w-[100%] z-0 h-[calc(100%-65px)] space-y-2 px-5">
+                  {filteredBookmarks.map((timeline) => (
+                    <BookmarkItem
                       key={timeline._id}
                       id={timeline._id}
                       name={timeline.title}
@@ -222,7 +186,14 @@ const Bookmarks = ({ user, handleSetUser, windowWidth }) => {
                       favicon={timeline.favicon}
                       windowWidth={windowWidth}
                       updatedAt={timeline.updatedAt}
-                      user={visitedUser}
+                      isOwner={username === auth.username}
+                      clickedId={clickedId}
+                      setClickedId={setClickedId}
+                      isSelected={timeline.isSelected}
+                      collectionId = {collectionId}
+                      toggleBookmarkPin={toggleBookmarkPin}
+                      isPinned={timeline.isPinned}
+                      collectionName={collectionData.collectionData.title}
                     />
                   ))}
                 </div>
@@ -238,6 +209,7 @@ const Bookmarks = ({ user, handleSetUser, windowWidth }) => {
           </div>
         </div>
       </div>
+    </BaseLayout>
   );
 };
 
