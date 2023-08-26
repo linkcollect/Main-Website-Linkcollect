@@ -128,7 +128,7 @@ const Bookmarks = ({ windowWidth }) => {
 
         {/* Bookmarks */}
         {/* Create Bookamrk */}
-        {collectionData.isFetching && <EcBookamrkModal isOpen={openCreateBookmarkModal} onClose={bookmarkCreateModalHandler} isEditing={false} collectionID={collectionId}/>}
+        {!collectionData.isFetching && <EcBookamrkModal isOpen={openCreateBookmarkModal} onClose={bookmarkCreateModalHandler} isEditing={false} collectionID={collectionId}/>}
         
 
         <div className="flex flex-col w-full">
@@ -153,7 +153,7 @@ const Bookmarks = ({ windowWidth }) => {
                 collectionUsername ={collectionData.collectionData.username}
               />
               {/* Search Bar and Filter */}
-              <div className="w-[100%] sticky z-50">
+              <div className="w-[100%] sticky z-10">
                 <div className="relative flex flex-row sm:flex-row items-end mt-5 gap-2">
                   <Search query={query} setQuery={setQuery} />
 
