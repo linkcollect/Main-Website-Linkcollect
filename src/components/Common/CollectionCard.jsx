@@ -62,7 +62,7 @@ const CollectionitemV2 = React.forwardRef(({
 
   const upvoteHandler = ()=>{
     if(!auth.isLoggedIn){
-      navigate(-1);
+      navigate('/login');
       return;
     }
     if(!isUpvoted.isClicked){
@@ -82,7 +82,7 @@ const CollectionitemV2 = React.forwardRef(({
 
   const saveHandler = () =>{
     if(!auth.isLoggedIn){
-      navigate(-1);
+      navigate('/login');
       return;
     }
     if(!isSaved){

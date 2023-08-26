@@ -64,7 +64,7 @@ const CollectionInfoHeader = ({
 
   const upvoteHandler = ()=>{
     if(!auth.isLoggedIn){
-      navigate(-1);
+      navigate('/login');
       return;
     }
     if(!isUpvoted){
@@ -78,7 +78,7 @@ const CollectionInfoHeader = ({
 
   const saveHandler = () =>{
     if(!auth.isLoggedIn){
-      navigate(-1);
+      navigate('/login');
       return;
     }
     if(!isSaved){

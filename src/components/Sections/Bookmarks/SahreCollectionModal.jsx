@@ -20,7 +20,7 @@ const SahreCollectionModal = ({ isOpen, onClose, collectionName, tags }) => {
             copyRef.current.src = approve;
             setTimeout(() => {
                 copyRef.current.src = Copy;
-            }, [2000])
+            }, [500])
         }
     }
     return (
@@ -32,7 +32,7 @@ const SahreCollectionModal = ({ isOpen, onClose, collectionName, tags }) => {
                         Share Collection
                     </h1>
                     <button className="flex" onClick={onClose}>
-                        <img src={cancelIcon} />
+                        <img src={cancelIcon} alt=''/>
                     </button>
                 </div>
 
@@ -40,9 +40,9 @@ const SahreCollectionModal = ({ isOpen, onClose, collectionName, tags }) => {
                 <div className='mb-1'>
 
                     <p className='mb-1'>Collection Link</p>
-                    <div className='relative cursor-pointer' onClick={copyLinkHandler}>
+                    <div className='relative h-max cursor-pointer' onClick={copyLinkHandler}>
                         <Input value={`https://linkcollect.io${location.pathname}`} readonly className="cursor-pointer"/>
-                        <image src={Copy} ref={copyRef} className='absolute right-2 top-0 z-[99]' />
+                        <img src={Copy} ref={copyRef} className='absolute bg-white p-1 right-2 h-7 w-7 top-[0.75rem] z-[99]' alt=''/>
                     </div>
 
                 </div>
