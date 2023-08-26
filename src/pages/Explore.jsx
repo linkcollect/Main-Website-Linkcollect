@@ -135,6 +135,7 @@ const Explore = ({ windowWidth }) => {
                     links={collectionItem.countOfLinks}
                     tags={collectionItem.tags}
                     username={collectionItem.username}
+                    description={collectionItem.description}
                     windowWidth={windowWidth}
                     isOwner={false}
                     upvotes={collectionItem.upvotes}
