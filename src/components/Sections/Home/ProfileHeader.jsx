@@ -14,18 +14,27 @@ const ProfileHeader = ({name,socials,imageUrl,totalViews,totalCollections,userna
     const copyRef = useRef();
     const copyMobileRef = useRef();
 
+    // TODO: Need to change logic to copy link
     const copyLinkHandler = () =>{
         navigator.clipboard.writeText(`https://linkcollect.io/${username}`)
             if(copyRef.current){
                 copyRef.current.src = approve;
                 setTimeout(()=>{
-                    copyRef.current.src = Copy;
-                },[2000])
+                    try {
+                        copyRef.current.src = Copy;
+                    } catch (error) {
+                        // console.error(error)
+                    }
+                }, 500)
             if(copyMobileRef.current){
                 copyMobileRef.current.src = approve;
                 setTimeout(()=>{
-                    copyMobileRef.current.src = Copy;
-                },[2000])
+                    try {
+                        copyMobileRef.current.src = Copy;
+                    } catch (error) {
+                        // console.error(error)
+                    }
+                }, 500)
             }
         }
     }

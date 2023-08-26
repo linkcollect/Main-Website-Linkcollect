@@ -140,7 +140,7 @@ const CollectionitemV2 = React.forwardRef(({
             className="object-cover w-full h-full rounded-t-md"
             alt="collection img"
           />
-          <div className="absolute rounded-t-md top-0 left-0 w-full h-full z-5  shadow-[inset_0_0_15px_5px_rgba(0,0,0,0.1)]">
+          <div className="absolute rounded-t-md top-0 left-0 w-full h-full z-5 shadow-[inset_0_0_15px_5px_rgba(0,0,0,0.1)]">
 
           </div>
         </div>

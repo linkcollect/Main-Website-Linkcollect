@@ -11,7 +11,7 @@ import whatsappIcon from "../../../assets/whatsappOutlined.svg"
 import { TelegramShareButton, TwitterShareButton, WhatsappShareButton } from 'react-share'
 import IconButton from '../../UI/IconButton/IconButton'
 
-const SahreCollectionModal = ({ isOpen, onClose, collectionName, tags }) => {
+const ShareCollectionModal = ({ isOpen, onClose, collectionName, tags }) => {
     const location = useLocation()
     const copyRef = useRef();
     const copyLinkHandler = () => {
@@ -19,8 +19,12 @@ const SahreCollectionModal = ({ isOpen, onClose, collectionName, tags }) => {
         if (copyRef.current) {
             copyRef.current.src = approve;
             setTimeout(() => {
-                copyRef.current.src = Copy;
-            }, [500])
+                try {
+                    copyRef.current.src = Copy;
+                } catch (error) {
+                    
+                }
+            }, 500)
         }
     }
     return (
@@ -74,4 +78,4 @@ const SahreCollectionModal = ({ isOpen, onClose, collectionName, tags }) => {
     )
 }
 
-export default SahreCollectionModal
+export default ShareCollectionModal

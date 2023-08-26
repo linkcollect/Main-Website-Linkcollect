@@ -26,7 +26,7 @@ import IconButton from "../../UI/IconButton/IconButton";
 
 // Actions
 import { upvoteAction,downvoteAction,saveAction,unsaveAction } from "../../../store/actions/bookmarks.action";
-import SahreCollectionModal from "./SahreCollectionModal";
+import ShareCollectionModal from "./ShareCollectionModal";
 
 
 
@@ -98,7 +98,7 @@ const CollectionInfoHeader = ({
 
   return (
     <>
-      <SahreCollectionModal onClose={shareModalOpenHandler} isOpen={shareModelOpen} collectionName={collectionName} tags={tags}/>
+      <ShareCollectionModal onClose={shareModalOpenHandler} isOpen={shareModelOpen} collectionName={collectionName} tags={tags}/>
       <div className="w-full bg-bgPrimary pb-2">
         {/* Actions : Back */}
         <div className="flex justify-between bg-bgPrimary mb-5">
@@ -112,45 +112,41 @@ const CollectionInfoHeader = ({
               <p>Back</p>
             </Button>
           </div>
-          {windowWidth < 600 && (
-            <div className="flex items-center justify-end w-32 h-10">
-              <Link to="/">
-                <img src={MainLogo} alt="" className="w-32 ml-2 h-14" />
-              </Link>
-            </div>
-          )}
+          
         </div>
 
         {/* Collection Inormation */}
-        <div className="flex justify-between sm:mt-2 gap-10">
+        <div className="flex  justify-between sm:mt-2 gap-10">
           {/* Collection Details Section */}
-          <div className="flex">
+          <div className="flex gap-4 flex-col w-full sm:flex-row">
             {/* Collection Thumbnail */}
-            <div className="flex justify-between w-[294px] h-[137px]">
+            { <div className="flex justify-center rounded shadow-[inset_0_0_15px_5px_rgba(0,0,0,0.1)] items-center w-[100%] sm:w-[294px] sm:h-[137px]">
               <img
                 src={
-                  image != "undefined" && image !== undefined
+                  image !== "undefined" && image !== undefined
                     ? image
-                    : defultCollectionImage
+                    : ""
                 }
                 className="block rounded object-cover"
                 alt=""
               />
-            </div>
+            </div>}
 
             {/* Collection Info */}
-            <div className="flex flex-col text-left ml-5">
+            <div className="flex flex-col text-left gap-2">
               {/* Collection Title, Links, Share */}
-              <div className="flex gap-2 items-center mb-1">
+              <div className="flex justify-between sm:justify-start gap-2 items-baseline mb-1">
                 <h1 className="text-xl font-bold lexend text-neutral-700">
-                  {windowWidth < 600
-                    ? nameShortner(collectionName, 14)
+                  {windowWidth < 640
+                    ? nameShortner(collectionName, 50)
                     : collectionName}
                 </h1>
-                <h1 className="text-base text-neutral-500">
+                <h1 className="w-[5rem] text-base text-neutral-500">
                   {noOfLinks} links
                 </h1>
-                {isOwner?  <button
+                
+              </div>
+              {isOwner?  <button
                   // onClick={onBack}
                   onClick={shareModalOpenHandler}
                   className="flex items-center justify-center w-[76x] h-[24px] bg-neutral-200 border border-primary-500 rounded-[40px] p-2"
@@ -158,7 +154,6 @@ const CollectionInfoHeader = ({
                   <img src={share} className="w-[20px] h-[20px] mr-1" alt="" />
                   <p className="text-[14px] text-neutral-700 ">Share</p>
                 </button> : <Link to={`/${collectionUsername}`}>by <span>{collectionUsername}</span></Link>}
-              </div>
               {/* Tags */}
               <div className="flex flex-wrap gap-1">
                 <Chip name={isPublic ? "Public" : "Private"} />
@@ -166,15 +161,15 @@ const CollectionInfoHeader = ({
               </div>
 
               <p className="w-full mt-2 text-sm ">
-                {windowWidth < 600
-                  ? nameShortner(collectionDesc, 18)
+                {windowWidth > 640
+                  ? nameShortner(collectionDesc, 500)
                   : collectionDesc}
               </p>
             </div>
           </div>
 
           {/* Collection Actions for logged In user*/}
-          {windowWidth > 600 && auth.isLoggedIn && isOwner ? (
+          {windowWidth > 640 && auth.isLoggedIn && isOwner ? (
             <div className="flex justify-center gap-3 items-start">
               {/* Add bookmark */}
               <IconButton onClick={createBookmarkModalOpener}>
@@ -190,7 +185,7 @@ const CollectionInfoHeader = ({
               </IconButton>
             </div>
           ) :
-            <div className="flex justify-center gap-3 items-start">
+            <div className="hidden sm:flex justify-center gap-3 items-start">
               {/* Add bookmark */}
               <IconButton onClick={upvoteHandler}>
                 <img src={isUpvoted?upvotedIcon:upvoteIcon} className="w-[19px] h-[19px]"/>

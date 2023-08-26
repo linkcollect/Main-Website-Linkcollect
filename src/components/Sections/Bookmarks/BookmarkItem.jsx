@@ -71,8 +71,12 @@ const BookmarkItem = ({
     if (copyRef) copyRef.current.src = approveIcon;
     navigator.clipboard.writeText(url);
     setTimeout(() => {
-      copyRef.current.src = copyIcon;
-    }, 1500);
+      try {
+        copyRef.current.src = copyIcon;
+      } catch (error) {
+        // console.error(error)
+      }
+    }, 500);
   };
 
   const onActionClickeHandler = (type) => {
@@ -145,7 +149,7 @@ const BookmarkItem = ({
           }
 
 
-        <a className="flex" href={url} target="_blank">
+        <a className="flex" href={url} rel="noreferrer" target="_blank">
           {/* Bookamrk Info: Name , Link, Image */}
           <div className="flex items-center">
             {/* Bookmark Image */}
@@ -164,17 +168,23 @@ const BookmarkItem = ({
             {/* Bookmark Name, Link name */}
             <div className="flex flex-col items-start justify-center gap-[2.63px] h-10 sm:h-10">
               {/* Bookmark Name */}
-              <p className="font-normal text-start para text-[16px] text-neutral-900  sm:w-max sm:h-[21px]">
-                {windowWidth < 600
-                  ? nameShortner(name, 20)
-                  : nameShortner(name, 60)}
+              <p className="font-normal text-start para text-[0.9rem] text-neutral-900  sm:w-max sm:h-[21px]">
+              {name > 640
+                ? windowWidth > 768 
+                  ? windowWidth > 1024 
+                    ? windowWidth > 1280 
+                      ? nameShortner(name, 23)
+                      : nameShortner(name, 25)
+                    : nameShortner(name, 18)
+                  : nameShortner(name, 17)
+                : nameShortner(name, 28)}
               </p>
 
               {/* Link Name */}
-              <p className="text-start text-[14px] sm:text-[12px] sm:w-[271px] text-neutral-500 mt-[0.1rem]">
-                {windowWidth < 700
-                  ? nameShortner(getOrigin(url), 15)
-                  : nameShortner(getOrigin(url), 30)}
+              <p className="text-start text-[0.8rem] sm:text-[12px] sm:w-[271px] text-neutral-500 mt-[0.1rem]">
+                {windowWidth < 640
+                  ? nameShortner(getOrigin(url), 25)
+                  : nameShortner(getOrigin(url), 40)}
               </p>
             </div>
           </div>
@@ -184,7 +194,7 @@ const BookmarkItem = ({
         {/* Timestamp, Actions: Note, Open Link, Popup menu */}
         <div className="flex items-center gap-[4rem] mr-2">
           {/* Timestamp */}
-          <p className="text-xs font-medium whitespace-nowrap  text-neutral-500 mr-5">
+          <p className="hidden sm:block text-xs font-medium whitespace-nowrap  text-neutral-500 mr-5">
             Added {fromNow(updatedAt)}
           </p>
 
@@ -202,7 +212,7 @@ const BookmarkItem = ({
                 className="block mx-auto cursor-pointer"
               />
             </IconButton>
-            <a className="flex items-center" href={url} target="_blank">
+            <a className="hidden sm:flex items-center" href={url} target="_blank" rel="noreferrer">
               <img
                 src={redirectIcon}
                 alt=""
@@ -210,7 +220,7 @@ const BookmarkItem = ({
               />
             </a>
             {auth.isLoggedIn && isOwner && <div className="relative">
-              <button className="flex items-center" onClick={() => setClickedId(prev => prev === id ? null : id)}>
+              <button className="hidden sm:flex items-center" onClick={() => setClickedId(prev => prev === id ? null : id)}>
                 <img
                   src={menuIcon}
                   alt=""
