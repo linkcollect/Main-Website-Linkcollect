@@ -12,6 +12,7 @@ const ProfileHeader = ({name,socials,imageUrl,totalViews,totalCollections,userna
     const auth = useSelector(state=>state.auth);
     const navigate  = useNavigate();
     const copyRef = useRef();
+    const copyMobileRef = useRef();
 
     const copyLinkHandler = () =>{
         navigator.clipboard.writeText(`https://linkcollect.io/${username}`)
@@ -20,6 +21,12 @@ const ProfileHeader = ({name,socials,imageUrl,totalViews,totalCollections,userna
                 setTimeout(()=>{
                     copyRef.current.src = Copy;
                 },[2000])
+            if(copyMobileRef.current){
+                copyMobileRef.current.src = approve;
+                setTimeout(()=>{
+                    copyMobileRef.current.src = Copy;
+                },[2000])
+            }
         }
     }
     const backHnadler = () =>{
@@ -31,7 +38,7 @@ const ProfileHeader = ({name,socials,imageUrl,totalViews,totalCollections,userna
     }
     
     return (
-        <div className="flex flex-col items-start justify-center w-full gap-8 mx-auto 3xl:px-0 px-8 max-w-[1500px] pb-5">
+        <div className="flex flex-col items-start justify-center w-full gap-8 mx-auto 3xl:px-0 max-w-[1500px] pb-5">
         <div className='flex flex-col items-start justify-center w-full gap-6'>
 
             {/* back button */}
@@ -41,13 +48,16 @@ const ProfileHeader = ({name,socials,imageUrl,totalViews,totalCollections,userna
 
             <div className='flex items-start justify-between w-full'>
                 {/*visited user's details*/}
-                <div className="flex items-center justify-start w-full gap-5">
+                <div className="flex flex-col sm:flex-row items-center justify-start w-full gap-5">
                     {/* Profile photo */}
                     <img src={imageUrl ? imageUrl : profile} alt="" className='w-20 h-20 rounded-full' />
 
-                    <div className="flex flex-col items-start justify-start gap-3">
+                    <div className="flex flex-col items-center sm:items-start w-full justify-start gap-3">
                         {/* Name */}
-                        <p className="text-sm font-medium text-neutral-900">{name}</p>
+                        <div className='flex flex-row gap-2'>
+                          <p className="text-sm font-medium text-neutral-900">{name}</p>
+                          <img ref={copyMobileRef} src={Copy} alt="" onClick={copyLinkHandler} className='cursor-pointer sm:hidden'/>
+                        </div>
 
                         {/* Social Links */}
                         {/* Logic Ramining */}
@@ -63,21 +73,22 @@ const ProfileHeader = ({name,socials,imageUrl,totalViews,totalCollections,userna
                         </div> */}
 
                         {/*No. of Views and collections */}
-                        <div className="flex items-center justify-start w-full gap-3">
-                            <span className="text-xs font-normal text-neutral-600">Total views {totalViews}</span>
+                        <div className="flex items-center justify-between sm:justify-start w-full gap-3">
                             <span className="text-xs font-normal text-neutral-600">Total Collections {totalCollections}</span>
+                            <span className="text-xs font-normal text-neutral-600">Total views {totalViews}</span>
                         </div>
                     </div>
                 </div>
 
                 {/* Profile link copy */}
-                <Button variant="secondaryOutline" onClick={copyLinkHandler} className="w-[172px] h-[44px]">
+                <div className=''>
+                <Button variant="secondaryOutline" onClick={copyLinkHandler} className="w-[172px] h-[44px] hidden sm:flex align-top justify-evenly">
                     <img ref={copyRef} src={Copy} alt="" />Profile Link
-                </Button>
+                </Button></div>
             </div>
         </div>
         </div>
     )
 }
 
-export default ProfileHeader
+export default ProfileHeader;

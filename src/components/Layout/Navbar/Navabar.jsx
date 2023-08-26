@@ -18,7 +18,7 @@ const Navabar = () => {
   return (
     <nav className="flex items-center justify-end w-full gap-5 px-8 max-w-[1500px] py-3 border-b border-neutral-200 bg-neutral-50">
       {(navabrItem.map(({ name }) => (
-        <div className="flex items-center justify-center rounded" key={name}>
+        <div className=" hidden sm:flex items-center justify-center rounded" key={name}>
           <span className="text-base font-normal text-center text-neutral-600">
             {name}
           </span>
