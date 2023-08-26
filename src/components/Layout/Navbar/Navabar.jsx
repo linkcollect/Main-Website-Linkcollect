@@ -9,12 +9,15 @@ const Navabar = () => {
   const navabrItem = [
     {
       name: "Contact us",
+      link: "https://linktr.ee/askwhyharsh"
     },
     {
       name: "FAQs",
+      link: "https://linkcollect.super.site/help"
     },
     {
       name: "Feedback",
+      link: "https://forms.gle/Dg5ehCAR4AEZBnF89"
     },
   ];
   return (
@@ -25,12 +28,12 @@ const Navabar = () => {
               </Link>
             </div>
     <nav className="flex items-center justify-end w-full gap-5 px-8 max-w-[1500px] py-3 ">
-      {(navabrItem.map(({ name }) => (
-        <div className=" hidden sm:flex items-center justify-center rounded" key={name}>
+      {(navabrItem.map(({ name, link }) => (
+        <a href={link} target="_blank" className=" hidden sm:flex items-center justify-center rounded" key={link} rel="noreferrer">
           <span className="text-base font-normal text-center text-neutral-600">
             {name}
           </span>
-        </div>
+        </a>
       )))} 
         {!isLoggedIn && <a href="https://chrome.google.com/webstore/detail/linkcollect/knekpacpcgkieomkhhngenjeeokddkif" rel="noreferrer" target="_blank"><Button className="px-[9.6px] py-[1rem] rounded-[4.8px] text-[0.75rem] font-normal h-6 w-max">Try LinkCollect</Button></a>}
     </nav>
