@@ -13,6 +13,9 @@ const Signup = ({ windowWidth }) => {
   const [verifying, setVerifying] = useState(false);
   const [isSiging, setIsSigning] = useState(false);
 
+  // going for normal approach later on we will use hooks for inputs
+  const [isPasswordfocus,setIsPasswordfocus] = useState(false);
+
   // signup details handling
   const [data, setData] = useState({
     name: "",
@@ -126,7 +129,14 @@ const Signup = ({ windowWidth }) => {
                           placeholder="password"
                           onInput={onInput}
                           value={data.password}
+                          onFocus={()=>setIsPasswordfocus(true)}
+                          onBlur={()=>setIsPasswordfocus(false)}
                         />
+                        {!isValidPassword && !isPasswordfocus && data.password.length>=1 && (
+                          <p className="text-xs text-error-500 mt-2 text-start">
+                            Password should be at least 8 of character and consist of 1 Uppercase, 1 lower case, 1 special character
+                          </p>
+                        )}
                       </div>
 
                       {/* Need to add link after adding the api for forget pass */}
