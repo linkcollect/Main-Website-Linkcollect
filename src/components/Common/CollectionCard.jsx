@@ -37,7 +37,6 @@ const CollectionitemV2 = React.forwardRef(({
 },ref) => {
   const auth = useSelector(state=>state.auth)
   const navigate = useNavigate();
-  console.log(description);
   // LOCAL STATE WILL HELP TO MUTATE THE ITEM SO QUICKLY WHEN IT COMES TO LARGE DATA
   const [isSaved,setIsSaved] = useState(false);
   const [hover, setHover] = useState(false)
