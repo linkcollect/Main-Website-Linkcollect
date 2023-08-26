@@ -22,10 +22,10 @@ export const SortActions = ({ name, menuItems }) => {
   return (
     <div
       onClick={() => setShowDropdown(!showDropdown)}
-      className="w-48  cursor-pointer h-[46px] relative p-4 flex items-center justify-center rounded-lg border-neutral-300 bg-white gap-2 border"
+      className="w-[3rem] px-2 sm:w-48 cursor-pointer h-[46px] relative sm:p-4 flex items-center justify-center rounded-lg border-neutral-300 bg-white gap-2 border"
     >
       <img src={SortBy} alt="" />
-      <span className="text-sm font-medium">Sort By</span>
+      <span className="hidden sm:block text-sm font-medium">Sort By</span>
 
       {/* dropdown */}
       {showDropdown && (
@@ -34,15 +34,15 @@ export const SortActions = ({ name, menuItems }) => {
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0, y: 10 }}
         transition={{ duration: 0.2 }}
-        className={`w-[188px] rounded border absolute z-50 top-[50px] right-0 border-white p-1 bg-neutral-100 drop-shadow`}
+        className={`w-[188px] rounded border absolute z-[9999_!important] top-[50px] right-0 border-white p-1 bg-neutral-100 drop-shadow`}
     >
           {menuItems.map((menItem, index) => (
             <>
             <MenuItem
+              key={menItem.name}
               name={menItem.name}
               onClick={menItem.onClick}
               type={menItem.type}
-              key={menItem.type}
             />
             {index !== lastIndex && (
               <hr className="w-full border border-neutral-300" />
