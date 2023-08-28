@@ -38,7 +38,7 @@ const Sidebar = ({ user, handleSetUser, windowWidth }) => {
       activeIcon: ActiveExplore
     },
     {
-      name: "Saved Collectoion",
+      name: "Saved Collection",
       link: "/saved",
       icon: saved,
       activeIcon: ActiveSaved

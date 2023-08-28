@@ -9,7 +9,7 @@ const Navabar = () => {
   const navabrItem = [
     {
       name: "Contact us",
-      link: "https://linktr.ee/askwhyharsh"
+      link: "http://linkcollect.io/askwhyharsh/c/64ecd6198fac6bae8d54fb77"
     },
     {
       name: "FAQs",

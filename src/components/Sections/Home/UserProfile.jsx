@@ -12,6 +12,7 @@ const UserProfile = ({ username,windowWidth }) => {
   const dispatch = useDispatch();
   const collection = useSelector((state) => state.collection);
   const [user,setUser] = useState({});
+
   useEffect(() => {
     // dispatch(getUserCollection({ username}));
     async function getCollectionOfTheUser() {
@@ -27,6 +28,7 @@ const UserProfile = ({ username,windowWidth }) => {
           totalCollections:data.collections.length,
         }
         setUser(user)
+        document.title = `${data.name} - ${username}'s LinkCollect Profile`; // Change this to the desired title
         dispatch(collectionFetchingSuccess({data:data}));
 
       }catch(e){

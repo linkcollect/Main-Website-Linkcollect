@@ -33,6 +33,8 @@ const OwnerProfile = ({ username, windowWidth }) => {
       try {
         const res = await getByUsername(username);
         const sortedData = dataSortByType(res.data.data.collections,sortingType)
+        document.title = `${username}'s LinkCollect Profile`; // Change this to the desired title
+
         dispatch(collectionFetchingSuccess({ data: {collections:sortedData} }));
       } catch(e) {
         console.log(e)
