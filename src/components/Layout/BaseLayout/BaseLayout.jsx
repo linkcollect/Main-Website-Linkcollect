@@ -12,7 +12,7 @@ const BaseLayout = ({ windowWidth, children }) => {
       {/* <Helmet>
         <title>{nameOfUser?.toUpperCase()} - (User on Linkcollect)</title>
       </Helmet> */}
-      {auth.isLoggedIn && <div className={`flex-1`}>
+      {auth.isLoggedIn && <div className={`hidden sm:block flex-1`}>
        <Sidebar/>
       </div>}
       <div className="flex flex-col items-center justify-start w-full h-[100vh] gap-5 overflow-y-hidden flex-2 max-h-none sm:h-screen">
