@@ -150,7 +150,7 @@ const CollectionitemV2 = React.forwardRef(({
                 ? windowWidth > 768 
                   ? windowWidth > 1024 
                     ? windowWidth > 1280 
-                      ? nameShortner(title, 23)
+                      ? nameShortner(title, 18)
                       : nameShortner(title, 25)
                     : nameShortner(title, 18)
                   : nameShortner(title, 17)
