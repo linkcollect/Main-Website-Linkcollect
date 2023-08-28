@@ -190,7 +190,7 @@ const CollectionitemV2 = React.forwardRef(({
             {/* Saved  */}
           { isSavedOptionVisible &&
             <IconButton className={`gap-1 ${isSaved? 'text-primary-500':"text-neutral-500"}  text-[14px]`} onClick={saveHandler}>
-              <img src={isSaved ? saved : bmSidebar}/>{isSaved ? "saved":"save"}
+              <img src={isSaved ? saved : bmSidebar}/>{isSaved ? "":"save"}
             </IconButton>
           }
           </div>

@@ -139,7 +139,7 @@ const BookmarkItem = ({
 
       <div
         className={`cursor-pointer relative flex items-center justify-between w-full h-[60px] rounded-xl ${
-          hovered ? "bg-primary-50" : checked ? "bg-neutral-300" : "bg-neutral-100"
+          hovered ? "bg-neutral-200" : checked ? "bg-neutral-300" : "bg-neutral-100"
         } border border-neutral-200  duration-200 transition-all group`}
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}

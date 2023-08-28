@@ -55,6 +55,7 @@ const CollectionInfoHeader = ({
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [shareModelOpen,setShareMpdelOpen] = useState(false);
+  document.title = `${collectionName} - Collection on LinkCollect`; // Change this to the desired title
 
   useEffect(()=>{
     const isUpvoted = upvotes?.findIndex(userId=>auth.userId===userId)>=0;
@@ -175,30 +176,30 @@ const CollectionInfoHeader = ({
             <div className="flex justify-center gap-3 items-start">
               {/* Add bookmark */}
               <IconButton onClick={createBookmarkModalOpener}>
-                <img src={addIcon} />
+                <img src={addIcon}  className="w-[1.8rem] h-[1.8rem]"/>
               </IconButton>
               {/* Edit */}
               <IconButton onClick={editCollectionModalOpener}>
-                <img src={editIcon} />
+                <img src={editIcon}  className="w-[1.8rem] h-[1.8rem]"/>
               </IconButton>
               {/* Delete */}
               <IconButton onClick={deleteCollectionModalHandler}>
-                <img src={deleteIcon} />
+                <img src={deleteIcon}  className="w-[1.8rem] h-[1.8rem]" />
               </IconButton>
             </div>
           ) :
             <div className="hidden sm:flex justify-center mt-[-0.25rem] gap-3 items-start">
               {/* Add bookmark */}
               <IconButton onClick={upvoteHandler}>
-                <img src={isUpvoted?upvotedIcon:upvoteIcon} className="w-[2rem] h-[2rem]"/>
+                <img src={isUpvoted?upvotedIcon:upvoteIcon} className="w-[1.8rem] h-[1.8rem]"/>
               </IconButton>
               {/* Edit */}
               <IconButton onClick={saveHandler}>
-                <img src={isSaved?savedIcon:saveIcon} className="w-[2rem] h-[2rem]"/>
+                <img src={isSaved?savedIcon:saveIcon} className="w-[1.8rem] h-[1.8rem]"/>
               </IconButton>
               {/* Delete */}
               <IconButton onClick={shareModalOpenHandler}>
-                <img src={share} className="w-[2rem] h-[2rem]"/>
+                <img src={share} className="w-[1.8rem] h-[1.8rem]"/>
               </IconButton>
             </div>
           }
