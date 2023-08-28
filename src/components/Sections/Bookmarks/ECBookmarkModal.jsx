@@ -80,7 +80,7 @@ const EcBookamrkModal = ({ isOpen, onClose, isEditing, originalData = {}, collec
                 {/* Header */}
                 <div className="flex justify-between  w-full">
                     <h1 className="text-start font-medium text-[20px]  text-textPrimary ">
-                        {isEditing ? "Edit Bookmark" : "Create Bookamrk"}
+                        {isEditing ? "Edit Bookmark" : "Create Bookmark"}
                     </h1>
                     <button className="flex" onClick={onClose}>
                         <img src={cancelIcon} />
@@ -90,7 +90,7 @@ const EcBookamrkModal = ({ isOpen, onClose, isEditing, originalData = {}, collec
                 {/* Content */}
                 <div className="w-[100%]">
                     <div className="flex w-full justify-between items-center">
-                        <Label name="Collection Title" htmlFor="title" />
+                        <Label name="Bookmark Title" htmlFor="title" />
                         <small className="text-xs">
                             <span
                                 className={`${data.title.length > 200 ? "text-error-500" : ""
@@ -133,7 +133,7 @@ const EcBookamrkModal = ({ isOpen, onClose, isEditing, originalData = {}, collec
                         {isLoading ? (
                             <Loader />
                         ) : (
-                            <span>{isEditing ? "Update" : "Add Bookbark"}</span>
+                            <span>{isEditing ? "Update" : "Add Bookmark"}</span>
                         )}
                     </Button>
                     {isEditing && (
