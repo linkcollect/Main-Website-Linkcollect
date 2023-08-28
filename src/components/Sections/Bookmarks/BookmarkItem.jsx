@@ -8,7 +8,7 @@ import menuIcon from "../../../assets/3dot.svg";
 import redirectIcon from "../../../assets/redirectIcon.svg";
 import approveIcon from "../../../assets/approve.svg";
 import bookmarkDefalutIcon from "../../../assets/bookmarkDefault.svg";
-import pinIcon from "../../../assets/bookmarkPin.svg"
+import pinIcon from "../../../assets/bookmarkPin.svg";
 
 // Utils Imports
 import { nameShortner, getOrigin, fromNow } from "../../../utils/utils";
@@ -18,9 +18,6 @@ import EcBookamrkModal from "./ECBookmarkModal";
 import { MenuItem } from "../../Common/ActiondropDown";
 import Delete from "./DeleteModal";
 import IconButton from "../../UI/IconButton/IconButton";
-
-
-
 
 const BookmarkItem = ({
   id,
@@ -41,31 +38,30 @@ const BookmarkItem = ({
   movebokmark,
   deleteBookmark,
   toggleBookmarkPin,
-  collectionName
+  collectionName,
 }) => {
   // to see if checked or not
   const [checked, setChecked] = useState(false);
   const [openEditBookmarkModal, setOpenEditBookmarkModal] = useState(false);
   const [hovered, setHovered] = useState(false);
-  const [bookmarkDeleteModal,setBookmarkDeleteModal] = useState(false);
-  const auth = useSelector(state=>state.auth);
-  const bookmarkDeleteModalHandler = () =>{
-    setBookmarkDeleteModal(prev=>!prev);
-  }
+  const [bookmarkDeleteModal, setBookmarkDeleteModal] = useState(false);
+  const auth = useSelector((state) => state.auth);
+  const bookmarkDeleteModalHandler = () => {
+    setBookmarkDeleteModal((prev) => !prev);
+  };
   useEffect(() => {
     if (isSelected) {
       setChecked(true);
     } else {
       setChecked(false);
     }
-  }, [isSelected])
-
+  }, [isSelected]);
 
   const copyRef = useRef();
 
   const bookmarkEditModalHandler = () => {
-    setOpenEditBookmarkModal(prev => !prev);
-  }
+    setOpenEditBookmarkModal((prev) => !prev);
+  };
 
   const onCopy = () => {
     if (copyRef) copyRef.current.src = approveIcon;
@@ -94,8 +90,7 @@ const BookmarkItem = ({
         toggleBookmarkPin(id);
         return;
     }
-  }
-
+  };
 
   // Popup Action menu
   const popupActionMenu = useMemo(() => {
@@ -103,7 +98,7 @@ const BookmarkItem = ({
       {
         name: "Edit",
         onClick: onActionClickeHandler,
-        type: "EDIT"
+        type: "EDIT",
       },
       {
         name: !isPinned ? "Pin" : "Unpin",
@@ -111,28 +106,46 @@ const BookmarkItem = ({
         type: "PIN",
       },
       // Move Menu will be here
-      
+
       {
         name: "Delete",
         onClick: onActionClickeHandler,
-        type: "DELETE"
-      }
-    ]
-  }, [isPinned])
-
+        type: "DELETE",
+      },
+    ];
+  }, [isPinned]);
 
   return (
     <>
-      <EcBookamrkModal isOpen={openEditBookmarkModal} onClose={bookmarkEditModalHandler} isEditing={true} collectionID={collectionId} originalData={{
-        title: name,
-        link: url
-      }} bookmarkID={id}
+      <EcBookamrkModal
+        isOpen={openEditBookmarkModal}
+        onClose={bookmarkEditModalHandler}
+        isEditing={true}
+        collectionID={collectionId}
+        originalData={{
+          title: name,
+          link: url,
+        }}
+        bookmarkID={id}
       />
-      <Delete onClose={bookmarkDeleteModalHandler} isOpen={bookmarkDeleteModal} collectionID={collectionId} bookmarkID={id} heading="Delete Bookmark" subheading={`Delete ${name} from ${collectionName}`}/>
+      <Delete
+        onClose={bookmarkDeleteModalHandler}
+        isOpen={bookmarkDeleteModal}
+        collectionID={collectionId}
+        bookmarkID={id}
+        heading="Delete Bookmark"
+        subheading={`Delete ${name} from ${collectionName}`}
+      />
 
-      <div className={`cursor-pointer relative flex items-center justify-between w-full h-[60px] rounded-xl ${checked ? "bg-neutral-300" : "bg-neutral-100"} border border-neutral-200  duration-200 transition-all group`} onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)} >
+      <div
+        className={`cursor-pointer relative flex items-center justify-between w-full h-[60px] rounded-xl ${
+          hovered ? "bg-primary-50" : checked ? "bg-neutral-300" : "bg-neutral-100"
+        } border border-neutral-200  duration-200 transition-all group`}
+        onMouseEnter={() => setHovered(true)}
+        onMouseLeave={() => setHovered(false)}
+      >
         {/* Note this below input is to be shown to owner only after  implementing state mangement resolve it */}
-          {/* {isOwner && <input
+        {/* {isOwner && <input
             type="checkbox"
             className={` cursor-pointer custom-checkbox rounded-md ${isStillOneBookmarkSelected
                 ? "ml-2"
@@ -141,13 +154,11 @@ const BookmarkItem = ({
             checked={checked}
             onChange={handleCheck}
           />} */}
-          {isOwner && isPinned && <div className="w-[20px] h-[20px] absolute z-[9999] top-[20px] left-[-13px] cursor-pointer border border-neutral-300 bg-neutral-100 rounded-md" >
-            <img key="pin-icon"
-              className=""
-              src={pinIcon} alt="" />
+        {isOwner && isPinned && (
+          <div className="w-[20px] h-[20px] absolute z-[9999] top-[20px] left-[-13px] cursor-pointer border border-neutral-300 bg-neutral-100 rounded-md">
+            <img key="pin-icon" className="" src={pinIcon} alt="" />
           </div>
-          }
-
+        )}
 
         <a className="flex" href={url} rel="noreferrer" target="_blank">
           {/* Bookamrk Info: Name , Link, Image */}
@@ -169,15 +180,15 @@ const BookmarkItem = ({
             <div className="flex flex-col items-start justify-center gap-[2.63px] h-10 sm:h-10">
               {/* Bookmark Name */}
               <p className="font-normal text-start para text-[0.9rem] text-neutral-900  sm:w-max sm:h-[21px]">
-              {name > 640
-                ? windowWidth > 768 
-                  ? windowWidth > 1024 
-                    ? windowWidth > 1280 
-                      ? nameShortner(name, 23)
-                      : nameShortner(name, 25)
-                    : nameShortner(name, 18)
-                  : nameShortner(name, 17)
-                : nameShortner(name, 28)}
+                {name > 640
+                  ? windowWidth > 768
+                    ? windowWidth > 1024
+                      ? windowWidth > 1280
+                        ? nameShortner(name, 23)
+                        : nameShortner(name, 25)
+                      : nameShortner(name, 18)
+                    : nameShortner(name, 17)
+                  : nameShortner(name, 28)}
               </p>
 
               {/* Link Name */}
@@ -190,7 +201,6 @@ const BookmarkItem = ({
           </div>
         </a>
 
-
         {/* Timestamp, Actions: Note, Open Link, Popup menu */}
         <div className="flex items-center gap-[4rem] mr-2">
           {/* Timestamp */}
@@ -200,54 +210,72 @@ const BookmarkItem = ({
 
           {/* Actions: Note, Open Link, Popup menu */}
           {/* All actions should work only when all links is not selected */}
-          {!isStillOneBookmarkSelected &&  <div className="flex gap-4 mr-2">
-            <IconButton
-              onClick={onCopy}
-              className="flex items-center justify-center "
-            >
-              <img
-                ref={copyRef}
-                src={copyIcon}
-                alt=""
-                className="block mx-auto cursor-pointer"
-              />
-            </IconButton>
-            <a className="hidden sm:flex items-center" href={url} target="_blank" rel="noreferrer">
-              <img
-                src={redirectIcon}
-                alt=""
-                className="block mx-auto cursor-pointer "
-              />
-            </a>
-            {auth.isLoggedIn && isOwner && <div className="relative">
-              <button className="hidden sm:flex items-center" onClick={() => setClickedId(prev => prev === id ? null : id)}>
+          {!isStillOneBookmarkSelected && (
+            <div className="flex gap-4 mr-2">
+              <IconButton
+                onClick={onCopy}
+                className="flex items-center justify-center "
+              >
                 <img
-                  src={menuIcon}
+                  ref={copyRef}
+                  src={copyIcon}
                   alt=""
                   className="block mx-auto cursor-pointer"
                 />
-              </button>
-              {clickedId === id &&
-                <motion.div
-                initial={{ opacity: 0, y: 10}}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: 10 }}
-                transition={{ duration: 0.2 }}
-                className={`w-[135px] rounded border absolute z-[9990] top-[28px] p-1 right-0 border-neutral-300 bg-neutral-100 `}
-            >
-
-                  {popupActionMenu.map((menuItem, index) => (
-                    <>
-                      <MenuItem name={menuItem.name} onClick={menuItem.onClick} type={menuItem.type} key={menuItem.type}/>
-                      {(index !== popupActionMenu.length - 1) && <div className="w-full h-[1px] bg-neutral-300 mt-1 mb-1" />}
-                    </>
-                  ))}
-
-                </motion.div>
-              }
-            </div>}
-          </div>
-          }
+              </IconButton>
+              <a
+                className="hidden sm:flex items-center"
+                href={url}
+                target="_blank"
+                rel="noreferrer"
+              >
+                <img
+                  src={redirectIcon}
+                  alt=""
+                  className="block mx-auto cursor-pointer "
+                />
+              </a>
+              {auth.isLoggedIn && isOwner && (
+                <div className="relative">
+                  <button
+                    className="hidden sm:flex items-center"
+                    onClick={() =>
+                      setClickedId((prev) => (prev === id ? null : id))
+                    }
+                  >
+                    <img
+                      src={menuIcon}
+                      alt=""
+                      className="block mx-auto cursor-pointer"
+                    />
+                  </button>
+                  {clickedId === id && (
+                    <motion.div
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: 10 }}
+                      transition={{ duration: 0.2 }}
+                      className={`w-[135px] rounded border absolute z-[9990] top-[28px] p-1 right-0 border-neutral-300 bg-neutral-100 `}
+                    >
+                      {popupActionMenu.map((menuItem, index) => (
+                        <>
+                          <MenuItem
+                            name={menuItem.name}
+                            onClick={menuItem.onClick}
+                            type={menuItem.type}
+                            key={menuItem.type}
+                          />
+                          {index !== popupActionMenu.length - 1 && (
+                            <div className="w-full h-[1px] bg-neutral-300 mt-1 mb-1" />
+                          )}
+                        </>
+                      ))}
+                    </motion.div>
+                  )}
+                </div>
+              )}
+            </div>
+          )}
         </div>
       </div>
     </>
