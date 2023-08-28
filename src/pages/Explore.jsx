@@ -17,6 +17,7 @@ import Loader from "../components/UI/Loader/Loader";
 import { getSearch } from "../api-services/collectionService";
 import { useSearchParams } from "react-router-dom";
 import { searchedCollection } from "../store/Slices/explore.slice";
+import { SortActions } from "../components/Common/ActiondropDown";
 
 const Explore = ({ windowWidth }) => {
   const dispatch = useDispatch();
@@ -48,6 +49,42 @@ const Explore = ({ windowWidth }) => {
   const fetchMoreExploreDataData = () => {
     dispatch(getAllExplore(collection.page + 1));
   }
+
+// menuitem 
+const menuItem = [
+  {
+    name: "Recent",
+    onClick: getRecentData,
+    type: "RECENETLY_UPDATED",
+  },
+  {
+    name: "Views",
+    onClick: getViewsData,
+    type: "ALPHABETICAlLY",
+  },
+  {
+    name: "Upvotes",
+    onClick: getUpvotesData,
+    type: "ALPHABETICAlLY",
+  },
+];
+
+function getRecentData() {
+  dispatch(getAllExplore(1, 'createdAt'));
+}
+
+function getViewsData() {
+  dispatch(getAllExplore(1, 'views'));
+
+}
+
+function getUpvotesData() {
+  dispatch(getAllExplore());
+}
+
+
+
+
 
 
 
@@ -102,9 +139,15 @@ const Explore = ({ windowWidth }) => {
           className={`w-full flex items-start justify-between gap-6 ${windowWidth < 640 ? "" : ""
             }`}
         >
-          <div className=" w-[100%]">
-            <Search query={query} setQuery={setQuery} onCancel={onCancelSerchedHandler} onSubmit={getSearchResult} />
-          </div>
+          <div className="w-[100%] sticky z-10">
+                <div className="relative flex flex-row sm:flex-row items-end mt-5 gap-2">
+                  <Search query={query} setQuery={setQuery} />
+
+                  {/* sort by */}
+                  <SortActions name="Sort By" menuItems={menuItem}/>
+                </div>
+
+              </div>
 
           {/* Filter By*/}
           {/* <FilterActions menuItems={}/> */}

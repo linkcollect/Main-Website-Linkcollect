@@ -3,18 +3,19 @@ import { upvote,downvote,startFetching,fetchSuccess,fetchFailed } from "../Slice
 import { save,unsave } from "../Slices/user.slice";
 import { downvoteCollection, getExplore, saveCollection, unsaveCollection, upvoteCollection } from "../../api-services/collectionService";
 
-
-export const getAllExplore = (page=1) =>{
+// sortby can be -  createdAt, views, upvotes
+export const getAllExplore = (page=1, sortBy = 'upvotes') =>{
   return async dispatch =>{
     dispatch(startFetching({page}));
     try{
-        const res =await getExplore(page);
+        const res =await getExplore(page, sortBy);
         dispatch(fetchSuccess({data:{collections:res.data.data},page}));
     }catch(e){
         dispatch(fetchFailed());
     }
   }
 }
+
 
 // Need to implement
 export const getSearchCollections = createAsyncThunk(
