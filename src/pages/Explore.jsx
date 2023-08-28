@@ -141,7 +141,7 @@ function getUpvotesData() {
         >
           <div className="w-[100%] sticky z-10">
                 <div className="relative flex flex-row sm:flex-row items-end mt-5 gap-2">
-                  <Search query={query} setQuery={setQuery} />
+                <Search query={query} setQuery={setQuery} onCancel={onCancelSerchedHandler} onSubmit={getSearchResult} />
 
                   {/* sort by */}
                   <SortActions name="Sort By" menuItems={menuItem}/>
