@@ -180,14 +180,14 @@ const BookmarkItem = ({
             <div className="flex flex-col items-start justify-center gap-[2.63px] h-10 sm:h-10">
               {/* Bookmark Name */}
               <p className="font-normal text-start para text-[0.9rem] text-neutral-900  sm:w-max sm:h-[21px]">
-                {name > 640
+                {windowWidth > 640
                   ? windowWidth > 768
                     ? windowWidth > 1024
                       ? windowWidth > 1280
-                        ? nameShortner(name, 23)
-                        : nameShortner(name, 25)
-                      : nameShortner(name, 18)
-                    : nameShortner(name, 17)
+                        ? nameShortner(name, 110)
+                        : nameShortner(name, 80)
+                      : nameShortner(name, 50)
+                    : nameShortner(name, 25)
                   : nameShortner(name, 28)}
               </p>
 

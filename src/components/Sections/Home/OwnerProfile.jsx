@@ -74,7 +74,8 @@ const OwnerProfile = ({ username, windowWidth }) => {
     },
   ];
 
-  const onPin = async (collectionId) =>{
+  const onPin = async (e, collectionId) =>{
+    e.stopPropagation()
     dispatch(pinCollectionToggle({ collectionId }))
     dispatch(sortCollectionByType({sortType:sortingType}))
     try {

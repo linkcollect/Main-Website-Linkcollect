@@ -123,12 +123,15 @@ const Sidebar = ({ user, handleSetUser, windowWidth }) => {
         {/* Upgrade button */}
 
         <div className="flex items-center justify-center w-full mx-5 my-5">
-          <button
+          <a
             className={` font-normal  text-white outline-none px-4 py-3  bg-primary-500  rounded-lg  flex justify-start items-center gap-2 w-11/12  ${windowWidth < 700 ? "hidden" : ""
               } relative`}
+            href="https://linkcollect.lemonsqueezy.com/"
+            target="_blank"
+            rel="noreferrer"
           >
             <img src={energy} width={16} /> Upgrade
-          </button>
+          </a>
         </div>
       </div>
     </aside>
