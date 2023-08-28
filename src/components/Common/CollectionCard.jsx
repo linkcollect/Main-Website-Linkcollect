@@ -122,8 +122,8 @@ const CollectionitemV2 = React.forwardRef(({
       >
         {isOwner && (
           <IconButton
-            className={`absolute p-1 transition-all duration-500 rounded-sm bg-black/[0.20] top-2 left-2 ${!isPinned ? "group-hover:opacity-100 opacity-0" : "opacity-1"}`}
-            onClick={()=>onPin(id)}
+            className={`z-10 absolute p-1 transition-all duration-500 rounded-sm bg-black/[0.20] top-2 left-2 ${!isPinned ? "group-hover:opacity-100 opacity-0" : "opacity-1"}`}
+            onClick={(e)=>onPin(e, id)}
           >
             {isPinned ? (
               <img src={filledPinSvg} alt="pin" />
