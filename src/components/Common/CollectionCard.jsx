@@ -72,7 +72,8 @@ const CollectionitemV2 = React.forwardRef(({
 //           titleRef.current = description
 //       }
 //   }, [hover])
-  const upvoteHandler = ()=>{
+  const upvoteHandler = (e)=>{
+    e.stopPropagation()
     if(!auth.isLoggedIn){
       navigate('/login');
       return;
@@ -92,7 +93,8 @@ const CollectionitemV2 = React.forwardRef(({
     }
   }
 
-  const saveHandler = () =>{
+  const saveHandler = (e) =>{
+    e.stopPropagation()
     if(!auth.isLoggedIn){
       navigate('/login');
       return;
@@ -109,11 +111,14 @@ const CollectionitemV2 = React.forwardRef(({
  
   return (
     <>
+
       <div
         className="relative bg-bgPrimary border  border-neutral-300 rounded-lg w-full group 
-        hover:shadow-md h-[210px] transition duration-300 ease-in-out"
+        hover:shadow-md h-[210px] transition duration-300 ease-in-out cursor-pointer"
         ref={ref}
         onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}
+        onClick={()=>navigate(`/${username}/c/${id}`)}
+
       >
         {isOwner && (
           <IconButton
@@ -127,7 +132,7 @@ const CollectionitemV2 = React.forwardRef(({
             )}
           </IconButton>
         )}
-        <Link to={`/${username}/c/${id}`}>
+        
           {image !== "undefined" && image !== undefined && image !== "null" && image !== null ? 
           (<div className="w-full h-[109px] relative">
           <img
@@ -160,7 +165,7 @@ const CollectionitemV2 = React.forwardRef(({
               {links} Links
             </p>
           </div>
-        </Link>
+       
         <div className="flex items-start justify-between pt-2.5 px-1.5 gap-2 flex-col">
           <div className="flex flex-wrap items-center gap-2">
             {isOwner && <Chip name={isPublic ? "Public" :  "Private"}/>}
