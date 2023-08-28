@@ -109,7 +109,7 @@ const Bookmarks = ({ windowWidth }) => {
 
   return (
     <BaseLayout>
-      <div className="flex mb-6 overflow-y-scroll sm:min-h-screen w-full">
+      <div className="flex mb-6 overflow-y-auto  mx-auto scrollbar-hide w-full">
         {/* Collection Edit Modal */}
         {!collectionData.isFetching && <CollectionModal
           isOpen={editCollectionModalOpen}
@@ -131,8 +131,8 @@ const Bookmarks = ({ windowWidth }) => {
         {!collectionData.isFetching && <EcBookamrkModal isOpen={openCreateBookmarkModal} onClose={bookmarkCreateModalHandler} isEditing={false} collectionID={collectionId}/>}
         
 
-        <div className="flex flex-col w-full">
-          <div className="px-5">
+        <div className="flex px-8 flex-col w-full">
+          <div className="">
             {/* Header : Collection Details , Actions */}
             <div className="w-full pt-2 mx-auto ">
               <CollectionInfoHeader
@@ -169,14 +169,14 @@ const Bookmarks = ({ windowWidth }) => {
           </div>
 
           {/* Bookmarks Container */}
-          <div className="w-full h-[60%] mx-auto">
+          <div className="w-full h-[60%] mx-auto pb-6">
             {collectionData.isFetching ? (
               <div className="flex items-center justify-center w-full h-full">
                 <PageLoader />
               </div>
             ) : collectionData.collectionData && filteredBookmarks?.length > 0 ? (
               <div className="w-full h-[calc(100%-55px)] py-4 scrollbar-hide">
-                <div className="w-[100%] z-0 h-[calc(100%-65px)] space-y-2 px-5">
+                <div className="w-[100%] z-0 h-[calc(100%-65px)] space-y-2">
                   {filteredBookmarks.map((timeline) => (
                     <BookmarkItem
                       key={timeline._id}

@@ -153,7 +153,7 @@ const CollectionInfoHeader = ({
                 >
                   <img src={share} className="w-[20px] h-[20px] mr-1" alt="" />
                   <p className="text-[14px] text-neutral-700 ">Share</p>
-                </button> : <Link to={`/${collectionUsername}`} className="sm:mt-[2px]">by <span>{collectionUsername}</span></Link>
+                </button> : <Link to={`/${collectionUsername}`} className="sm:mt-[2px] text-primary-400">by <span>{collectionUsername}</span></Link>
                 }
             </div>
               {/* Tags */}
@@ -187,18 +187,18 @@ const CollectionInfoHeader = ({
               </IconButton>
             </div>
           ) :
-            <div className="hidden sm:flex justify-center gap-3 items-start">
+            <div className="hidden sm:flex justify-center mt-[-0.25rem] gap-3 items-start">
               {/* Add bookmark */}
               <IconButton onClick={upvoteHandler}>
-                <img src={isUpvoted?upvotedIcon:upvoteIcon} className="w-[19px] h-[19px]"/>
+                <img src={isUpvoted?upvotedIcon:upvoteIcon} className="w-[2rem] h-[2rem]"/>
               </IconButton>
               {/* Edit */}
               <IconButton onClick={saveHandler}>
-                <img src={isSaved?savedIcon:saveIcon} className="w-[19px] h-[19px]"/>
+                <img src={isSaved?savedIcon:saveIcon} className="w-[2rem] h-[2rem]"/>
               </IconButton>
               {/* Delete */}
               <IconButton onClick={shareModalOpenHandler}>
-                <img src={share} className="w-[20px] h-[20px]"/>
+                <img src={share} className="w-[2rem] h-[2rem]"/>
               </IconButton>
             </div>
           }
