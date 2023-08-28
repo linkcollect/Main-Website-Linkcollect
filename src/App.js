@@ -6,6 +6,8 @@ import {
   Navigate,
   useNavigate,
 } from "react-router-dom";
+import { Analytics } from '@vercel/analytics/react';
+
 import LandingPage from "./pages/LandingPage";
 import Signup from "./pages/Signup";
 import Login from "./pages/Login";
@@ -102,6 +104,8 @@ function App() {
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
       </div>
+      <Analytics />
+
     </Router>
   );
 }
