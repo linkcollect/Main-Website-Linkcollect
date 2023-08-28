@@ -156,10 +156,10 @@ const CollectionitemV2 = React.forwardRef(({
                   ? windowWidth > 1024 
                     ? windowWidth > 1280 
                       ? nameShortner(title, 18)
-                      : nameShortner(title, 25)
+                      : nameShortner(title, 22)
                     : nameShortner(title, 18)
-                  : nameShortner(title, 17)
-                : nameShortner(title, 25)}
+                  : nameShortner(title, 22)
+                : nameShortner(title, 28)}
             </p>
             <p className="text-sm font-normal text-neutral-600">
               {links} Links
