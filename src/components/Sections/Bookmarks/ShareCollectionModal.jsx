@@ -11,7 +11,7 @@ import whatsappIcon from "../../../assets/whatsappOutlined.svg"
 import { TelegramShareButton, TwitterShareButton, WhatsappShareButton } from 'react-share'
 import IconButton from '../../UI/IconButton/IconButton'
 
-const SahreCollectionModal = ({ isOpen, onClose, collectionName, tags }) => {
+const ShareCollectionModal = ({ isOpen, onClose, collectionName, tags }) => {
     const location = useLocation()
     const copyRef = useRef();
     const copyLinkHandler = () => {
@@ -19,8 +19,12 @@ const SahreCollectionModal = ({ isOpen, onClose, collectionName, tags }) => {
         if (copyRef.current) {
             copyRef.current.src = approve;
             setTimeout(() => {
-                copyRef.current.src = Copy;
-            }, [2000])
+                try {
+                    copyRef.current.src = Copy;
+                } catch (error) {
+                    
+                }
+            }, 500)
         }
     }
     return (
@@ -32,7 +36,7 @@ const SahreCollectionModal = ({ isOpen, onClose, collectionName, tags }) => {
                         Share Collection
                     </h1>
                     <button className="flex" onClick={onClose}>
-                        <img src={cancelIcon} />
+                        <img src={cancelIcon} alt=''/>
                     </button>
                 </div>
 
@@ -40,9 +44,9 @@ const SahreCollectionModal = ({ isOpen, onClose, collectionName, tags }) => {
                 <div className='mb-1'>
 
                     <p className='mb-1'>Collection Link</p>
-                    <div className='relative cursor-pointer' onClick={copyLinkHandler}>
+                    <div className='relative h-max cursor-pointer' onClick={copyLinkHandler}>
                         <Input value={`https://linkcollect.io${location.pathname}`} readonly className="cursor-pointer"/>
-                        <image src={Copy} ref={copyRef} className='absolute right-2 top-0 z-[99]' />
+                        <img src={Copy} ref={copyRef} className='absolute bg-white p-1 right-2 h-7 w-7 top-[0.75rem] z-[99]' alt=''/>
                     </div>
 
                 </div>
@@ -74,4 +78,4 @@ const SahreCollectionModal = ({ isOpen, onClose, collectionName, tags }) => {
     )
 }
 
-export default SahreCollectionModal
+export default ShareCollectionModal

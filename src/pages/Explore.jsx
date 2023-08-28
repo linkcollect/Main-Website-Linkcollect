@@ -99,7 +99,7 @@ const Explore = ({ windowWidth }) => {
           name={searchParams.get("queryFor") ? `Searched ${searchParams.get("queryFor")}` : "Explore"}
         />
         <div
-          className={`w-full flex items-start justify-between gap-6 ${windowWidth < 700 ? "hidden" : ""
+          className={`w-full flex items-start justify-between gap-6 ${windowWidth < 640 ? "" : ""
             }`}
         >
           <div className=" w-[100%]">
@@ -116,7 +116,7 @@ const Explore = ({ windowWidth }) => {
       <div className=" w-full h-full pb-6 overflow-y-scroll 3xl:px-0 px-8">
         {/* At fisrt reandering when I am going to get first page loading or if we will get search result for the first time*/}
         {(collection.collections.length === 0 && collection.isFetching) || isSearching ? (
-          <div className="flex items-center justify-center w-full">
+          <div className="flex items-center h-full justify-center w-full">
             <PageLoader />
           </div>
         ) : collection.collections.length > 0 ? (
@@ -135,6 +135,7 @@ const Explore = ({ windowWidth }) => {
                     links={collectionItem.countOfLinks}
                     tags={collectionItem.tags}
                     username={collectionItem.username}
+                    description={collectionItem.description}
                     windowWidth={windowWidth}
                     isOwner={false}
                     upvotes={collectionItem.upvotes}
@@ -155,7 +156,7 @@ const Explore = ({ windowWidth }) => {
             </div>
             {((collection.isFetching && collection.page > 1) || isSearchingMore) &&
 
-              <div className="flex w-full justify-center items-center my-3">
+              <div className="flex w-full  justify-center items-center my-3">
 
                 <Loader />
 

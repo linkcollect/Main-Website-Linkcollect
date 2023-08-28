@@ -54,7 +54,7 @@ const UserProfile = ({ username,windowWidth }) => {
           />
            <div className=" w-full">
           {collection.collections.length > 0 ? (
-            <div className="flex items-start justify-start w-full pl-8 mx-auto 3xl:pl-0 3xl:justify-center">
+            <div className="flex items-start justify-start w-full mx-auto 3xl:pl-0 3xl:justify-center">
             <div className="w-full justify-start grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-6 2xl:gap-6 max-w-[1500px]">
                 {collection.collections.map((collections) => (
                   <CollectionitemV2
@@ -65,6 +65,7 @@ const UserProfile = ({ username,windowWidth }) => {
                     links={collections.timelines.length}
                     isPublic={collections.isPublic}
                     isPinned={collections.isPinned}
+                    description={collections.description}
                     tags={collections.tags}
                     username={username}
                     windowWidth={windowWidth}

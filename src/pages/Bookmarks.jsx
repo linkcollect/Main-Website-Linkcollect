@@ -109,7 +109,7 @@ const Bookmarks = ({ windowWidth }) => {
 
   return (
     <BaseLayout>
-      <div className="flex w-full min-h-screen">
+      <div className="flex mb-6 overflow-y-scroll sm:min-h-screen w-full">
         {/* Collection Edit Modal */}
         {!collectionData.isFetching && <CollectionModal
           isOpen={editCollectionModalOpen}
@@ -128,11 +128,11 @@ const Bookmarks = ({ windowWidth }) => {
 
         {/* Bookmarks */}
         {/* Create Bookamrk */}
-        {collectionData.isFetching && <EcBookamrkModal isOpen={openCreateBookmarkModal} onClose={bookmarkCreateModalHandler} isEditing={false} collectionID={collectionId}/>}
+        {!collectionData.isFetching && <EcBookamrkModal isOpen={openCreateBookmarkModal} onClose={bookmarkCreateModalHandler} isEditing={false} collectionID={collectionId}/>}
         
 
-        <div className="flex flex-col w-full h-screen overflow-y-hidden">
-          <div className="px-10">
+        <div className="flex flex-col w-full">
+          <div className="px-5">
             {/* Header : Collection Details , Actions */}
             <div className="w-full pt-2 mx-auto ">
               <CollectionInfoHeader
@@ -153,12 +153,12 @@ const Bookmarks = ({ windowWidth }) => {
                 collectionUsername ={collectionData.collectionData.username}
               />
               {/* Search Bar and Filter */}
-              <div className=" w-[100%]">
-                <div className="flex mt-5 gap-2">
+              <div className="w-[100%] sticky z-10">
+                <div className="relative flex flex-row sm:flex-row items-end mt-5 gap-2">
                   <Search query={query} setQuery={setQuery} />
 
                   {/* sort by */}
-                  <SortActions name="Sort By" menuItems={menuItem} />
+                  <SortActions name="Sort By" menuItems={menuItem}/>
                 </div>
 
               </div>
@@ -175,8 +175,8 @@ const Bookmarks = ({ windowWidth }) => {
                 <PageLoader />
               </div>
             ) : collectionData.collectionData && filteredBookmarks?.length > 0 ? (
-              <div className="w-full h-[calc(100%-55px)] py-4 overflow-y-scroll scrollbar-hide">
-                <div className="w-[100%] h-[calc(100%-65px)] space-y-2 px-10">
+              <div className="w-full h-[calc(100%-55px)] py-4 scrollbar-hide">
+                <div className="w-[100%] z-0 h-[calc(100%-65px)] space-y-2 px-5">
                   {filteredBookmarks.map((timeline) => (
                     <BookmarkItem
                       key={timeline._id}

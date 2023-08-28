@@ -79,6 +79,7 @@ const SavedCollection = ({ windowWidth }) => {
                   links={collectionItem.timelines.length}
                   isPublic={collectionItem.isPublic}
                   isPinned={collectionItem.isPinned}
+                  description={collectionItem.description}
                   tags={collectionItem.tags}
                   username={collectionItem.username}
                   windowWidth={windowWidth}

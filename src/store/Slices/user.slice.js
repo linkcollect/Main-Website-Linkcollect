@@ -22,8 +22,8 @@ const authDefaultState = {
 
 // userData saving utility
 const setUserData = (state,action) =>{
-  const {email,isPremium,isPublic,savedCollections,collections} = action.payload.userData;
-      state.userData = {...state.userData,email,isPremium,isPublic,savedCollections};
+  const {name,email,isPremium,isPublic,savedCollections,collections,profilePic} = action.payload.userData;
+      state.userData = {...state.userData,name,email,isPremium,isPublic,savedCollections,profilePic};
       state.userData.totalCollections =
         action.payload.userData.collections.length;
       let totalLinks = 0;

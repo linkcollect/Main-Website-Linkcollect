@@ -72,3 +72,38 @@ export const fromNow = (date)=>{
     
   }
 
+export const backgroundGradients = [
+    { color1: 'rgba(89,147,251,0.70)', color2: 'rgba(140,126,254,0.7)' },
+    { color1: 'rgba(101,200,152,0.70)', color2: 'rgba(251,234,223,0.7)' },
+    { color1: 'rgba(46, 49, 146, 0.70)', color2: 'rgba(27, 255, 255, 0.70)' },
+    { color1: 'rgba(0, 146, 69, 0.70)', color2: 'rgba(252, 238, 33, 0.70)' },
+    { color1: 'rgba(212, 20, 90, 0.70)', color2: 'rgba(251, 176, 59, 0.70)' },
+    { color1: 'rgba(102, 45, 140, 0.70)', color2: 'rgba(237, 30, 121, 0.70)' },
+    { color1: 'rgba(238, 156, 167, 0.70)', color2: 'rgba(255, 221, 225, 0.70)' },
+    { color1: 'rgba(97, 67, 133, 0.70)', color2: 'rgba(81, 99, 149, 0.70)' },
+    { color1: 'rgba(2, 170, 189, 0.70)', color2: 'rgba(0, 205, 172, 0.70)' },
+    { color1: 'rgba(255, 81, 47, 0.70)', color2: 'rgba(221, 36, 118, 0.70)' },
+    { color1: 'rgba(255, 95, 109, 0.70)', color2: 'rgba(255, 195, 113, 0.70)' },
+    { color1: 'rgba(17, 153, 142, 0.70)', color2: 'rgba(56, 239, 125, 0.70)' },
+    { color1: 'rgba(198, 234, 141, 0.70)', color2: 'rgba(254, 144, 175, 0.70)' },
+    { color1: 'rgba(234, 141, 141, 0.70)', color2: 'rgba(168, 144, 254, 0.70)' },
+    { color1: 'rgba(216, 181, 255, 0.70)', color2: 'rgba(30, 174, 152, 0.70)' },
+    { color1: 'rgba(255, 97, 210, 0.70)', color2: 'rgba(254, 144, 144, 0.70)' },
+    { color1: 'rgba(191, 240, 152, 0.70)', color2: 'rgba(111, 214, 255, 0.70)' },
+    { color1: 'rgba(78, 101, 255, 0.70)', color2: 'rgba(146, 239, 253, 0.70)' },
+    { color1: 'rgba(169, 241, 223, 0.70)', color2: 'rgba(255, 187, 187, 0.70)' },
+    { color1: 'rgba(147, 165, 207, 0.70)', color2: 'rgba(228, 239, 233, 0.70)' },
+];
+
+export const pickFromHash = (hash, gradientArray) => {
+    const M = gradientArray.length;
+    // Hash the input using a hashing algorithm (e.g., SHA-256)
+    const hashedInput = hash;
+    // Convert the hashed input to numbers for x and y positions
+    const x = parseInt(hashedInput.slice(-4, -2), 16) % 100;
+    const y = parseInt(hashedInput.slice(0, 2), 16) % 100;
+    const i = parseInt(hashedInput.slice(-2), 16) % M;
+
+    return { ...gradientArray[i], xPosition: x , yPosition: y };
+};      
+
