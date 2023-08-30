@@ -10,10 +10,10 @@ return (
 <meta name='description' content={description} />
 { /* End standard metadata tags */ }
 { /* Facebook tags */ }
-<meta property="og:type" content='website'/>
+{/* <meta property="og:type" content='website'/>
 <meta property="og:title" content={title} />
 <meta property="og:description" content={description} />
-<meta property="og:image" content={image} />
+<meta property="og:image" content={image} /> */}
 { /* End Facebook tags */ }
 
 <meta property="twitter:card" content="summary_large_image" />
