@@ -1,5 +1,5 @@
 // Package Imports
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -15,7 +15,11 @@ import upvoteIcon from "../../../assets/Upvote.svg"
 import upvotedIcon from "../../../assets/upvoted.svg"
 import savedIcon from "../../../assets/saved.svg"
 import saveIcon from "../../../assets/bmSidebar.svg"
-
+import ShareDarkMode from '../../../assets/darkMode/share.svg'
+import AddWhite from '../../../assets/darkMode/addIcon.svg'
+import EditDarkMode from '../../../assets/darkMode/editicon.svg'
+import DeleteIcon from '../../../assets/darkMode/deleteicon.svg'
+import WhiteBackArrow from '../../../assets/darkMode/WhiteBackArrow.svg'
 // Utilites/Fuctions Import
 import { nameShortner } from "../../../utils/utils";
 
@@ -25,9 +29,10 @@ import Button from "../../UI/Button/Button";
 import IconButton from "../../UI/IconButton/IconButton";
 
 // Actions
-import { upvoteAction,downvoteAction,saveAction,unsaveAction } from "../../../store/actions/bookmarks.action";
+import { upvoteAction, downvoteAction, saveAction, unsaveAction } from "../../../store/actions/bookmarks.action";
 import ShareCollectionModal from "./ShareCollectionModal";
 import BackgroundGradient from "../../UI/BackgroundGraident/BackgroundGradient";
+import { switchMode } from "../../../hooks/switchMode";
 
 
 
@@ -49,75 +54,83 @@ const CollectionInfoHeader = ({
   collectionId,
   collectionUsername,
 }) => {
-  const [isUpvoted,setIsUpvoted] = useState(false);
-  const [isSaved,setIsSaved] = useState(false);
+  const [isUpvoted, setIsUpvoted] = useState(false);
+  const [isSaved, setIsSaved] = useState(false);
   const auth = useSelector(state => state.auth);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [shareModelOpen,setShareMpdelOpen] = useState(false);
 
-  useEffect(()=>{
-    const isUpvoted = upvotes?.findIndex(userId=>auth.userId===userId)>=0;
-    const isSaved = auth.userData.savedCollections?.findIndex(saveId=>saveId===collectionId)>=0;
+  useEffect(() => {
+    const isUpvoted = upvotes?.findIndex(userId => auth.userId === userId) >= 0;
+    const isSaved = auth.userData.savedCollections?.findIndex(saveId => saveId === collectionId) >= 0;
     setIsSaved(isSaved);
     setIsUpvoted(isUpvoted);
-  },[])
+  }, [])
 
-  const upvoteHandler = ()=>{
-    if(!auth.isLoggedIn){
+  const upvoteHandler = () => {
+    if (!auth.isLoggedIn) {
       navigate('/login');
       return;
     }
-    if(!isUpvoted){
+    if (!isUpvoted) {
       setIsUpvoted(true);
-      dispatch(upvoteAction(collectionId,auth.userId));
-    }else{
+      dispatch(upvoteAction(collectionId, auth.userId));
+    } else {
       setIsUpvoted(false);
-      dispatch(downvoteAction(collectionId,auth.userId));
+      dispatch(downvoteAction(collectionId, auth.userId));
     }
   }
 
-  const saveHandler = () =>{
-    if(!auth.isLoggedIn){
+  const saveHandler = () => {
+    if (!auth.isLoggedIn) {
       navigate('/login');
       return;
     }
-    if(!isSaved){
+    if (!isSaved) {
       setIsSaved(true);
       dispatch(saveAction(collectionId));
-    }else{
+    } else {
       setIsSaved(false);
       dispatch(unsaveAction(collectionId));
     }
   }
 
-  const shareModalOpenHandler = () =>{
-    setShareMpdelOpen(prev=>!prev);
+  const shareModalOpenHandler = () => {
+    setShareMpdelOpen(prev => !prev);
   }
+
+  // getting selected mode for theme change
+  const { selectedMode } = useContext(switchMode)
 
   return (
     <>
-      <ShareCollectionModal onClose={shareModalOpenHandler} isOpen={shareModelOpen} collectionName={collectionName} tags={tags}/>
-      <div className="w-full bg-bgPrimary pb-2">
+      <ShareCollectionModal onClose={shareModalOpenHandler} isOpen={shareModelOpen} collectionName={collectionName} tags={tags} />
+      <div className="w-full pb-2 bg-bgPrimary">
         {/* Actions : Back */}
-        <div className="flex justify-between bg-bgPrimary mb-5">
+        <div className="flex justify-between mb-5 bg-bgPrimary">
           <div className="flex items-center">
             <Button
               onClick={onBack}
-              variant="secondaryOutline"
-              className="bg-white gap-0 px-4"
+              variant={selectedMode === "light" ? "secondaryOutline" : "darkOutlined"}
+              className={`gap-0 px-4 ${selectedMode === "light" ? "bg-white" : "bg-dark-primary"}`}
             >
-              <img src={backarrow} className="w-[20px] h-[20px] mr-1" alt="" />
+              {selectedMode === "light" ?
+                <img src={backarrow} className="w-[20px] h-[20px] mr-1" alt="" />
+                :
+                <img src={WhiteBackArrow} className="w-[20px] h-[20px] mr-1" alt="" />
+              }
+
               <p>Back</p>
             </Button>
           </div>
-          
+
         </div>
 
         {/* Collection Inormation */}
-        <div className="flex  justify-between sm:mt-2 gap-10">
+        <div className="flex justify-between gap-10 sm:mt-2">
           {/* Collection Details Section */}
-          <div className="flex gap-4 flex-col w-full overflow-hidden sm:flex-row">
+          <div className="flex flex-col w-full gap-4 overflow-hidden sm:flex-row">
             {/* Collection Thumbnail */}
             {image !== "undefined" && image !== undefined ? (<div className="flex justify-center rounded-sm items-center w-[100%] sm:w-[294px] sm:h-[137px]">
               <img
@@ -126,43 +139,47 @@ const CollectionInfoHeader = ({
                     ? image
                     : ""
                 }
-                className="block rounded object-cover"
+                className="block object-cover rounded"
                 alt=""
               />
             </div>) : (<BackgroundGradient hashValue={collectionId} title={collectionName} className="sm:w-[294px] sm:h-[137px]" />)}
 
             {/* Collection Info */}
-            <div className="flex flex-col text-left gap-2">
-            <div className="flex flex-col sm:flex-row align-center gap-2">
-              {/* Collection Title, Links, Share */}
-              <div className="flex justify-between sm:justify-start gap-2 items-baseline mb-1">
-                <h1 className="text-xl font-bold lexend text-neutral-700">
-                  {windowWidth < 640
-                    ? nameShortner(collectionName, 50)
-                    : collectionName}
-                </h1>
-                <h1 className="w-[5rem] text-base text-neutral-500">
-                  {noOfLinks} links
-                </h1>
-                
-              </div>
-              {isOwner?  <button
+            <div className="flex flex-col gap-2 text-left">
+              <div className="flex flex-col gap-2 sm:flex-row align-center">
+                {/* Collection Title, Links, Share */}
+                <div className="flex items-baseline justify-between gap-2 mb-1 sm:justify-start">
+                  <h1 className={`text-xl font-bold lexend ${selectedMode === "light" ? "text-neutral-700" : "text-neutral-50"}`}>
+                    {windowWidth < 640
+                      ? nameShortner(collectionName, 50)
+                      : collectionName}
+                  </h1>
+                  <h1 className={`w-[5rem] text-base ${selectedMode === "light" ? "text-neutral-500" : "text-dark-fade"}`}>
+                    {noOfLinks} links
+                  </h1>
+
+                </div>
+                {isOwner ? <button
                   // onClick={onBack}
                   onClick={shareModalOpenHandler}
-                  className="flex items-center justify-center px-4 w-min h-[24px] bg-neutral-200 border border-primary-500 rounded-[40px] p-2"
+                  className={`flex items-center justify-center px-4 w-min h-[24px] ${selectedMode === "light" ? "bg-neutral-200" : "bg-dark-primary"} border border-primary-500 rounded-[40px] p-2`}
                 >
-                  <img src={share} className="w-[20px] h-[20px] mr-1" alt="" />
-                  <p className="text-[14px] text-neutral-700 ">Share</p>
-                </button> : <Link to={`/${collectionUsername}`} className="sm:mt-[2px] text-primary-400">by <span>{collectionUsername}</span></Link>
+                  {selectedMode === "dark" ?
+                    <img src={ShareDarkMode} className="w-[20px] h-[20px] mr-1" alt="" />
+                    :
+                    <img src={share} className="w-[20px] h-[20px] mr-1" alt="" />
+                  }
+                  <p className={`text-[14px] ${selectedMode === "light" ? " text-neutral-700" : "text-neutral-200"}`}>Share</p>
+                </button> : <Link to={`/${collectionUsername}`} className={`sm:mt-[2px] ${selectedMode === "light" ? "text-primary-400" : "text-borderPrimary"}`}>by <span>{collectionUsername}</span></Link>
                 }
-            </div>
+              </div>
               {/* Tags */}
               <div className="flex flex-wrap gap-1">
                 <Chip name={isPublic ? "Public" : "Private"} />
                 {tags?.length > 0 && tags.map(tag => (<Chip name={tag} />))}
               </div>
 
-              <p className="w-full mt-2 text-sm ">
+              <p className={`w-full mt-2 text-sm ${selectedMode === "light" ? "text-black" : "text-dark-placeholder"} `}>
                 {windowWidth > 640
                   ? nameShortner(collectionDesc, 500)
                   : collectionDesc}
@@ -172,33 +189,45 @@ const CollectionInfoHeader = ({
 
           {/* Collection Actions for logged In user*/}
           {windowWidth > 640 && auth.isLoggedIn && isOwner ? (
-            <div className="flex justify-center gap-3 items-start">
+            <div className="flex items-start justify-center gap-3">
               {/* Add bookmark */}
               <IconButton onClick={createBookmarkModalOpener}>
-                <img src={addIcon}  className="w-[1.8rem] h-[1.8rem]"/>
+                {selectedMode === "dark" ?
+                  < img src={AddWhite} className="w-[1.8rem] h-[1.8rem]" />
+                  :
+                  <img src={addIcon} className="w-[1.8rem] h-[1.8rem]" />
+                }
               </IconButton>
               {/* Edit */}
               <IconButton onClick={editCollectionModalOpener}>
-                <img src={editIcon}  className="w-[1.8rem] h-[1.8rem]"/>
+                {selectedMode === "dark" ?
+                  < img src={EditDarkMode} className="w-[1.8rem] h-[1.8rem]" />
+                  :
+                  <img src={editIcon} className="w-[1.8rem] h-[1.8rem]" />
+                }
               </IconButton>
               {/* Delete */}
               <IconButton onClick={deleteCollectionModalHandler}>
-                <img src={deleteIcon}  className="w-[1.8rem] h-[1.8rem]" />
+                {selectedMode === "dark" ?
+                  < img src={DeleteIcon} className="w-[1.8rem] h-[1.8rem]" />
+                  :
+                  <img src={deleteIcon} className="w-[1.8rem] h-[1.8rem]" />
+                }
               </IconButton>
             </div>
           ) :
             <div className="hidden sm:flex justify-center mt-[-0.25rem] gap-3 items-start">
               {/* Add bookmark */}
               <IconButton onClick={upvoteHandler}>
-                <img src={isUpvoted?upvotedIcon:upvoteIcon} className="w-[1.8rem] h-[1.8rem]"/>
+                <img src={isUpvoted ? upvotedIcon : upvoteIcon} className="w-[1.8rem] h-[1.8rem]" />
               </IconButton>
               {/* Edit */}
               <IconButton onClick={saveHandler}>
-                <img src={isSaved?savedIcon:saveIcon} className="w-[1.8rem] h-[1.8rem]"/>
+                <img src={isSaved ? savedIcon : saveIcon} className="w-[1.8rem] h-[1.8rem]" />
               </IconButton>
               {/* Delete */}
               <IconButton onClick={shareModalOpenHandler}>
-                <img src={share} className="w-[1.8rem] h-[1.8rem]"/>
+                <img src={share} className="w-[1.8rem] h-[1.8rem]" />
               </IconButton>
             </div>
           }

@@ -12,7 +12,14 @@ module.exports = {
     colors: {
       gradientEnd: "#9092FF",
       gradinetInitial: "rgba(144, 146, 255, 0)",
-
+      borderPrimary: "#D9D9D9",
+      dark:{
+       "primary":"#141414",
+       "border": "#242424",
+       "secondary": "#333",
+       "placeholder":"#B3B3B3",
+       "fade": "#636363"
+      },
       primary: {
         50: "#DADBFF",
         100: "#C4C5FF",

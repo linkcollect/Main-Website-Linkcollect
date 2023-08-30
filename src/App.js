@@ -69,8 +69,14 @@ function App() {
     <Router>
       <div className="App">
         <Routes>
+          {/* Conditional Routes */}
           {/* Landing page  */}
-          <Route path="/" element={<LandingPage windowWidth={windowWidth} />} />
+          
+          <Route path="/" element={auth.isLoggedIn ? (
+                <Navigate to={`/${auth?.username}`} />
+              ) : (
+                <LandingPage windowWidth={windowWidth} />
+              )} />
 
           <Route
             path="/signup"
@@ -92,6 +98,7 @@ function App() {
               )
             }
           />
+          {/* This are all open routes */}
           <Route
             path="/:username"
             element={<Home windowWidth={windowWidth} />}
