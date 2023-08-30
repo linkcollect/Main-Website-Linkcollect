@@ -1,5 +1,5 @@
 import React from 'react';
-import { Helmet } from 'react-helmet-async';
+import { Helmet } from 'react-helmet';
 export default function SEO(
     {title="LinkCollect, Save and Share Resources Blazingly Fast", description="Linkcollect, most loved bookmarking tool for people to collect, curate and share amazing resources", image="https://linkcollect.io/static/media/mainLogo.71d1a218042d27dad79cc550d564c867.svg"}) {
 
