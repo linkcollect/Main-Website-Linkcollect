@@ -55,9 +55,9 @@ export const CollectionModal = ({
   };
 
   // Data validation
-  const isValidName = collectionData.title.length >= 3 && collectionData.title.length <= 40;
-  const isValidDescription = collectionData.description.length <= 240;
-  const isValidTags = collectionData.tags.length <= 3;
+  const isValidName = collectionData.title?.length >= 3 && collectionData.title.length <= 40;
+  const isValidDescription = collectionData.description?.length <= 240;
+  const isValidTags = collectionData.tags?.length <= 3;
   // File max size
   const MAXED_ALLOWED_SIZE = 3 * 1024 * 1024;
   // if no file is selected that means iamge is null so it will be always true as image is not mandatory data
@@ -68,7 +68,7 @@ export const CollectionModal = ({
   const sameObjectChecker = () => {
     return originalCollectionData.title === collectionData.title &&
     originalCollectionData.description === collectionData.description &&
-    originalCollectionData.tags.map(tag=>collectionData.tags.findIndex(tItem=>tItem==tag)>=0) &&
+    originalCollectionData.tags?.map(tag=>collectionData.tags?.findIndex(tItem=>tItem==tag)>=0) &&
     originalCollectionData.isPublic === collectionData.isPublic && 
     !collectionData.image
   }
@@ -88,7 +88,7 @@ export const CollectionModal = ({
       collectionFormData.append("description", description);
       collectionFormData.append("isPublic", isPublic);
       image && collectionFormData.append("image", image);
-      tags.length > 0 && collectionFormData.append("tags", tags);
+      tags?.length > 0 && collectionFormData.append("tags", tags);
       // As the model is taking care of both edit and new collection addition
       // that is why we need to send the request to different request-> according to that condition
       let res = {};
@@ -143,10 +143,10 @@ export const CollectionModal = ({
               <small className="text-xs">
                 <span
                   className={`${
-                    collectionData.title.length > 40 ? "text-error-500" : ""
+                    collectionData.title?.length > 40 ? "text-error-500" : ""
                   }`}
                 >
-                  {collectionData.title.length}
+                  {collectionData.title?.length}
                 </span>
                 /{40}
               </small>
@@ -165,12 +165,12 @@ export const CollectionModal = ({
               <small className="text-xs">
                 <span
                   className={`${
-                    collectionData.description.length > 240
+                    collectionData.description?.length > 240
                       ? "text-error-500"
                       : ""
                   }`}
                 >
-                  {collectionData.description.length}
+                  {collectionData.description?.length}
                 </span>
                 /{240}
               </small>
