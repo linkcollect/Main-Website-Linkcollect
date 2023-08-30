@@ -30,6 +30,7 @@ const Login = ({ windowWidth }) => {
     let token = new URLSearchParams(location.search).get("token");
     if(token && !auth.isLoggedIn){
       setJwtInRequestHeader(token)
+      localStorage.setItem("token", token);
       dispatch(setLoggedInUser({token}));
       dispatch(getUserDetails({token}))
     }
