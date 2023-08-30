@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import Search from "./Search";
 import { useState } from "react";
 import SortBy from "../../assets/sortBy.svg";
@@ -6,6 +6,7 @@ import Plus from "../../assets/plus.svg";
 import Button from "../UI/Button/Button"
 import CollectionModal from "./CollectionModal";
 import { useSelector } from "react-redux";
+import { switchMode } from "../../hooks/switchMode";
 const CollectionHeader = ({ name,isOwner,windowWidth,setQuery}) => {
   // sort by dropdown
   const auth = useSelector(state=>state.auth);
@@ -18,7 +19,9 @@ const CollectionHeader = ({ name,isOwner,windowWidth,setQuery}) => {
   }
 
 
-
+  // getting current selected mode
+  const {selectedMode} = useContext(switchMode)
+  
   return (
     <React.Fragment>
         {isOwner && <CollectionModal isOpen={openModal} modalCloseHandler={createModalHandler}/>}
@@ -26,7 +29,7 @@ const CollectionHeader = ({ name,isOwner,windowWidth,setQuery}) => {
           {/* Modify this */}
           <div className="flex items-center justify-between w-full ">
             <p
-              className={`text-left font-medium  text-[30px] text-neutral-700  ${
+              className={`text-left font-medium  text-[30px] ${selectedMode === "dark" ? "text-neutral-50" : "text-neutral-700"} ${
                 windowWidth < 700 ? "hidden" : ""
               }`}
             >

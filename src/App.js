@@ -25,6 +25,8 @@ import { getUserDetails } from "./store/actions/user.action";
 import PageLoader from "./components/UI/Loader/PageLoader";
 import { setLoggedInUser } from "./store/Slices/user.slice";
 
+import { HelmetProvider } from 'react-helmet-async';
+
 function App() {
   const auth = useSelector((state) => state.auth);
   const dispatch = useDispatch();
@@ -60,8 +62,10 @@ function App() {
       </div>
     );
   }
+  const helmetContext = {};
 
   return (
+    <HelmetProvider context={helmetContext}>
     <Router>
       <div className="App">
         <Routes>
@@ -113,7 +117,8 @@ function App() {
       </div>
       <Analytics />
 
-    </Router>
+    </Router>      
+    </HelmetProvider>
   );
 }
 

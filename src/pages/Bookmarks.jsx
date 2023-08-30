@@ -13,6 +13,11 @@ import { getBookmarks } from "../store/actions/bookmarks.action";
 import { togglePin } from "../api-services/timelineService";
 import { setTogglePinBookmark, sortBookmarksByType } from "../store/Slices/bookmarks.slice";
 import { SortActions } from "../components/Common/ActiondropDown";
+import SEO from "../components/SEO/SEO";
+import { useContext } from "react";
+import { switchMode } from "../hooks/switchMode";
+
+
 const Bookmarks = ({ windowWidth }) => {
   const navigation = useNavigate();
   const { collectionId, username } = useParams();
@@ -105,11 +110,18 @@ const Bookmarks = ({ windowWidth }) => {
       ) : []
     );
   }, [query, collectionData.collectionData,collectionData.isFetching]);
-
+    // dark and light mode switch
+    const { selectedMode } = useContext(switchMode)
 
   return (
     <BaseLayout>
-      <div className="flex mb-6 overflow-y-auto  mx-auto scrollbar-hide w-full">
+        <SEO 
+        title={collectionData.collectionData?.title ? collectionData.collectionData?.title : null}
+        description={collectionData.collectionData?.description ? collectionData.collectionData?.description : "This is an amazing collection of links, curated by " + collectionData.collectionData?.username }
+        image={collectionData.collectionData?.image ? collectionData.collectionData?.image : null}
+        >
+      </SEO>
+      <div className="flex w-full mx-auto mb-6 overflow-y-auto scrollbar-hide">
         {/* Collection Edit Modal */}
         {!collectionData.isFetching && <CollectionModal
           isOpen={editCollectionModalOpen}
@@ -131,7 +143,7 @@ const Bookmarks = ({ windowWidth }) => {
         {!collectionData.isFetching && <EcBookamrkModal isOpen={openCreateBookmarkModal} onClose={bookmarkCreateModalHandler} isEditing={false} collectionID={collectionId}/>}
         
 
-        <div className="flex px-8 flex-col w-full">
+        <div className="flex flex-col w-full px-8">
           <div className="">
             {/* Header : Collection Details , Actions */}
             <div className="w-full pt-2 mx-auto ">
@@ -154,7 +166,7 @@ const Bookmarks = ({ windowWidth }) => {
               />
               {/* Search Bar and Filter */}
               <div className="w-[100%] sticky z-10">
-                <div className="relative flex flex-row sm:flex-row items-end mt-5 gap-2">
+                <div className="relative flex flex-row items-end gap-2 mt-5 sm:flex-row">
                   <Search query={query} setQuery={setQuery} />
 
                   {/* sort by */}
