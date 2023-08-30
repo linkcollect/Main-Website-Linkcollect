@@ -23,8 +23,14 @@ const Input = forwardRef(
 
     // getting current selected mode
     const {selectedMode} = useContext(switchMode)
+
+    // checking if it is a login page as not to show dark mode in login page for now
+    // keeping normal styles for login page
+    const urlParams = window?.location?.href?.split('/')
+    const currentPage = urlParams[urlParams.length - 1]
+
     const inputVariants = cva(
-      `block focus:outline-none text-base ${selectedMode === "dark"? "placeholder:text-dark-placeholder text-neutral-200":"placeholder:text-neutral-500 text-neutral-900"}  border-2 rounded-lg`,
+      `block focus:outline-none text-base ${selectedMode === "dark" && currentPage !== "login" ? "placeholder:text-dark-placeholder text-neutral-200":"placeholder:text-neutral-500 text-neutral-900"}  border-2 rounded-lg`,
       {
         variants: {
           variant: {
