@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import upvote from "../../assets/Upvote.svg";
 import pinSvg from "../../assets/pinSvg.svg";
@@ -9,10 +9,14 @@ import { nameShortner } from "../../utils/utils";
 import bmSidebar from "../../assets/bmSidebar.svg";
 import upvoted from "../../assets/upvoted.svg"
 import saved from "../../assets/saved.svg"
+import darkSaved from "../../assets/darkMode/darkmodeSaved.svg"
+import darkUpvote from "../../assets/darkMode/darkmodeUpvote.svg"
+import darkEye from "../../assets/darkMode/darkmodeEye.svg"
 import Chip from "../UI/Chip/Chip";
 import IconButton from "../UI/IconButton/IconButton";
 import { useDispatch, useSelector } from "react-redux";
 import BackgroundGradient from "../UI/BackgroundGraident/BackgroundGradient";
+import { switchMode } from "../../hooks/switchMode";
 
 const CollectionitemV2 = React.forwardRef(({
   id,
@@ -34,36 +38,36 @@ const CollectionitemV2 = React.forwardRef(({
   onSave,
   onUnsave,
   onPin
-},ref) => {
-  const auth = useSelector(state=>state.auth)
+}, ref) => {
+  const auth = useSelector(state => state.auth)
   const navigate = useNavigate();
   // LOCAL STATE WILL HELP TO MUTATE THE ITEM SO QUICKLY WHEN IT COMES TO LARGE DATA
-  const [isSaved,setIsSaved] = useState(false);
+  const [isSaved, setIsSaved] = useState(false);
   const [hover, setHover] = useState(false)
-  const [isUpvoted,setIsUpvoted] = useState({
-    isClicked:false,
-    number:0,
+  const [isUpvoted, setIsUpvoted] = useState({
+    isClicked: false,
+    number: 0,
   });
-  useEffect(()=>{
-    if(!auth.isLoggedIn){
+  useEffect(() => {
+    if (!auth.isLoggedIn) {
       // in this case need to set the upvote length
       setIsUpvoted({
-        isClicked:false,
-        number:upvotes.length,
+        isClicked: false,
+        number: upvotes.length,
       });
       return;
     }
-    const isUpvoted = upvotes?.findIndex(userId=>auth.userId===userId)>=0;
-    const isSaved = auth.userData.savedCollections?.findIndex(saveId=>saveId===id)>=0;
+    const isUpvoted = upvotes?.findIndex(userId => auth.userId === userId) >= 0;
+    const isSaved = auth.userData.savedCollections?.findIndex(saveId => saveId === id) >= 0;
     setIsSaved(isSaved);
     setIsUpvoted({
-      isClicked:isUpvoted,
-      number:upvotes.length,
+      isClicked: isUpvoted,
+      number: upvotes.length,
     });
-  },[])
+  }, [])
   const dispatch = useDispatch();
 
-//   const titleRef = useRef()
+  //   const titleRef = useRef()
 
 //   useEffect(()=>{
 //       if (hover) {
@@ -78,18 +82,18 @@ const CollectionitemV2 = React.forwardRef(({
       navigate('/login');
       return;
     }
-    if(!isUpvoted.isClicked){
-      setIsUpvoted(prev=>({
-        isClicked:true,
-        number:prev.number+1
+    if (!isUpvoted.isClicked) {
+      setIsUpvoted(prev => ({
+        isClicked: true,
+        number: prev.number + 1
       }));
-      dispatch(onUpvote(id,auth.userId));
-    }else{
-      setIsUpvoted(prev=>({
-        isClicked:false,
-        number:prev.number-1
+      dispatch(onUpvote(id, auth.userId));
+    } else {
+      setIsUpvoted(prev => ({
+        isClicked: false,
+        number: prev.number - 1
       }));
-      dispatch(onDownVote(id,auth.userId));
+      dispatch(onDownVote(id, auth.userId));
     }
   }
 
@@ -99,22 +103,25 @@ const CollectionitemV2 = React.forwardRef(({
       navigate('/login');
       return;
     }
-    if(!isSaved){
+    if (!isSaved) {
       setIsSaved(true);
       dispatch(onSave(id));
-    }else{
+    } else {
       setIsSaved(false);
       dispatch(onUnsave(id));
     }
   }
 
- 
+  // getting current selected mode
+
+  const {selectedMode} = useContext(switchMode)
+
   return (
     <>
 
       <div
-        className="relative bg-bgPrimary border  border-neutral-300 rounded-lg w-full group 
-        hover:shadow-md h-[210px] transition duration-300 ease-in-out cursor-pointer"
+        className={`relative bg-bgPrimary border ${selectedMode === "dark" ? "border-dark-border" : "border-neutral-300"}  rounded-lg w-full group 
+        hover:shadow-md h-[210px] transition duration-300 ease-in-out cursor-pointer`}
         ref={ref}
         onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}
         onClick={()=>navigate(`/${username}/c/${id}`)}
@@ -146,11 +153,11 @@ const CollectionitemV2 = React.forwardRef(({
           />
           <div className="absolute rounded-t-md top-0 left-0 w-full h-full z-5 shadow-[inset_0_0_15px_5px_rgba(0,0,0,0.1)]">
 
-          </div>
-        </div>
-        ) : (<BackgroundGradient hashValue={id} title={!hover ? title : description ? description : title}/>)}
+              </div>
+            </div>
+            ) : (<BackgroundGradient hashValue={id} title={!hover ? title : description ? description : title} />)}
           <div className="flex items-center justify-between pt-2.5 px-1.5 ">
-            <p className="text-sm font-normal text-neutral-800">
+            <p className={`text-sm font-normal ${selectedMode === "dark" ? "text-neutral-50" : "text-neutral-800"}`}>
               {windowWidth > 640
                 ? windowWidth > 768 
                   ? windowWidth > 1024 
@@ -161,38 +168,46 @@ const CollectionitemV2 = React.forwardRef(({
                   : nameShortner(title, 22)
                 : nameShortner(title, 28)}
             </p>
-            <p className="text-sm font-normal text-neutral-600">
+            <p className={`text-sm font-normal ${selectedMode === "dark" ? "text-neutral-50" : "text-neutral-600"}`}>
               {links} Links
             </p>
           </div>
        
         <div className="flex items-start justify-between pt-2.5 px-1.5 gap-2 flex-col">
           <div className="flex flex-wrap items-center gap-2">
-            {isOwner && <Chip name={isPublic ? "Public" :  "Private"}/>}
-            {tags?.length > 0 ? tags?.map(tag=> <Chip name={tag}/> ) : <Chip name={`by ${username}`}/>}
+            {isOwner && <Chip name={isPublic ? "Public" : "Private"} />}
+            {tags?.length > 0 ? tags?.map(tag => <Chip name={tag} />) : <Chip name={`by ${username}`} />}
           </div>
-          <div className="flex items-center w-full justify-between ">
+          <div className="flex items-center justify-between w-full ">
             <div className="flex items-center ">
               {/* veiws */}
               <div className="flex items-center m-1">
-                <img src={viewsSvg} alt="views" className="w-5 h-5 mr-1" />
-                <p className="text-sm font-normal text-neutral-500 ">
+                {selectedMode === "dark" ?
+                  <img src={darkEye} alt="views" className="w-5 h-5 mr-1" />
+                  :
+                  <img src={viewsSvg} alt="views" className="w-5 h-5 mr-1" />
+                }
+                <p className={`text-sm font-normal  ${selectedMode === "dark" ? "text-neutral-50" : "text-neutral-500"}`}>
                   {views ? views : 0}
                 </p>
               </div>
               {/* votes */}
-              <IconButton className="m-1 text-sm font-normal text-neutral-500 " onClick={upvoteHandler}>
-                <img src={isUpvoted.isClicked ? upvoted : upvote} alt="upvote" className="w-4 h-4 mr-1" />
-                  {isUpvoted.number}
+              <IconButton className={`m-1 text-sm font-normal ${selectedMode === "dark" ? "text-neutral-50" : "text-neutral-500"} `} onClick={upvoteHandler}>
+                {selectedMode === "dark" ?
+                  <img src={isUpvoted.isClicked ? upvoted : darkUpvote} alt="upvote" className="w-4 h-4 mr-1" />
+                  :
+                  <img src={isUpvoted.isClicked ? upvoted : upvote} alt="upvote" className="w-4 h-4 mr-1" />
+                }
+                {isUpvoted.number}
               </IconButton>
             </div>
 
             {/* Saved  */}
-          { isSavedOptionVisible &&
-            <IconButton className={`gap-1 ${isSaved? 'text-primary-500':"text-neutral-500"}  text-[14px]`} onClick={saveHandler}>
-              <img src={isSaved ? saved : bmSidebar}/>{isSaved ? "":"save"}
-            </IconButton>
-          }
+            {isSavedOptionVisible &&
+              <IconButton className={`gap-1 ${isSaved ? 'text-primary-500' : selectedMode === "dark" ? "text-neutral-50" : "text-neutral-500"}  text-[14px]`} onClick={saveHandler}>
+                <img src={isSaved ? saved : selectedMode === "light" ? bmSidebar : darkSaved} />{isSaved ? "" : "save"}
+              </IconButton>
+            }
           </div>
         </div>
       </div>
