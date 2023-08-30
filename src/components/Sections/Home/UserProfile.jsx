@@ -8,6 +8,7 @@ import BaseLayout from "../../Layout/BaseLayout/BaseLayout";
 import { useDispatch, useSelector } from "react-redux";
 import { collectionFetchingFailed, collectionFetchingSuccess, collectionFething } from "../../../store/Slices/collection.slice";
 import { downvoteAction, saveAction, unsaveAction, upvoteAction } from "../../../store/actions/collection.action";
+import SEO from "../../SEO/SEO";
 const UserProfile = ({ username,windowWidth }) => {
   const dispatch = useDispatch();
   const collection = useSelector((state) => state.collection);
@@ -28,7 +29,6 @@ const UserProfile = ({ username,windowWidth }) => {
           totalCollections:data.collections.length,
         }
         setUser(user)
-        document.title = `${data.name} - ${username}'s LinkCollect Profile`; // Change this to the desired title
         dispatch(collectionFetchingSuccess({data:data}));
 
       }catch(e){
@@ -40,6 +40,12 @@ const UserProfile = ({ username,windowWidth }) => {
   },[dispatch,username]);
   return (
     <BaseLayout>
+        <SEO 
+        title={username ? `${user?.name} @(${username}) - User on linkcollect`: "User Profile on linkcollect"}
+        description={`Meet ${user?.name} (@${username}) on Linkcollect. ${user?.name} has ${user?.totalCollections ? user?.totalCollections  : "0"} collections and ${user?.totalViews} views on linkcollect. Checkout his amazing collections`}
+        image={user?.profilePic ? user?.profilePic : undefined}
+        >
+      </SEO>
       {collection.isFetching ? (
         <div className="flex items-center justify-center w-full h-full">
           <PageLoader />

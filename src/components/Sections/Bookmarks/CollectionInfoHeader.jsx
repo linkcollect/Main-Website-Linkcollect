@@ -55,7 +55,6 @@ const CollectionInfoHeader = ({
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [shareModelOpen,setShareMpdelOpen] = useState(false);
-  document.title = `${collectionName} - Collection on LinkCollect`; // Change this to the desired title
 
   useEffect(()=>{
     const isUpvoted = upvotes?.findIndex(userId=>auth.userId===userId)>=0;

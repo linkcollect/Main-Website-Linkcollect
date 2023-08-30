@@ -11,7 +11,7 @@ import {
   collectionFetchingSuccess,
   collectionFething,
   sortCollectionByType,
-  pinCollectionToggle
+  pinCollectionToggle,
 } from "../../../store/Slices/collection.slice";
 import PageLoader from "../../UI/Loader/PageLoader";
 import {
@@ -20,11 +20,14 @@ import {
 } from "../../../store/actions/collection.action";
 import { SortActions } from "../../Common/ActiondropDown";
 import { togglePin } from "../../../api-services/collectionService";
+import SEO from "../../SEO/SEO";
+
 const OwnerProfile = ({ username, windowWidth }) => {
   const dispatch = useDispatch();
   const [query, setQuery] = useState("");
   const collection = useSelector((state) => state.collection);
-  const [sortingType,setSortingType] = useState("RECENETLY_UPDATED")
+  const user = useSelector((state) => state.auth);
+  const [sortingType, setSortingType] = useState("RECENETLY_UPDATED");
 
   useEffect(() => {
     // dispatch(getUserCollection({username}));
@@ -32,12 +35,16 @@ const OwnerProfile = ({ username, windowWidth }) => {
       dispatch(collectionFething());
       try {
         const res = await getByUsername(username);
-        const sortedData = dataSortByType(res.data.data.collections,sortingType)
-        document.title = `${username}'s LinkCollect Profile`; // Change this to the desired title
+        const sortedData = dataSortByType(
+          res.data.data.collections,
+          sortingType
+        );
 
-        dispatch(collectionFetchingSuccess({ data: {collections:sortedData} }));
-      } catch(e) {
-        console.log(e)
+        dispatch(
+          collectionFetchingSuccess({ data: { collections: sortedData } })
+        );
+      } catch (e) {
+        console.log(e);
         dispatch(collectionFetchingFailed());
       }
     }
@@ -51,13 +58,13 @@ const OwnerProfile = ({ username, windowWidth }) => {
         cItem.title.toLowerCase().includes(query.toLowerCase())
       )
     );
-  }, [query, collection.collections,collection.isFetching]);
+  }, [query, collection.collections, collection.isFetching]);
 
   // Sort actions
-  const sortdata = (sortType)=>{
+  const sortdata = (sortType) => {
     setSortingType(sortType);
-    dispatch(sortCollectionByType({sortType}));
-  }
+    dispatch(sortCollectionByType({ sortType }));
+  };
   const menuItem = [
     {
       name: "Recently Updated",
@@ -76,19 +83,32 @@ const OwnerProfile = ({ username, windowWidth }) => {
     },
   ];
 
-  const onPin = async (e, collectionId) =>{
-    e.stopPropagation()
-    dispatch(pinCollectionToggle({ collectionId }))
-    dispatch(sortCollectionByType({sortType:sortingType}))
+  const onPin = async (e, collectionId) => {
+    e.stopPropagation();
+    dispatch(pinCollectionToggle({ collectionId }));
+    dispatch(sortCollectionByType({ sortType: sortingType }));
     try {
       const res = await togglePin(collectionId);
     } catch (error) {
-        console.error(error)
+      console.error(error);
     }
-  }
+  };
 
   return (
     <BaseLayout>
+      <SEO
+        title={
+          username
+            ? `${user?.userData?.name} @(${username}) - User on linkcollect`
+            : "User Profile on linkcollect"
+        }
+        description={`@${username} on Linkcollect. ${user?.userData?.name} has ${
+          collection.collections.length ? collection.collections.length : "0"
+        } collections. Checkout his amazing collections`}
+        image={
+          user?.userData?.profilePic ? user?.userData?.profilePic : undefined
+        }
+      ></SEO>
       {/* Top bar */}
       <div className="flex flex-col items-start justify-center w-full gap-4 mx-auto 3xl:px-0 px-8 max-w-[1500px]">
         <CollectionHeader

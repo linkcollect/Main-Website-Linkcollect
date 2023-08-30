@@ -13,6 +13,7 @@ import { getBookmarks } from "../store/actions/bookmarks.action";
 import { togglePin } from "../api-services/timelineService";
 import { setTogglePinBookmark, sortBookmarksByType } from "../store/Slices/bookmarks.slice";
 import { SortActions } from "../components/Common/ActiondropDown";
+import SEO from "../components/SEO/SEO";
 const Bookmarks = ({ windowWidth }) => {
   const navigation = useNavigate();
   const { collectionId, username } = useParams();
@@ -106,9 +107,14 @@ const Bookmarks = ({ windowWidth }) => {
     );
   }, [query, collectionData.collectionData,collectionData.isFetching]);
 
-
   return (
     <BaseLayout>
+       <SEO 
+        title={collectionData.collectionData?.title ? collectionData.collectionData?.title : null}
+        description={collectionData.collectionData?.description ? collectionData.collectionData?.description : "This is an amazing collection of links, curated by " + collectionData.collectionData?.username }
+        image={collectionData.collectionData?.image ? collectionData.collectionData?.image : null}
+        >
+      </SEO>
       <div className="flex mb-6 overflow-y-auto  mx-auto scrollbar-hide w-full">
         {/* Collection Edit Modal */}
         {!collectionData.isFetching && <CollectionModal
