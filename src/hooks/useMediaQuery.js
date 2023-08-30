@@ -1,4 +1,7 @@
+import { useEffect, useState } from "react";
+
 // Hook for inner width detection for responsive design
+
 export const useMediaQuery = () => {
   
     const [windowWidth, setWindowWidth] = useState(768);

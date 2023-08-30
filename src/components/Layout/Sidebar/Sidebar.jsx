@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import mainlogo from "../../../assets/mainLogo.svg";
+import mainlogoWhite from "../../../assets/mainlogoWhite.svg";
 import { useLocation } from "react-router-dom";
 import { Link } from "react-router-dom";
 import defaultImage from "../../../assets/defaultImage.svg";
@@ -16,6 +17,7 @@ import NavbarItem from "./NavbarItem";
 import { useSelector } from "react-redux";
 import { motion } from "framer-motion";
 import { login } from "../../../api-services/authService";
+import { switchMode } from "../../../hooks/switchMode";
 
 const Sidebar = ({ user, handleSetUser, windowWidth }) => {
   const state = useLocation();
@@ -23,7 +25,7 @@ const Sidebar = ({ user, handleSetUser, windowWidth }) => {
 
   const [isHovered, setIsHovered] = useState(false);
 
-//   console.log(auth);
+  //   console.log(auth);
   const menuItem = [
     {
       name: "Home",
@@ -45,9 +47,11 @@ const Sidebar = ({ user, handleSetUser, windowWidth }) => {
     },
   ];
 
+  const { selectedMode } = useContext(switchMode)
+  
   return (
     <aside
-      className={` bg-[#F3F3F6] border-r-[1px] border-[#D1D1DB] ${windowWidth < 700 ? "h-[350px] w-full " : "w-[270px]"
+      className={`${selectedMode === "dark" ? "bg-dark-primary border-r border-dark-border" : "bg-neutral-100 border-r border-neutral-300"}  ${windowWidth < 700 ? "h-[350px] w-full " : "w-[270px]"
         } `}
     >
       <div
@@ -60,18 +64,18 @@ const Sidebar = ({ user, handleSetUser, windowWidth }) => {
             to="/"
             className="flex items-center justify-center w-full py-4 "
           >
-            <img src={mainlogo} alt="" className="w-40 h-10 mx" />
+            <img src={selectedMode === "dark" ? mainlogoWhite : mainlogo} alt="" className="w-40 h-10 mx" />
           </Link>
-          <div className="w-full border-2  border-[#D1D1DB] rounded-lg py-3 px-3 ">
+          <div className={`w-full border-2 ${selectedMode === 'light'?  "border-[#D1D1DB]" : "border-dark-secondary"}  rounded-lg py-3 px-3 `}>
             <div className=" h-[100px] w-[100px] mx-auto mb-2 overflow-hidden">
               <img
                 src={auth.userData.profilePic ? auth.userData.profilePic : defaultImage}
                 className="object-cover w-full h-full rounded-full"
               />
             </div>
-            <p className="font-bold text-[16px]">{auth.userData.name}</p>
+            <p className={` ${selectedMode === "dark" ? "text-white" : "text-black"} font-bold text-[16px]`}>{auth.userData.name}</p>
 
-            <div className="flex flex-col justify-evenly items-start text-base font-normal text-[#4B4C63] gap-2 pt-8">
+            <div className={`flex flex-col justify-evenly items-start text-base font-normal ${selectedMode === "dark" ? "text-borderPrimary" : "text-neutral-600"} gap-2 pt-8`}>
               <div className="flex flex-row justify-between items-center gap-[118px] text-xs">
                 <p>Link Saved</p>
                 <p className="ml-1">{auth.userData.totalLinks}</p>
@@ -93,10 +97,11 @@ const Sidebar = ({ user, handleSetUser, windowWidth }) => {
                 isActive={link === state.pathname}
                 key={name}
                 activeIcon={activeIcon}
+                selectedMode={selectedMode}
               />
             ))}
             {/* Temorary until setting page come */}
-            <p className={` relative flex flex-row items-center justify-start w-full gap-3 px-2 py-3 rounded-md cursor-pointer border-1 text-base text-neutarl-50 hover:bg-primary-50 hover:text-primary-500`} onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}>
+            <p className={` relative flex flex-row items-center justify-start w-full gap-3 px-2 py-3 rounded-md cursor-pointer border-1 text-base ${selectedMode === "dark" ? "text-[#B3B3B3] hover:text-primary-500 hover:bg-dark-border" : "text-[#636363] hover:bg-primary-50 hover:text-primary-500"}`} onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}>
               {
                 isHovered ?
                   <img src={ActiveSettings} />
