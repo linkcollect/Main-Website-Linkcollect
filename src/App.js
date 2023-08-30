@@ -24,6 +24,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getUserDetails } from "./store/actions/user.action";
 import PageLoader from "./components/UI/Loader/PageLoader";
 import { setLoggedInUser } from "./store/Slices/user.slice";
+import LandingPageV2 from "./pages/LandingPageV2";
 
 function App() {
   const auth = useSelector((state) => state.auth);
@@ -67,6 +68,7 @@ function App() {
         <Routes>
           {/* Landing page  */}
           <Route path="/" element={<LandingPage windowWidth={windowWidth} />} />
+          <Route path="/landing" element={<LandingPageV2 windowWidth={windowWidth} />} />
 
           <Route
             path="/signup"
