@@ -4,6 +4,11 @@ import { useNavigate } from 'react-router';
 import MockupImage from '../../../assets/landingPage/Mockup.png'
 import BackArrow from '../../../assets/back-arrow.svg'
 import GoogleIcon from '../../../assets/googleIcon.svg'
+import Approve from '../../../assets/approve.svg'
+import Extension from '../../../assets/landingPage/Extension.png'
+import Feature2 from '../../../assets/landingPage/Features2.png'
+// video
+import Video from '../../../assets/newTest.mp4'
 // other
 const testimonialData = Array(6).fill({comment: "This extension allow me to organize and access data from  my laptop where I want and when I want to. The interface is easy to navigate and I find everything I need quickly. Everyone should check it out!", name: "John Doe", designation: "CEO, Co-founder", imageUrl: GoogleIcon});
 
@@ -42,7 +47,52 @@ const Main = () => {
             </button>
           </div>
         </section>
-        <section className='features py-[6.25rem] px-[5rem]'></section>
+        <section className='features py-[6.25rem] px-[5rem]'>
+          <div className='heading mx-auto max-w-[1000px]'>
+            <h2 className='text-[4.25rem] leading-[4.75rem] max-w-[1000px]'>What we do?</h2>
+            <p className='text-neutral-700 max-w-[500px] mx-auto mt-[1rem]'>A way to manage your online resources with our advanced bookmarking tool, simplifying saving, categorizing, and synchronizing for unmatched digital efficiency.</p>
+          </div>
+          <div className='mt-[3rem] grid grid-cols-7 gap-[1.25rem]'>
+            <div className='col-span-4 row-span-1 bg-neutral-50 border-[1px] border-neutral-300 p-[2rem] rounded-[1rem] grid grid-cols-2 gap-[2rem] h-[30rem] overflow-y-hidden'>
+              <div className='w-full text-left self-end'>
+                <h3 className='text-[1.25rem] font-medium leading-[1.75rem] mb-[0.5rem]'>Browser extension</h3>
+                <p className='text-neutral-600'>A way to manage your online resources with our advanced bookmarking tool, simplifying saving, categorizing, and synchronizing for unmatched digital efficiency.</p>
+              </div>
+              <div className='w-full h-[20rem] overflow-y-show'> <img src={Extension} alt='' /></div>
+            </div>
+            <div className='col-span-3 row-span-1 bg-neutral-50 border-[1px] border-neutral-300 p-[2rem] rounded-[1rem] grid h-[30rem] bg-[url("/src/assets/landingPage/Features2.png")] bg-[length:100%_auto] bg-no-repeat'>
+              <div className='w-full text-left self-end'>
+                <h3 className='text-[1.25rem] font-medium leading-[1.75rem] mb-[0.5rem]'>Summarize content</h3>
+                <p className='text-neutral-600'>A way to manage your online resources with our advanced bookmarking tool, simplifying saving, categorizing, and synchronizing for unmatched digital efficiency.</p>
+              </div>
+            </div>
+            <div className='col-span-4 row-span-1 bg-neutral-50 border-[1px] border-neutral-300 p-[2rem] rounded-[1rem] grid grid-cols-2 gap-[2rem] h-[30rem] overflow-y-hidden'>
+              <div className='w-full text-left self-end'>
+                <h3 className='text-[1.25rem] font-medium leading-[1.75rem] mb-[0.5rem]'>Seamless sharing</h3>
+                <p className='text-neutral-600'>A way to manage your online resources with our advanced bookmarking tool, simplifying saving, categorizing, and synchronizing for unmatched digital efficiency.</p>
+              </div>
+              <div className='w-full h-[20rem] overflow-y-show'> <img src='' alt='' /></div>
+            </div>
+            <div className='col-span-3 row-span-1 bg-neutral-50 border-[1px] border-neutral-300 p-[2rem] rounded-[1rem] grid h-[30rem] bg-[] bg-[length:100%_auto] bg-no-repeat'>
+              <div className='w-full text-left self-end'>
+                <h3 className='text-[1.25rem] font-medium leading-[1.75rem] mb-[0.5rem]'>Add notes and reminders</h3>
+                <p className='text-neutral-600'>A way to manage your online resources with our advanced bookmarking tool, simplifying saving, categorizing, and synchronizing for unmatched digital efficiency.</p>
+              </div>
+            </div>
+            <div className='col-span-7 row-span-1 bg-neutral-50 border-[1px] border-neutral-300 p-[2rem] rounded-[1rem] grid grid-cols-8 gap-[2rem]'>
+              <div className='w-full text-left self-end col-span-3'>
+                <h3 className='text-[1.25rem] font-medium leading-[1.75rem] mb-[0.5rem]'>Curate and discover new collections</h3>
+                <p className='text-neutral-600'>A way to manage your online resources with our advanced bookmarking tool, simplifying saving, categorizing, and synchronizing for unmatched digital efficiency.</p>
+              </div>
+              <div className='col-span-5 w-full rounded-[1rem] overflow-hidden border border-primary-500'>
+                <video autoPlay loop muted>
+                  <source src={Video} type="video/mp4"/>
+                  Your browser does not support video playing.
+                </video>
+              </div>
+            </div>
+          </div>
+        </section>
         <section className='testimonial py-[6.25rem] px-[5rem]'>
           <div className='testimonial-heading mx-auto w-[710px]'>
             <h2 className='text-[4.25rem] leading-[4.75rem] max-w-[1000px]'>Amazing stories from <br></br>our customers</h2>
@@ -63,7 +113,61 @@ const Main = () => {
             ))}
           </div>
         </section>
-        <section className='pricing py-[6.25rem] px-[5rem]'></section>
+        <section className='pricing py-[6.25rem] px-[5rem]'>
+          <div className='testimonial-heading mx-auto max-w-[1500px]'>
+            <h2 className='text-[4.25rem] leading-[4.75rem] max-w-[1500px]'>Simple pricing for all your needs</h2>
+            <p className='text-neutral-700 max-w-[500px] mx-auto mt-[1rem]'>Start for free, upgrade when you love it. No credit card required. All prices are in US Dollars.</p>
+          </div>
+          <div className='pricing-cards mt-[3rem] flex gap-[3rem] justify-center'>
+            <div className='starter max-w-[30rem] p-[2rem] border-[1px] border-neutral-300 rounded-[1rem] flex flex-col gap-[2rem] shadow-[rgba(0,_0,_0,_0.25)_0px_25px_50px_-12px]'>
+              <div className='head h-[10.5rem] border-b-[1px] border-b-neutral-300'>
+                <p className='text-neutral-700'>Starter Plan</p>
+                <h3 className='text-[2.75rem] text-neutral-700'>Free for everyone</h3>
+              </div>
+              <div className='list text-neutral-800'>
+                <p className='text-left mb-[1rem]'>Includes</p>
+                <ul className='list-none flex flex-col gap-[0.75rem] text-left'>
+                  <li className='flex'><img src={Approve} alt='' className='w-[1.25rem] mt-[-0.25rem] mr-[0.75rem]'/><p>Access to all basic features</p></li>
+                  <li className='flex'><img src={Approve} alt='' className='w-[1.25rem] mt-[-0.25rem] mr-[0.75rem]'/><p>Limited to 30 collections</p></li>
+                  <li className='flex'><img src={Approve} alt='' className='w-[1.25rem] mt-[-0.25rem] mr-[0.75rem]'/><p>Save 3000 bookmarks (100 per collection)</p></li>
+                </ul>
+              </div>
+              <div className='cta mt-auto'>
+                <button onClick={() => {navigate('/login')}} className="p-[0.75rem] h-min leading-[calc(1.25rem-4px)] w-full border-2 border-primary-300 rounded-[5px] flex gap-[0.25rem]">
+                  <p className='mx-auto'>Get started with free</p>
+                </button>
+              </div>
+            </div>
+            <div className='pro max-w-[30rem] p-[2rem] bg-gradient-to-b from-primary-100 border-[1px] border-primary-400 rounded-[1rem] flex flex-col gap-[2rem] shadow-[rgba(0,_0,_0,_0.25)_0px_25px_50px_-12px]'>
+              <div className='head h-[10.5rem] border-b-[1px] border-b-neutral-300'>
+                <p className='text-neutral-700'>Pro Plan</p>
+                <h3 className='text-[2.75rem] text-neutral-700'>$8 per user/month</h3>
+                <div className='mx-auto mt-[1rem] py-[0.125rem] px-[0.125rem] rounded-[3.5rem] border-[1px] border-neutral-300 bg-neutral-50 font-light h-max w-max items-center flex'>
+                  <div className='rounded-[3.5rem]  py-[0.125rem] px-[0.75rem] text-white bg-neutral-900 flex'>Monthly</div>
+                  <div className='px-[0.75rem] text-neutral-500'>Anually</div>
+                </div>
+              </div>
+              <div className='list text-neutral-800'>
+                <p className='text-left mb-[1rem]'>Includes all features of free plan and</p>
+                <ul className='list-none flex flex-col gap-[0.75rem] text-left'>
+                  <li className='flex'><img src={Approve} alt='' className='w-[1.25rem] h-[1.5rem] mr-[0.75rem]'/><p className=''>Unlimited collections</p></li>
+                  <li className='flex'><img src={Approve} alt='' className='w-[1.25rem] h-[1.5rem] mr-[0.75rem]'/><p className=''>Unlimited bookmarks</p></li>
+                  <li className='flex'><img src={Approve} alt='' className='w-[1.25rem] h-[1.5rem] mr-[0.75rem]'/><p className=''>Add personalized notes to your bookmarks</p></li>
+                  <li className='flex'><div className='ml-[2rem] rounded-[25px] border-[1px] border-success-300 bg-success-100 leading-0 px-[0.5rem]'>Coming Soon 👇</div></li>
+                  <li className='flex'><img src={Approve} alt='' className='w-[1.25rem] h-[1.5rem] mr-[0.75rem]'/><p className=''>Auto summaries content on bookmarking using AI.</p></li>
+                  <li className='flex'><img src={Approve} alt='' className='w-[1.25rem] h-[1.5rem] mr-[0.75rem]'/><p className=''>Visual analytics of bookmarks and browsing data</p></li>
+                </ul>
+              </div>
+              <div className='cta mt-auto'>
+                <button 
+                  onClick={() => {window.location.href = 'https://chrome.google.com/webstore/detail/linkcollect/knekpacpcgkieomkhhngenjeeokddkif/'}} 
+                  className="p-[0.75rem] h-min w-full leading-[1.25rem] bg-primary-400 rounded-[5px] text-white font-light flex gap-[0.25rem]">
+                  <p className='mx-auto'>Get started with free</p>
+                </button>
+              </div>
+            </div>
+          </div>
+        </section>
         <section className='cta py-[6.25rem] px-[5rem]'>
           <div className='flex flex-col items-center bg-gradient-to-b from-primary-200 rounded-[1rem] border-[1px] border-neutral-200 py-[2.5rem] px-[2.5rem] font-normal'>
             <h2 className='text-[4.25rem] leading-[4.75rem] max-w-[1000px]'>Simplify Bookmarking with LinkCollect's Magic</h2>
