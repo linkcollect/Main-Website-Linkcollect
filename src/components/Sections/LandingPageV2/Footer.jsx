@@ -2,6 +2,14 @@ import React from 'react';
 import { useNavigate } from 'react-router';
 // images
 import MainLogo from '../../../assets/mainLogo.svg';
+const links = {
+    extensionUrl: 'https://chrome.google.com/webstore/detail/linkcollect/knekpacpcgkieomkhhngenjeeokddkif/',
+    contact: 'https://linkcollect.io/askwhyharsh/c/64ecd6198fac6bae8d54fb77',
+    feedback: 'https://forms.gle/Dg5ehCAR4AEZBnF89',
+    instagram: 'https://www.instagram.com/linkcollect/',
+    discord: 'https://discord.gg/askwhy-1074020862489022514',
+    x: 'https://x.com/linkcollect_io'
+}
 
 const Footer = () => {
 	const navigate = useNavigate();
@@ -14,26 +22,25 @@ const Footer = () => {
           </div>
           <div className='links flex justify-between gap-[4.5rem] '>
             <div className='flex flex-col items-start'>
-              <a href="http://localhost:3000/landing" rel="noreferrer" className='mb-[1rem]'>Install Extension</a>
-              <a href="http://localhost:3000/landing" rel="noreferrer" className='mb-[1rem]'>Explore Collections</a>
+              <a href={links.extensionUrl} rel="noreferrer" target='_blank' className='mb-[1rem]'>Install Extension</a>
+              <a href="https://linkcollect.io/explore" rel="noreferrer" target='_blank' className='mb-[1rem]'>Explore Collections</a>
             </div>
             <div className='flex flex-col items-start'>
-              <a href="http://localhost:3000/landing" rel="noreferrer" className='mb-[1rem]'>How it works </a>
-              <a href="http://localhost:3000/landing" rel="noreferrer" className='mb-[1rem]'>Feedback</a>
+              <a href="#features" rel="noreferrer" className='mb-[1rem]'>How it works </a>
+              <a href={links.feedback} rel="noreferrer" target='_blank' className='mb-[1rem]'>Feedback</a>
             </div>
             <div className='flex flex-col items-start'>
-              <a href="http://localhost:3000/landing" rel="noreferrer" className='mb-[1rem]'>Instagram</a>
-              <a href="http://localhost:3000/landing" rel="noreferrer" className='mb-[1rem]'>X</a>
-              <a href="http://localhost:3000/landing" rel="noreferrer" className='mb-[1rem]'>Discord</a>
-              <a href="http://localhost:3000/landing" rel="noreferrer" className='mb-[1rem]'>Medium</a>
+              <a href={links.instagram} rel="noreferrer" target='_blank' className='mb-[1rem]'>Instagram</a>
+              <a href={links.x} rel="noreferrer" target='_blank' className='mb-[1rem]'>X / Twitter</a>
+              <a href={links.discord} rel="noreferrer" target='_blank' className='mb-[1rem]'>Discord</a>
             </div>
           </div>
         </div>
         <div className='copyright flex py-[1.25rem] justify-between text-neutral-500 w-full'>
-          <p>Copyright © 2020 linkCollect.io</p>
+          <p>Copyright © 2023 linkCollect.io</p>
           <div className='flex gap-[2rem]'>
-            <a href='https://github.com/linkcollect' target='_blank' rel='noreferrer'>Contact Us</a>
-            <a href='https://github.com/linkcollect' target='_blank' rel='noreferrer'>Privacy Policy</a>
+            <a href={links.contact} target='_blank' rel='noreferrer'>Contact Us</a>
+            <a href='https://linkcollect.io/privacy' target='_blank' rel='noreferrer'>Privacy Policy</a>
           </div>
         </div>
 		</footer>
