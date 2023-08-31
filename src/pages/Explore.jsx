@@ -18,7 +18,7 @@ import { getSearch } from "../api-services/collectionService";
 import { useSearchParams } from "react-router-dom";
 import { searchedCollection } from "../store/Slices/explore.slice";
 import { SortActions } from "../components/Common/ActiondropDown";
-
+import SEO from "../components/SEO/SEO";
 const Explore = ({ windowWidth }) => {
   const dispatch = useDispatch();
   const [query, setQuery] = useState("");
@@ -130,6 +130,10 @@ function getUpvotesData() {
 
   return (
     <BaseLayout>
+        <SEO 
+        title={ `Explore Amazing Collections on linkcollect`}
+        >
+      </SEO>
       <div className="flex flex-col items-start justify-center w-full gap-4 mx-auto 3xl:px-0 px-8 max-w-[1500px]">
         <CollectionHeader
           windowWidth={windowWidth}

@@ -26,6 +26,8 @@ import PageLoader from "./components/UI/Loader/PageLoader";
 import { setLoggedInUser } from "./store/Slices/user.slice";
 import LandingPageV2 from "./pages/LandingPageV2";
 
+import { HelmetProvider } from 'react-helmet-async';
+
 function App() {
   const auth = useSelector((state) => state.auth);
   const dispatch = useDispatch();
@@ -61,14 +63,21 @@ function App() {
       </div>
     );
   }
+  const helmetContext = {};
 
   return (
+    <HelmetProvider context={helmetContext}>
     <Router>
       <div className="App">
         <Routes>
+          {/* Conditional Routes */}
           {/* Landing page  */}
-          <Route path="/" element={<LandingPage windowWidth={windowWidth} />} />
           <Route path="/landing" element={<LandingPageV2 windowWidth={windowWidth} />} />
+          <Route path="/" element={auth.isLoggedIn ? (
+                <Navigate to={`/${auth?.username}`} />
+              ) : (
+                <LandingPage windowWidth={windowWidth} />
+              )} />
 
           <Route
             path="/signup"
@@ -90,6 +99,7 @@ function App() {
               )
             }
           />
+          {/* This are all open routes */}
           <Route
             path="/:username"
             element={<Home windowWidth={windowWidth} />}
@@ -108,7 +118,8 @@ function App() {
       </div>
       <Analytics />
 
-    </Router>
+    </Router>      
+    </HelmetProvider>
   );
 }
 

@@ -16,6 +16,7 @@ const ButtonVariants = cva(
           " bg-neutral-200 border-2 border-error-500 text-error-500 ",
         disabled: " bg-neutral-400 text-white cursor-not-allowed ",
         loading: " bg-primary-200 text-white cursor-not-allowed ",
+        darkOutlined: "border-dark-border border bg-dark-primary text-borderPrimary",
       },
       size: {
         default:
