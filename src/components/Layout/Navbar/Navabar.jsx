@@ -1,6 +1,7 @@
 import React from "react";
 import Button from "../../UI/Button/Button";
 import MainLogo from "../../../assets/mainLogo.svg";
+import darkModeLogo from '../../../assets/darkMode/mainlogoWhite.svg'
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import ToggleMode from "../../UI/Toggler/ToggleMode";
@@ -42,7 +43,11 @@ const Navabar = () => {
       {windowWidth < 768 &&
         <div className="flex items-center justify-start px-4 my-auto align-center sm:w-32 sm:h-10">
           <Link to="/">
-            <img src={MainLogo} alt="" className="w-32 sm:ml-2 h-14" />
+            {selectedMode === "light" ?
+              <img src={MainLogo} alt="" className="w-32 sm:ml-2 h-14" />
+              :
+              <img src={darkModeLogo} alt="" className="w-32 sm:ml-2 h-14" />
+            }
           </Link>
         </div>
       }

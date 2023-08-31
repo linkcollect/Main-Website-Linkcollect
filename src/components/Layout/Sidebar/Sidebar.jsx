@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import mainlogo from "../../../assets/mainLogo.svg";
-import mainlogoWhite from "../../../assets/mainlogoWhite.svg";
+import mainlogoWhite from "../../../assets/darkMode/mainlogoWhite.svg";
 import { useLocation } from "react-router-dom";
 import { Link } from "react-router-dom";
 import defaultImage from "../../../assets/defaultImage.svg";

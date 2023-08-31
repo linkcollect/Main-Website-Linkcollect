@@ -7,7 +7,7 @@ import LightMoon from '../../../assets/lightMoon.svg'
 const ToggleMode = ({ selectedMode, handleSwitchMode }) => {
 
     return (
-        <div className={`relative flex p-1 items-start gap-1.5 rounded-md border ${selectedMode === "dark" ? " border-[#303] bg-dark-primary " : " border-borderPrimary bg-neutral-100 "}`}>
+        <div className={`relative flex p-1 items-start gap-1.5 rounded-md border ${selectedMode === "dark" ? " border-dark-border bg-dark-primary " : " border-borderPrimary bg-neutral-100 "}`}>
 
             {/* light */}
             <div
