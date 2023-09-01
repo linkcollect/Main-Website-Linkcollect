@@ -7,7 +7,7 @@ import SearchIcon from "../../../assets/Frame_40250search.svg";
 import CommandIcon from "../../../assets/Frame_40250command.svg";
 import Card1 from "../../../assets/Card.mp4";
 import LCLogo from "../../../assets/LCLogo.svg";
-import mainlogoWhite from "../../../assets/mainlogoWhite.svg";
+import mainlogoWhite from "../../../assets/darkMode/mainlogoWhite.svg";
 import instagram from "../../../assets/instagram.svg";
 import medium from "../../../assets/medium.svg";
 import discord from "../../../assets/discord.svg";
@@ -55,9 +55,9 @@ const Features = ({ windowWidth }) => {
 
 
       {/*Mobile design only*** */}
-      <div className="flex  flex-col justify-center items-center mx-auto my-12  xl:ml-48 xl:flex-row">
+      <div className="flex flex-col items-center justify-center mx-auto my-12 xl:ml-48 xl:flex-row">
         <div className="block sm:hidden">
-          <div className="flex  flex-col items-center justify-center gap-2 mx-auto w-72">
+          <div className="flex flex-col items-center justify-center gap-2 mx-auto w-72">
             <img src={Vector} alt='banner image' className="w-64 h-60" />
             <h1 className="w-72 h-[3.4rem] lexend font-semibold text-center text-textPrimary mx-auto">Stay organized, save
               your web links</h1>
@@ -100,8 +100,8 @@ const Features = ({ windowWidth }) => {
               loop
             ></video>
           </div>
-          <div className="main-div  mx-auto mt-4  xl:mt-24">
-            <div className="sub-div flex">
+          <div className="mx-auto mt-4 main-div xl:mt-24">
+            <div className="flex sub-div">
               <div>
                 <img src={LCLogo} alt="" className="sm:w-[20px] xl:w-[30px]" />
               </div>
@@ -111,7 +111,7 @@ const Features = ({ windowWidth }) => {
                 </h1>
               </div>
             </div>
-            <div className="w-3/5 text-left leading-8 xl:ml-9">
+            <div className="w-3/5 leading-8 text-left xl:ml-9">
               <p className="">
                 maybe your favourite videos, blogs, twitter threads, ai tools or
                 learning resources and share these collections with your friends
@@ -119,8 +119,8 @@ const Features = ({ windowWidth }) => {
                 simple 😉{" "}
               </p>
             </div>
-            <div className="main-div mt-8 ">
-              <div className="sub-div flex ">
+            <div className="mt-8 main-div ">
+              <div className="flex sub-div ">
                 <div>
                   <img src={LCLogo} alt="" className="sm:w-[20px] xl:w-[30px]" />
                 </div>
@@ -130,7 +130,7 @@ const Features = ({ windowWidth }) => {
                   </h1>
                 </div>
               </div>
-              <div className="w-3/5 text-left ml-9 leading-8">
+              <div className="w-3/5 leading-8 text-left ml-9">
                 <p>
                   with anyone and they can view all your public collections that
                   you have created or if you will create later{" "}
@@ -142,7 +142,7 @@ const Features = ({ windowWidth }) => {
 
       </div>
 
-      <div className='mx-auto w-full'>
+      <div className='w-full mx-auto'>
         <FamewallEmbed
           wallUrl="linkcollect"
           carouselMode={true}
@@ -159,7 +159,7 @@ const Features = ({ windowWidth }) => {
                 When you find something you like on the internet, save it with
                 linkcollect before you forget
               </p>
-              <div className="loco-tray flex align-middle gap-4 mt-4 ml-3 cursor-pointer items-center xl:gap-7 xl:ml-7 xl:mt-14">
+              <div className="flex items-center gap-4 mt-4 ml-3 align-middle cursor-pointer loco-tray xl:gap-7 xl:ml-7 xl:mt-14">
                 <a href="https://twitter.com/linkcollect_io" target="_blank" className="xl:w-auto w-[1rem] "><img src={twitterx} alt="" /></a>
                 <a href="https://www.instagram.com/linkcollect/" target="_blank" className="xl:w-auto w-[1rem] "><img src={instagram} alt="" /></a>
                 <a href="https://medium.com/@askwhyharsh" target="_blank" className="xl:w-auto w-[1rem]"><img src={medium} alt="" /></a>
