@@ -13,19 +13,18 @@ const useExploreData = () => {
     const fetchData = async () => {
       try {
         const res = await getExplore();
-        setExploreData(res.data.data.slice(0, 20));
+        setExploreData([...res.data.data.slice(0, 20)]);
       } catch (error) {
         console.error('Error fetching explore data:', error);
       }
     };
     fetchData();
   }, []);
-  return { exploreData };
+  return { data: exploreData };
 };
 
 const LandingPageV2 = ({ windowWidth }) => {
-  const { exploreData } = useExploreData();
-  console.log(typeof(exploreData), exploreData);
+  const exploreData = useExploreData();
   return (
     <div className="flex flex-col justify-between h-screen overflow-x-hidden overflow-y-scroll scrollbar-hide">
       <Navbar />

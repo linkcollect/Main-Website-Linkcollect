@@ -15,7 +15,7 @@ const Navbar = () => {
   const navigate = useNavigate()
 
   return (
-    <header className="sticky top-0 bg-white h-[4.25rem] w-screen px-[5rem] py-[0.75rem] flex justify-between align-middle border-b-[1px] border-b-neutral-200 text-neutral-700">
+    <header className="sticky z-[100] top-0 bg-white h-[4.25rem] w-screen px-[5rem] py-[0.75rem] flex justify-between align-middle border-b-[1px] border-b-neutral-200 text-neutral-700">
       <div className="logo">
         <img src={MainLogo} alt="" className="h-[2.5rem]" />
       </div>

@@ -13,6 +13,9 @@ import Video from '../../../assets/newTest.mp4'
 // api
 import CollectionitemV2 from '../../Common/CollectionCard';
 import PageLoader from '../../UI/Loader/PageLoader';
+// carousel
+import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
+import { Carousel } from 'react-responsive-carousel';
 // other
 const testimonialData = Array(6).fill({comment: "This extension allow me to organize and access data from  my laptop where I want and when I want to. The interface is easy to navigate and I find everything I need quickly. Everyone should check it out!", name: "John Doe", designation: "CEO, Co-founder", imageUrl: GoogleIcon});
 const links = {
@@ -24,10 +27,26 @@ const links = {
     x: 'https://x.com/linkcollect_io',
     premium: 'https://linkcollect.lemonsqueezy.com/'
 }
+const carouselSettings = {
+    axis: 'horizontal',
+    autoPlay: true, 
+    autoFocs: true,
+    infiniteLoop: true,
+    stopOnHover: true,
+    centerMode: true,
+    interval: 2000,
+    centerSlidePercentage: 17,
+    swipeable: true,
+    emulateTouch: true,
+    swipeScrollTolerance: 5,
+    selectedItem: 1,
+    showThumbs: false,
+    showIndicators: false,
+    preventMovementUntilSwipeScrollTolerance: true
+}
 
 const Main = ({ exploreData = undefined}) => {
   const navigate = useNavigate();
-  console.log(typeof(exploreData), exploreData);
 	return (
 	<main className='w-full mx-auto bg-[url("/src/assets/landingPage/Grid.svg")] bg-[length:100%_auto] bg-no-repeat'>
       <div className='w-full max-w-[1800px] mx-auto'>
@@ -46,22 +65,32 @@ const Main = ({ exploreData = undefined}) => {
         <section id='trending' className='trending py-[6.25rem] px-[0rem]'>
           <div className='flex flex-col items-center gap-[4rem]'>
             <h2 className='text-[4.25rem] leading-[4.75rem] max-w-[1000px]'>Trending Collections</h2>
-            <div className='trending-list flex flex-row items-center flex-nowrap overflow-x-scroll w-full gap-[1.5rem] ml-[10rem]'>
-              {/* {exploreData === undefined ? <PageLoader /> : (exploreData.map((collection) => {
-                  return <CollectionitemV2
-                    key={collection._id}
-                    id={collection._id}
-                    image={collection.image}
-                    title={collection.title}
-                    links={collection.timelines.length}
-                    isPublic={collection.isPublic}
-                    isPinned={collection.isPinned}
-                    description={collection.description}
-                    tags={collection.tags}
-                    isOwner={true}
-                    upvotes={collection.upvotes}
-                    views={collection.views}
-                />}))} */}
+            <div className='trending-list w-screen select-none'>
+             
+              {exploreData.data === undefined ? <PageLoader /> : 
+              (<Carousel {...carouselSettings}>
+                {exploreData?.data?.map((collection) => {
+                  return (
+                  <div className='w-[300px]'>
+                    <CollectionitemV2
+                        key={collection._id}
+                        id={collection._id}
+                        image={collection.image}
+                        title={collection.title}
+                        links={collection.countOfLinks}
+                        username={collection.username}
+                        isPublic={collection.isPublic}
+                        isPinned={collection.isPinned}
+                        description={collection.description}
+                        tags={collection.tags}
+                        isOwner={false}
+                        upvotes={collection.upvotes}
+                        views={collection.views}
+                    />
+                  </div>
+                  )}
+                )}
+              </Carousel>)}                
             </div>
             <button onClick={() => {navigate('/explore')}} className="p-[0.75rem] h-min leading-[calc(1.25rem-4px)] border-2 border-primary-300 rounded-[5px] flex gap-[0.25rem]">
               <p>Explore Collections</p>

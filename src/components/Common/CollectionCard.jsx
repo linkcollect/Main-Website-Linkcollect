@@ -121,7 +121,7 @@ const CollectionitemV2 = React.forwardRef(({
 
       <div
         className={`relative bg-bgPrimary border ${selectedMode === "dark" ? "border-dark-border" : "border-neutral-300"}  rounded-lg w-full group 
-        hover:shadow-md h-[210px] transition duration-300 ease-in-out cursor-pointer`}
+        hover:shadow-md h-[210px] transition duration-300 ease-in-out cursor-pointer select-none`}
         ref={ref}
         onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}
         onClick={()=>navigate(`/${username}/c/${id}`)}
