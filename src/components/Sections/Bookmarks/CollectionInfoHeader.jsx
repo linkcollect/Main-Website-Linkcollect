@@ -149,12 +149,12 @@ const CollectionInfoHeader = ({
               <div className="flex flex-col gap-2 sm:flex-row align-center">
                 {/* Collection Title, Links, Share */}
                 <div className="flex items-baseline justify-between gap-2 mb-1 sm:justify-start">
-                  <h1 className={`text-xl font-bold lexend ${selectedMode === "light" ? "text-neutral-700" : "text-neutral-50"}`}>
+                  <h1 className={`text-xl font-bold lexend ${selectedMode === "light" ? "text-neutral-700" : "text-neutral-300"}`}>
                     {windowWidth < 640
                       ? nameShortner(collectionName, 50)
                       : collectionName}
                   </h1>
-                  <h1 className={`w-[5rem] text-base ${selectedMode === "light" ? "text-neutral-500" : "text-dark-fade"}`}>
+                  <h1 className={`w-[5rem] text-base ${selectedMode === "light" ? "text-neutral-500" : "text-neutral-400"}`}>
                     {noOfLinks} links
                   </h1>
 
@@ -170,7 +170,7 @@ const CollectionInfoHeader = ({
                     <img src={share} className="w-[20px] h-[20px] mr-1" alt="" />
                   }
                   <p className={`text-[14px] ${selectedMode === "light" ? " text-neutral-700" : "text-neutral-200"}`}>Share</p>
-                </button> : <Link to={`/${collectionUsername}`} className={`sm:mt-[2px] ${selectedMode === "light" ? "text-primary-400" : "text-borderPrimary"}`}>by <span>{collectionUsername}</span></Link>
+                </button> : <Link to={`/${collectionUsername}`} className={`sm:mt-[2px] ${selectedMode === "light" ? "text-primary-400" : "text-primary-200 "}`}>by <span>{collectionUsername}</span></Link>
                 }
               </div>
               {/* Tags */}

@@ -72,7 +72,7 @@ export const fromNow = (date)=>{
     
   }
 
-export const backgroundGradients = [
+export const backgroundGradientsLight = [
     { color1: 'rgba(89,147,251,0.70)', color2: 'rgba(140,126,254,0.7)' },
     { color1: 'rgba(101,200,152,0.70)', color2: 'rgba(251,234,223,0.7)' },
     { color1: 'rgba(46, 49, 146, 0.70)', color2: 'rgba(27, 255, 255, 0.70)' },
@@ -93,6 +93,24 @@ export const backgroundGradients = [
     { color1: 'rgba(78, 101, 255, 0.70)', color2: 'rgba(146, 239, 253, 0.70)' },
     { color1: 'rgba(169, 241, 223, 0.70)', color2: 'rgba(255, 187, 187, 0.70)' },
     { color1: 'rgba(147, 165, 207, 0.70)', color2: 'rgba(228, 239, 233, 0.70)' },
+];
+export const backgroundGradientsDark = [
+  { color1: 'rgba(61, 64, 91, 0.70)', color2: 'rgba(29, 31, 42, 0.70)' },
+  { color1: 'rgba(51, 56, 79, 0.70)', color2: 'rgba(16, 17, 24, 0.70)' },
+  { color1: 'rgba(41, 48, 62, 0.70)', color2: 'rgba(10, 12, 18, 0.70)' },
+  { color1: 'rgba(31, 40, 45, 0.70)', color2: 'rgba(6, 8, 11, 0.70)' },
+  { color1: 'rgba(21, 32, 29, 0.70)', color2: 'rgba(4, 6, 6, 0.70)' },
+  { color1: 'rgba(11, 24, 12, 0.70)', color2: 'rgba(2, 5, 3, 0.70)' },
+  { color1: 'rgba(0, 14, 0, 0.70)', color2: 'rgba(0, 2, 0, 0.70)' },
+  { color1: 'rgba(61, 64, 91, 0.70)', color2: 'rgba(29, 31, 42, 0.70)' }, // Deep Blue
+  { color1: 'rgba(51, 56, 79, 0.70)', color2: 'rgba(16, 17, 24, 0.70)' }, // Midnight Blue
+  { color1: 'rgba(41, 48, 62, 0.70)', color2: 'rgba(10, 12, 18, 0.70)' }, // Dark Slate Gray
+  { color1: 'rgba(31, 40, 45, 0.70)', color2: 'rgba(6, 8, 11, 0.70)' },  // Charcoal
+  { color1: 'rgba(21, 32, 29, 0.70)', color2: 'rgba(4, 6, 6, 0.70)' },   // Dark Forest Green
+  { color1: 'rgba(11, 24, 12, 0.70)', color2: 'rgba(2, 5, 3, 0.70)' },   // Dark Green
+  { color1: 'rgba(0, 14, 0, 0.70)', color2: 'rgba(0, 2, 0, 0.70)' },     // Very Dark Green
+  { color1: 'rgba(74, 42, 75, 0.70)', color2: 'rgba(35, 15, 36, 0.70)' }, // Dark Purple
+
 ];
 
 export const pickFromHash = (hash, gradientArray) => {

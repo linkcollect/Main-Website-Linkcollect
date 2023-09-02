@@ -14,7 +14,7 @@ module.exports = {
       gradinetInitial: "rgba(144, 146, 255, 0)",
       borderPrimary: "#D9D9D9",
       dark:{
-       "primary":"#141414",
+       "primary":"#1F1F1F",
        "border": "#242424",
        "secondary": "#333",
        "placeholder":"#B3B3B3",

@@ -57,7 +57,8 @@ const ProfileHeader = ({ name, socials, imageUrl, totalViews, totalCollections, 
             <div className='flex flex-col items-start justify-center w-full gap-6'>
 
                 {/* back button */}
-                <Button variant={selectedMode === "light" ? "secondaryOutline" : "darkOutlined"} className="w-[91px] h-[41px] pr-3" onClick={backHnadler}>
+                <Button variant={selectedMode === "light" ? "secondaryOutline" : "darkOutlined"} className={`
+                w-[91px] h-[41px] pr-31`} onClick={backHnadler}>
                     {selectedMode === "light" ?
                         <img src={Back} alt="" className='' />
                         :
