@@ -1,5 +1,6 @@
 import { createSlice} from "@reduxjs/toolkit";
 import { dataSortByType } from "../../utils/utils";
+import { logout } from "./user.slice";
 const collectionDefaultState = {
     collections:[],
     isFetching:false,
@@ -71,6 +72,11 @@ const collectionSlice = createSlice({
             state.collections[collectionIndex].pinnedTime =  Date.now()
         },
     },
+    extraReducers:(builder)=>{
+        builder.addCase(logout.type,(state,action)=>{
+            return collectionDefaultState
+        })
+    }
 })
 
 export const {upvote,downvote,remove,collectionFething,collectionFetchingSuccess,collectionFetchingFailed,addCollection,sortCollectionByType,pinCollectionToggle} = collectionSlice.actions;
