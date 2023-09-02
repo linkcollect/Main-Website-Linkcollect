@@ -74,7 +74,7 @@ const Navabar = () => {
           </a>
         )))}
         {!isLoggedIn && <a href="https://chrome.google.com/webstore/detail/linkcollect/knekpacpcgkieomkhhngenjeeokddkif" rel="noreferrer" target="_blank"><Button className="px-[9.6px] py-[1rem] rounded-[4.8px] text-[0.75rem] font-normal h-6 w-max">Try LinkCollect</Button></a>}
-        {isLoggedIn && <Button onClick={logoutHandler} className="px-[9.6px] py-[1rem] rounded-[4.8px] text-[0.75rem] font-normal h-6 w-max">Logout</Button>}
+        {isLoggedIn && <Button onClick={logoutHandler} className={`px-[9.6px] py-[1rem] rounded-[4.8px] text-[0.75rem] h-6 w-max flex  ${selectedMode === "light" ? "text-neutral-600" : "text-borderPrimary"} transition-all duration-200 rounded-md hover:scale-110 border border-error-500 bg-white-10`}>Logout</Button>}
       </nav>
     </div>
   );
