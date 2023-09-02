@@ -48,8 +48,9 @@ const AuthSlicer = createSlice({
   name: "auth",
   initialState: authDefaultState,
   reducers: {
-    logout: () => {
+    logout: (state,action) => {
       localStorage.removeItem("token");
+      // state = initialState;
       return authDefaultState;
     },
     setLoggedInUser: (state, action) => {

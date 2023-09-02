@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit"
 import { getBookmarks } from "../actions/bookmarks.action"
 import { dataSortByType } from "../../utils/utils"
+import { logout } from "./user.slice"
 
 const initialCollectionData ={
    collectionData:{},
@@ -82,6 +83,9 @@ const collectionDataSlice = createSlice({
         builder.addCase(getBookmarks.rejected,(state,action)=>{
             state.isFailed = true;
             state.isFetching=false;
+        });
+        builder.addCase(logout.type,(state,action)=>{
+            return initialCollectionData
         })
     }
 })

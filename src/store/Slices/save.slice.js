@@ -1,5 +1,6 @@
 import { createSlice} from "@reduxjs/toolkit";
 import { getSaveCollectionOfUser } from "../actions/save.actions";
+import { logout } from "./user.slice";
 const saveCollectionDefaultState = {
     collections:[],
     isFetching:false,
@@ -54,6 +55,9 @@ const saveCollectionSlice = createSlice({
         builder.addCase(getSaveCollectionOfUser.rejected,(state,action)=>{
             state.isFetching=false;
             state.isFailed=true;
+        })
+        builder.addCase(logout.type,(state,action)=>{
+            return saveCollectionDefaultState;
         })
     }
 })

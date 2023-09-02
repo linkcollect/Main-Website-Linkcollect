@@ -2,16 +2,18 @@ import React from "react";
 import Button from "../../UI/Button/Button";
 import MainLogo from "../../../assets/mainLogo.svg";
 import darkModeLogo from '../../../assets/darkMode/mainlogoWhite.svg'
-import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
 import ToggleMode from "../../UI/Toggler/ToggleMode";
-import { useState } from 'react'
 import { useContext } from "react";
 import { switchMode } from "../../../hooks/switchMode";
 import { useMediaQuery } from "../../../hooks/useMediaQuery";
+import { logout } from "../../../store/Slices/user.slice";
 
 const Navabar = () => {
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const navabrItem = [
     {
       name: "Contact us",
@@ -33,6 +35,11 @@ const Navabar = () => {
   // handling theme switch
   const handleSwitchMode = (value) => {
     setSelectedMode(value)
+  }
+
+  const logoutHandler = () =>{
+    dispatch(logout());
+    navigate("/login");
   }
 
   const windowWidth = useMediaQuery()
@@ -67,6 +74,7 @@ const Navabar = () => {
           </a>
         )))}
         {!isLoggedIn && <a href="https://chrome.google.com/webstore/detail/linkcollect/knekpacpcgkieomkhhngenjeeokddkif" rel="noreferrer" target="_blank"><Button className="px-[9.6px] py-[1rem] rounded-[4.8px] text-[0.75rem] font-normal h-6 w-max">Try LinkCollect</Button></a>}
+        {isLoggedIn && <Button onClick={logoutHandler} className="px-[9.6px] py-[1rem] rounded-[4.8px] text-[0.75rem] font-normal h-6 w-max">Logout</Button>}
       </nav>
     </div>
   );
