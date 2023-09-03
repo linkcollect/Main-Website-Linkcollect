@@ -57,7 +57,7 @@ const PageLoader = () => {
       </svg>
       </div>
 
-      <p className={`${selectedMode === "light" ? "text-neutral-800" : "text-neutral-800"} font-normal text-xl text-center`}>{name}</p>
+      <p className={`${selectedMode === "light" ? "text-neutral-800" : "text-neutral-50"} font-normal text-xl text-center`}>{name}</p>
     </div>
   );
 };

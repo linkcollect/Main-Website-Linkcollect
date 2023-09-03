@@ -9,6 +9,7 @@ import redirectIcon from "../../../assets/redirectIcon.svg";
 import approveIcon from "../../../assets/approve.svg";
 import bookmarkDefalutIcon from "../../../assets/bookmarkDefault.svg";
 import pinIcon from "../../../assets/bookmarkPin.svg";
+import whitePinIcon from '../../../assets/darkMode/pinIcon.svg'
 import MenuWhiteIcon from '../../../assets/darkMode/MenuWhiteIcon.svg'
 import RedirectWhiteIcon from '../../../assets/darkMode/RedirectWhiteIcon.svg'
 import CopyWhiteIcon from '../../../assets/darkMode/whiteCopyIcon.svg'
@@ -122,7 +123,7 @@ const BookmarkItem = ({
   // dark and light mode switch
   const { selectedMode } = useContext(switchMode)
 
-  
+
   return (
     <>
       <EcBookamrkModal
@@ -146,10 +147,9 @@ const BookmarkItem = ({
       />
 
       <div
-          className={`cursor-pointer relative flex items-center justify-between w-full h-[60px] rounded-xl 
-          ${
-         selectedMode === 'light' ? hovered ? "bg-neutral-200 border-neutral-200" : "bg-neutral-100 border-neutral-200" : hovered ? "bg-dark-secondary border-dark-secondary" : 
-         "bg-dark-primary border-dark-border" 
+        className={`cursor-pointer relative flex items-center justify-between w-full h-[60px] rounded-xl 
+          ${selectedMode === 'light' ? hovered ? "bg-neutral-200 border-neutral-200" : "bg-neutral-100 border-neutral-200" : hovered ? "bg-dark-secondary border-dark-secondary" :
+            "bg-dark-primary border-dark-border"
           } border   duration-200 transition-all group`}
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
@@ -165,8 +165,12 @@ const BookmarkItem = ({
             onChange={handleCheck}
           />} */}
         {isOwner && isPinned && (
-          <div className="w-[20px] h-[20px] absolute z-[9999] top-[20px] left-[-13px] cursor-pointer border border-neutral-300 bg-neutral-100 rounded-md">
-            <img key="pin-icon" className="" src={pinIcon} alt="" />
+          <div className={`w-[20px] h-[20px] absolute z-[9999] top-[20px] left-[-13px] cursor-pointer border  ${selectedMode === 'light' ? "border-neutral-300 bg-neutral-100" : "bg-dark-primary border-dark-secondary"}  rounded-md`}>
+            {selectedMode === 'light' ?
+              <img key="pin-icon" className="" src={pinIcon} alt="" />
+              :
+              <img key="pin-icon" className="" src={whitePinIcon} alt="" />
+            }
           </div>
         )}
 
@@ -290,7 +294,7 @@ const BookmarkItem = ({
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: 10 }}
                       transition={{ duration: 0.2 }}
-                      className={`w-[135px] rounded border absolute z-[9990] top-[28px] p-2 right-0 ${selectedMode === "light" ?"border-neutral-300 bg-neutral-100" : "border-dark-border bg-dark-primary"} `}
+                      className={`w-[135px] rounded border absolute z-[9990] top-[28px] p-2 right-0 ${selectedMode === "light" ? "border-neutral-300 bg-neutral-100" : "border-dark-border bg-dark-primary"} `}
                     >
                       {popupActionMenu.map((menuItem, index) => (
                         <>
@@ -301,7 +305,7 @@ const BookmarkItem = ({
                             key={menuItem.type}
                           />
                           {index !== popupActionMenu.length - 1 && (
-                            <div className={`w-full h-[1px] ${selectedMode === "light" ?"bg-neutral-300" : "bg-dark-border"} mt-1 mb-1`} />
+                            <div className={`w-full h-[1px] ${selectedMode === "light" ? "bg-neutral-300" : "bg-dark-border"} mt-1 mb-1`} />
                           )}
                         </>
                       ))}

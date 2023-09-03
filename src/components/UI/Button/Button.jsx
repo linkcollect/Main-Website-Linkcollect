@@ -1,6 +1,7 @@
-import React, { forwardRef } from "react";
+import React, { forwardRef, useContext } from "react";
 import { cva } from "class-variance-authority";
 import { classMerge } from "../../../utils/utils";
+import { switchMode } from "../../../hooks/switchMode";
 
 const ButtonVariants = cva(
   " flex w-full items-center justify-center cursor-pointer gap-2",
@@ -16,7 +17,8 @@ const ButtonVariants = cva(
           " bg-neutral-200 border-2 border-error-500 text-error-500 ",
         disabled: " bg-neutral-400 text-white cursor-not-allowed ",
         loading: " bg-primary-200 text-white cursor-not-allowed ",
-        darkOutlined: "border-dark-border border bg-dark-primary text-borderPrimary",
+        darkOutlined: "border-dark-secondary border bg-dark-primary text-borderPrimary",
+        darkDisabled: "bg-dark-secondary text-dark-placeholder"
       },
       size: {
         default:
@@ -39,12 +41,14 @@ const Button = forwardRef(
     isLoading,
     ...props
   },ref) => {
-   
+    // getting current selected mode
+    const { selectedMode } = useContext(switchMode)
+
     const variant =
       !disabled && !isLoading
         ? buttonVariant
         : disabled
-        ? "disabled"
+        ? selectedMode === "light" ? "disabled" : "darkDisabled"
         : "loading";
     return (
       <button
