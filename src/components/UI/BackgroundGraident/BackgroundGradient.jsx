@@ -7,9 +7,9 @@ const BackgroundGradient = ({ hashValue, title, className }) => {
   const { color1, color2, xPosition, yPosition } = pickFromHash(hashValue, gradients);
 
   const backgroundStyle = {
-    'background-image': `url(${GridCard}), radial-gradient(circle at ${xPosition}% ${yPosition}%, ${color1} 0%, ${color2} 100%)`,
-    'background-size': 'cover',
-    'background-repeat': 'no-repeat'
+    'backgroundImage': `url(${GridCard}), radial-gradient(circle at ${xPosition}% ${yPosition}%, ${color1} 0%, ${color2} 100%)`,
+    'backgroundSize': 'cover',
+    'backgroundRepeat': 'no-repeat'
   };
 
   return (

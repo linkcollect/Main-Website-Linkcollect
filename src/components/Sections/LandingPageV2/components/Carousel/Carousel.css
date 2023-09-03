@@ -1,0 +1,33 @@
+.carousel-container {
+    width: 100vw;
+    overflow-x: visible;
+    /* padding: 5rem; */
+}
+
+#carousel {
+    white-space: nowrap;
+    display: flex;
+    gap: 1rem;
+    overflow-x: scroll;
+    -ms-overflow-style: none;
+    /* Hide the scrollbar for MS Edge */
+    scrollbar-width: none;
+    /* Hide the scrollbar for Mozilla Firefox */
+    user-select: none;
+    cursor: pointer;
+}
+
+#carousel.active {
+    cursor: grabbing;
+    cursor: -webkit-grabbing;
+    transform: scale(1);
+    transition: all 0.5s;
+}
+
+#carousel {
+    margin: 0 auto 0 auto;
+    width: 100vw;
+    padding-inline: 2rem;
+    height: fit-content;
+    will-change: transform;
+}

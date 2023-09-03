@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
+// components
+import Carousel from './components/Carousel';
 // images
 import MockupImage from '../../../assets/landingPage/Mockup.png'
 import BackArrow from '../../../assets/back-arrow.svg'
@@ -13,9 +15,6 @@ import Video from '../../../assets/newTest.mp4'
 // api
 import CollectionitemV2 from '../../Common/CollectionCard';
 import PageLoader from '../../UI/Loader/PageLoader';
-// carousel
-import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
-import { Carousel } from 'react-responsive-carousel';
 // other
 const testimonialData = Array(6).fill({comment: "This extension allow me to organize and access data from  my laptop where I want and when I want to. The interface is easy to navigate and I find everything I need quickly. Everyone should check it out!", name: "John Doe", designation: "CEO, Co-founder", imageUrl: GoogleIcon});
 const links = {
@@ -26,23 +25,6 @@ const links = {
     discord: 'https://discord.gg/askwhy-1074020862489022514',
     x: 'https://x.com/linkcollect_io',
     premium: 'https://linkcollect.lemonsqueezy.com/'
-}
-const carouselSettings = {
-    axis: 'horizontal',
-    autoPlay: true, 
-    autoFocs: true,
-    infiniteLoop: true,
-    stopOnHover: true,
-    centerMode: true,
-    interval: 2000,
-    centerSlidePercentage: 17,
-    // swipeable: true,
-    // emulateTouch: true,
-    // swipeScrollTolerance: 10,
-    selectedItem: 1,
-    showThumbs: false,
-    showIndicators: false,
-    preventMovementUntilSwipeScrollTolerance: true
 }
 
 const Main = ({ exploreData = undefined}) => {
@@ -68,12 +50,12 @@ const Main = ({ exploreData = undefined}) => {
             <div className='trending-list w-screen select-none'>
              
               {exploreData.data === undefined ? <PageLoader /> : 
-              (<Carousel {...carouselSettings}>
+              (<Carousel>
                 {exploreData?.data?.map((collection) => {
                   return (
-                  <div className='w-[300px]'>
+                  <div key={collection._id} className='min-w-[300px]'>
                     <CollectionitemV2
-                        key={collection._id}
+                        isHoverable={false}
                         id={collection._id}
                         image={collection.image}
                         title={collection.title}
