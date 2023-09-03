@@ -205,7 +205,7 @@ const Main = ({ exploreData = undefined}) => {
           </div>
         </section>
         <section className='cta py-[6.25rem] px-[5rem]'>
-          <div className='flex flex-col items-center bg-gradient-to-b from-primary-200 rounded-[1rem] border-[1px] border-neutral-200 py-[2.5rem] px-[2.5rem] font-normal'>
+          <div className='flex flex-col items-center bg-[linear-gradient(to_top,_rgba(255,255,255,1),_rgba(255,255,255,0)_80%),url("/src/assets/landingPage/GridBase.svg"),_linear-gradient(180deg,_rgba(97,102,241,0.50)_0%,_rgba(254,254,255,0.50)_100%)] bg-[length:100%_auto] bg-no-repeat rounded-[1rem] border-[1px] border-neutral-200 py-[2.5rem] px-[2.5rem] font-normal'>
             <h2 className='text-[4.25rem] leading-[4.75rem] max-w-[1000px]'>Simplify Bookmarking with LinkCollect's Magic</h2>
             <button 
               onClick={() => {window.open(links.extensionUrl, "_blank")}} 
