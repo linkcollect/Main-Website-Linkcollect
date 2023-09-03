@@ -37,7 +37,8 @@ const CollectionitemV2 = React.forwardRef(({
   onDownVote,
   onSave,
   onUnsave,
-  onPin
+  onPin,
+  isHoverable = true,
 }, ref) => {
   const auth = useSelector(state => state.auth)
   const navigate = useNavigate();
@@ -126,9 +127,9 @@ const CollectionitemV2 = React.forwardRef(({
 
       <div
         className={`relative bg-bgPrimary border ${selectedMode === "dark" ? "border-dark-secondary" : "border-neutral-200"}  rounded-lg w-full group 
-        hover:shadow-md h-[210px] transition duration-300 ease-in-out cursor-pointer`}
+        hover:shadow-md h-[210px] transition duration-300 ease-in-out cursor-pointer select-none`}
         ref={ref}
-        onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}
+        onMouseEnter={() => {isHoverable && setHover(true)}} onMouseLeave={() => {isHoverable && setHover(false)}}
         onClick={()=>navigate(`/${username}/c/${id}`)}
 
       >
