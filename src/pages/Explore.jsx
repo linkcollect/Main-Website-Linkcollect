@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useCallback, useContext, useEffect, useRef, useState } from "react";
 import CollectionHeader from "../components/Common/CollectionHeader";
 import BaseLayout from "../components/Layout/BaseLayout/BaseLayout";
 import { useDispatch, useSelector } from "react-redux";
@@ -19,6 +19,7 @@ import { useSearchParams } from "react-router-dom";
 import { searchedCollection } from "../store/Slices/explore.slice";
 import { SortActions } from "../components/Common/ActiondropDown";
 import SEO from "../components/SEO/SEO";
+import { switchMode } from "../hooks/switchMode";
 const Explore = ({ windowWidth }) => {
   const dispatch = useDispatch();
   const [query, setQuery] = useState("");
@@ -50,37 +51,37 @@ const Explore = ({ windowWidth }) => {
     dispatch(getAllExplore(collection.page + 1));
   }
 
-// menuitem 
-const menuItem = [
-  {
-    name: "Recent",
-    onClick: getRecentData,
-    type: "RECENETLY_UPDATED",
-  },
-  {
-    name: "Views",
-    onClick: getViewsData,
-    type: "ALPHABETICAlLY",
-  },
-  {
-    name: "Upvotes",
-    onClick: getUpvotesData,
-    type: "ALPHABETICAlLY",
-  },
-];
+  // menuitem 
+  const menuItem = [
+    {
+      name: "Recent",
+      onClick: getRecentData,
+      type: "RECENETLY_UPDATED",
+    },
+    {
+      name: "Views",
+      onClick: getViewsData,
+      type: "ALPHABETICAlLY",
+    },
+    {
+      name: "Upvotes",
+      onClick: getUpvotesData,
+      type: "ALPHABETICAlLY",
+    },
+  ];
 
-function getRecentData() {
-  dispatch(getAllExplore(1, 'createdAt'));
-}
+  function getRecentData() {
+    dispatch(getAllExplore(1, 'createdAt'));
+  }
 
-function getViewsData() {
-  dispatch(getAllExplore(1, 'views'));
+  function getViewsData() {
+    dispatch(getAllExplore(1, 'views'));
 
-}
+  }
 
-function getUpvotesData() {
-  dispatch(getAllExplore());
-}
+  function getUpvotesData() {
+    dispatch(getAllExplore());
+  }
 
 
 
@@ -127,12 +128,16 @@ function getUpvotesData() {
     setSearcParams(searchParams);
     dispatch(getAllExplore());
   }
+  
+   // getting selected mode for theme change
+   const { selectedMode } = useContext(switchMode)
 
+   
   return (
     <BaseLayout>
-        <SEO 
-        title={ `Explore Amazing Collections on linkcollect`}
-        >
+      <SEO
+        title={`Explore Amazing Collections on linkcollect`}
+      >
       </SEO>
       <div className="flex flex-col items-start justify-center w-full gap-4 mx-auto 3xl:px-0 px-8 max-w-[1500px]">
         <CollectionHeader
@@ -144,14 +149,14 @@ function getUpvotesData() {
             }`}
         >
           <div className="w-[100%] sticky z-10">
-                <div className="relative flex flex-row sm:flex-row items-end mt-5 gap-2">
-                <Search query={query} setQuery={setQuery} onCancel={onCancelSerchedHandler} onSubmit={getSearchResult} />
+            <div className="relative flex flex-row items-end gap-2 mt-5 sm:flex-row">
+              <Search query={query} setQuery={setQuery} onCancel={onCancelSerchedHandler} onSubmit={getSearchResult} />
 
-                  {/* sort by */}
-                  <SortActions name="Sort By" menuItems={menuItem}/>
-                </div>
+              {/* sort by */}
+              <SortActions name="Sort By" menuItems={menuItem} />
+            </div>
 
-              </div>
+          </div>
 
           {/* Filter By*/}
           {/* <FilterActions menuItems={}/> */}
@@ -160,10 +165,10 @@ function getUpvotesData() {
       </div>
 
       {/* Collection Items */}
-      <div className=" w-full h-full pb-6 overflow-y-scroll 3xl:px-0 px-8">
+      <div className="w-full h-full px-8 pb-6 overflow-y-scroll 3xl:px-0">
         {/* At fisrt reandering when I am going to get first page loading or if we will get search result for the first time*/}
         {(collection.collections.length === 0 && collection.isFetching) || isSearching ? (
-          <div className="flex items-center h-full justify-center w-full">
+          <div className="flex items-center justify-center w-full h-full">
             <PageLoader />
           </div>
         ) : collection.collections.length > 0 ? (
@@ -203,7 +208,7 @@ function getUpvotesData() {
             </div>
             {((collection.isFetching && collection.page > 1) || isSearchingMore) &&
 
-              <div className="flex w-full  justify-center items-center my-3">
+              <div className="flex items-center justify-center w-full my-3">
 
                 <Loader />
 
@@ -211,11 +216,11 @@ function getUpvotesData() {
             }
           </>
         ) : (
-          <div className="flex flex-col self-center items-center justify-center w-full h-full">
-            <p className="mb-5 text-5xl text-textPrimary">
+          <div className={`flex flex-col self-center items-center justify-center w-full h-full ${selectedMode === "dark" ? "text-neutral-50" : "text-black"}`}>
+            <p className="mb-5 text-5xl ">
               No Collection Found
             </p>
-            <p className="text-textPrimary">You can add it from extension</p>
+            <p className="">You can add it from extension</p>
           </div>
         )}
       </div>
