@@ -24,6 +24,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getUserDetails } from "./store/actions/user.action";
 import PageLoader from "./components/UI/Loader/PageLoader";
 import { setLoggedInUser } from "./store/Slices/user.slice";
+import LandingPageV2 from "./pages/LandingPageV2";
 
 import { HelmetProvider } from 'react-helmet-async';
 
@@ -71,11 +72,11 @@ function App() {
         <Routes>
           {/* Conditional Routes */}
           {/* Landing page  */}
-          
+          <Route path="/landing" element={<LandingPageV2 windowWidth={windowWidth} />} />
           <Route path="/" element={auth.isLoggedIn ? (
                 <Navigate to={`/${auth?.username}`} />
               ) : (
-                <LandingPage windowWidth={windowWidth} />
+                windowWidth < 1280 ? <LandingPage windowWidth={windowWidth} /> : <LandingPageV2 windowWidth={windowWidth} />
               )} />
 
           <Route
