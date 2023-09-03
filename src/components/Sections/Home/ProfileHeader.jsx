@@ -8,6 +8,7 @@ import Back from '../../../assets/back-arrow.svg'
 import DarkModeBack from '../../../assets/darkMode/WhiteBackArrow.svg'
 import Button from '../../UI/Button/Button'
 import approve from "../../../assets/approve.svg"
+import WhiteApprove from "../../../assets/darkMode/whiteCheck.svg"
 import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { switchMode } from '../../../hooks/switchMode'
@@ -17,23 +18,26 @@ const ProfileHeader = ({ name, socials, imageUrl, totalViews, totalCollections, 
     const copyRef = useRef();
     const copyMobileRef = useRef();
 
+    // getting current selected mode
+    const { selectedMode } = useContext(switchMode)
+    
     // TODO: Need to change logic to copy link
     const copyLinkHandler = () => {
         navigator.clipboard.writeText(`https://linkcollect.io/${username}`)
         if (copyRef.current) {
-            copyRef.current.src = approve;
+            copyRef.current.src = selectedMode === "light"? approve : WhiteApprove ;
             setTimeout(() => {
                 try {
-                    copyRef.current.src = Copy;
+                    copyRef.current.src = selectedMode === "light"? Copy : CopyWhiteIcon;
                 } catch (error) {
                     // console.error(error)
                 }
             }, 500)
             if (copyMobileRef.current) {
-                copyMobileRef.current.src = approve;
+                copyMobileRef.current.src = selectedMode === "light"? approve : WhiteApprove ;
                 setTimeout(() => {
                     try {
-                        copyMobileRef.current.src = Copy;
+                        copyMobileRef.current.src = selectedMode === "light"? Copy : CopyWhiteIcon ;
                     } catch (error) {
                         // console.error(error)
                     }
@@ -49,8 +53,6 @@ const ProfileHeader = ({ name, socials, imageUrl, totalViews, totalCollections, 
         }
     }
 
-    // getting current selected mode
-    const { selectedMode } = useContext(switchMode)
 
     return (
         <div className="flex flex-col items-start justify-center w-full gap-8 mx-auto 3xl:px-0 max-w-[1500px] pb-5">

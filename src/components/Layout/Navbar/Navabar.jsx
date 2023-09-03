@@ -45,7 +45,7 @@ const Navabar = () => {
   const windowWidth = useMediaQuery()
 
   return (
-    <div className={`flex justify-between w-full border-b ${selectedMode === "dark" ? "bg-dark-primary border-dark-border" : "border-neutral-200 bg-neutral-50"}`}>
+    <div className={`flex justify-between w-full border-b ${selectedMode === "dark" ? "bg-dark-primary border-dark-secondary" : "border-neutral-200 bg-neutral-50"}`}>
 
       {windowWidth < 768 &&
         <div className="flex items-center justify-start px-4 my-auto align-center sm:w-32 sm:h-10">

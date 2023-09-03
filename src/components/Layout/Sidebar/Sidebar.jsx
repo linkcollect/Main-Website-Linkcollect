@@ -51,7 +51,7 @@ const Sidebar = ({ user, handleSetUser, windowWidth }) => {
   
   return (
     <aside
-      className={`${selectedMode === "dark" ? "bg-dark-primary border-r border-dark-border" : "bg-neutral-100 border-r border-neutral-300"}  ${windowWidth < 700 ? "h-[350px] w-full " : "w-[270px]"
+      className={`${selectedMode === "dark" ? "bg-dark-primary border-r border-dark-secondary" : "bg-neutral-100 border-r border-neutral-300"}  ${windowWidth < 700 ? "h-[350px] w-full " : "w-[270px]"
         } `}
     >
       <div
