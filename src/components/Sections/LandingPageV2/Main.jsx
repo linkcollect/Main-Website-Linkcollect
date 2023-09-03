@@ -99,16 +99,16 @@ const Main = ({ exploreData = undefined}) => {
             <p className='text-neutral-700 max-w-[500px] mx-auto mt-[1rem]'>A way to manage your online resources with our advanced bookmarking tool, simplifying saving, categorizing, and synchronizing for unmatched digital efficiency.</p>
           </div>
           <div className='content mt-[3rem] grid grid-cols-7 gap-[1.25rem]'>
-            <div className='col-span-4 row-span-1 bg-gradient-to-br from-primary-100 to-neutral-50 border-[1px] border-neutral-300 p-[2rem] rounded-[1rem] grid grid-cols-2 gap-[2rem] h-[30rem] overflow-y-hidden hover:scale-[1.02] hover:shadow-md transition'>
+            <div className='col-span-4 row-span-1 bg-gradient-to-br from-primary-100 to-neutral-50 border-[1px] border-neutral-300 p-[2rem] rounded-[1rem] grid grid-cols-2 gap-[2rem] min-h-[30rem] overflow-y-hidden hover:scale-[1.02] hover:shadow-md transition'>
               <div className='w-full text-left self-end'>
                 <h3 className='text-[1.25rem] font-medium leading-[1.75rem] mb-[0.5rem]'>Browser extension</h3>
                 <p className='text-neutral-600'>LinkCollect Makes Bookmarking simpler for everyone. Save, organise, conquer! , you don't need a PhD in rocket science to bookmark. It's so easy, even your cat could do it. 🐱</p>
               </div>
               <div className='w-full h-[20rem] overflow-y-show shadow-[0px_40px_100px_-30px_rgba(0,0,0,0.4)]'> <img src={Extension} alt='' /></div>
             </div>
-            <div className='col-span-3 row-span-1 bg-neutral-50 border-[1px] border-neutral-300 p-[2rem] rounded-[1rem] grid h-[30rem] hover:scale-[1.02] hover:shadow-md transition'>
-            <div className='mb-[1rem] w-full rounded-[1rem] overflow-hidden border-2 border-primary-500'>
-                <video ref={video1Ref} autoPlay muted onTimeUpdate={video1Controls.play} onEnded={video1Controls.end} className='rounded-[1rem] object-cover'>
+            <div className='col-span-3 row-span-1 bg-neutral-50 border-[1px] border-neutral-300 p-[2rem] rounded-[1rem] grid min-h-[30rem] hover:scale-[1.02] hover:shadow-md transition'>
+              <div className='mb-[1rem] w-full aspect-video rounded-[1rem] overflow-hidden border-2 border-primary-500'>
+                <video ref={video1Ref} autoPlay muted onTimeUpdate={video1Controls.play} onEnded={video1Controls.end} className='rounded-[1rem] h-full w-atuo'>
                   <source src={`${Video1}`} type="video/mp4"/>
                   Your browser does not support video playing.
                 </video>
@@ -146,7 +146,7 @@ const Main = ({ exploreData = undefined}) => {
                 <p className='text-neutral-600'>Uncover Skills and Secrets Be like Sherlock without the pipe. Dive into our explore page and find treasures recommended by the coolest community ever. New skills? Nailed it. 🕵️‍♂️📚</p>
               </div>
               </div>
-              <div className='col-span-5 w-full rounded-[1rem] overflow-hidden border-2 border-primary-500'>
+              <div className='col-span-5 w-full rounded-[1rem] overflow-hidden border-2 border-primary-500 aspect-video'>
                 <video ref={video2Ref} autoPlay muted onTimeUpdate={video2Controls.play} onEnded={video2Controls.end} className='rounded-[1rem] object-cover'>
                   <source src={`${Video2}`} type="video/mp4"/>
                   Your browser does not support video playing.
