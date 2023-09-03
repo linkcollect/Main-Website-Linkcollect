@@ -1,4 +1,5 @@
 import { createSlice} from "@reduxjs/toolkit";
+import { logout } from "./user.slice";
 // import { getAllExplore } from "../actions/explore.action";
 const exploreCollectionDefaultState = {
     collections:[],
@@ -66,7 +67,7 @@ const exploreCollectionSlice = createSlice({
             state.isSearched=true;
         }
     },
-    // extraReducers:(builder)=>{
+    extraReducers:(builder)=>{
     //     builder.addCase(getAllExplore.pending,(state,action)=>{
     //         state.isFetching = true;
     //     })
@@ -83,7 +84,10 @@ const exploreCollectionSlice = createSlice({
     //         state.isFetching=false;
     //         state.isFailed=true;
     //     })
-    // }
+    builder.addCase(logout.type,(state,action)=>{
+        return exploreCollectionDefaultState;
+    })
+    }
 })
 
 export const {upvote,downvote,searchedCollection,startFetching,fetchSuccess,fetchFailed} = exploreCollectionSlice.actions;

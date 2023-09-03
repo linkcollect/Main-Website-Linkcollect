@@ -1,4 +1,5 @@
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useEffect, useState, useCallback, useContext } from "react";
+import { switchMode } from "../../../hooks/switchMode";
 const names = [
   "wasting your valuable time",
   "Calling gpt-3 apis for no reason",
@@ -24,12 +25,16 @@ const PageLoader = () => {
     const intervalID = setInterval(shuffle, 1000);
     return () => clearInterval(intervalID);
   }, [shuffle]);
+ 
+
+  // getting current selected mode
+  const { selectedMode } = useContext(switchMode)
 
   return (
     <div role="status">
       <div className="w-[100px] mx-auto">
       <svg
-        className="text-grey text-center animate-spin dark:text-gray-600 fill-blue-600"
+        className="text-center text-grey animate-spin dark:text-gray-600 fill-blue-600"
         width="100"
         height="100"
         viewBox="0 0 170 170"
@@ -52,7 +57,7 @@ const PageLoader = () => {
       </svg>
       </div>
 
-      <p className="text-textPrimary font-normal text-xl text-center">{name}</p>
+      <p className={`${selectedMode === "light" ? "text-neutral-800" : "text-neutral-800"} font-normal text-xl text-center`}>{name}</p>
     </div>
   );
 };

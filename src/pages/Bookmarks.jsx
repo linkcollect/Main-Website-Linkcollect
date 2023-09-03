@@ -211,11 +211,11 @@ const Bookmarks = ({ windowWidth }) => {
                 </div>
               </div>
             ) : (
-              <div className="flex flex-col items-center justify-center w-full h-full">
-                <p className="mb-5 text-5xl text-textPrimary">
+              <div className="py-20 flex flex-col items-center justify-center w-full h-full">
+                <p className={`mb-5 text-5xl ${ selectedMode === 'light' ? 'text-textPrimary' : 'text-neutral-300'}  `}>
                   No bookmarks Found
                 </p>
-                <p className="text-textPrimary">You can add it from extension</p>
+                <p className={`text-textPrimary ${ selectedMode === 'light' ? 'text-textPrimary' : 'text-neutral-300'} `}>You can add it from extension</p>
               </div>
             )}
           </div>

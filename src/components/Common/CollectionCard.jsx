@@ -113,6 +113,11 @@ const CollectionitemV2 = React.forwardRef(({
     }
   }
 
+  const onClickUsername = (e) => {
+    e.stopPropagation()
+    navigate(`/${username}`)
+  }
+
   // getting current selected mode
 
   const {selectedMode} = useContext(switchMode)
@@ -121,7 +126,7 @@ const CollectionitemV2 = React.forwardRef(({
     <>
 
       <div
-        className={`relative bg-bgPrimary border ${selectedMode === "dark" ? "border-dark-border" : "border-neutral-300"}  rounded-lg w-full group 
+        className={`relative bg-bgPrimary border ${selectedMode === "dark" ? "border-dark-secondary" : "border-neutral-200"}  rounded-lg w-full group 
         hover:shadow-md h-[210px] transition duration-300 ease-in-out cursor-pointer select-none`}
         ref={ref}
         onMouseEnter={() => {isHoverable && setHover(true)}} onMouseLeave={() => {isHoverable && setHover(false)}}
@@ -158,7 +163,7 @@ const CollectionitemV2 = React.forwardRef(({
             </div>
             ) : (<BackgroundGradient hashValue={id} title={!hover ? title : description ? description : title} />)}
           <div className="flex items-center justify-between pt-2.5 px-1.5 ">
-            <p className={`text-sm font-normal ${selectedMode === "dark" ? "text-neutral-50" : "text-neutral-800"}`}>
+            <p className={`text-sm font-normal ${selectedMode === "dark" ? "text-neutral-200" : "text-neutral-800"}`}>
               {windowWidth > 640
                 ? windowWidth > 768 
                   ? windowWidth > 1024 
@@ -169,15 +174,17 @@ const CollectionitemV2 = React.forwardRef(({
                   : nameShortner(title, 22)
                 : nameShortner(title, 28)}
             </p>
-            <p className={`text-sm font-normal ${selectedMode === "dark" ? "text-neutral-50" : "text-neutral-600"}`}>
+            <p className={`text-sm font-normal ${selectedMode === "dark" ? "text-neutral-200" : "text-neutral-600"}`}>
               {links} Links
             </p>
           </div>
        
         <div className="flex items-start justify-between pt-2.5 px-1.5 gap-2 flex-col">
-          <div className="flex flex-wrap items-center gap-2">
+          <div className={`flex flex-wrap items-center gap-2 ${selectedMode === "dark" ? "text-neutral-50" : "text-neutral-500"}`} >
             {isOwner && <Chip name={isPublic ? "Public" : "Private"} />}
-            {tags?.length > 0 ? tags?.map(tag => <Chip name={tag} />) : <Chip name={`by ${username}`} />}
+            {tags?.length > 0 ? 
+                  tags?.map(tag => <Chip name={tag} isTag={true} />) : 
+                  <button onClick={onClickUsername}> <Chip  name={`by ${username}`} /></button>}
           </div>
           <div className="flex items-center justify-between w-full ">
             <div className="flex items-center ">
@@ -188,16 +195,16 @@ const CollectionitemV2 = React.forwardRef(({
                   :
                   <img src={viewsSvg} alt="views" className="w-5 h-5 mr-1" />
                 }
-                <p className={`text-sm font-normal  ${selectedMode === "dark" ? "text-neutral-50" : "text-neutral-500"}`}>
+                <p className={`text-sm font-normal  ${selectedMode === "dark" ? "text-neutral-200" : "text-neutral-500"}`}>
                   {views ? views : 0}
                 </p>
               </div>
               {/* votes */}
-              <IconButton className={`m-1 text-sm font-normal ${selectedMode === "dark" ? "text-neutral-50" : "text-neutral-500"} `} onClick={upvoteHandler}>
+              <IconButton className={`m-1 text-sm font-normal ${selectedMode === "dark" ? "text-neutral-200" : "text-neutral-500"}  `} onClick={upvoteHandler}>
                 {selectedMode === "dark" ?
-                  <img src={isUpvoted.isClicked ? upvoted : darkUpvote} alt="upvote" className="w-4 h-4 mr-1" />
+                  <img src={isUpvoted.isClicked ? upvoted : darkUpvote} alt="upvote" className="w-5 h-5 mr-1 transition-all duration-200 hover:scale-110 " />
                   :
-                  <img src={isUpvoted.isClicked ? upvoted : upvote} alt="upvote" className="w-4 h-4 mr-1" />
+                  <img src={isUpvoted.isClicked ? upvoted : upvote} alt="upvote" className="w-5 h-5 mr-1 transition-all duration-200 hover:scale-110 " />
                 }
                 {isUpvoted.number}
               </IconButton>
@@ -205,8 +212,12 @@ const CollectionitemV2 = React.forwardRef(({
 
             {/* Saved  */}
             {isSavedOptionVisible &&
-              <IconButton className={`gap-1 ${isSaved ? 'text-primary-500' : selectedMode === "dark" ? "text-neutral-50" : "text-neutral-500"}  text-[14px]`} onClick={saveHandler}>
-                <img src={isSaved ? saved : selectedMode === "light" ? bmSidebar : darkSaved} />{isSaved ? "" : "save"}
+              <IconButton className={`gap-1  ${isSaved ? 'text-primary-500' : selectedMode === "dark" ? "text-neutral-50" : "text-neutral-500"}  text-[14px]`} onClick={saveHandler}>
+                <img 
+                alt="save"
+                src={isSaved ? saved : selectedMode === "light" ? bmSidebar : darkSaved} 
+                className = "transition-all duration-200 hover:scale-110 "
+                />{isSaved ? "" : "save"}
               </IconButton>
             }
           </div>

@@ -1,16 +1,19 @@
 import React from "react";
 import Button from "../../UI/Button/Button";
 import MainLogo from "../../../assets/mainLogo.svg";
-import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import darkModeLogo from '../../../assets/darkMode/mainlogoWhite.svg'
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
 import ToggleMode from "../../UI/Toggler/ToggleMode";
-import { useState } from 'react'
 import { useContext } from "react";
 import { switchMode } from "../../../hooks/switchMode";
 import { useMediaQuery } from "../../../hooks/useMediaQuery";
+import { logout } from "../../../store/Slices/user.slice";
 
 const Navabar = () => {
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const navabrItem = [
     {
       name: "Contact us",
@@ -34,6 +37,11 @@ const Navabar = () => {
     setSelectedMode(value)
   }
 
+  const logoutHandler = () =>{
+    dispatch(logout());
+    navigate("/login");
+  }
+
   const windowWidth = useMediaQuery()
 
   return (
@@ -42,7 +50,11 @@ const Navabar = () => {
       {windowWidth < 768 &&
         <div className="flex items-center justify-start px-4 my-auto align-center sm:w-32 sm:h-10">
           <Link to="/">
-            <img src={MainLogo} alt="" className="w-32 sm:ml-2 h-14" />
+            {selectedMode === "light" ?
+              <img src={MainLogo} alt="" className="w-32 sm:ml-2 h-14" />
+              :
+              <img src={darkModeLogo} alt="" className="w-32 sm:ml-2 h-14" />
+            }
           </Link>
         </div>
       }
@@ -62,6 +74,7 @@ const Navabar = () => {
           </a>
         )))}
         {!isLoggedIn && <a href="https://chrome.google.com/webstore/detail/linkcollect/knekpacpcgkieomkhhngenjeeokddkif" rel="noreferrer" target="_blank"><Button className="px-[9.6px] py-[1rem] rounded-[4.8px] text-[0.75rem] font-normal h-6 w-max">Try LinkCollect</Button></a>}
+        {isLoggedIn && <Button onClick={logoutHandler} className={`px-[9.6px] py-[1rem] rounded-[4.8px] text-[0.75rem] h-6 w-max flex  ${selectedMode === "light" ? "text-neutral-600" : "text-borderPrimary"} transition-all duration-200 rounded-md hover:scale-110 border border-error-500 bg-white-10`}>Logout</Button>}
       </nav>
     </div>
   );

@@ -146,7 +146,10 @@ const BookmarkItem = ({
       />
 
       <div
-        className={`cursor-pointer relative flex items-center justify-between w-full h-[60px] rounded-xl ${hovered ? selectedMode === "light" ? "bg-neutral-200" : "bg-dark-secondary" : checked ? selectedMode === "light" ? "bg-neutral-300" : "bg-dark-primary" : selectedMode === "light" ? "bg-neutral-100 border-neutral-200" : "bg-dark-primary border-dark-border"
+          className={`cursor-pointer relative flex items-center justify-between w-full h-[60px] rounded-xl 
+          ${
+         selectedMode === 'light' ? hovered ? "bg-neutral-200 border-neutral-200" : "bg-neutral-100 border-neutral-200" : hovered ? "bg-dark-secondary border-dark-secondary" : 
+         "bg-dark-primary border-dark-border" 
           } border   duration-200 transition-all group`}
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}

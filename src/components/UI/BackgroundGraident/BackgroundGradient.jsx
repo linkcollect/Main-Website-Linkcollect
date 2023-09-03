@@ -1,9 +1,15 @@
 import React from 'react';
-import { backgroundGradients, classMerge, nameShortner, pickFromHash } from '../../../utils/utils';
 import GridCard from '../../../assets/landingPage/GridCard.svg'
+import { backgroundGradientsLight, backgroundGradientsDark, classMerge, nameShortner, pickFromHash } from '../../../utils/utils';
+import { useContext } from 'react';
+import { switchMode } from '../../../hooks/switchMode';
 
 const BackgroundGradient = ({ hashValue, title, className }) => {
-  const gradients = backgroundGradients;
+  const { selectedMode } = useContext(switchMode)
+  let gradients = backgroundGradientsLight;
+  if(selectedMode === "dark") {
+    gradients = backgroundGradientsDark;
+  }
   const { color1, color2, xPosition, yPosition } = pickFromHash(hashValue, gradients);
 
   const backgroundStyle = {
@@ -14,7 +20,7 @@ const BackgroundGradient = ({ hashValue, title, className }) => {
 
   return (
     <div style={backgroundStyle} className={classMerge("background rounded-t-md p-1 flex items-center wrap justify-center w-full h-[109px]", className)}>
-      <div className='text-[14px] text-neutral-800'>{nameShortner(title, 100)}</div>
+      <div className={` ${selectedMode === "light" ? 'text-neutral-800' : 'text-neutral-300'}`}>{nameShortner(title, 100)}</div>
     </div>
   );
 };
