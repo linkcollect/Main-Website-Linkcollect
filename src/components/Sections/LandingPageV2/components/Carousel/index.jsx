@@ -73,7 +73,7 @@ const Carousel = ({ children }) => {
 
   return (
     <div className="carousel-container">
-      <div id="carousel" className="snap no-scrollbar" ref={sliderRef}
+      <div id="carousel" className="snap no-scrollbar py-[5rem]" ref={sliderRef}
         onMouseDown={handleMouseDown}
         onMouseLeave={handleMouseLeave}
         onMouseUp={handleMouseUp}

@@ -1,0 +1,48 @@
+{ "data": [
+    {
+        "name": "Pablo ",
+        "imageUrl": "https://cdn.famewall.io/public_facing_avatar/pablooomvc1_1682770154284_aa3700b6-836f-46ea-ad71-77774a818fd5",
+        "comment": "Just created my first collection in @linkcollect_io.\nIt's a super cool and useful way of organizing our links/bookmarks, and it makes browsing online a lot more productive. Shoutout to @askwhyharsh for such a good idea and execution ✨", 
+        "designation": "Founder, Famewall",
+        "link": "https://twitter.com/_pabloomvc/status/1652278281763184648"
+    }, 
+    {
+        "name": "Vlas Bashynskyi",
+        "imageUrl": "https://media.licdn.com/dms/image/C4D03AQE3YXNb6upl7w/profile-displayphoto-shrink_100_100/0/1543604589237?e=1699488000&v=beta&t=EbSMJMOh7qXsp5oPyEsf9NkF5pyCG7IoRh1yWINW7a8",
+        "comment": "Looks like a cool product. \nSo now, after researching a topic for 5 hours straight I can save it for somebody else to explore instead of just deleting? :)",
+        "designation": "Chrome Extension Developer, Chromane",
+        "link": "https://www.linkedin.com/feed/update/urn:li:activity:7103630235685818368?commentUrn=urn%3Ali%3Acomment%3A%28activity%3A7103630235685818368%2C7103641024522039297%29&dashCommentUrn=urn%3Ali%3Afsd_comment%3A%287103641024522039297%2Curn%3Ali%3Aactivity%3A7103630235685818368%29"
+
+
+    },
+    {
+        "name": "Shubham Kumar",
+        "imageUrl": "https://pbs.twimg.com/profile_images/1688124320025903105/R_nJ4IWI_400x400.jpg",
+        "comment": "I'm using linkcollect and honestly it helps me a lot to organize my learning. I share and recommend my collection to my frnds too. Really appreciate your work \n @askwhyharsh keep growing bro🪴",
+        "designation": "Filmmaker / Youtuber",
+        "link": "https://twitter.com/Shubhamvrs/status/1696351468905697740?s=20"
+    },
+    {
+        "name": "Mizan A Rahi",
+        "imageUrl": "https://media.licdn.com/dms/image/C5603AQEaCfGoJgXLxA/profile-displayphoto-shrink_400_400/0/1662551296053?e=1699488000&v=beta&t=6RA4FewGn-lBajQUb3JVZKYOywr2NqmFXiAZEgYfmUw",
+        "comment": "Loved it man.\nIn fact, I'm using it only, instead of the ordinary bookmark.",
+        "designation": "Lead Security Engineer - BlockAudit",
+        "link": "https://www.linkedin.com/feed/update/urn:li:ugcPost:7065753565985701888?commentUrn=urn%3Ali%3Acomment%3A%28ugcPost%3A7065753565985701888%2C7093729862548357120%29&dashCommentUrn=urn%3Ali%3Afsd_comment%3A%287093729862548357120%2Curn%3Ali%3AugcPost%3A7065753565985701888%29"
+    },
+    {
+        "name": "Bikash Roy",
+        "imageUrl": "https://media.licdn.com/dms/image/D4D03AQHdxGXbxsUojg/profile-displayphoto-shrink_400_400/0/1672079910240?e=1699488000&v=beta&t=HTmQkE7nACu_aPIOnRUT7_8dXkWlyPH_AfdEGop2CTM",
+        "comment": "It is a handy tool for sure. I have been using this tool for the past 2.5 months and it really made my life easier.",
+        "designation": "Software - Developer",
+        "link": "https://www.linkedin.com/feed/update/urn:li:activity:7103630235685818368?commentUrn=urn%3Ali%3Acomment%3A%28activity%3A7103630235685818368%2C7103977203645726720%29&dashCommentUrn=urn%3Ali%3Afsd_comment%3A%287103977203645726720%2Curn%3Ali%3Aactivity%3A7103630235685818368%29"
+    },
+    {
+        "name": "Himanshu",
+        "imageUrl": "https://pbs.twimg.com/profile_images/1664997619624722434/5VucNo-8_400x400.jpg",
+        "comment": "Explore pages looks damn 🔥Linkcollect has come a long way! Loved the save all tabs feature",
+        "designation": "Developer & Designer",
+        "link": "https://twitter.com/garadiya0/status/1696072616321433685?s=20"
+
+    }
+]
+}

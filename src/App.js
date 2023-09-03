@@ -76,7 +76,7 @@ function App() {
           <Route path="/" element={auth.isLoggedIn ? (
                 <Navigate to={`/${auth?.username}`} />
               ) : (
-                <LandingPage windowWidth={windowWidth} />
+                windowWidth < 1280 ? <LandingPage windowWidth={windowWidth} /> : <LandingPageV2 windowWidth={windowWidth} />
               )} />
 
           <Route

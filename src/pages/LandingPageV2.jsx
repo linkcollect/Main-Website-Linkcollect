@@ -20,7 +20,7 @@ const useExploreData = () => {
     };
     fetchData();
   }, []);
-  return { data: exploreData };
+  return { data: exploreData.sort((a, b) => b.views - a.views) };
 };
 
 const LandingPageV2 = ({ windowWidth }) => {

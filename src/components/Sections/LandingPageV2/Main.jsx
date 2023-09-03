@@ -11,12 +11,14 @@ import Extension from '../../../assets/landingPage/Extension.png'
 import Notes from '../../../assets/landingPage/notes.png'
 import Grid from '../../../assets/landingPage/GridBase.svg'
 // video
-import Video from '../../../assets/newTest.mp4'
+import Video2 from '../../../assets/newTest.mp4'
+import Video1 from '../../../assets/41-low.mp4'
 // api
 import CollectionitemV2 from '../../Common/CollectionCard';
 import PageLoader from '../../UI/Loader/PageLoader';
 // other
-const testimonialData = Array(6).fill({comment: "This extension allow me to organize and access data from  my laptop where I want and when I want to. The interface is easy to navigate and I find everything I need quickly. Everyone should check it out!", name: "John Doe", designation: "CEO, Co-founder", imageUrl: GoogleIcon});
+import testimonialData from './constants/testimonialData.json'
+import { useRef } from 'react';
 const links = {
     extensionUrl: 'https://chrome.google.com/webstore/detail/linkcollect/knekpacpcgkieomkhhngenjeeokddkif/',
     contact: 'https://linkcollect.io/askwhyharsh/c/64ecd6198fac6bae8d54fb77',
@@ -27,25 +29,36 @@ const links = {
     premium: 'https://linkcollect.lemonsqueezy.com/'
 }
 
+
 const Main = ({ exploreData = undefined}) => {
   const navigate = useNavigate();
+  const video1Ref = useRef();
+  const video1Controls = {
+    end: () => {video1Ref.current.currentTime = 0; video1Ref.current.play()},
+    play: () => {if(video1Ref.current.currentTime >= 20) {video1Ref.current.currentTime = 0; video1Ref.current.play()}}
+  }
+  const video2Ref = useRef();
+  const video2Controls = {
+    end: () => {video2Ref.current.currentTime = 0; video2Ref.current.play()},
+    play: () => {if(video2Ref.current.currentTime >= 20) {video2Ref.current.currentTime = 0; video2Ref.current.play()}}
+  }
 	return (
 	<main className='w-full mx-auto bg-[url("/src/assets/landingPage/Grid.svg")] bg-[length:100%_auto] bg-no-repeat'>
       <div className='w-full max-w-[1800px] mx-auto'>
         <section id='home' className='hero w-full py-[6.25rem] px-[5rem] '>
-          <div className='hero-content mx-auto flex flex-col items-center w-[60rem]'>
-            <h1 className='text-neutral-900 text-[5.25rem]'>Save, Curate, Share <br></br>& Discover Bookmarks</h1>
-            <p className='text-neutral-600 w-[40rem]'>Effortlessly Manage Your Favorite Links: Save, Curate, and Share Bookmarks with Our Intuitive Platform. Discover a Smarter Way to Navigate the Web and much more.</p>
+          <div className='hero-content mx-auto flex flex-col items-center gap-[2rem] w-[60rem]'>
+            <h1 className='text-neutral-900 text-[5.25rem] leading-[5.5rem]'>Save, Curate, Share <br></br>& Discover Bookmarks</h1>
+            <p className='text-neutral-600 w-[520px]'>Ready to bookmark like a hero? Join LinkCollect and save the day – one link at a time. 🌟📌</p>
             <button 
               onClick={() => {window.open(links.extensionUrl, "_blank")}} 
-              className="mt-[2.5rem] py-[0.75rem] px-[1rem] w-[175px] h-min leading-[1.25rem] bg-primary-400 rounded-[5px] text-white">
+              className="mt-[2.5rem] py-[0.75rem] px-[1rem] w-[175px] h-min leading-[1.25rem] bg-primary-400 rounded-[5px] text-white hover:scale-[1.05] hover:shadow-md transition">
                 Install Extension
             </button>
           </div>
           <img src={MockupImage} alt='' className='mt-[5rem] w-full rounded-[1rem] shadow-[0px_40px_100px_-30px_rgba(0,0,0,0.4)]'></img>
         </section>
         <section id='trending' className='trending py-[6.25rem] px-[0rem]'>
-          <div className='flex flex-col items-center gap-[4rem]'>
+          <div className='flex flex-col items-center gap-[1rem]'>
             <h2 className='text-[4.25rem] leading-[4.75rem] max-w-[1000px]'>Trending Collections</h2>
             <div className='trending-list w-screen select-none'>
              
@@ -53,7 +66,7 @@ const Main = ({ exploreData = undefined}) => {
               (<Carousel>
                 {exploreData?.data?.map((collection) => {
                   return (
-                  <div key={collection._id} className='min-w-[300px]'>
+                  <div key={collection._id} className='min-w-[300px] rounded-md hover:scale-[103%] hover:shadow-xl transition'>
                     <CollectionitemV2
                         isHoverable={false}
                         id={collection._id}
@@ -74,7 +87,7 @@ const Main = ({ exploreData = undefined}) => {
                 )}
               </Carousel>)}                
             </div>
-            <button onClick={() => {navigate('/explore')}} className="p-[0.75rem] h-min leading-[calc(1.25rem-4px)] border-2 border-primary-300 rounded-[5px] flex gap-[0.25rem]">
+            <button onClick={() => {navigate('/explore')}} className="p-[0.75rem] h-min leading-[calc(1.25rem-4px)] border-2 border-primary-300 rounded-[5px] flex gap-[0.25rem] hover:scale-[1.05] hover:shadow-md transition">
               <p>Explore Collections</p>
               <img src={BackArrow} alt='' className='rotate-180 mt-[1px] h-4 w-4'></img>
             </button>
@@ -86,43 +99,56 @@ const Main = ({ exploreData = undefined}) => {
             <p className='text-neutral-700 max-w-[500px] mx-auto mt-[1rem]'>A way to manage your online resources with our advanced bookmarking tool, simplifying saving, categorizing, and synchronizing for unmatched digital efficiency.</p>
           </div>
           <div className='content mt-[3rem] grid grid-cols-7 gap-[1.25rem]'>
-            <div className='col-span-4 row-span-1 bg-gradient-to-br from-primary-100 to-neutral-50 border-[1px] border-neutral-300 p-[2rem] rounded-[1rem] grid grid-cols-2 gap-[2rem] h-[30rem] overflow-y-hidden'>
+            <div className='col-span-4 row-span-1 bg-gradient-to-br from-primary-100 to-neutral-50 border-[1px] border-neutral-300 p-[2rem] rounded-[1rem] grid grid-cols-2 gap-[2rem] h-[30rem] overflow-y-hidden hover:scale-[1.02] hover:shadow-md transition'>
               <div className='w-full text-left self-end'>
                 <h3 className='text-[1.25rem] font-medium leading-[1.75rem] mb-[0.5rem]'>Browser extension</h3>
                 <p className='text-neutral-600'>LinkCollect Makes Bookmarking simpler for everyone. Save, organise, conquer! , you don't need a PhD in rocket science to bookmark. It's so easy, even your cat could do it. 🐱</p>
               </div>
               <div className='w-full h-[20rem] overflow-y-show shadow-[0px_40px_100px_-30px_rgba(0,0,0,0.4)]'> <img src={Extension} alt='' /></div>
             </div>
-            <div className='col-span-3 row-span-1 bg-neutral-50 border-[1px] border-neutral-300 p-[2rem] rounded-[1rem] grid h-[30rem] bg-[url("/src/assets/landingPage/Features2.png")] bg-[length:100%_auto] bg-no-repeat'>
+            <div className='col-span-3 row-span-1 bg-neutral-50 border-[1px] border-neutral-300 p-[2rem] rounded-[1rem] grid h-[30rem] hover:scale-[1.02] hover:shadow-md transition'>
+            <div className='mb-[1rem] w-full rounded-[1rem] overflow-hidden border-2 border-primary-500'>
+                <video ref={video1Ref} autoPlay muted onTimeUpdate={video1Controls.play} onEnded={video1Controls.end} className='rounded-[1rem] object-cover'>
+                  <source src={`${Video1}`} type="video/mp4"/>
+                  Your browser does not support video playing.
+                </video>
+              </div>
+            {/* <div className='col-span-3 row-span-1 bg-neutral-50 border-[1px] border-neutral-300 p-[2rem] rounded-[1rem] grid h-[30rem] bg-[url("/src/assets/landingPage/Features2.png")] bg-[length:100%_auto] bg-no-repeat hover:scale-[1.02] hover:shadow-md transition'> */}
               <div className='w-full text-left self-end'>
-                <h3 className='text-[1.25rem] font-medium leading-[1.75rem] mb-[0.5rem]'>Summarize content</h3>
-                <p className='text-neutral-600'>A way to manage your online resources with our advanced bookmarking tool, simplifying saving, categorizing, and synchronizing for unmatched digital efficiency.</p>
+                <h3 className='text-[1.25rem] font-medium leading-[1.75rem] mb-[0.5rem]'>Use Commands to save</h3>
+                <p className='text-neutral-600'>Right click or use commands Alt+A or Alt+C to save the link / tab / All open tabs directly to linkCollect on any Page.</p>
               </div>
             </div>
-            <div className='col-span-4 row-span-1 bg-neutral-50 border-[1px] border-neutral-300 rounded-[1rem] grid grid-cols-2 h-[30rem] overflow-y-hidden'>
+            <div className='col-span-4 row-span-1 bg-neutral-50 border-[1px] border-neutral-300 rounded-[1rem] grid grid-cols-2 h-[30rem] overflow-y-hidden hover:scale-[1.02] hover:shadow-md transition'>
               <div className='w-full text-left self-end p-[2rem]'>
                 <h3 className='text-[1.25rem] font-medium leading-[1.75rem] mb-[0.5rem]'>Seamless sharing</h3>
                 <p className='text-neutral-600'>A way to manage your online resources with our advanced bookmarking tool, simplifying saving, categorizing, and synchronizing for unmatched digital efficiency.</p>
               </div>
               <div className='h-full bg-[url("/src/assets/landingPage/Features4.png")] bg-[length:100%_100%] bg-no-repeat w-full overflow-y-show'> <img src='' alt='' /></div>
             </div>
-            <div className='col-span-3 row-span-1 bg-gradient-to-b from-primary-200 to-neutral-50 border-[1px] border-neutral-300 p-[2rem] rounded-[1rem] grid h-[30rem] bg-[] bg-[length:100%_auto] bg-no-repeat'>
+            <div className='col-span-3 row-span-1 bg-gradient-to-b from-primary-200 to-neutral-50 border-[1px] border-neutral-300 p-[2rem] rounded-[1rem] grid h-[30rem] bg-[] bg-[length:100%_auto] bg-no-repeat hover:scale-[1.02] hover:shadow-md transition'>
               <div className=''>
                 <img src={Notes} alt='' className=' mx-auto h-[18rem]'/>
               </div>
               <div className='w-full text-left self-end'>
-                <h3 className='text-[1.25rem] font-medium leading-[1.75rem] mb-[0.5rem]'>Add notes and reminders</h3>
+                <h3 className='text-[1.25rem] font-medium leading-[1.75rem] mb-[0.5rem]'>Add notes and reminders <div className='ml-[1rem] rounded-[25px] border-[1px] border-success-300 bg-success-100 leading-0 px-[0.5rem] inline text-[1rem]'>Coming Soon 👇</div></h3>
                 <p className='text-neutral-600'>A way to manage your online resources with our advanced bookmarking tool, simplifying saving, categorizing, and synchronizing for unmatched digital efficiency.</p>
               </div>
             </div>
-            <div className='relative col-span-7 row-span-1 bg-[url("/src/assets/landingPage/GridBase.svg"),_linear-gradient(to_top_left,rgba(173,174,255,1.0),_rgba(249,249,251,0.1))] bg-[length:100%_auto] bg-no-repeat border-[1px] border-neutral-300 p-[2rem] rounded-[1rem] grid grid-cols-8 gap-[2rem]'>
-              <div className='w-full text-left self-end col-span-3'>
+            <div className='relative col-span-7 row-span-1 bg-[url("/src/assets/landingPage/GridBase.svg"),_linear-gradient(to_top_left,rgba(173,174,255,1.0),_rgba(249,249,251,0.1))] bg-[length:100%_auto] bg-no-repeat border-[1px] border-neutral-300 p-[2rem] rounded-[1rem] grid grid-cols-8 gap-[2rem] hover:scale-[1.02] hover:shadow-md transition'>
+            <div className='col-span-3 py-[2rem] flex flex-col justify-between gap-[2rem]'>
+              <div className='w-full text-left self-end'>
                 <h3 className='text-[1.25rem] font-medium leading-[1.75rem] mb-[0.5rem]'>Curate and discover new collections</h3>
                 <p className='text-neutral-600'>LinkCollect is not just a bookmarking tool, We are a community, a community of 700+ developers, designers 🍥, writers and researchers 👨🏻‍💻 who are bookmarking and sharing some of the best content they come across and anyone can be a part of it 🤝</p>
               </div>
-              <div className='col-span-5 w-full rounded-[1rem] overflow-hidden border border-primary-500'>
-                <video autoPlay loop muted>
-                  <source src={Video} type="video/mp4"/>
+              <div className='w-full text-left self-end'>
+                <h3 className='text-[1.25rem] font-medium leading-[1.75rem] mb-[0.5rem]'>🤖 Explore</h3>
+                <p className='text-neutral-600'>Uncover Skills and Secrets Be like Sherlock without the pipe. Dive into our explore page and find treasures recommended by the coolest community ever. New skills? Nailed it. 🕵️‍♂️📚</p>
+              </div>
+              </div>
+              <div className='col-span-5 w-full rounded-[1rem] overflow-hidden border-2 border-primary-500'>
+                <video ref={video2Ref} autoPlay muted onTimeUpdate={video2Controls.play} onEnded={video2Controls.end} className='rounded-[1rem] object-cover'>
+                  <source src={`${Video2}`} type="video/mp4"/>
                   Your browser does not support video playing.
                 </video>
               </div>
@@ -135,11 +161,11 @@ const Main = ({ exploreData = undefined}) => {
             <p className='text-neutral-700 max-w-[500px] mx-auto mt-[1rem]'>Discover how our bookmarking solution simplified their online lives and revolutionized the way they explore the web.</p>
           </div>
           <div className='testimonial-cards mt-[3rem] grid grid-cols-3 grid-rows-2 gap-[1.75rem]'>
-            {testimonialData.map((testimonial, index) => (
-              <div key={index} className='h-[17rem] py-[2.5rem] px-[1.75rem] rounded-[0.5rem] border-[1px] border-neutral-200 text-neutral-700 bg-neutral-50 flex flex-col justify-between text-left'>
-                <p className='text-ellipsis'>{testimonial.comment}</p>
-                <div className='flex gap-[1rem] items-start'>
-                  <img src={testimonial.imageUrl} alt='' className='h-[3rem] w-[3rem]'/>
+            {testimonialData.data.map((testimonial, index) => (
+              <div key={index} className='h-[100%] py-[2.5rem] px-[1.75rem] rounded-[0.5rem] border-[1px] border-neutral-200 text-neutral-700 bg-neutral-50 flex flex-col justify-between text-left select-none cursor-pointer hover:scale-[105%] hover:shadow-xl transition-all' onClick={() => window.open(testimonial.link)}>
+                <p className='text-ellipsis' style={{ whiteSpace: 'pre-line' }}>{testimonial.comment}</p>
+                <div className='flex gap-[1rem] pt-[1rem] mt-auto items-start'>
+                  <img src={testimonial.imageUrl} alt='' className='h-[3rem] w-[3rem] rounded-full'/>
                   <div className='flex flex-col items-start'>
                     <p className='font-semibold'>{testimonial.name}</p>
                     <p className='text-neutral-400'>{testimonial.designation}</p>
