@@ -47,7 +47,7 @@ const Main = ({ exploreData = undefined, windowWidth }) => {
       <div className='w-full max-w-[1800px] mx-auto'>
         <section id='home' className='hero w-full py-[clamp(1rem,5vw,6.25rem)] px-[clamp(1rem,5vw,5rem)] '>
           <div className='hero-content mx-auto flex flex-col items-center gap-[2rem] w-[clamp(auto,12vw,60rem)]'>
-            <h1 className='text-neutral-900 text-[clamp(1rem,10vw,4.25rem)] leading-[clamp(1rem,12vw,4.75rem)]'>Save, Curate, Share <br></br>& Discover Bookmarks</h1>
+            <h1 className='text-neutral-900 text-[clamp(1rem,10vw,4.25rem)] leading-[clamp(1rem,12vw,4.75rem)]'>Save, Curate, Share <br className='hidden md:block'></br>& Discover Bookmarks</h1>
             <p className='text-neutral-600 max-w-[520px]'>Ready to bookmark like a hero? Join LinkCollect and save the day – one link at a time. 🌟📌</p>
             {windowWidth > 768 ? (<button 
               onClick={() => {window.open(links.extensionUrl, "_blank")}} 
@@ -188,9 +188,9 @@ const Main = ({ exploreData = undefined, windowWidth }) => {
             <h2 className='text-[clamp(1rem,10vw,4.25rem)] leading-[clamp(1rem,12vw,4.75rem)] max-w-[1500px]'>Simple pricing for all your needs</h2>
             <p className='text-neutral-700 max-w-[500px] mx-auto mt-[1rem]'>Start for free, upgrade when you love it. No credit card required. All prices are in US Dollars.</p>
           </div>
-          <div className='pricing-cards mt-[3rem] flex gap-[3rem] justify-center '>
-            <div className='starter max-w-[30rem] p-[2rem] border-[1px] border-neutral-300 rounded-[1rem] flex flex-col gap-[2rem] shadow-[rgba(0,_0,_0,_0.25)_0px_25px_50px_-12px] hover:scale-[1.02] transition'>
-              <div className='head h-[10.5rem] border-b-[1px] border-b-neutral-300'>
+          <div className='pricing-cards mt-[3rem] mx-auto items-center lg:items-stretch flex flex-col lg:flex-row gap-[3rem] lg:justify-center '>
+            <div className='starter w-full max-w-[30rem] p-[2rem] border-[1px] border-neutral-300 rounded-[1rem] flex flex-col gap-[2rem] shadow-[rgba(0,_0,_0,_0.25)_0px_25px_50px_-12px] hover:scale-[1.02] transition'>
+              <div className='head min-h-[10.5rem] border-b-[1px] border-b-neutral-300'>
                 <p className='text-neutral-700'>Starter Plan</p>
                 <h3 className='text-[2.75rem] text-neutral-700'>Free for everyone</h3>
               </div>
@@ -208,8 +208,8 @@ const Main = ({ exploreData = undefined, windowWidth }) => {
                 </button>
               </div>
             </div>
-            <div className='pro max-w-[30rem] p-[2rem] bg-gradient-to-b from-primary-100 border-[1px] border-primary-400 rounded-[1rem] flex flex-col gap-[2rem] shadow-[rgba(0,_0,_0,_0.25)_0px_25px_50px_-12px] hover:scale-[1.02] transition'>
-              <div className='head h-[10.5rem] border-b-[1px] border-b-neutral-300'>
+            <div className='pro w-full max-w-[30rem] p-[2rem] bg-gradient-to-b from-primary-100 border-[1px] border-primary-400 rounded-[1rem] flex flex-col gap-[2rem] shadow-[rgba(0,_0,_0,_0.25)_0px_25px_50px_-12px] hover:scale-[1.02] transition'>
+              <div className='head min-h-[10.5rem] border-b-[1px] border-b-neutral-300'>
                 <p className='text-neutral-700'>Pro Plan</p>
                 <h3 className='text-[2.75rem] text-neutral-700'>$9.9 per user/year</h3>
                 <div className='mx-auto mt-[1rem] py-[0.125rem] px-[0.125rem] rounded-[3.5rem] border-[1px] border-neutral-300 bg-neutral-50 font-light h-max w-max items-center flex'>
