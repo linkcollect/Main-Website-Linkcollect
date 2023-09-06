@@ -216,7 +216,7 @@ const CollectionitemV2 = React.forwardRef(({
                 <img 
                 alt="save"
                 src={isSaved ? saved : selectedMode === "light" ? bmSidebar : darkSaved} 
-                className = "transition-all duration-200 hover:scale-110 "
+                className = "w-6 h-6 transition-all duration-200 hover:scale-110"
                 />{isSaved ? "" : "save"}
               </IconButton>
             }

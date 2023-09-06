@@ -22,7 +22,7 @@ const Input = forwardRef(
   }, ref) => {
 
     // getting current selected mode
-    const {selectedMode} = useContext(switchMode)
+    const { selectedMode } = useContext(switchMode)
 
     // checking if it is a login page as not to show dark mode in login page for now
     // keeping normal styles for login page
@@ -30,7 +30,7 @@ const Input = forwardRef(
     const currentPage = urlParams[urlParams.length - 1]
 
     const inputVariants = cva(
-      `block focus:outline-none text-base ${selectedMode === "dark" && currentPage !== "login" ? "placeholder:text-dark-placeholder text-neutral-200":"placeholder:text-neutral-500 text-neutral-900"}  border-2 rounded-lg`,
+      `block focus:outline-none text-base ${selectedMode === "dark" && currentPage !== "login" ? "placeholder:text-dark-placeholder text-neutral-200" : "placeholder:text-neutral-500 text-neutral-900"}  border-2 rounded-lg`,
       {
         variants: {
           variant: {
@@ -39,21 +39,20 @@ const Input = forwardRef(
             secondary: "border-neutral-300 bg-neutral-50",
             file: `text-sm border-2 border-primary-200 rounded-md
                      file:mr-4 file:py-0 file:px-4 file:py-1
-                      file:rounded-full file:border-2 file:border-nutral-900
+                      file:rounded-full file:border-2 file:border-borderPrimary
                       file:text-[16px] file:font-light
-                        file:bg-secodary file:text-primary
+                        file:bg-borderPrimary file:text-dark-border
                         hover:file:bg-violet-100
                         file:cursor-pointer
           `,
-            darkDefault: "border-dark-secondary bg-dark-primary",
-            darkPrimary: "border-dark-secondary bg-dark-primary",
-            darkSecondary: "border-dark-secondary bg-dark-primary",
-            darkFile: `text-sm border-2 border-primary-200 rounded-md
+            darkDefault: "border-dark-border bg-dark-primary",
+            darkPrimary: "border-dark-border bg-dark-primary",
+            darkSecondary: "border-dark-border bg-dark-primary",
+            darkFile: `text-sm border-2 border-dark-border bg-dark-primary rounded-md
                      file:mr-4 file:py-0 file:px-4 file:py-1
-                      file:rounded-full file:border-2 file:border-nutral-900
+                      file:rounded-full file:border-2 file:border-dark-border
                       file:text-[16px] file:font-light
-                        file:bg-secodary file:text-primary
-                        hover:file:bg-violet-100
+                        file:bg-dark-secondary file:text-neutral-200
                         file:cursor-pointer
           `,
           },
@@ -74,7 +73,7 @@ const Input = forwardRef(
           : InputVariant
             ? InputVariant
             : "primary"
-        : "file";
+        : selectedMode ==="light"? "file": "darkFile";
     const [showPassword, setShowPassword] = useState(false);
     useMemo(() => {
       if (type !== "file" && value.length === 0 && type === "password") {
@@ -117,9 +116,12 @@ const Input = forwardRef(
 );
 
 export const Label = ({ name, htmlFor }) => {
+  // getting current selected mode
+  const { selectedMode } = useContext(switchMode)
+
   return (
     <label className="block" htmlFor={htmlFor}>
-      <span className="text-neutral-900 font-normal text-[16px] my-[3px]">
+      <span className={`${selectedMode === 'light' ? "text-neutral-900" : "text-neutral-50"} font-normal text-[16px] my-[3px]`}>
         <p>{name}</p>
       </span>
     </label>
@@ -127,10 +129,12 @@ export const Label = ({ name, htmlFor }) => {
 };
 
 export const TextArea = ({ className, ...props }) => {
+  // getting current selected mode
+  const { selectedMode } = useContext(switchMode)
   return (
     <textarea
-      className={classMerge(
-        "w-full h-28 px-4 py-3  border-solid border-2 border-primary-200 rounded-[10px] font-normal text-base text-textPrimary resize-none focus:outline-none",
+      className={classMerge(`${selectedMode === 'light' ? "text-black border-primary-200" : "text-neutral-50 border-dark-border bg-dark-primary"}
+      w-full h-28 px-4 py-3  border-solid border-2  rounded-[10px] font-normal text-base  resize-none focus:outline-none`,
         className
       )}
       {...props}

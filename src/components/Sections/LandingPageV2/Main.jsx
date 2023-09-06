@@ -211,28 +211,29 @@ const Main = ({ exploreData = undefined, windowWidth }) => {
             <div className='pro max-w-[30rem] p-[2rem] bg-gradient-to-b from-primary-100 border-[1px] border-primary-400 rounded-[1rem] flex flex-col gap-[2rem] shadow-[rgba(0,_0,_0,_0.25)_0px_25px_50px_-12px] hover:scale-[1.02] transition'>
               <div className='head h-[10.5rem] border-b-[1px] border-b-neutral-300'>
                 <p className='text-neutral-700'>Pro Plan</p>
-                <h3 className='text-[2.75rem] text-neutral-700'>$8 per user/month</h3>
+                <h3 className='text-[2.75rem] text-neutral-700'>$9.9 per user/year</h3>
                 <div className='mx-auto mt-[1rem] py-[0.125rem] px-[0.125rem] rounded-[3.5rem] border-[1px] border-neutral-300 bg-neutral-50 font-light h-max w-max items-center flex'>
-                  <div className='rounded-[3.5rem]  py-[0.125rem] px-[0.75rem] text-white bg-neutral-900 flex'>Monthly</div>
-                  <div className='px-[0.75rem] text-neutral-500'>Anually</div>
+                  <div className='rounded-[3.5rem]  py-[0.125rem] px-[0.75rem] text-white bg-neutral-900 flex'>yearly</div>
+                  {/* <div className='px-[0.75rem] text-neutral-500'>monthly</div> */}
                 </div>
               </div>
-              <div className='list text-neutral-800'>
+              <div className='list text-neutral-800 '>
                 <p className='text-left mb-[1rem]'>Includes all features of free plan and</p>
                 <ul className='list-none flex flex-col gap-[0.75rem] text-left'>
                   <li className='flex'><img src={Approve} alt='' className='w-[1.25rem] h-[1.5rem] mr-[0.75rem]'/><p className=''>Unlimited collections</p></li>
                   <li className='flex'><img src={Approve} alt='' className='w-[1.25rem] h-[1.5rem] mr-[0.75rem]'/><p className=''>Unlimited bookmarks</p></li>
                   <li className='flex'><img src={Approve} alt='' className='w-[1.25rem] h-[1.5rem] mr-[0.75rem]'/><p className=''>Add personalized notes to your bookmarks</p></li>
                   <li className='flex'><div className='ml-[2rem] rounded-[25px] border-[1px] border-success-300 bg-success-100 leading-0 px-[0.5rem]'>Coming Soon 👇</div></li>
+                  <li className='flex'><img src={Approve} alt='' className='w-[1.25rem] h-[1.5rem] mr-[0.75rem]'/><p className=''>Add Reminders to your bookmarks, so you don't forget to check it out later</p></li>
+                  <li className='flex'><img src={Approve} alt='' className='w-[1.25rem] h-[1.5rem] mr-[0.75rem]'/><p className=''>Collaborative Curation, create privately shared collections between your colleagues or friends</p></li>
                   <li className='flex'><img src={Approve} alt='' className='w-[1.25rem] h-[1.5rem] mr-[0.75rem]'/><p className=''>Auto summaries content on bookmarking using AI.</p></li>
-                  <li className='flex'><img src={Approve} alt='' className='w-[1.25rem] h-[1.5rem] mr-[0.75rem]'/><p className=''>Visual analytics of bookmarks and browsing data</p></li>
                 </ul>
               </div>
               <div className='cta mt-auto'>
                 <button 
                   onClick={() => {window.open(links.premium, "_blank")}} 
-                  className="p-[0.75rem] h-min w-full leading-[1.25rem] bg-primary-400 rounded-[5px] text-white font-light flex gap-[0.25rem]">
-                  <p className='mx-auto'>Get started with pro plan</p>
+                  className="p-[0.75rem] h-min w-full leading-[1.25rem] bg-primary-400 rounded-[5px] text-white font-light flex gap-[0.25rem] hover:scale-[1.02] hover:shadow-md transition">
+                  <p className='mx-auto '>Get started with pro plan</p>
                 </button>
               </div>
             </div>
@@ -243,7 +244,7 @@ const Main = ({ exploreData = undefined, windowWidth }) => {
             <h2 className='text-[clamp(1rem,10vw,4.25rem)] leading-[clamp(1rem,12vw,4.75rem)] max-w-[1000px]'>Simplify Bookmarking with LinkCollect's Magic</h2>
             <button 
               onClick={() => {window.open(links.extensionUrl, "_blank")}} 
-              className="mt-[2.5rem] py-[0.75rem] px-[1rem] w-[max-content] h-min leading-[1.25rem] bg-primary-400 rounded-[5px] text-white">
+              className="mt-[2.5rem] py-[0.75rem] px-[1rem] w-[max-content] h-min leading-[1.25rem] bg-primary-400 rounded-[5px] text-white hover:scale-[1.09] hover:shadow-xl transition">
                 Try Linkcollect for Free
             </button>
           </div>

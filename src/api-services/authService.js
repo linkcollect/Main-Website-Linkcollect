@@ -29,8 +29,8 @@ export function getUserById(userId) {
 export function googleAuth() {
   const query = queryString.stringify({
     client_id:
-      "842762588000-kh4ksf014o6upmdklc1tukus5d4gi5ch.apps.googleusercontent.com",
-    redirect_uri: "https://api.linkcollect.io/api/v1/user/google-auth", // Changes on production
+      "333534217481-vi5fkiks31acvki83rrkinnvn7aua4r9.apps.googleusercontent.com",
+    redirect_uri: "https://dev.linkcollect.io/api/v1/user/google-auth", // Changes on production
     scope: [
       "https://www.googleapis.com/auth/userinfo.email",
       "https://www.googleapis.com/auth/userinfo.profile",

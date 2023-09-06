@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import PageLoader from "../../UI/Loader/PageLoader";
 import ProfileHeader from "./ProfileHeader";
 import CollectionitemV2 from "../../Common/CollectionCard";
@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { collectionFetchingFailed, collectionFetchingSuccess, collectionFething } from "../../../store/Slices/collection.slice";
 import { downvoteAction, saveAction, unsaveAction, upvoteAction } from "../../../store/actions/collection.action";
 import SEO from "../../SEO/SEO";
+import { switchMode } from "../../../hooks/switchMode";
 const UserProfile = ({ username,windowWidth }) => {
   const dispatch = useDispatch();
   const collection = useSelector((state) => state.collection);
@@ -38,6 +39,10 @@ const UserProfile = ({ username,windowWidth }) => {
     }
     getCollectionOfTheUser();
   },[dispatch,username]);
+
+   // getting selected mode for theme change
+   const { selectedMode } = useContext(switchMode)
+   
   return (
     <BaseLayout>
         <SEO 
@@ -51,7 +56,7 @@ const UserProfile = ({ username,windowWidth }) => {
           <PageLoader />
         </div>
       ) : (
-        <div className="w-full h-full pb-6 overflow-y-scroll 3xl:px-0 px-8">
+        <div className="w-full h-full px-8 pb-6 overflow-y-scroll 3xl:px-0">
           <ProfileHeader
             username={username}
             name={user.name}
@@ -60,7 +65,7 @@ const UserProfile = ({ username,windowWidth }) => {
             totalViews={user.totalViews}
             totalCollections={user.totalCollections}
           />
-           <div className=" w-full">
+           <div className="w-full ">
           {collection.collections.length > 0 ? (
             <div className="flex items-start justify-start w-full mx-auto 3xl:pl-0 3xl:justify-center">
             <div className="w-full justify-start grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-6 2xl:gap-6 max-w-[1500px]">
@@ -90,11 +95,11 @@ const UserProfile = ({ username,windowWidth }) => {
               </div>
             </div>
           ) : (
-            <div className="flex flex-col self-center items-center justify-center w-full h-full">
-              <p className="mb-5 text-5xl text-textPrimary">
+            <div className={`flex flex-col self-center items-center justify-center w-full h-full ${selectedMode === "dark"? "text-neutral-50" : "text-black"}`}>
+              <p className="mb-5 text-5xl">
                 No Collection Found
               </p>
-              <p className="text-textPrimary">You can add it from extension</p>
+              <p className="">You can add it from extension</p>
             </div>
           )}
         </div>

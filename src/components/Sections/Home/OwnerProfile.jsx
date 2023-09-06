@@ -40,7 +40,6 @@ const OwnerProfile = ({ username, windowWidth }) => {
           res.data.data.collections,
           sortingType
         );
-
         dispatch(
           collectionFetchingSuccess({ data: { collections: sortedData } })
         );
@@ -95,8 +94,8 @@ const OwnerProfile = ({ username, windowWidth }) => {
     }
   };
 
-    // getting current selected mode
-    const {selectedMode} = useContext(switchMode)
+  // getting current selected mode
+  const { selectedMode } = useContext(switchMode)
 
   return (
     <BaseLayout>
@@ -106,9 +105,8 @@ const OwnerProfile = ({ username, windowWidth }) => {
             ? `${user?.userData?.name} @(${username}) - User on linkcollect`
             : "User Profile on linkcollect"
         }
-        description={`@${username} on Linkcollect. ${user?.userData?.name} has ${
-          collection.collections.length ? collection.collections.length : "0"
-        } collections. Checkout his amazing collections`}
+        description={`@${username} on Linkcollect. ${user?.userData?.name} has ${collection.collections.length ? collection.collections.length : "0"
+          } collections. Checkout his amazing collections`}
         image={
           user?.userData?.profilePic ? user?.userData?.profilePic : undefined
         }
@@ -121,9 +119,8 @@ const OwnerProfile = ({ username, windowWidth }) => {
           name="My Collection"
         />
         <div
-          className={`w-full flex items-start justify-between gap-6 ${
-            windowWidth < 700 ? "hidden" : ""
-          }`}
+          className={`w-full flex items-start justify-between gap-6 ${windowWidth < 700 ? "hidden" : ""
+            }`}
         >
           <div className=" w-[calc(100%-212px)]">
             <Search query={query} setQuery={setQuery} />
@@ -167,7 +164,7 @@ const OwnerProfile = ({ username, windowWidth }) => {
             </div>
           </div>
         ) : (
-          <div className={`flex flex-col items-center self-center justify-center w-full h-full ${selectedMode === "dark"? "text-neutral-50" : "text-black"} `}>
+          <div className={`flex flex-col items-center self-center justify-center w-full h-full ${selectedMode === "dark" ? "text-neutral-50" : "text-black"} `}>
             <p className="mb-5 text-5xl text-textPrimary">
               No Collection Found
             </p>
