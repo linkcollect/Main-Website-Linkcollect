@@ -198,11 +198,13 @@ const BookmarkItem = ({
                   ? windowWidth > 768
                     ? windowWidth > 1024
                       ? windowWidth > 1280
-                        ? nameShortner(name, 108)
-                        : nameShortner(name, 80)
-                      : nameShortner(name, 50)
-                    : nameShortner(name, 25)
-                  : nameShortner(name, 25)}
+                        ? windowWidth > 1400
+                          ? nameShortner(name, 110)
+                          : nameShortner(name, 70)
+                        : nameShortner(name, 40)
+                      : nameShortner(name, 25)
+                    : nameShortner(name, 20)
+                  : nameShortner(name, 23)}
               </p>
 
               {/* Link Name */}
