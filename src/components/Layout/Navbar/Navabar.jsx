@@ -89,7 +89,7 @@ const Navabar = () => {
   return (
     <div className={`flex mb-[0.5rem] md:mb-[1rem] py-[0.5rem] px-8 3xl:px-[2rem] relative justify-between items-center w-full border-b  ${selectedMode === "dark" ? "bg-dark-primary border-dark-secondary" : "border-neutral-200 bg-neutral-50"}`}>
         <div className="flex items-center justify-start my-auto mr-[1rem] align-center w-32 h-10">
-        {windowWidth < 768 &&
+        {(windowWidth < 768 || !auth.isLoggedIn)&& 
           <Link to="/">
             {selectedMode === "light" ?
               <img src={MainLogo} alt="" className="w-32 h-14" />

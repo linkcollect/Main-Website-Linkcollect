@@ -121,7 +121,7 @@ const Bookmarks = ({ windowWidth }) => {
         image={collectionData.collectionData?.image ? collectionData.collectionData?.image : null}
         >
       </SEO>
-      <div className="flex w-full mx-auto mb-[0.5rem] overflow-y-auto scrollbar-hide">
+      <div className="flex w-full h-[calc(100%)] mx-auto mb-[0.5rem] overflow-y-auto scrollbar-hide">
         {/* Collection Edit Modal */}
         {!collectionData.isFetching && <CollectionModal
           isOpen={editCollectionModalOpen}
@@ -143,7 +143,7 @@ const Bookmarks = ({ windowWidth }) => {
         {!collectionData.isFetching && <EcBookamrkModal isOpen={openCreateBookmarkModal} onClose={bookmarkCreateModalHandler} isEditing={false} collectionID={collectionId}/>}
         
 
-        <div className="flex flex-col w-full px-8">
+        <div className="flex flex-col w-full px-8 lg:px-[5rem]">
           <div className="">
             {/* Header : Collection Details , Actions */}
             <div className="w-full pt-2 mx-auto ">
@@ -181,7 +181,7 @@ const Bookmarks = ({ windowWidth }) => {
           </div>
 
           {/* Bookmarks Container */}
-          <div className="w-full h-[60%] mx-auto ">
+          <div className="w-full h-[max] mx-auto ">
             {collectionData.isFetching ? (
               <div className="flex items-center justify-center w-full h-full">
                 <PageLoader />
@@ -208,6 +208,7 @@ const Bookmarks = ({ windowWidth }) => {
                       collectionName={collectionData.collectionData.title}
                     />
                   ))}
+                  <div className="h-[120px]"></div>
                 </div>
               </div>
             ) : (
