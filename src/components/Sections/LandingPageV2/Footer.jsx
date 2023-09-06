@@ -14,13 +14,13 @@ const links = {
 const Footer = () => {
 	const navigate = useNavigate();
 	return (
-		<footer className='w-screen flex flex-col px-[5rem] border-t-[1px] bg-neutral-50 border-t-neutral-300 text-neutral-800'>
-        <div className='footer-content py-[4rem] flex justify-between'>
+		<footer className='w-screen flex flex-col lg:px-[5rem] border-t-[1px] bg-neutral-50 border-t-neutral-300 text-neutral-800'>
+        <div className='footer-content py-[4rem] px-[2rem] lg:px-0 flex flex-col gap-[4rem] lg:gap-0 lg:flex-row justify-between'>
           <div className='logo max-w-[400px]'>
             <img onClick={() => navigate('/')} src={MainLogo} alt="" className='h-[2.5rem] mb-[1rem]'/>
             <p className='text-start'>When you find something you like on the internet, save it with linkcollect before you forget</p>
           </div>
-          <div className='links flex justify-between gap-[4.5rem] '>
+          <div className='links flex flex-col lg:flex-row justify-between gap-[2rem] lg:gap-[4.5rem] '>
             <div className='flex flex-col items-start'>
               <a href={links.extensionUrl} rel="noreferrer" target='_blank' className='mb-[1rem]'>Install Extension</a>
               <a href="https://linkcollect.io/explore" rel="noreferrer" target='_blank' className='mb-[1rem]'>Explore Collections</a>
@@ -36,9 +36,9 @@ const Footer = () => {
             </div>
           </div>
         </div>
-        <div className='copyright flex py-[1.25rem] justify-between text-neutral-500 w-full'>
+        <div className='copyright border-2 border-neutral-200 lg:border-none py-[1.25rem] px-[2rem] lg:px-0 flex flex-col lg:flex-row gap-[1rem] justify-between text-neutral-500 w-full'>
           <p>Copyright © 2023 linkCollect.io</p>
-          <div className='flex gap-[2rem]'>
+          <div className='flex gap-[2rem] justify-between lg:justify-start'>
             <a href={links.contact} target='_blank' rel='noreferrer'>Contact Us</a>
             <a href='https://linkcollect.io/privacy' target='_blank' rel='noreferrer'>Privacy Policy</a>
           </div>
