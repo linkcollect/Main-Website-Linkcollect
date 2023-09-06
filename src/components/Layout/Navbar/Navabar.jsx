@@ -87,7 +87,7 @@ const Navabar = () => {
   const windowWidth = useMediaQuery()
 
   return (
-    <div className={`flex mb-[0.5rem] md:mb-[1rem] py-[0.5rem] px-8 3xl:px-[2rem] relative justify-between items-center w-full border-b  ${selectedMode === "dark" ? "bg-dark-primary border-dark-secondary" : "border-neutral-200 bg-neutral-50"}`}>
+    <div className={`flex mb-[0.5rem] md:mb-[1rem] py-[0.5rem] px-[1rem] sm:px-8 3xl:px-[2rem] relative justify-between items-center w-full border-b  ${selectedMode === "dark" ? "bg-dark-primary border-dark-secondary" : "border-neutral-200 bg-neutral-50"}`}>
         <div className="flex items-center justify-start my-auto mr-[1rem] align-center w-32 h-10">
         {(windowWidth < 768 || !auth.isLoggedIn)&& 
           <Link to="/">
@@ -106,9 +106,9 @@ const Navabar = () => {
           handleSwitchMode={handleSwitchMode}
           selectedMode={selectedMode}
         />
-      <button onClick={handleMenu} className="ml-[1rem] block md:hidden min-w-max z-[101]">
+      {auth.isLoggedIn && <button onClick={handleMenu} className="ml-[1rem] block md:hidden min-w-max z-[101]">
         <img src={!sideMenuOpen ? Hamburger : Close} alt="" />
-      </button>
+      </button>}
       <div className={`sidebar absolute top-[calc(100%+2px)] right-0 bg-neutral-50 w-screen z-[100] border-b-2 border-neutral-200 px-[2rem] py-[3rem] transition ${sideMenuOpen ? 'translate-x-0' : 'translate-x-[100%]'}`}>
       <div className="flex flex-col items-start justify-start gap-4">
         {menuItem.map(({ name, link, icon, activeIcon }) => (
@@ -155,9 +155,9 @@ const Navabar = () => {
             </span>
           </a>
         )))}
-        {!isLoggedIn && <a href="https://chrome.google.com/webstore/detail/linkcollect/knekpacpcgkieomkhhngenjeeokddkif" rel="noreferrer" target="_blank"><Button className="py-[1rem] rounded-[4.8px] text-[0.75rem] font-normal h-6 w-max">Try LinkCollect</Button></a>}
         {isLoggedIn && <Button onClick={logoutHandler} className={`py-[1rem] rounded-[4.8px] text-[0.75rem] h-6 w-max flex  ${selectedMode === "light" ? "text-neutral-600" : "text-borderPrimary"} transition-all duration-200 rounded-md hover:scale-110 border border-error-500 bg-white-10`}>Logout</Button>}
       </nav>
+      {!isLoggedIn && <a href="https://chrome.google.com/webstore/detail/linkcollect/knekpacpcgkieomkhhngenjeeokddkif" rel="noreferrer" target="_blank"><Button className="ml-[0.5rem] sm:ml-[1rem] py-[1rem] rounded-[4.8px] text-[0.75rem] font-normal h-6 w-max">Try LinkCollect</Button></a>}
       </div>
     </div>
   );
