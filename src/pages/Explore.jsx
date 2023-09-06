@@ -165,7 +165,7 @@ const Explore = ({ windowWidth }) => {
       </div>
 
       {/* Collection Items */}
-      <div className="w-full h-full px-8 pb-6 overflow-y-scroll 3xl:px-0">
+      <div className="w-full h-full mt-[1rem] px-8 pb-6 overflow-y-scroll 3xl:px-0">
         {/* At fisrt reandering when I am going to get first page loading or if we will get search result for the first time*/}
         {(collection.collections.length === 0 && collection.isFetching) || isSearching ? (
           <div className="flex items-center justify-center w-full h-full">

@@ -71,6 +71,7 @@ const Sidebar = ({ user, handleSetUser, windowWidth }) => {
               <img
                 src={auth.userData.profilePic ? auth.userData.profilePic : defaultImage}
                 className="object-cover w-full h-full rounded-full"
+                alt=""
               />
             </div>
             <p className={` ${selectedMode === "dark" ? "text-white" : "text-black"} font-bold text-[16px]`}>{auth.userData.name}</p>
@@ -135,7 +136,7 @@ const Sidebar = ({ user, handleSetUser, windowWidth }) => {
             target="_blank"
             rel="noreferrer"
           >
-            <img src={energy} width={16} /> Upgrade
+            <img src={energy} width={16} alt=""/> Upgrade
           </a>
         </div>
       </div>

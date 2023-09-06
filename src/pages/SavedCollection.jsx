@@ -12,12 +12,15 @@ import {
 } from "../store/actions/save.actions";
 import { SortActions } from "../components/Common/ActiondropDown";
 import Search from "../components/Common/Search";
+import { useContext } from "react";
+import { switchMode } from "../hooks/switchMode";
 
 const SavedCollection = ({ windowWidth }) => {
   const dispatch = useDispatch();
   const collection = useSelector((state) => state.save);
   const [query, setQuery] = useState("");
   const auth = useSelector((state) => state.auth);
+  const { selectedMode } = useContext(switchMode);
   useEffect(() => {
     dispatch(getSaveCollectionOfUser(auth.userId));
   }, [dispatch]);
@@ -61,7 +64,7 @@ const SavedCollection = ({ windowWidth }) => {
       </div>
 
       {/* Collection Items */}
-      <div className=" w-full pb-6 h-full overflow-y-scroll 3xl:px-0 px-8">
+      <div className=" w-full pb-6 mt-[1rem] h-full overflow-y-scroll 3xl:px-0 px-8">
         {collection.isFetching ? (
           <div className="flex items-center justify-center w-full h-full">
             <PageLoader />

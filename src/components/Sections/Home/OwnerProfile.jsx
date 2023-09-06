@@ -82,6 +82,20 @@ const OwnerProfile = ({ username, windowWidth }) => {
       type: "MOST_BOOKMARKED",
     },
   ];
+  const navabrItem = [
+    {
+      name: "Contact us",
+      link: "http://linkcollect.io/askwhyharsh/c/64ecd6198fac6bae8d54fb77"
+    },
+    {
+      name: "FAQs",
+      link: "https://linkcollect.super.site/help"
+    },
+    {
+      name: "Feedback",
+      link: "https://forms.gle/Dg5ehCAR4AEZBnF89"
+    },
+  ];
 
   const onPin = async (e, collectionId) => {
     e.stopPropagation();
@@ -112,7 +126,7 @@ const OwnerProfile = ({ username, windowWidth }) => {
         }
       ></SEO>
       {/* Top bar */}
-      <div className="flex flex-col items-start justify-center w-full gap-4 mx-auto 3xl:px-0 px-8 max-w-[1500px]">
+      <div className="flex flex-col items-start justify-center w-full gap-4 mb-[1rem] mx-auto 3xl:px-0 px-8 max-w-[1500px]">
         <CollectionHeader
           windowWidth={windowWidth}
           isOwner={true}

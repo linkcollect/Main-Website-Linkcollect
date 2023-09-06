@@ -121,7 +121,7 @@ const Bookmarks = ({ windowWidth }) => {
         image={collectionData.collectionData?.image ? collectionData.collectionData?.image : null}
         >
       </SEO>
-      <div className="flex w-full mx-auto mb-6 overflow-y-auto scrollbar-hide">
+      <div className="flex w-full mx-auto mb-[0.5rem] overflow-y-auto scrollbar-hide">
         {/* Collection Edit Modal */}
         {!collectionData.isFetching && <CollectionModal
           isOpen={editCollectionModalOpen}
@@ -181,7 +181,7 @@ const Bookmarks = ({ windowWidth }) => {
           </div>
 
           {/* Bookmarks Container */}
-          <div className="w-full h-[60%] mx-auto pb-6">
+          <div className="w-full h-[60%] mx-auto ">
             {collectionData.isFetching ? (
               <div className="flex items-center justify-center w-full h-full">
                 <PageLoader />
