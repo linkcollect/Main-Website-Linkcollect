@@ -20,16 +20,6 @@ const Navbar = () => {
 
   const handleMenu = () => {
     setSideMenuOpen(!sideMenuOpen);
-    // const sideMenuElement = document.querySelectorAll([".navbar"]);
-
-    // if (!sideMenuOpen) {
-    //     sideMenuElement[0].classList.remove('hidden');
-    //     sideMenuElement[0].classList.add('flex');
-    // } else {
-    //     sideMenuElement[0].classList.add('hidden');
-    // }
-
-    // console.log(sideMenuElement);
   }
 
   return (
