@@ -162,9 +162,9 @@ const CollectionitemV2 = React.forwardRef(({
               </div>
             </div>
             ) : (<BackgroundGradient hashValue={id} title={!hover ? title : description ? description : title} />)}
-          <div className="flex items-center justify-between pt-2.5 px-1.5 ">
-            <p className={`text-sm font-normal ${selectedMode === "dark" ? "text-neutral-200" : "text-neutral-800"}`}>
-              {windowWidth > 640
+          <div className="flex  justify-between pt-2.5 px-1.5 ">
+            <p className={`text-sm truncate font-normal ${selectedMode === "dark" ? "text-neutral-200" : "text-neutral-800"}`}>
+              {/* {windowWidth > 640
                 ? windowWidth > 768 
                   ? windowWidth > 1024 
                     ? windowWidth > 1280 
@@ -172,9 +172,10 @@ const CollectionitemV2 = React.forwardRef(({
                       : nameShortner(title, 22)
                     : nameShortner(title, 18)
                   : nameShortner(title, 22)
-                : nameShortner(title, 28)}
+                : nameShortner(title, 28)} */}
+              {title}
             </p>
-            <p className={`text-sm font-normal ${selectedMode === "dark" ? "text-neutral-200" : "text-neutral-600"}`}>
+            <p className={`text-sm text-right min-w-[4rem] max-h-[1rem] font-normal ${selectedMode === "dark" ? "text-neutral-200" : "text-neutral-600"}`}>
               {links} Links
             </p>
           </div>
