@@ -28,7 +28,7 @@ const LandingPageV2 = ({ windowWidth }) => {
   return (
     <div className="flex flex-col justify-between h-screen overflow-x-hidden overflow-y-scroll scrollbar-hide">
       <Navbar />
-      <Main exploreData={exploreData} />
+      <Main exploreData={exploreData} windowWidth={windowWidth}/>
       <Footer />
     </div>
   );
