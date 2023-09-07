@@ -1,15 +1,20 @@
-import { createContext, useState } from 'react';
+import { createContext, useEffect, useState } from 'react';
 
 export const switchMode = createContext("");
 
 // Provider
-export const  ThemeProvider  =  ({ children })  =>  {
+export const ThemeProvider = ({ children }) => {
+  
+  const currentTheme = localStorage?.getItem('theme')
   // dark and light mode switch
-  const [selectedMode, setSelectedMode] = useState('light')
+  const [selectedMode, setSelectedMode] = useState(currentTheme || 'light')
 
-return  (
+  useEffect(() => {
+    localStorage.setItem('theme', selectedMode)
+  }, [selectedMode])
+  return (
     <switchMode.Provider value={{ selectedMode, setSelectedMode }}>
-        {children}
+      {children}
     </switchMode.Provider>
-    );
+  );
 };
