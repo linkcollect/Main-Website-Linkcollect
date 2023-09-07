@@ -142,7 +142,16 @@ const CollectionitemV2 = React.forwardRef(({
       )
     } catch (error) {
       console.log(error)
-      toast.error("Collection Duplication Failed 😫")
+      toast.error("Collection Duplication Failed 😫", {
+        style: {
+          border: '1px solid #4B4C63',
+          padding: '6px',
+          color: '#713200',
+          boxShadow: "none",
+          width: 'max-content',
+          minWidth: "max-content"
+        },
+      })
 
     }
   }
