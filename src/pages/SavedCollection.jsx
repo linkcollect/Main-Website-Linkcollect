@@ -94,6 +94,7 @@ const SavedCollection = ({ windowWidth }) => {
                   onUnsave={unsaveAction}
                   onUpvote={upvoteAction}
                   onDownVote={downvoteAction}
+                  isDuplicate={true}
                 /> 
               ))}
             </div>

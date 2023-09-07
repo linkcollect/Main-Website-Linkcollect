@@ -17,6 +17,8 @@ import IconButton from "../UI/IconButton/IconButton";
 import { useDispatch, useSelector } from "react-redux";
 import BackgroundGradient from "../UI/BackgroundGraident/BackgroundGradient";
 import { switchMode } from "../../hooks/switchMode";
+import duplicateSvg from "../../assets/duplicate-white.svg"
+import { duplicateCollection } from "../../api-services/collectionService.js";
 
 const CollectionitemV2 = React.forwardRef(({
   id,
@@ -39,6 +41,7 @@ const CollectionitemV2 = React.forwardRef(({
   onUnsave,
   onPin,
   isHoverable = true,
+  isDuplicate = false,
 }, ref) => {
   const auth = useSelector(state => state.auth)
   const navigate = useNavigate();
@@ -98,6 +101,9 @@ const CollectionitemV2 = React.forwardRef(({
     }
   }
 
+
+
+
   const saveHandler = (e) =>{
     e.stopPropagation()
     if(!auth.isLoggedIn){
@@ -118,6 +124,15 @@ const CollectionitemV2 = React.forwardRef(({
     navigate(`/${username}`)
   }
 
+  const onDuplicate = async (e,id) => {
+    e.stopPropagation();
+    console.log("duplicate")
+    try {
+      let dup = await duplicateCollection(id);
+    } catch (error) {
+      console.log(error)
+    }
+  }
   // getting current selected mode
 
   const {selectedMode} = useContext(switchMode)
@@ -126,14 +141,14 @@ const CollectionitemV2 = React.forwardRef(({
     <>
 
       <div
-        className={`relative bg-bgPrimary border ${selectedMode === "dark" ? "border-dark-secondary" : "border-neutral-200"}  rounded-lg w-full group 
-        hover:shadow-md h-[210px] transition duration-300 ease-in-out cursor-pointer select-none`}
+        className={`relative bg-bgPrimary border ${selectedMode === "dark" ? "border-dark-secondary" : "border-neutral-200 hover:shadow-md "}  rounded-lg w-full group 
+        h-[210px] transition duration-300 ease-in-out cursor-pointer select-none`}
         ref={ref}
         onMouseEnter={() => {isHoverable && setHover(true)}} onMouseLeave={() => {isHoverable && setHover(false)}}
         onClick={()=>navigate(`/${username}/c/${id}`)}
 
       >
-        {isOwner && (
+        {isOwner && !isDuplicate && (
           <IconButton
             className={`z-10 absolute p-1 transition-all duration-500 rounded-sm bg-black/[0.20] top-2 left-2 ${!isPinned ? "group-hover:opacity-100 opacity-0" : "opacity-1"}`}
             onClick={(e)=>onPin(e, id)}
@@ -143,6 +158,16 @@ const CollectionitemV2 = React.forwardRef(({
             ) : (
               <img src={pinSvg} alt="pin" />
             )}
+          </IconButton>
+        )}
+
+        {isDuplicate && (
+          <IconButton
+            className={`z-10 absolute p-1 transition-all duration-500 rounded-sm bg-black/[0.20] top-2 left-2 ${hover ? "opacity-100" : "opacity-0"}`}
+            onClick={(e)=>onDuplicate(e, id)}
+          >
+           <img src={duplicateSvg} alt="pin" />
+         
           </IconButton>
         )}
         

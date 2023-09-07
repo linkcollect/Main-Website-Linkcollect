@@ -76,6 +76,9 @@ export function saveCollection(id){
 export function unsaveCollection(id){
   return http.post(`${apiEndpoint}/${id}/unsave`)
 }
+export function duplicateCollection(id){
+  return http.post(`${apiEndpoint}/${id}/duplicate`)
+}
 
 export function togglePin(collectionId) {
   return http.post(`${apiEndpoint}/togglePin/${collectionId}`)
