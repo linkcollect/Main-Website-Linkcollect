@@ -47,8 +47,8 @@ const Main = ({ exploreData = undefined, windowWidth }) => {
       <div className='w-full max-w-[1800px] mx-auto'>
         <section id='home' className='hero w-full py-[clamp(1rem,5vw,6.25rem)] px-[clamp(1rem,5vw,5rem)] '>
           <div className='hero-content mx-auto flex flex-col items-center gap-[2rem] w-[clamp(auto,12vw,60rem)]'>
-            <h1 className='text-neutral-900 text-[clamp(1rem,10vw,4.25rem)] leading-[clamp(1rem,12vw,4.75rem)]'>Save, Curate, Share <br className='hidden md:block'></br>& Discover Bookmarks</h1>
-            <p className='text-neutral-600 max-w-[520px]'> Pinterest but make it links - linkcollect is 🐐 bookmark manager made for people who like to curate and share information online </p>
+            <h1 className='text-neutral-900 text-[clamp(1rem,10vw,4.25rem)] leading-[clamp(1rem,12vw,4.75rem)]'>keep forgetting links? <br className='hidden md:block'></br>not anymore</h1>
+            <p className='text-neutral-600 max-w-[520px]'> linkcollect is the only browser extension that you need to organise your links in simple, clean and efficient manner + we let you discover popular collections, just like pinterest </p>
             {windowWidth > 768 ? (<button 
               onClick={() => {window.open(links.extensionUrl, "_blank")}} 
               className="mt-[2.5rem] py-[0.75rem] px-[1rem] w-[175px] h-min leading-[1.25rem] bg-primary-400 rounded-[5px] text-white hover:scale-[1.05] hover:shadow-md transition">
@@ -101,7 +101,7 @@ const Main = ({ exploreData = undefined, windowWidth }) => {
         <section id='features' className='features py-[clamp(1rem,5vw,6.25rem)] px-[clamp(1rem,5vw,5rem)]'>
           <div className='heading mx-auto max-w-[1000px]'>
             <h2 className='text-[clamp(1rem,10vw,4.25rem)] leading-[clamp(1rem,12vw,4.75rem)] max-w-[1000px] '>What we do?</h2>
-            <p className='text-neutral-700 max-w-[500px] mx-auto mt-[1rem]'>A way to manage your online resources with our browser extension, simplifying saving, categorizing, and synchronizing for unmatched digital efficiency, and it's damn simple to use </p>
+            <p className='text-neutral-700 max-w-[500px] mx-auto mt-[1rem]'>A way to manage your online resources across multiple devices. Save with our browser extension in just a click. we simplify saving, grouping and sharing 🪄 magicly, it's damn simple to use </p>
           </div>
           <div className='content mt-[3rem] grid xl:grid-cols-7 gap-[1.25rem]'>
             <div className='xl:col-span-4 xl:row-span-1 bg-gradient-to-br from-primary-100 to-neutral-50 border-[1px] border-neutral-300 p-[0.75rem] md:p-[2rem] rounded-[1rem] flex flex-col gap-[1rem] md:grid md:grid-cols-2 md:gap-[2rem] min-h-[30rem] overflow-y-hidden hover:scale-[1.02] hover:shadow-md transition'>
