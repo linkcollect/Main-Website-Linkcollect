@@ -175,7 +175,7 @@ const CollectionitemV2 = React.forwardRef(({
                 : nameShortner(title, 28)} */}
               {title}
             </p>
-            <p className={`text-sm text-right min-w-[4rem] max-h-[1rem] font-normal ${selectedMode === "dark" ? "text-neutral-200" : "text-neutral-600"}`}>
+            <p className={`text-sm text-right min-w-[4rem] max-h-[1rem] font-normal ${selectedMode === "dark" ? "text-neutral-500" : "text-neutral-600"}`}>
               {links} Links
             </p>
           </div>
@@ -196,16 +196,16 @@ const CollectionitemV2 = React.forwardRef(({
                   :
                   <img src={viewsSvg} alt="views" className="w-5 h-5 mr-1" />
                 }
-                <p className={`text-sm font-normal  ${selectedMode === "dark" ? "text-neutral-200" : "text-neutral-500"}`}>
+                <p className={`text-sm font-normal  ${selectedMode === "dark" ? "text-neutral-500" : "text-neutral-500"}`}>
                   {views ? views : 0}
                 </p>
               </div>
               {/* votes */}
-              <IconButton className={`m-1 text-sm font-normal ${selectedMode === "dark" ? "text-neutral-200" : "text-neutral-500"}  `} onClick={upvoteHandler}>
+              <IconButton className={`m-1  text-sm font-normal ${selectedMode === "dark" ? "text-neutral-500" : "text-neutral-500"}  `} onClick={upvoteHandler}>
                 {selectedMode === "dark" ?
-                  <img src={isUpvoted.isClicked ? upvoted : darkUpvote} alt="upvote" className="w-5 h-5 mr-1 transition-all duration-200 hover:scale-110 " />
+                  <img src={isUpvoted.isClicked ? upvoted : darkUpvote} alt="upvote" className="w-5 h-5  mr-1 transition-all duration-200 hover:scale-110 " />
                   :
-                  <img src={isUpvoted.isClicked ? upvoted : upvote} alt="upvote" className="w-5 h-5 mr-1 transition-all duration-200 hover:scale-110 " />
+                  <img src={isUpvoted.isClicked ? upvoted : upvote} alt="upvote" className=" w-5 h-5 mr-1 transition-all duration-200 hover:scale-110 " />
                 }
                 {isUpvoted.number}
               </IconButton>
@@ -213,7 +213,7 @@ const CollectionitemV2 = React.forwardRef(({
 
             {/* Saved  */}
             {isSavedOptionVisible &&
-              <IconButton className={`gap-1  ${isSaved ? 'text-primary-500' : selectedMode === "dark" ? "text-neutral-50" : "text-neutral-500"}  text-[14px]`} onClick={saveHandler}>
+              <IconButton className={`gap-1  ${isSaved ? 'text-primary-500' : selectedMode === "dark" ? "text-neutral-400" : "text-neutral-500"}  text-[14px]`} onClick={saveHandler}>
                 <img 
                 alt="save"
                 src={isSaved ? saved : selectedMode === "light" ? bmSidebar : darkSaved} 
