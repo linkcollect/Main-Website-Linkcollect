@@ -19,6 +19,7 @@ import BackgroundGradient from "../UI/BackgroundGraident/BackgroundGradient";
 import { switchMode } from "../../hooks/switchMode";
 import duplicateSvg from "../../assets/duplicate-white.svg"
 import { duplicateCollection } from "../../api-services/collectionService.js";
+import toast, { Toaster } from "react-hot-toast";
 
 const CollectionitemV2 = React.forwardRef(({
   id,
@@ -73,16 +74,16 @@ const CollectionitemV2 = React.forwardRef(({
 
   //   const titleRef = useRef()
 
-//   useEffect(()=>{
-//       if (hover) {
-//         titleRef.current = title
-//       } else {
-//           titleRef.current = description
-//       }
-//   }, [hover])
-  const upvoteHandler = (e)=>{
+  //   useEffect(()=>{
+  //       if (hover) {
+  //         titleRef.current = title
+  //       } else {
+  //           titleRef.current = description
+  //       }
+  //   }, [hover])
+  const upvoteHandler = (e) => {
     e.stopPropagation()
-    if(!auth.isLoggedIn){
+    if (!auth.isLoggedIn) {
       navigate('/login');
       return;
     }
@@ -104,9 +105,9 @@ const CollectionitemV2 = React.forwardRef(({
 
 
 
-  const saveHandler = (e) =>{
+  const saveHandler = (e) => {
     e.stopPropagation()
-    if(!auth.isLoggedIn){
+    if (!auth.isLoggedIn) {
       navigate('/login');
       return;
     }
@@ -124,18 +125,39 @@ const CollectionitemV2 = React.forwardRef(({
     navigate(`/${username}`)
   }
 
-  const onDuplicate = async (e,id) => {
+  const onDuplicate = async (e, id) => {
     e.stopPropagation();
-    console.log("duplicate")
     try {
       let dup = await duplicateCollection(id);
+      toast.success("Collection Duplicated in your profile Successfully 😎", {
+        style: {
+          border: '1px solid #4B4C63',
+          padding: '6px',
+          color: '#713200',
+          boxShadow: "none",
+          width: 'max-content',
+          minWidth: "max-content"
+        },
+      }
+      )
     } catch (error) {
       console.log(error)
+      toast.error("Collection Duplication Failed 😫", {
+        style: {
+          border: '1px solid #4B4C63',
+          padding: '6px',
+          color: '#713200',
+          boxShadow: "none",
+          width: 'max-content',
+          minWidth: "max-content"
+        },
+      })
+
     }
   }
   // getting current selected mode
 
-  const {selectedMode} = useContext(switchMode)
+  const { selectedMode } = useContext(switchMode)
 
   return (
     <>
@@ -144,14 +166,19 @@ const CollectionitemV2 = React.forwardRef(({
         className={`relative bg-bgPrimary border ${selectedMode === "dark" ? "border-dark-secondary" : "border-neutral-200 hover:shadow-md "}  rounded-lg w-full group 
         h-[210px] transition duration-300 ease-in-out cursor-pointer select-none`}
         ref={ref}
-        onMouseEnter={() => {isHoverable && setHover(true)}} onMouseLeave={() => {isHoverable && setHover(false)}}
-        onClick={()=>navigate(`/${username}/c/${id}`)}
+        onMouseEnter={() => { isHoverable && setHover(true) }} onMouseLeave={() => { isHoverable && setHover(false) }}
+        onClick={() => navigate(`/${username}/c/${id}`)}
 
       >
+        <Toaster
+          position="top-center"
+          reverseOrder={true}
+        />
+
         {isOwner && !isDuplicate && (
           <IconButton
             className={`z-10 absolute p-1 transition-all duration-500 rounded-sm bg-black/[0.20] top-2 left-2 ${!isPinned ? "group-hover:opacity-100 opacity-0" : "opacity-1"}`}
-            onClick={(e)=>onPin(e, id)}
+            onClick={(e) => onPin(e, id)}
           >
             {isPinned ? (
               <img src={filledPinSvg} alt="pin" />
@@ -164,32 +191,32 @@ const CollectionitemV2 = React.forwardRef(({
         {isDuplicate && (
           <IconButton
             className={`z-10 absolute p-1 transition-all duration-500 rounded-sm bg-black/[0.20] top-2 left-2 ${hover ? "opacity-100" : "opacity-0"}`}
-            onClick={(e)=>onDuplicate(e, id)}
+            onClick={(e) => onDuplicate(e, id)}
           >
-           <img src={duplicateSvg} alt="pin" />
-         
+            <img src={duplicateSvg} alt="pin" />
+
           </IconButton>
         )}
-        
-          {image !== "undefined" && image !== undefined && image !== "null" && image !== null ? 
-          (<div className="w-full h-[109px] relative">
-          <img
-            src={
-              image !== "undefined" && image !== undefined && image !== "null" && image !== null
-                ? image
-                : defultCollectionImage
-            }
-            className="object-cover w-full h-full rounded-t-md"
-            alt="collection img"
-          />
-          <div className="absolute rounded-t-md top-0 left-0 w-full h-full z-5 shadow-[inset_0_0_15px_5px_rgba(0,0,0,0.1)]">
 
-              </div>
+        {image !== "undefined" && image !== undefined && image !== "null" && image !== null ?
+          (<div className="w-full h-[109px] relative">
+            <img
+              src={
+                image !== "undefined" && image !== undefined && image !== "null" && image !== null
+                  ? image
+                  : defultCollectionImage
+              }
+              className="object-cover w-full h-full rounded-t-md"
+              alt="collection img"
+            />
+            <div className="absolute rounded-t-md top-0 left-0 w-full h-full z-5 shadow-[inset_0_0_15px_5px_rgba(0,0,0,0.1)]">
+
             </div>
-            ) : (<BackgroundGradient hashValue={id} title={!hover ? title : description ? description : title} />)}
-          <div className="flex  justify-between pt-2.5 px-1.5 ">
-            <p className={`text-sm truncate font-normal ${selectedMode === "dark" ? "text-neutral-200" : "text-neutral-800"}`}>
-              {/* {windowWidth > 640
+          </div>
+          ) : (<BackgroundGradient hashValue={id} title={!hover ? title : description ? description : title} />)}
+        <div className="flex  justify-between pt-2.5 px-1.5 ">
+          <p className={`text-sm truncate font-normal ${selectedMode === "dark" ? "text-neutral-200" : "text-neutral-800"}`}>
+            {/* {windowWidth > 640
                 ? windowWidth > 768 
                   ? windowWidth > 1024 
                     ? windowWidth > 1280 
@@ -198,19 +225,19 @@ const CollectionitemV2 = React.forwardRef(({
                     : nameShortner(title, 18)
                   : nameShortner(title, 22)
                 : nameShortner(title, 28)} */}
-              {title}
-            </p>
-            <p className={`text-sm text-right min-w-[4rem] max-h-[1rem] font-normal ${selectedMode === "dark" ? "text-neutral-500" : "text-neutral-600"}`}>
-              {links} Links
-            </p>
-          </div>
-       
+            {title}
+          </p>
+          <p className={`text-sm text-right min-w-[4rem] max-h-[1rem] font-normal ${selectedMode === "dark" ? "text-neutral-500" : "text-neutral-600"}`}>
+            {links} Links
+          </p>
+        </div>
+
         <div className="flex items-start justify-between pt-2.5 px-1.5 gap-2 flex-col">
           <div className={`flex flex-wrap items-center gap-2 ${selectedMode === "dark" ? "text-neutral-50" : "text-neutral-500"}`} >
             {isOwner && <Chip name={isPublic ? "Public" : "Private"} />}
-            {tags?.length > 0 ? 
-                  tags?.map(tag => <Chip name={tag} isTag={true} />) : 
-                  <button onClick={onClickUsername}> <Chip  name={`by ${username}`} /></button>}
+            {tags?.length > 0 ?
+              tags?.map(tag => <Chip name={tag} isTag={true} />) :
+              <button onClick={onClickUsername}> <Chip name={`by ${username}`} /></button>}
           </div>
           <div className="flex items-center justify-between w-full ">
             <div className="flex items-center ">
@@ -228,9 +255,9 @@ const CollectionitemV2 = React.forwardRef(({
               {/* votes */}
               <IconButton className={`m-1  text-sm font-normal ${selectedMode === "dark" ? "text-neutral-500" : "text-neutral-500"}  `} onClick={upvoteHandler}>
                 {selectedMode === "dark" ?
-                  <img src={isUpvoted.isClicked ? upvoted : darkUpvote} alt="upvote" className="w-5 h-5  mr-1 transition-all duration-200 hover:scale-110 " />
+                  <img src={isUpvoted.isClicked ? upvoted : darkUpvote} alt="upvote" className="w-5 h-5 mr-1 transition-all duration-200 hover:scale-110 " />
                   :
-                  <img src={isUpvoted.isClicked ? upvoted : upvote} alt="upvote" className=" w-5 h-5 mr-1 transition-all duration-200 hover:scale-110 " />
+                  <img src={isUpvoted.isClicked ? upvoted : upvote} alt="upvote" className="w-5 h-5 mr-1 transition-all duration-200 hover:scale-110" />
                 }
                 {isUpvoted.number}
               </IconButton>
@@ -239,10 +266,10 @@ const CollectionitemV2 = React.forwardRef(({
             {/* Saved  */}
             {isSavedOptionVisible &&
               <IconButton className={`gap-1  ${isSaved ? 'text-primary-500' : selectedMode === "dark" ? "text-neutral-400" : "text-neutral-500"}  text-[14px]`} onClick={saveHandler}>
-                <img 
-                alt="save"
-                src={isSaved ? saved : selectedMode === "light" ? bmSidebar : darkSaved} 
-                className = "w-6 h-6 transition-all duration-200 hover:scale-110"
+                <img
+                  alt="save"
+                  src={isSaved ? saved : selectedMode === "light" ? bmSidebar : darkSaved}
+                  className="w-6 h-6 transition-all duration-200 hover:scale-110"
                 />{isSaved ? "" : "save"}
               </IconButton>
             }
