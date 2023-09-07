@@ -127,7 +127,7 @@ const Main = ({ exploreData = undefined, windowWidth }) => {
             <div className='xl:col-span-4 xl:row-span-1 bg-neutral-50 border-[1px] border-neutral-300 rounded-[1rem] md:grid md:grid-cols-2 md:h-[30rem] overflow-y-hidden hover:scale-[1.02] hover:shadow-md transition'>
               <div className='w-full text-left self-end p-[0.75rem] md:p-[2rem]'>
                 <h3 className='text-[1.25rem] font-medium leading-[1.75rem] mb-[0.5rem]'>Seamless sharing</h3>
-                <p className='text-[0.75rem] md:text-[1rem] text-neutral-600'>Create collections of links and start sharing them instantly with your friends, so you don't have to send dozens of links to your friends, just share them your linkcollect profile, that's linkcollect.io/yourusername and boom 💥</p>
+                <p className='text-[0.75rem] md:text-[1rem] text-neutral-600'>Create collections of links and start sharing them instantly with your friends, you can also just share them your linkcollect profile, that's <b>linkcollect.io/yourusername</b> and boom 💥. if you ever get in a fight with them, just edit your collection visibility to private   </p>
               </div>
               <div className='h-full bg-[url("/src/assets/landingPage/Features4.png")] bg-[length:100%_100%] bg-no-repeat w-full overflow-y-show'> <img src='' alt='' /></div>
             </div>
