@@ -13,6 +13,8 @@ import { motion } from "framer-motion";
 // images
 import Hamburger from '../../../assets/landingPage/hamburger.svg'
 import Close from '../../../assets/landingPage/closeIcon.svg'
+import WhiteHamburgerIcon from '../../../assets/darkMode/menu.svg'
+import WhiteCloseIcon from '../../../assets/darkMode/cancelWhite.svg'
 import home from "../../../assets/homeSidebar.svg";
 import settings from "../../../assets/settingsSidebar.svg";
 import navigation from "../../../assets/navSidebar.svg";
@@ -107,9 +109,13 @@ const Navabar = () => {
           selectedMode={selectedMode}
         />
       {auth.isLoggedIn && <button onClick={handleMenu} className="ml-[1rem] block md:hidden min-w-max z-[101]">
-        <img src={!sideMenuOpen ? Hamburger : Close} alt="" />
+       {switchMode === "light"?
+        <img src={!sideMenuOpen ? Hamburger : Close} alt="" className="w-6 h-6"/>
+        :
+        <img src={!sideMenuOpen ? WhiteHamburgerIcon : WhiteCloseIcon} alt="" className="w-6 h-6"/>
+       }
       </button>}
-      <div className={`sidebar absolute top-[calc(100%+2px)] right-0 bg-neutral-50 w-screen z-[100] border-b-2 border-neutral-200 px-[2rem] py-[3rem] transition ${sideMenuOpen ? 'translate-x-0' : 'translate-x-[100%]'}`}>
+      <div className={`sidebar absolute top-[calc(100%+2px)] right-0 ${selectedMode === "dark" ? "bg-dark-primary border-r border-dark-secondary" : "bg-neutral-50 border-r border-neutral-200"} w-screen z-[100] border-b-2 px-[2rem] py-[3rem] transition ${sideMenuOpen ? 'translate-x-0' : 'translate-x-[100%]'}`}>
       <div className="flex flex-col items-start justify-start gap-4">
         {menuItem.map(({ name, link, icon, activeIcon }) => (
           <NavbarItem
@@ -149,7 +155,7 @@ const Navabar = () => {
       </div>
       <nav className="ml-[1rem] hidden md:flex items-center justify-end w-full gap-5 max-w-[1500px] ">
         {(navabrItem.map(({ name, link }) => (
-          <a href={link} target="_blank" className="items-center justify-center rounded flex" key={link} rel="noreferrer">
+          <a href={link} target="_blank" className="flex items-center justify-center rounded" key={link} rel="noreferrer">
             <span className={`text-base font-normal text-center ${selectedMode === "light" ? "text-neutral-600" : "text-borderPrimary"} `}>
               {name}
             </span>
