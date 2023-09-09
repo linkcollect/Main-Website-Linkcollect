@@ -241,6 +241,7 @@ export const CollectionModal = ({
               ></div>
             </div>
           </div>
+          <div className="text-neutral-600 w-full text-[0.8rem]"><span className="text-error-500">Note: </span>Public Collections will be featured on the explore page</div>
         </div>
         {/* Actions */}
         <div className={`flex w-full sm:justify-between justify-evenly items-center ${isEditing && "gap-1"}`}>
