@@ -37,9 +37,9 @@ const MoreFromUser = ({ collectionData, user }) => {
 
     return(
         auth.username !== user && userCollections?.data?.data.length > 1 && <div className="w-full min-h-[200px] border-t-2 border-neutral-300">
-            <div className="flex flex-col w-full justify-items-center items-start py-[5rem]">
+            <div className="flex flex-col w-full justify-items-center items-start pt-[5rem]">
                 <h2 className="text-[1.75rem] px-[clamp(1rem,5vw,5rem)]">More from <a className="text-[1.75rem] text-primary-500" href={`https://linkcollect.io/${user}`}>{user}</a></h2>
-                <Carousel className={"px-[clamp(1rem,5vw,5rem)] pt-[2rem]"} fullWidth={false} isAutoScroll={false}>
+                <Carousel className={"px-[clamp(1rem,5vw,5rem)] pt-[2rem] pb-[5rem]"} fullWidth={false} isAutoScroll={false}>
                 {userCollections?.data?.data.filter((collection) => {
                     return collection._id !== collectionData.collectionData._id
                 }).map((collection) => {
