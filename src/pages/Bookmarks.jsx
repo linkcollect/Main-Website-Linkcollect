@@ -16,6 +16,7 @@ import { SortActions } from "../components/Common/ActiondropDown";
 import SEO from "../components/SEO/SEO";
 import { useContext } from "react";
 import { switchMode } from "../hooks/switchMode";
+import MoreFromUser from "../components/Sections/Bookmarks/MoreFromUser";
 
 
 const Bookmarks = ({ windowWidth }) => {
@@ -127,7 +128,7 @@ const Bookmarks = ({ windowWidth }) => {
         image={collectionData.collectionData?.image ? collectionData.collectionData?.image : null}
         >
       </SEO>
-      <div className="flex w-full h-[calc(100%)] mx-auto mb-[0.5rem] overflow-y-auto scrollbar-hide">
+      <div className="flex flex-col w-full h-[calc(100%)] mx-auto mb-[0.5rem] overflow-y-auto scrollbar-hide">
         {/* Collection Edit Modal */}
         {!collectionData.isFetching && <CollectionModal
           isOpen={editCollectionModalOpen}
@@ -215,7 +216,7 @@ const Bookmarks = ({ windowWidth }) => {
                       collectionName={collectionData.collectionData.title}
                     />
                   ))}
-                  <div className="h-[120px]"></div>
+                  <div className="h-[60px]"></div>
                 </div>
               </div>
             ) : (
@@ -228,6 +229,7 @@ const Bookmarks = ({ windowWidth }) => {
             )}
           </div>
         </div>
+        <MoreFromUser collectionData={collectionData} user={username}></MoreFromUser>
       </div>
     </BaseLayout>
   );
