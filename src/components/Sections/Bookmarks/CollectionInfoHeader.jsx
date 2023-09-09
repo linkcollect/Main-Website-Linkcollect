@@ -230,11 +230,11 @@ const CollectionInfoHeader = ({
             <div className="flex justify-start sm:justify-center mt-[0.75rem] sm:mt-[-0.25rem] gap-3 items-start">
               {/* Add bookmark */}
               <IconButton onClick={upvoteHandler}>
-                <img src={isUpvoted ? upvotedIcon : upvoteIcon} className="min-w-[1.8rem] min-h-[1.8rem] p-[0.25rem] bg-neutral-200 rounded-[0.25rem]" />
+                <img src={isUpvoted ? upvotedIcon : upvoteIcon} className={`min-w-[1.8rem] min-h-[1.8rem] p-[0.25rem] ${selectedMode === "dark" ? "bg-primary-800" : "bg-neutral-200"} rounded-[0.25rem]`} />
               </IconButton>
               {/* Edit */}
               <IconButton onClick={saveHandler}>
-                <img src={isSaved ? savedIcon : saveIcon} className="min-w-[1.8rem] min-h-[1.8rem] p-[0.25rem] bg-neutral-200 rounded-[0.25rem]" />
+                <img src={isSaved ? savedIcon : saveIcon} className={`min-w-[1.8rem] min-h-[1.8rem] p-[0.25rem] ${selectedMode === "dark" ? "bg-primary-800" : "bg-neutral-200"} rounded-[0.25rem]`} />
               </IconButton>
               {/* Delete */}
               {/* <IconButton onClick={shareModalOpenHandler}>

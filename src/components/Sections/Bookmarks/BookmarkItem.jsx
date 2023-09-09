@@ -150,7 +150,7 @@ const BookmarkItem = ({
 
       <div
         // className={`cursor-pointer relative flex items-center justify-between w-full h-[60px] rounded-xl 
-        className={`cursor-pointer relative grid grid-cols-[1fr_70px] sm:grid-cols-[5fr_150px_100px] gap-[0.75rem] sm:gap-[2rem] items-center justify-between w-full h-[60px] rounded-xl 
+        className={`cursor-pointer relative grid grid-cols-[1fr_70px] sm:grid-cols-[5fr_140px_100px] gap-[0.75rem] sm:gap-[2rem] items-center justify-between w-full h-[60px] rounded-xl 
           ${selectedMode === 'light' ? hovered ? "bg-neutral-200 border-neutral-200" : "bg-neutral-100 border-neutral-200" : hovered ? "bg-dark-secondary border-dark-secondary" :
             "bg-dark-primary border-dark-border"
           } border   duration-200 transition-all group`}
@@ -233,7 +233,7 @@ const BookmarkItem = ({
         {/* Actions: Note, Open Link, Popup menu */}
           {/* All actions should work only when all links is not selected */}
           {!isStillOneBookmarkSelected && (
-            <div className="flex gap-4 mr-2">
+            <div className="flex justify-end gap-4 pr-4">
               <IconButton
                 onClick={onCopy}
                 className="flex items-center justify-center "
