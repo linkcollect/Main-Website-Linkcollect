@@ -27,6 +27,7 @@ const BookmarkItem = ({
   id,
   name,
   url,
+  note,
   favicon,
   windowWidth,
   updatedAt,
@@ -134,6 +135,7 @@ const BookmarkItem = ({
         originalData={{
           title: name,
           link: url,
+          note: note
         }}
         bookmarkID={id}
       />
@@ -165,7 +167,7 @@ const BookmarkItem = ({
             onChange={handleCheck}
           />} */}
         {isOwner && isPinned && (
-          <div className={`w-[20px] h-[20px] absolute z-[9999] top-[20px] left-[-13px] cursor-pointer border  ${selectedMode === 'light' ? "border-neutral-300 bg-neutral-100" : "bg-dark-primary border-dark-secondary"}  rounded-md`}>
+          <div className={`w-[20px] h-[20px] absolute z-[100] top-[20px] left-[-13px] cursor-pointer border  ${selectedMode === 'light' ? "border-neutral-300 bg-neutral-100" : "bg-dark-primary border-dark-secondary"}  rounded-md`}>
             {selectedMode === 'light' ?
               <img key="pin-icon" className="" src={pinIcon} alt="" />
               :

@@ -195,6 +195,7 @@ const Bookmarks = ({ windowWidth }) => {
                       id={timeline._id}
                       name={timeline.title}
                       url={timeline.link}
+                      note={timeline.note}
                       favicon={timeline.favicon}
                       windowWidth={windowWidth}
                       updatedAt={timeline.updatedAt}
