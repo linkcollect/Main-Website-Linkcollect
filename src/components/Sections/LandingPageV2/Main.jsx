@@ -30,7 +30,7 @@ const links = {
 }
 
 
-const Main = ({ exploreData = undefined, windowWidth }) => {
+const Main = ({ analytics, exploreData = undefined, windowWidth }) => {
   const navigate = useNavigate();
   const video1Ref = useRef();
   const video1Controls = {
@@ -50,7 +50,7 @@ const Main = ({ exploreData = undefined, windowWidth }) => {
             <h1 className='text-neutral-900 text-[clamp(1rem,10vw,4.25rem)] leading-[clamp(1rem,12vw,4.75rem)]'>keep forgetting links? <br className='hidden md:block'></br>not anymore</h1>
             <p className='text-neutral-600 max-w-[520px]'> linkcollect is the only browser extension that you need to organise your links in simple, clean and efficient manner + we let you discover popular collections, just like pinterest </p>
             {windowWidth > 768 ? (<button 
-              onClick={() => {window.open(links.extensionUrl, "_blank")}} 
+              onClick={() => {analytics('Install Extension'); window.open(links.extensionUrl, "_blank");}} 
               className="mt-[2.5rem] py-[0.75rem] px-[1rem] w-[175px] h-min leading-[1.25rem] bg-primary-400 rounded-[5px] text-white hover:scale-[1.05] hover:shadow-md transition">
                 Install Extension
             </button>) :

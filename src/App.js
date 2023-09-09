@@ -25,10 +25,17 @@ import { getUserDetails } from "./store/actions/user.action";
 import PageLoader from "./components/UI/Loader/PageLoader";
 import { setLoggedInUser } from "./store/Slices/user.slice";
 import LandingPageV2 from "./pages/LandingPageV2";
-
 import { HelmetProvider } from 'react-helmet-async';
+import ReactGA from 'react-ga';
+const TRACKING_ID = "G-6NHCQSCVJP";
+
+ReactGA.initialize(TRACKING_ID);
 
 function App() {
+  useEffect(() => {
+    ReactGA.pageview(window.location.pathname + window.location.search);
+  }, []);
+
   const auth = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   //for responsiveness

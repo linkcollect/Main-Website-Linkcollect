@@ -14,7 +14,7 @@ const links = {
     x: 'https://x.com/linkcollect_io'
 }
 
-const Navbar = () => {
+const Navbar = ({ analytics }) => {
   const navigate = useNavigate()
   const [sideMenuOpen, setSideMenuOpen] = useState(false);
 
@@ -36,7 +36,7 @@ const Navbar = () => {
         <a href="#pricing" rel="noreferrer">Pricing</a>
         <a href={links.contact} rel="noreferrer">Contact Us</a>
         <button onClick={() => {navigate('/login')}} className="p-[0.75rem] w-[150px] h-min leading-[calc(1.25rem-4px)] border-2 border-primary-300 rounded-[5px] hover:scale-[1.02] hover:shadow-md transition">Log In</button>
-        <button onClick={() => {window.open(links.extensionUrl, "_blank")}} className="py-[0.75rem] px-[1rem] w-[175px] h-min leading-[1.25rem] bg-primary-400 rounded-[5px] text-white hover:scale-[1.05] hover:shadow-md transition">Install Extension</button>
+        <button onClick={() => {analytics('Install Extension'); window.open(links.extensionUrl, "_blank");}} className="py-[0.75rem] px-[1rem] w-[175px] h-min leading-[1.25rem] bg-primary-400 rounded-[5px] text-white hover:scale-[1.05] hover:shadow-md transition">Install Extension</button>
       </nav>
     </header>
   )
