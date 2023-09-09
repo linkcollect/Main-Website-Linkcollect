@@ -40,16 +40,21 @@ const Button = forwardRef(
     disabled,
     isLoading,
     ...props
-  },ref) => {
+  }, ref) => {
     // getting current selected mode
     const { selectedMode } = useContext(switchMode)
 
+    // checking if it is a login page as not to show dark mode in login page for now
+    // keeping normal styles for login page
+    const urlParams = window?.location?.href?.split('/')
+    const currentPage = urlParams[urlParams.length - 1]
+    console.log(currentPage);
     const variant =
       !disabled && !isLoading
         ? buttonVariant
         : disabled
-        ? selectedMode === "light" ? "disabled" : "darkDisabled"
-        : "loading";
+          ? currentPage === 'login' ? "disabled" : selectedMode === "light" ? "disabled" : "darkDisabled"
+          : "loading";
     return (
       <button
         className={classMerge(ButtonVariants({ variant, size, className }))}
