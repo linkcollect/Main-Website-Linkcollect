@@ -109,7 +109,7 @@ const Navabar = () => {
           selectedMode={selectedMode}
         />
       {auth.isLoggedIn && <button onClick={handleMenu} className="ml-[1rem] block md:hidden min-w-max z-[101]">
-       {switchMode === "light"?
+       {selectedMode === "light"?
         <img src={!sideMenuOpen ? Hamburger : Close} alt="" className="w-6 h-6"/>
         :
         <img src={!sideMenuOpen ? WhiteHamburgerIcon : WhiteCloseIcon} alt="" className="w-6 h-6"/>
