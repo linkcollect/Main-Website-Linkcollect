@@ -11,7 +11,7 @@ const links = {
     x: 'https://x.com/linkcollect_io'
 }
 
-const Footer = () => {
+const Footer = ({ analytics }) => {
 	const navigate = useNavigate();
 	return (
 		<footer className='w-screen flex flex-col lg:px-[5rem] border-t-[1px] bg-neutral-50 border-t-neutral-300 text-neutral-800'>
