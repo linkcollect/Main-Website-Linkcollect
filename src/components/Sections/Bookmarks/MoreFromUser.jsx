@@ -4,11 +4,13 @@ import CollectionitemV2 from "../../Common/CollectionCard";
 import Carousel from "../LandingPageV2/components/Carousel";
 import { useSelector } from "react-redux";
 import { switchMode } from "../../../hooks/switchMode";
+import { useNavigate } from "react-router-dom";
 
 const MoreFromUser = ({ collectionData, user }) => {
 
     const [isLoading, setIsLoading] = useState(false);
     const [userCollections, setUserCollections] = useState([])
+    const navigate = useNavigate()
 
     const auth = useSelector((state) => state.auth);
 
@@ -43,14 +45,15 @@ const MoreFromUser = ({ collectionData, user }) => {
                 {userCollections?.data?.data.filter((collection) => {
                     return collection._id !== collectionData.collectionData._id
                 }).map((collection) => {
+                    {console.log(collection)}
                     return (
+                        
                         <div key={collection._id} className='min-w-[300px] rounded-md hover:scale-[103%] hover:shadow-xl transition'>
                           <CollectionitemV2
-                              isHoverable={false}
                               id={collection._id}
                               image={collection.image}
                               title={collection.title}
-                              links={collection.countOfLinks}
+                              links={collection.timelines.length}
                               username={collection.username}
                               isPublic={collection.isPublic}
                               isPinned={collection.isPinned}

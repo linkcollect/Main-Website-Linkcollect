@@ -3,7 +3,7 @@ import React, { useRef, useState, useEffect } from "react";
 // import './Carousel.css'
 
 const Carousel = ({ fullWidth = true, className = "p-[5rem_2rem]", isAutoScroll = true, children }) => {
-  const sliderRef = useRef(null);
+  const sliderRef = useRef();
   const [isDown, setIsDown] = useState(false);
   const [startX, setStartX] = useState(null);
   const [scrollLeft, setScrollLeft] = useState(null);
@@ -37,7 +37,7 @@ const Carousel = ({ fullWidth = true, className = "p-[5rem_2rem]", isAutoScroll 
   useEffect(() => {
     // Auto-scroll after 3 seconds
     const autoScrollInterval = setInterval(() => {
-      if (isAutoScroll) {
+      if (isAutoScroll && sliderRef.current.firstElementChild) {
       const slider = sliderRef.current
       // Get the first child component and its width
       const firstChild = slider.firstElementChild;
@@ -75,7 +75,7 @@ const Carousel = ({ fullWidth = true, className = "p-[5rem_2rem]", isAutoScroll 
 
   return (
     <div className={`carousel-container ${fullWidth ? "w-screen" : "w-full" } overflow-x-visible`}>
-      <div id="carousel" className={`${className} snap no-scrollbar whitespace-nowrap flex gap-4 overflow-x-scroll scrollbar-hidden select-none cursor-pointer mx-auto ${fullWidth ? "w-screen" : "w-full" } h-auto transform will-change-transform`} ref={sliderRef}
+      <div id="carousel" className={`${className} snap no-scrollbar whitespace-wrap flex gap-4 overflow-x-scroll scrollbar-hidden select-none cursor-pointer mx-auto ${fullWidth ? "w-screen" : "w-full" } h-auto transform will-change-transform`} ref={sliderRef}
         onMouseDown={handleMouseDown}
         onMouseLeave={handleMouseLeave}
         onMouseUp={handleMouseUp}
