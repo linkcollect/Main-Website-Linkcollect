@@ -27,6 +27,7 @@ const BookmarkItem = ({
   id,
   name,
   url,
+  note,
   favicon,
   windowWidth,
   updatedAt,
@@ -134,6 +135,7 @@ const BookmarkItem = ({
         originalData={{
           title: name,
           link: url,
+          note: note
         }}
         bookmarkID={id}
       />
@@ -147,7 +149,8 @@ const BookmarkItem = ({
       />
 
       <div
-        className={`cursor-pointer relative flex items-center justify-between w-full h-[60px] rounded-xl 
+        // className={`cursor-pointer relative flex items-center justify-between w-full h-[60px] rounded-xl 
+        className={`cursor-pointer relative grid grid-cols-[1fr_70px] sm:grid-cols-[5fr_140px_100px] gap-[0.75rem] sm:gap-[2rem] items-center justify-between w-full h-[60px] rounded-xl 
           ${selectedMode === 'light' ? hovered ? "bg-neutral-200 border-neutral-200" : "bg-neutral-100 border-neutral-200" : hovered ? "bg-dark-secondary border-dark-secondary" :
             "bg-dark-primary border-dark-border"
           } border   duration-200 transition-all group`}
@@ -165,7 +168,7 @@ const BookmarkItem = ({
             onChange={handleCheck}
           />} */}
         {isOwner && isPinned && (
-          <div className={`w-[20px] h-[20px] absolute z-[9999] top-[20px] left-[-13px] cursor-pointer border  ${selectedMode === 'light' ? "border-neutral-300 bg-neutral-100" : "bg-dark-primary border-dark-secondary"}  rounded-md`}>
+          <div className={`w-[20px] h-[20px] absolute z-[100] top-[20px] left-[-13px] cursor-pointer border  ${selectedMode === 'light' ? "border-neutral-300 bg-neutral-100" : "bg-dark-primary border-dark-secondary"}  rounded-md`}>
             {selectedMode === 'light' ?
               <img key="pin-icon" className="" src={pinIcon} alt="" />
               :
@@ -174,11 +177,11 @@ const BookmarkItem = ({
           </div>
         )}
 
-        <a className="flex" href={url} rel="noreferrer" target="_blank">
+        <a className="flex justify-start items-center truncate" href={url} rel="noreferrer" target="_blank">
           {/* Bookamrk Info: Name , Link, Image */}
-          <div className="flex items-center">
+          {/* <div className="flex items-center"> */}
             {/* Bookmark Image */}
-            <div className="w-[48px] h-[48px] flex items-center justify-center">
+            <div className="min-w-[48px] min-h-[48px] block flex items-center justify-center">
               <img
                 src={
                   favicon !== "undefined" && favicon !== undefined
@@ -191,10 +194,10 @@ const BookmarkItem = ({
             </div>
 
             {/* Bookmark Name, Link name */}
-            <div className="flex flex-col items-start justify-center gap-[2.63px] h-10 sm:h-10">
+            <div className="flex flex-col block truncate items-start justify-center gap-[2.63px] h-10 sm:h-10">
               {/* Bookmark Name */}
-              <p className={`font-normal text-start para text-[0.9rem] ${selectedMode === "light" ? "text-neutral-900" : "text-borderPrimary"}  sm:w-max sm:h-[21px]`}>
-                {windowWidth > 640
+              <p className={`font-normal block text-start para text-[0.9rem] ${selectedMode === "light" ? "text-neutral-900" : "text-borderPrimary"}   sm:h-[21px]`}>
+                {/* {windowWidth > 640
                   ? windowWidth > 768
                     ? windowWidth > 1024
                       ? windowWidth > 1280
@@ -204,7 +207,8 @@ const BookmarkItem = ({
                         : nameShortner(name, 40)
                       : nameShortner(name, 25)
                     : nameShortner(name, 20)
-                  : nameShortner(name, 23)}
+                  : nameShortner(name, 23)} */}
+                  {name}
               </p>
 
               {/* Link Name */}
@@ -214,20 +218,22 @@ const BookmarkItem = ({
                   : nameShortner(getOrigin(url), 40)}
               </p>
             </div>
-          </div>
+          {/* </div> */}
         </a>
 
         {/* Timestamp, Actions: Note, Open Link, Popup menu */}
-        <div className="flex items-center gap-[4rem] mr-2">
+        <div className="hidden sm:flex items-center gap-[4rem] mr-2">
           {/* Timestamp */}
           <p className={`hidden sm:block text-xs font-medium whitespace-nowrap  ${selectedMode === "light" ? "text-neutral-500" : "text-dark-placeholder"} mr-5`}>
             Added {fromNow(updatedAt)}
           </p>
 
-          {/* Actions: Note, Open Link, Popup menu */}
+          
+        </div>
+        {/* Actions: Note, Open Link, Popup menu */}
           {/* All actions should work only when all links is not selected */}
           {!isStillOneBookmarkSelected && (
-            <div className="flex gap-4 mr-2">
+            <div className="flex justify-end gap-4 pr-4">
               <IconButton
                 onClick={onCopy}
                 className="flex items-center justify-center "
@@ -271,7 +277,7 @@ const BookmarkItem = ({
               {auth.isLoggedIn && isOwner && (
                 <div className="relative">
                   <button
-                    className="items-center hidden sm:flex"
+                    className="items-center flex"
                     onClick={() =>
                       setClickedId((prev) => (prev === id ? null : id))
                     }
@@ -280,18 +286,19 @@ const BookmarkItem = ({
                       <img
                         src={menuIcon}
                         alt=""
-                        className="block mx-auto cursor-pointer"
+                        className="threedotbutton block mx-auto cursor-pointer"
                       />
                       :
                       <img
                         src={MenuWhiteIcon}
                         alt=""
-                        className="block mx-auto cursor-pointer"
+                        className="threedotbutton block mx-auto cursor-pointer"
                       />
                     }
                   </button>
                   {clickedId === id && (
                     <motion.div
+                      id="options"
                       initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: 10 }}
@@ -317,7 +324,6 @@ const BookmarkItem = ({
               )}
             </div>
           )}
-        </div>
       </div>
     </>
   );
