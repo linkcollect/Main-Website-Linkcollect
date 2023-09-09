@@ -9,13 +9,13 @@ import share from "../../../assets/share.svg";
 import MainLogo from "../../../assets/mainLogo.svg";
 import defultCollectionImage from "../../../assets/defaultCollectio.svg";
 import editIcon from "../../../assets/edit-primary.svg";
-import { ReactComponent as AddIcon} from "../../../assets/add.svg";
+import addIcon from "../../../assets/add.svg";
 import AddPrimary from "../../../assets/add-primary.svg";
 import deleteIcon from "../../../assets/delete-primary.svg";
-import upvoteIcon from "../../../assets/Upvote.svg"
+import upvoteIcon from "../../../assets/upvoteIcon-primary.svg"
 import upvotedIcon from "../../../assets/upvoted.svg"
 import savedIcon from "../../../assets/saved.svg"
-import saveIcon from "../../../assets/bmSidebar.svg"
+import saveIcon from "../../../assets/save-primary.svg"
 import ShareDarkMode from '../../../assets/darkMode/share.svg'
 import SharePrimary from '../../../assets/share-primary.svg'
 
@@ -192,7 +192,7 @@ const CollectionInfoHeader = ({
 
           {/* Collection Actions for logged In user*/}
           {auth.isLoggedIn && isOwner ? (
-            <div className="flex items-start sm:justify-center gap-3 mt-[0.75rem] sm:mt-0">
+            <div className="flex items-start sm:justify-center gap-3 mt-[0.75rem] sm:mt-[-0.25rem]">
               {/* Add bookmark */}
               <IconButton onClick={createBookmarkModalOpener}>
                 {selectedMode === "dark" ?
@@ -227,18 +227,26 @@ const CollectionInfoHeader = ({
               </IconButton>}
             </div>
           ) :
-            <div className="hidden sm:flex justify-center mt-[-0.25rem] gap-3 items-start">
+            <div className="flex justify-start sm:justify-center mt-[0.75rem] sm:mt-[-0.25rem] gap-3 items-start">
               {/* Add bookmark */}
               <IconButton onClick={upvoteHandler}>
-                <img src={isUpvoted ? upvotedIcon : upvoteIcon} className="w-[1.8rem] h-[1.8rem]" />
+                <img src={isUpvoted ? upvotedIcon : upvoteIcon} className="min-w-[1.8rem] min-h-[1.8rem] p-[0.25rem] text-neutral-400 bg-neutral-200 rounded-[0.25rem]" />
               </IconButton>
               {/* Edit */}
               <IconButton onClick={saveHandler}>
-                <img src={isSaved ? savedIcon : saveIcon} className="w-[1.8rem] h-[1.8rem]" />
+                <img src={isSaved ? savedIcon : saveIcon} className="min-w-[1.8rem] min-h-[1.8rem] p-[0.25rem] text-neutral-400 bg-neutral-200 rounded-[0.25rem]" />
               </IconButton>
               {/* Delete */}
-              <IconButton onClick={shareModalOpenHandler}>
+              {/* <IconButton onClick={shareModalOpenHandler}>
                 <img src={share} className="w-[1.8rem] h-[1.8rem]" />
+              </IconButton> */}
+              {/* {windowWidth < 680 &&  */}
+              <IconButton>
+                {selectedMode === "dark" ?
+                  < img src={ShareDarkMode} onClick={shareModalOpenHandler} className="w-[1.8rem] h-[1.8rem]" />
+                  :
+                  <img src={SharePrimary} onClick={shareModalOpenHandler} className="min-w-[1.8rem] min-h-[1.8rem] p-[0.25rem] text-neutral-400 bg-neutral-200 rounded-[0.25rem]" />
+                }
               </IconButton>
             </div>
           }
