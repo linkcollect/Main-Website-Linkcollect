@@ -56,8 +56,17 @@ const Bookmarks = ({ windowWidth }) => {
     setOpenCreateBookmarkModal(prev => !prev);
   }
 
-  
+  useEffect(() => {
+    document.addEventListener('click', (e) => {
+      if (!e.target.className.includes("threedotbutton") && clickedId !== null) {
+        setClickedId(null);
+      }
+    })
 
+    return (document.removeEventListener('click', (e) => {
+
+    }))
+  })
 
   const backHandler = (e) => {
     e.preventDefault();
@@ -96,9 +105,6 @@ const Bookmarks = ({ windowWidth }) => {
       type: "ALPHABETICAlLY",
     },
   ];
-
-
-
 
 
   // Logic for search 

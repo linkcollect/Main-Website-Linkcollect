@@ -286,18 +286,19 @@ const BookmarkItem = ({
                       <img
                         src={menuIcon}
                         alt=""
-                        className="block mx-auto cursor-pointer"
+                        className="threedotbutton block mx-auto cursor-pointer"
                       />
                       :
                       <img
                         src={MenuWhiteIcon}
                         alt=""
-                        className="block mx-auto cursor-pointer"
+                        className="threedotbutton block mx-auto cursor-pointer"
                       />
                     }
                   </button>
                   {clickedId === id && (
                     <motion.div
+                      id="options"
                       initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: 10 }}
