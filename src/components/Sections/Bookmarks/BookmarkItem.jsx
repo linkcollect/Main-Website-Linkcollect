@@ -22,6 +22,7 @@ import { MenuItem } from "../../Common/ActiondropDown";
 import Delete from "./DeleteModal";
 import IconButton from "../../UI/IconButton/IconButton";
 import { switchMode } from "../../../hooks/switchMode";
+import BookmarkNoteModal from './BookmarkNoteModal';
 
 const BookmarkItem = ({
   id,
@@ -50,6 +51,7 @@ const BookmarkItem = ({
   const [openEditBookmarkModal, setOpenEditBookmarkModal] = useState(false);
   const [hovered, setHovered] = useState(false);
   const [bookmarkDeleteModal, setBookmarkDeleteModal] = useState(false);
+  const [bookmarkNoteModal, setBookmarkNoteModal] = useState(false);
   const auth = useSelector((state) => state.auth);
   const bookmarkDeleteModalHandler = () => {
     setBookmarkDeleteModal((prev) => !prev);
@@ -96,6 +98,18 @@ const BookmarkItem = ({
         return;
     }
   };
+
+  const handleBookmarkNoteModal = () => {
+    setBookmarkNoteModal((prev) => !prev)
+  }
+
+  useEffect(() => {
+    if (hovered) {
+      setBookmarkNoteModal(true);
+    } else {
+      setBookmarkNoteModal(false);
+    }
+  }, [hovered])
 
   // Popup Action menu
   const popupActionMenu = useMemo(() => {
@@ -150,13 +164,14 @@ const BookmarkItem = ({
 
       <div
         // className={`cursor-pointer relative flex items-center justify-between w-full h-[60px] rounded-xl 
-        className={`cursor-pointer relative grid grid-cols-[1fr_70px] sm:grid-cols-[5fr_140px_100px] gap-[0.75rem] sm:gap-[2rem] items-center justify-between w-full h-[60px] rounded-xl 
+        className={`cursor-pointer relative grid grid-cols-[1fr_70px] sm:grid-cols-[5fr_140px_70px] gap-[0.75rem] sm:gap-[2rem] items-center justify-between w-full h-[60px] rounded-xl 
           ${selectedMode === 'light' ? hovered ? "bg-neutral-200 border-neutral-200" : "bg-neutral-100 border-neutral-200" : hovered ? "bg-dark-secondary border-dark-secondary" :
             "bg-dark-primary border-dark-border"
           } border   duration-200 transition-all group`}
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
       >
+        {note && bookmarkNoteModal && <BookmarkNoteModal note={note} className={"absolute"}></BookmarkNoteModal>}
         {/* Note this below input is to be shown to owner only after  implementing state mangement resolve it */}
         {/* {isOwner && <input
             type="checkbox"
@@ -254,7 +269,7 @@ const BookmarkItem = ({
                   />
                 }
               </IconButton>
-              <a
+              {/* <a
                 className="items-center hidden sm:flex"
                 href={url}
                 target="_blank"
@@ -273,7 +288,7 @@ const BookmarkItem = ({
                     className="block mx-auto cursor-pointer "
                   />
                 }
-              </a>
+              </a> */}
               {auth.isLoggedIn && isOwner && (
                 <div className="relative">
                   <button
