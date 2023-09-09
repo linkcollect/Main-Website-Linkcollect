@@ -196,33 +196,33 @@ const CollectionInfoHeader = ({
               {/* Add bookmark */}
               <IconButton onClick={createBookmarkModalOpener}>
                 {selectedMode === "dark" ?
-                  < img src={AddWhite} className="w-[1.8rem] h-[1.8rem] " />
+                  < img src={AddPrimary} className="min-w-[1.8rem] min-h-[1.8rem] p-[0.25rem] bg-primary-800 rounded-[0.25rem]" />
                   :
-                  <img src={AddPrimary} className="min-w-[1.8rem] min-h-[1.8rem] p-[0.25rem] text-neutral-400 bg-neutral-200 rounded-[0.25rem]" />
+                  <img src={AddPrimary} className="min-w-[1.8rem] min-h-[1.8rem] p-[0.25rem] bg-neutral-200 rounded-[0.25rem]" />
                 }
               </IconButton>
               {/* Edit */}
               <IconButton onClick={editCollectionModalOpener}>
                 {selectedMode === "dark" ?
-                  < img src={EditDarkMode} className="w-[1.8rem] h-[1.8rem]" />
+                  < img src={editIcon} className="min-w-[1.8rem] min-h-[1.8rem] p-[0.25rem] bg-primary-800 rounded-[0.25rem]" />
                   :
-                  <img src={editIcon} className="min-w-[1.8rem] min-h-[1.8rem] p-[0.25rem] text-neutral-400 bg-neutral-200 rounded-[0.25rem]" />
+                  <img src={editIcon} className="min-w-[1.8rem] min-h-[1.8rem] p-[0.25rem] bg-neutral-200 rounded-[0.25rem]" />
                 }
               </IconButton>
               {/* Delete */}
               <IconButton onClick={deleteCollectionModalHandler}>
                 {selectedMode === "dark" ?
-                  < img src={DeleteIcon} className="w-[1.8rem] h-[1.8rem]" />
+                  < img src={deleteIcon} className="min-w-[1.8rem] min-h-[1.8rem] p-[0.25rem] bg-primary-800 rounded-[0.25rem]" />
                   :
-                  <img src={deleteIcon} className="min-w-[1.8rem] min-h-[1.8rem] p-[0.25rem] text-neutral-400 bg-neutral-200 rounded-[0.25rem]" />
+                  <img src={deleteIcon} className="min-w-[1.8rem] min-h-[1.8rem] p-[0.25rem] bg-neutral-200 rounded-[0.25rem]" />
                 }
               </IconButton>
               {windowWidth < 680 && 
               <IconButton>
                 {selectedMode === "dark" ?
-                  < img src={ShareDarkMode} onClick={shareModalOpenHandler} className="w-[1.8rem] h-[1.8rem]" />
+                  < img src={SharePrimary} onClick={shareModalOpenHandler} className="min-w-[1.8rem] min-h-[1.8rem] p-[0.25rem] bg-primary-800 rounded-[0.25rem]" />
                   :
-                  <img src={SharePrimary} onClick={shareModalOpenHandler} className="min-w-[1.8rem] min-h-[1.8rem] p-[0.25rem] text-neutral-400 bg-neutral-200 rounded-[0.25rem]" />
+                  <img src={SharePrimary} onClick={shareModalOpenHandler} className="min-w-[1.8rem] min-h-[1.8rem] p-[0.25rem] bg-neutral-200 rounded-[0.25rem]" />
                 }
               </IconButton>}
             </div>
@@ -230,11 +230,11 @@ const CollectionInfoHeader = ({
             <div className="flex justify-start sm:justify-center mt-[0.75rem] sm:mt-[-0.25rem] gap-3 items-start">
               {/* Add bookmark */}
               <IconButton onClick={upvoteHandler}>
-                <img src={isUpvoted ? upvotedIcon : upvoteIcon} className="min-w-[1.8rem] min-h-[1.8rem] p-[0.25rem] text-neutral-400 bg-neutral-200 rounded-[0.25rem]" />
+                <img src={isUpvoted ? upvotedIcon : upvoteIcon} className="min-w-[1.8rem] min-h-[1.8rem] p-[0.25rem] bg-neutral-200 rounded-[0.25rem]" />
               </IconButton>
               {/* Edit */}
               <IconButton onClick={saveHandler}>
-                <img src={isSaved ? savedIcon : saveIcon} className="min-w-[1.8rem] min-h-[1.8rem] p-[0.25rem] text-neutral-400 bg-neutral-200 rounded-[0.25rem]" />
+                <img src={isSaved ? savedIcon : saveIcon} className="min-w-[1.8rem] min-h-[1.8rem] p-[0.25rem] bg-neutral-200 rounded-[0.25rem]" />
               </IconButton>
               {/* Delete */}
               {/* <IconButton onClick={shareModalOpenHandler}>
@@ -243,9 +243,9 @@ const CollectionInfoHeader = ({
               {/* {windowWidth < 680 &&  */}
               <IconButton>
                 {selectedMode === "dark" ?
-                  < img src={ShareDarkMode} onClick={shareModalOpenHandler} className="w-[1.8rem] h-[1.8rem]" />
+                  < img src={SharePrimary} onClick={shareModalOpenHandler} className="min-w-[1.8rem] min-h-[1.8rem] p-[0.25rem] bg-primary-800 rounded-[0.25rem]" />
                   :
-                  <img src={SharePrimary} onClick={shareModalOpenHandler} className="min-w-[1.8rem] min-h-[1.8rem] p-[0.25rem] text-neutral-400 bg-neutral-200 rounded-[0.25rem]" />
+                  <img src={SharePrimary} onClick={shareModalOpenHandler} className="min-w-[1.8rem] min-h-[1.8rem] p-[0.25rem] bg-neutral-200 rounded-[0.25rem]" />
                 }
               </IconButton>
             </div>
