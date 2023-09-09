@@ -42,7 +42,7 @@ const Bookmarks = ({ windowWidth }) => {
 
   useEffect(() => {
     dispatch(getBookmarks({ collectionId }))
-  }, []);
+  }, [collectionId]);
 
 
   const editCollectionModalHandler = () => {
