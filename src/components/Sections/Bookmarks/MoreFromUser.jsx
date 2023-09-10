@@ -45,10 +45,8 @@ const MoreFromUser = ({ collectionData, user }) => {
                 {userCollections?.data?.data.filter((collection) => {
                     return collection._id !== collectionData.collectionData._id
                 }).map((collection) => {
-                    {console.log(collection)}
                     return (
-                        
-                        <div key={collection._id} className='min-w-[300px] rounded-md hover:scale-[103%] hover:shadow-xl transition'>
+                        <div key={collection._id} className='min-w-[300px] max-w-[300px] rounded-md hover:scale-[103%] hover:shadow-xl transition'>
                           <CollectionitemV2
                               id={collection._id}
                               image={collection.image}
