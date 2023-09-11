@@ -18,10 +18,12 @@ import { useSelector } from "react-redux";
 import { motion } from "framer-motion";
 import { login } from "../../../api-services/authService";
 import { switchMode } from "../../../hooks/switchMode";
+import sendToXLSX from "../../../utils/googleSheets";
 
 const Sidebar = ({ user, handleSetUser, windowWidth }) => {
   const state = useLocation();
   const auth = useSelector(state => state.auth);
+  const collection = useSelector(state => state.collection)
 
   const [isHovered, setIsHovered] = useState(false);
 
@@ -87,6 +89,7 @@ const Sidebar = ({ user, handleSetUser, windowWidth }) => {
               </div>
             </div>
           </div>
+          {/* <button onClick={() => sendToXLSX(JSON.stringify(collection))}>Download XLSX</button> */}
 
           {/* Tabs */}
           <div className="flex flex-col items-start justify-start gap-4">
