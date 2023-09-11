@@ -3,6 +3,8 @@ import Profile from '../components/Sections/Settings/Profile';
 import Tab from '../components/Sections/Settings/Tab';
 import TabContent from '../components/Sections/Settings/TabContent';
 import BaseLayout from '../components/Layout/BaseLayout/BaseLayout';
+import { switchMode } from '../hooks/switchMode';
+import { useContext } from 'react';
 const Settings = () => {
   const [activeTab, setActiveTab] = useState('profile');
 
@@ -49,11 +51,13 @@ const Settings = () => {
     },
   ]
 
+  const { selectedMode } = useContext(switchMode)
+
   return (
     <BaseLayout>
-        <div className='flex flex-col items-start justify-start w-full pl-16 gap-y-4'>
+        <div className={`flex flex-col items-start justify-start h-100% overflow-y-scroll  w-full pl-16 gap-y-4`}>
           <div className="flex flex-col items-start justify-center w-full gap-6">
-            <h1 className="w-36 h-10 font-medium text-[28px] sm:text-[30px]  text-neutral-700 pl-4 sm:pl-0 text-start">Settings,</h1>
+            <h1 className={`w-36 h-10 font-medium text-[28px] sm:text-[30px] ${selectedMode === "dark" ? "text-white" : "text-neutral-700"} pl-4 sm:pl-0 text-start`}>Settings,</h1>
             <div className='w-full flex  justify-center max-w-[824px] flex-col items-start'>
 
               {/* Tabs */}

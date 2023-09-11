@@ -1,9 +1,12 @@
 import React from 'react'
 import { motion } from 'framer-motion'
+import { useContext } from 'react'
+import { switchMode } from '../../../hooks/switchMode'
 const Tab = ({ onClick, id, aria_controls, activeTab, title, onMouseEnter, onMouseLeave, isHover, hoveredTab }) => {
+    const { selectedMode } = useContext(switchMode)
     return (
         <button
-            className={`inline-block relative pl-0 font-normal text-xs ${activeTab === aria_controls ? 'text-neutral-900' : 'text-neutral-400'
+            className={`inline-block relative pl-0 font-normal text-xs ${activeTab === aria_controls ? selectedMode === "dark" ? 'text-white' : 'text-neutral-900' : selectedMode === 'dark' ? 'text-neutral-500' : 'text-neutral-400'
                 }`}
             id={id}
             type="button"
