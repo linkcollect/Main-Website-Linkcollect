@@ -26,7 +26,7 @@ const links = {
     instagram: 'https://www.instagram.com/linkcollect/',
     discord: 'https://discord.gg/askwhy-1074020862489022514',
     x: 'https://x.com/linkcollect_io',
-    premium: 'https://linkcollect.lemonsqueezy.com/'
+    premium: 'https://linkcollect.lemonsqueezy.com/checkout/buy/7d135ecc-36de-4977-a2d2-7d56c512706b'
 }
 
 

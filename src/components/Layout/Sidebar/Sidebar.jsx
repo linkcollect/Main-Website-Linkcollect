@@ -132,7 +132,7 @@ const Sidebar = ({ user, handleSetUser, windowWidth }) => {
           <a
             className={` font-normal  text-white outline-none px-4 py-3  bg-primary-500  rounded-lg  flex justify-start items-center gap-2 w-11/12  ${windowWidth < 700 ? "hidden" : ""
               } relative`}
-            href="https://linkcollect.lemonsqueezy.com/"
+            href="https://linkcollect.lemonsqueezy.com/checkout/buy/7d135ecc-36de-4977-a2d2-7d56c512706b"
             target="_blank"
             rel="noreferrer"
           >
