@@ -3,16 +3,12 @@ import { useNavigate } from 'react-router';
 // components
 import Carousel from './components/Carousel';
 // images
-import MockupImage from '../../../assets/landingPage/Mockup.png'
 import BackArrow from '../../../assets/back-arrow.svg'
 import GoogleIcon from '../../../assets/googleIcon.svg'
 import Approve from '../../../assets/approve.svg'
 import Extension from '../../../assets/landingPage/Extension.png'
 import Notes from '../../../assets/landingPage/notes.png'
 import Grid from '../../../assets/landingPage/GridBase.svg'
-// video
-import Video2 from '../../../assets/newTest.mp4'
-import Video1 from '../../../assets/41-low.mp4'
 // api
 import CollectionitemV2 from '../../Common/CollectionCard';
 import PageLoader from '../../UI/Loader/PageLoader';
@@ -32,11 +28,11 @@ const links = {
 
 const Main = ({ analytics, exploreData = undefined, windowWidth }) => {
   const navigate = useNavigate();
-  const video1Ref = useRef();
-  const video1Controls = {
-    end: () => {video1Ref.current.currentTime = 0; video1Ref.current.play()},
-    play: () => {if(video1Ref.current.currentTime >= 20) {video1Ref.current.currentTime = 0; video1Ref.current.play()}}
-  }
+  // const video1Ref = useRef();
+  // const video1Controls = {
+  //   end: () => {video1Ref.current.currentTime = 0; video1Ref.current.play()},
+  //   play: () => {if(video1Ref.current.currentTime >= 20) {video1Ref.current.currentTime = 0; video1Ref.current.play()}}
+  // }
   const video2Ref = useRef();
   const video2Controls = {
     end: () => {video2Ref.current.currentTime = 0; video2Ref.current.play()},
@@ -60,7 +56,7 @@ const Main = ({ analytics, exploreData = undefined, windowWidth }) => {
                 Login
             </button>)}
           </div>
-          <img src={MockupImage} alt='' className='mt-[5rem] w-full rounded-[1rem] shadow-[0px_40px_100px_-30px_rgba(0,0,0,0.4)]'></img>
+          <img src='https://res.cloudinary.com/dkbxxcfau/image/upload/v1694515685/fiwiesbpcqauy1qnkaws.png' alt='' className='mt-[5rem] w-full rounded-[1rem] shadow-[0px_40px_100px_-30px_rgba(0,0,0,0.4)]'></img>
         </section>
         <section id='trending' className='trending py-[6.25rem] px-[0rem]'>
           <div className='flex flex-col items-center gap-[1rem]'>
@@ -113,8 +109,8 @@ const Main = ({ analytics, exploreData = undefined, windowWidth }) => {
             </div>
             <div className='xl:col-span-3 xl:row-span-1 bg-neutral-50 border-[1px] border-neutral-300 p-[0.75rem] md:p-[2rem] rounded-[1rem] gap-[1rem] md:grid md:min-h-[30rem] hover:scale-[1.02] hover:shadow-md transition'>
               <div className='mb-[1rem] w-full aspect-video rounded-[1rem] overflow-hidden border-2 border-primary-500'>
-                <video ref={video1Ref} autoPlay muted onTimeUpdate={video1Controls.play} onEnded={video1Controls.end} className='rounded-[1rem] h-full w-full mx-auto'>
-                  <source src={`${Video1}`} type="video/mp4"/>
+                <video loop autoPlay muted className='rounded-[1rem] h-full w-full mx-auto'>
+                  <source src='https://res.cloudinary.com/dkbxxcfau/video/upload/v1694515772/r2gtvuxiokxgghbgdfac.mp4?autoplay=1&amp;loop=1&amp;options=0' type="video/mp4"/>
                   Your browser does not support video playing.
                 </video>
               </div>
@@ -155,8 +151,8 @@ const Main = ({ analytics, exploreData = undefined, windowWidth }) => {
               </div>
               </div>
               <div className='col-span-5 w-full rounded-[1rem]  overflow-hidden border-2 border-primary-500 aspect-video'>
-                <video ref={video2Ref} autoPlay muted onTimeUpdate={video2Controls.play} onEnded={video2Controls.end} className='rounded-[1rem] object-cover'>
-                  <source src={`${Video2}`} type="video/mp4"/>
+                <video loop autoPlay muted className='rounded-[1rem] object-cover'>
+                  <source src='https://res.cloudinary.com/dkbxxcfau/video/upload/v1694515857/qsp5brdeox6pn9fwl0nz.mp4' type="video/mp4"/>
                   Your browser does not support video playing.
                 </video>
               </div>
