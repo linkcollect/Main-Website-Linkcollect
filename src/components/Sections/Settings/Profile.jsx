@@ -7,8 +7,10 @@ import { useContext } from 'react'
 import { switchMode } from '../../../hooks/switchMode'
 import { getCheckUsername } from '../../../api-services/userService'
 import { useEffect } from 'react'
+import { useSelector } from 'react-redux'
 const Profile = () => {
     const fileInputRef = useRef(null);
+    const auth = useSelector((state) => state.auth)
     // profile privacy
     const [isPublic, setIsPublic] = useState(false)
     const [selectedTheme, setSelectedTheme] = useState('light')
@@ -28,17 +30,6 @@ const Profile = () => {
         } else {
         }
     }
-
-    useEffect(() => {
-      async function checkusername() {
-        const res = await getCheckUsername("linkcollect.io");
-        console.log(res);
-      }
-      checkusername()
-      return () => {
-        
-      }
-    }, [])
     
     //user personal data
     const [userProfileDdata, setUserProfileData] = useState({
@@ -76,9 +67,22 @@ const Profile = () => {
         setSelectedTheme(value)
     }
 
-    const handleSave = () => {
-        console.log(userProfileDdata, userSocialLinks)
+    const handleSave = async(user) => {
+        const res = await getCheckUsername(user.username)
+        console.log(res);
+        // check username and redirect to patch route if success
     }
+
+    useEffect(() => {
+        const setUser = {
+            fullName: auth.userData.name,
+            username: auth.username,
+            isPublic: auth.isPublic,
+            email: auth.userData.email
+        }
+        auth.isPublic && setIsPublic(true) && handleSwitchPrivacy(true)
+        setUserProfileData(setUser)
+    }, [])
 
     const { selectedMode } = useContext(switchMode)
     

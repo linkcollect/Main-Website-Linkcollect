@@ -48,7 +48,6 @@ const Button = forwardRef(
     // keeping normal styles for login page
     const urlParams = window?.location?.href?.split('/')
     const currentPage = urlParams[urlParams.length - 1]
-    console.log(currentPage);
     const variant =
       !disabled && !isLoading
         ? buttonVariant
