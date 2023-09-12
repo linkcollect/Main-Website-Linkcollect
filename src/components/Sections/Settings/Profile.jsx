@@ -5,6 +5,8 @@ import twitter from '../../../assets/twitterBlue.svg'
 import websiteIcon from '../../../assets/websiteIcon.svg'
 import { useContext } from 'react'
 import { switchMode } from '../../../hooks/switchMode'
+import { getCheckUsername } from '../../../api-services/userService'
+import { useEffect } from 'react'
 const Profile = () => {
     const fileInputRef = useRef(null);
     // profile privacy
@@ -27,7 +29,17 @@ const Profile = () => {
         }
     }
 
-
+    useEffect(() => {
+      async function checkusername() {
+        const res = await getCheckUsername("linkcollect.io");
+        console.log(res);
+      }
+      checkusername()
+      return () => {
+        
+      }
+    }, [])
+    
     //user personal data
     const [userProfileDdata, setUserProfileData] = useState({
         fullName: 'Harsh Singh',
