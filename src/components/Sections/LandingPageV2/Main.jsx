@@ -56,7 +56,7 @@ const Main = ({ analytics, exploreData = undefined, windowWidth }) => {
                 Login
             </button>)}
           </div>
-          <img src='https://res.cloudinary.com/dkbxxcfau/image/upload/v1694515685/fiwiesbpcqauy1qnkaws.png' alt='' className='mt-[5rem] w-full rounded-[1rem] shadow-[0px_40px_100px_-30px_rgba(0,0,0,0.4)]'></img>
+          <img src='https://media.discordapp.net/attachments/1075034816849924166/1151585862681890917/Screen-min.jpg' alt='' className='mt-[5rem] w-full rounded-[1rem] shadow-[0px_40px_100px_-30px_rgba(0,0,0,0.4)]'></img>
         </section>
         <section id='trending' className='trending py-[6.25rem] px-[0rem]'>
           <div className='flex flex-col items-center gap-[1rem]'>
