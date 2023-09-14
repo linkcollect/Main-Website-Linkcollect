@@ -132,7 +132,7 @@ const Sidebar = ({ user, handleSetUser, windowWidth }) => {
         <div className="flex items-center justify-center w-full mx-5 my-5">
 
           {/* showing pro user to premium user */}
-          {!auth.userData.isPremium ?
+          {auth.userData.isPremium === true ?
             <div
               className={` font-normal cursor-pointer outline-none px-4 py-3 text-primary-500 border border-primary-500  rounded-lg  flex justify-start items-center gap-2 w-11/12  ${windowWidth < 700 ? "hidden" : ""
                 } relative`}
