@@ -52,10 +52,13 @@ const EcBookamrkModal = ({ isOpen, onClose, isEditing, originalData = {}, collec
         setIsLoading(true);
         const favIconBaseURL = "https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url="
         const origin = new URL(data.link).origin;
-        const timeline = { link: data.link, title: data.title, note: data.note, favicon: `${favIconBaseURL}${origin}` };
+        let timeline = { link: data.link, title: data.title, note: data.note, favicon: `${favIconBaseURL}${origin}` };
         let res = {};
         try {
             if (isEditing) {
+                if(data.link === originalData.link) {
+                timeline = { link: data.link, title: data.title, note: data.note };
+                }
                 res = await updateTimeline(collectionID, bookmarkID, timeline);
                 dispatch(updateBookmark({ updatedBookmark: res.data.data }));
             } else {
