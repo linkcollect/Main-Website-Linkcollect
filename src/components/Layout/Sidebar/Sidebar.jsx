@@ -25,7 +25,7 @@ const Sidebar = ({ user, handleSetUser, windowWidth }) => {
   const auth = useSelector(state => state.auth);
 
   const [isHovered, setIsHovered] = useState(false);
-  console.log(auth);
+
   //   console.log(auth);
   const menuItem = [
     {
