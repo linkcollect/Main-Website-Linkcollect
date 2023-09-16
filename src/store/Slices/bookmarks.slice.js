@@ -20,6 +20,7 @@ const getStructuredCollectionData = (data) => {
         username:"",
         tags:[],
         timelines:[],
+        note: ""
     }
     return {...defaultCollectionDataStructure,...data};
 }
