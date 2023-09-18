@@ -40,8 +40,10 @@ const EcBookamrkModal = ({ isOpen, onClose, isEditing, originalData = {}, collec
     const sameObjectChecker = () => {
         return originalData.title === data.title &&
             originalData.link == data.link &&
-                originalData.note == data.note
+           originalData.note === data.note
     }
+
+
     const isSameData = isEditing ? sameObjectChecker() : false
 
     const onSubmit = async () => {
@@ -56,8 +58,8 @@ const EcBookamrkModal = ({ isOpen, onClose, isEditing, originalData = {}, collec
         let res = {};
         try {
             if (isEditing) {
-                if(data.link === originalData.link) {
-                timeline = { link: data.link, title: data.title, note: data.note };
+                if (data.link === originalData.link) {
+                    timeline = { link: data.link, title: data.title, note: data.note };
                 }
                 res = await updateTimeline(collectionID, bookmarkID, timeline);
                 dispatch(updateBookmark({ updatedBookmark: res.data.data }));
