@@ -48,12 +48,14 @@ const Button = forwardRef(
     // keeping normal styles for login page
     const urlParams = window?.location?.href?.split('/')
     const currentPage = urlParams[urlParams.length - 1]
-    console.log(currentPage);
     const variant =
       !disabled && !isLoading
         ? buttonVariant
         : disabled
-          ? currentPage === 'login' ? "disabled" : selectedMode === "light" ? "disabled" : "darkDisabled"
+          ?
+          // condition for  showing normal disabled button and not darkmode button in login
+          currentPage === 'login' ? "disabled"
+            : selectedMode === "light" ? "disabled" : "darkDisabled"
           : "loading";
     return (
       <button
