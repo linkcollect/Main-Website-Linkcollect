@@ -9,6 +9,7 @@ import settings from "../../../assets/settingsSidebar.svg";
 import navigation from "../../../assets/navSidebar.svg";
 import saved from "../../../assets/bmSidebar.svg";
 import energy from "../../../assets/energy.svg";
+import BlueUpgrade from '../../../assets/UpgradeBlue.svg'
 import ActiveSettings from '../../../assets/blueSettings.svg'
 import ActiveExplore from '../../../assets/blueExplore.svg'
 import ActiveHome from '../../../assets/blueHome.svg'
@@ -54,7 +55,7 @@ const Sidebar = ({ user, handleSetUser, windowWidth }) => {
   ];
 
   const { selectedMode } = useContext(switchMode)
-  
+
   return (
     <aside
       className={`${selectedMode === "dark" ? "bg-dark-primary border-r border-dark-secondary" : "bg-neutral-100 border-r border-neutral-300"}  ${windowWidth < 700 ? "h-[350px] w-full " : "w-[270px]"
@@ -72,7 +73,7 @@ const Sidebar = ({ user, handleSetUser, windowWidth }) => {
           >
             <img src={selectedMode === "dark" ? mainlogoWhite : mainlogo} alt="" className="w-40 h-10 mx" />
           </Link>
-          <div className={`w-full border-2 ${selectedMode === 'light'?  "border-[#D1D1DB]" : "border-dark-secondary"}  rounded-lg py-3 px-3 `}>
+          <div className={`w-full border-2 ${selectedMode === 'light' ? "border-[#D1D1DB]" : "border-dark-secondary"}  rounded-lg py-3 px-3 `}>
             <div className=" h-[100px] w-[100px] mx-auto mb-2 overflow-hidden">
               <img
                 src={auth.userData.profilePic ? auth.userData.profilePic : defaultImage}
@@ -135,15 +136,31 @@ const Sidebar = ({ user, handleSetUser, windowWidth }) => {
         {/* Upgrade button */}
 
         <div className="flex items-center justify-center w-full mx-5 my-5">
-          <a
-            className={` font-normal  text-white outline-none px-4 py-3  bg-primary-500  rounded-lg  flex justify-start items-center gap-2 w-11/12  ${windowWidth < 700 ? "hidden" : ""
-              } relative`}
-            href="https://linkcollect.lemonsqueezy.com/checkout/buy/7d135ecc-36de-4977-a2d2-7d56c512706b"
-            target="_blank"
-            rel="noreferrer"
-          >
-            <img src={energy} width={16} alt=""/> Upgrade
-          </a>
+
+          {/* showing pro user to premium user */}
+          {auth.userData.isPremium === true ?
+            <div
+              className={` font-normal cursor-pointer outline-none px-4 py-3 text-primary-500 border border-primary-500  rounded-lg  flex justify-start items-center gap-2 w-11/12  ${windowWidth < 700 ? "hidden" : ""
+                } relative`}
+            >
+              <img src={BlueUpgrade}  alt="" />
+              Pro User
+            </div>
+            :
+            <a
+              className={` font-normal  outline-none px-4 py-3 bg-primary-500 text-white rounded-lg  flex justify-start items-center gap-2 w-11/12  ${windowWidth < 700 ? "hidden" : ""
+                } relative`}
+              href="https://linkcollect.lemonsqueezy.com/checkout/buy/7d135ecc-36de-4977-a2d2-7d56c512706b"
+              target="_blank"
+              rel="noreferrer"
+            >
+
+              <img src={energy} width={16} alt="" />
+              Upgrade
+
+            </a>
+          }
+
         </div>
       </div>
     </aside>

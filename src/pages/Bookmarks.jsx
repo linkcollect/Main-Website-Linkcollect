@@ -24,14 +24,14 @@ const Bookmarks = ({ windowWidth }) => {
   const { collectionId, username } = useParams();
   // Modal State: Collection
   const [editCollectionModalOpen, setEditCollectionModalOpen] = useState(false);
-  const [deleteCollectionModal,setDeleteCollectionModal] = useState(false);
+  const [deleteCollectionModal, setDeleteCollectionModal] = useState(false);
   // Modal State: Bookmarks
   const [openCreateBookmarkModal, setOpenCreateBookmarkModal] = useState(false);
 
-  
+
   // Sorting State
-  const [sortingType,setSortingType] = useState("RECENETLY_UPDATED")
-  
+  const [sortingType, setSortingType] = useState("RECENETLY_UPDATED")
+
   // search query
   const [query, setQuery] = useState("");
   //For handiling click event on the bookmarkItem
@@ -49,8 +49,8 @@ const Bookmarks = ({ windowWidth }) => {
     setEditCollectionModalOpen((prev) => !prev);
   };
 
-  const deleteCollectionModalHandler = () =>{
-    setDeleteCollectionModal((prev)=>!prev);
+  const deleteCollectionModalHandler = () => {
+    setDeleteCollectionModal((prev) => !prev);
   }
 
   const bookmarkCreateModalHandler = () => {
@@ -71,27 +71,27 @@ const Bookmarks = ({ windowWidth }) => {
 
   const backHandler = (e) => {
     e.preventDefault();
-    if(!auth.isLoggedIn){
+    if (!auth.isLoggedIn) {
       navigation("/login");
-    }else{
+    } else {
       navigation(-1);
     }
   };
 
   // Bookmark Toggle Pin
   const toggleBookmarkPin = async (bookmarkID) => {
-    dispatch(setTogglePinBookmark({ bookmarkID,sortType:sortingType }))
+    dispatch(setTogglePinBookmark({ bookmarkID, sortType: sortingType }))
     // console.log(collection);
     try {
-        const res = await togglePin(collectionId, bookmarkID);
+      const res = await togglePin(collectionId, bookmarkID);
     } catch (error) {
-        console.error(error)
+      console.error(error)
     }
   }
 
-  const sortdata = (sortType)=>{
+  const sortdata = (sortType) => {
     setSortingType(sortType);
-    dispatch(sortBookmarksByType({sortType}));
+    dispatch(sortBookmarksByType({ sortType }));
   }
 
   const menuItem = [
@@ -111,22 +111,22 @@ const Bookmarks = ({ windowWidth }) => {
   // Logic for search 
   const filteredBookmarks = useMemo(() => {
     return (
-      !collectionData.isFetching && collectionData.collectionData.timelines?.length > 0 ? 
-      collectionData.collectionData.timelines.filter((tItem) =>
-        tItem.title.toLowerCase().includes(query.toLowerCase())
-      ) : []
+      !collectionData.isFetching && collectionData.collectionData.timelines?.length > 0 ?
+        collectionData.collectionData.timelines.filter((tItem) =>
+          tItem.title.toLowerCase().includes(query.toLowerCase())
+        ) : []
     );
-  }, [query, collectionData.collectionData,collectionData.isFetching]);
-    // dark and light mode switch
-    const { selectedMode } = useContext(switchMode)
+  }, [query, collectionData.collectionData, collectionData.isFetching]);
+  // dark and light mode switch
+  const { selectedMode } = useContext(switchMode)
 
   return (
     <BaseLayout>
-        <SEO 
+      <SEO
         title={collectionData.collectionData?.title ? collectionData.collectionData?.title : null}
-        description={collectionData.collectionData?.description ? collectionData.collectionData?.description : "This is an amazing collection of links, curated by " + collectionData.collectionData?.username }
+        description={collectionData.collectionData?.description ? collectionData.collectionData?.description : "This is an amazing collection of links, curated by " + collectionData.collectionData?.username}
         image={collectionData.collectionData?.image ? collectionData.collectionData?.image : null}
-        >
+      >
       </SEO>
       <div className="flex flex-col w-full h-[calc(100%)] mx-auto mb-[0.5rem] overflow-y-auto scrollbar-hide">
         {/* Collection Edit Modal */}
@@ -147,8 +147,8 @@ const Bookmarks = ({ windowWidth }) => {
 
         {/* Bookmarks */}
         {/* Create Bookamrk */}
-        {!collectionData.isFetching && <EcBookamrkModal isOpen={openCreateBookmarkModal} onClose={bookmarkCreateModalHandler} isEditing={false} collectionID={collectionId}/>}
-        
+        {!collectionData.isFetching && <EcBookamrkModal isOpen={openCreateBookmarkModal} onClose={bookmarkCreateModalHandler} isEditing={false} collectionID={collectionId} />}
+
 
         <div className="flex flex-col w-full px-8 lg:px-[5rem]">
           <div className="">
@@ -167,9 +167,9 @@ const Bookmarks = ({ windowWidth }) => {
                 editCollectionModalOpener={editCollectionModalHandler}
                 createBookmarkModalOpener={bookmarkCreateModalHandler}
                 deleteCollectionModalHandler={deleteCollectionModalHandler}
-                collectionId = {collectionId}
+                collectionId={collectionId}
                 upvotes={collectionData.collectionData.upvotes}
-                collectionUsername ={collectionData.collectionData.username}
+                collectionUsername={collectionData.collectionData.username}
               />
               {/* Search Bar and Filter */}
               <div className="w-[100%] sticky z-10">
@@ -177,7 +177,7 @@ const Bookmarks = ({ windowWidth }) => {
                   <Search query={query} setQuery={setQuery} />
 
                   {/* sort by */}
-                  <SortActions name="Sort By" menuItems={menuItem}/>
+                  <SortActions name="Sort By" menuItems={menuItem} />
                 </div>
 
               </div>
@@ -202,7 +202,7 @@ const Bookmarks = ({ windowWidth }) => {
                       id={timeline._id}
                       name={timeline.title}
                       url={timeline.link}
-                      note={timeline.note}
+                      note={!timeline.note ? '' : timeline.note}
                       favicon={timeline.favicon}
                       windowWidth={windowWidth}
                       updatedAt={timeline.updatedAt}
@@ -210,7 +210,7 @@ const Bookmarks = ({ windowWidth }) => {
                       clickedId={clickedId}
                       setClickedId={setClickedId}
                       isSelected={timeline.isSelected}
-                      collectionId = {collectionId}
+                      collectionId={collectionId}
                       toggleBookmarkPin={toggleBookmarkPin}
                       isPinned={timeline.isPinned}
                       collectionName={collectionData.collectionData.title}
@@ -220,11 +220,11 @@ const Bookmarks = ({ windowWidth }) => {
                 </div>
               </div>
             ) : (
-              <div className="py-20 flex flex-col items-center justify-center w-full h-full">
-                <p className={`mb-5 text-5xl ${ selectedMode === 'light' ? 'text-textPrimary' : 'text-neutral-300'}  `}>
+              <div className="flex flex-col items-center justify-center w-full h-full py-20">
+                <p className={`mb-5 text-5xl ${selectedMode === 'light' ? 'text-textPrimary' : 'text-neutral-300'}  `}>
                   No bookmarks Found
                 </p>
-                <p className={`text-textPrimary ${ selectedMode === 'light' ? 'text-textPrimary' : 'text-neutral-300'} `}>You can add it from extension</p>
+                <p className={`text-textPrimary ${selectedMode === 'light' ? 'text-textPrimary' : 'text-neutral-300'} `}>You can add it from extension</p>
               </div>
             )}
           </div>

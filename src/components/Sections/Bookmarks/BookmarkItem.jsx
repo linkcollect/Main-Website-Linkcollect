@@ -111,6 +111,12 @@ const BookmarkItem = ({
     }
   }, [hovered])
 
+  const getFaviconFromURL = (link) => {
+    const favIconBaseURL = "https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url="
+    const origin = new URL(link).origin;
+    return `${favIconBaseURL}${origin}`
+  }
+
   // Popup Action menu
   const popupActionMenu = useMemo(() => {
     return [
@@ -201,7 +207,7 @@ const BookmarkItem = ({
                 src={
                   favicon !== "undefined" && favicon !== undefined
                     ? favicon
-                    : bookmarkDefalutIcon
+                    : getFaviconFromURL(url)
                 }
                 alt="Icon"
                 className="w-[30.68px] h-[30px] rounded-md object-contain"

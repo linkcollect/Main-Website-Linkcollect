@@ -52,7 +52,10 @@ const Button = forwardRef(
       !disabled && !isLoading
         ? buttonVariant
         : disabled
-          ? currentPage === 'login' ? "disabled" : selectedMode === "light" ? "disabled" : "darkDisabled"
+          ?
+          // condition for  showing normal disabled button and not darkmode button in login
+          currentPage === 'login' ? "disabled"
+            : selectedMode === "light" ? "disabled" : "darkDisabled"
           : "loading";
     return (
       <button
