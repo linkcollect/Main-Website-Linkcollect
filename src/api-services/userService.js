@@ -16,3 +16,7 @@ export function getCheckUsername(username) {
 export function patchUser(userObject) {
     return http.patch(`${apiEndpoint}/userInfo/`, userObject)
 }
+
+export function getByUserId(userId) {
+    return http.get(`${apiEndpoint}/get-user/${userId}`);
+}

@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { getByUsername } from "../../api-services/userService";
+import { getByUsername, getByUserId } from "../../api-services/userService";
 import { login } from "../../api-services/authService";
 import jwt from "jsonwebtoken"
 import { setJwtInRequestHeader } from "../../api-services/httpService";
@@ -20,7 +20,7 @@ export const getUserDetails = createAsyncThunk(
     'getUserDetails',
     async (payload) => {
         const { userId, username } = jwt.decode(payload.token);
-        const res = await getByUsername(username);
+        const res = await getByUserId(userId);
         console.log(res);
         return {userId,username,token:payload.token,userData:res.data.data};
     }

@@ -25,7 +25,7 @@ const authDefaultState = {
 
 // userData saving utility
 const setUserData = (state,action) =>{
-  const {name,email,isPremium,isPublic,savedCollections,collections,profilePic,socials} = action.payload.userData;
+  const {name,username,email,isPremium,isPublic,savedCollections,collections,profilePic,socials} = action.payload.userData;
       state.userData = {...state.userData,name,email,isPremium,isPublic,savedCollections,profilePic,socials};
       state.userData.totalCollections =
         action.payload.userData.collections.length;
@@ -35,13 +35,15 @@ const setUserData = (state,action) =>{
       );
       state.userData.collections = collections.map(collectionItem=> ({collectionId:collectionItem._id,name:collectionItem.name}))
       state.userData.totalLinks = totalLinks;
+      state.username = username
+      
 }
 
 // User Authentication information utilty
 const setLoggedInInFormation = (state,action) =>{
   const { userId, username } = jwt.decode(action.payload.token);
   state.userId = userId;
-  state.username = username;
+  // state.username = username;
   state.isLoading = false;
   state.isLoggedIn = true;
   state.token = action.payload.token; 
