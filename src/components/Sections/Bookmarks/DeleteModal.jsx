@@ -41,10 +41,10 @@ export const Delete = ({ isOpen, onClose, heading, subheading, mode, collectionI
   const {selectedMode} = useContext(switchMode)
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
-      <div className="flex flex-col gap-5 px-3">
+      <div className="flex flex-col gap-5 px-3 overflow-hidden">
         {/* Header  */}
         <div className="flex justify-between w-full">
-          <h1 className={`text-start font-medium text-[20px] ${selectedMode === 'light' ? "text-black" : "text-neutral-50"} `}>
+          <h1 className={`text-start text-clip font-medium text-[20px] ${selectedMode === 'light' ? "text-black" : "text-neutral-50"} `}>
             {heading}
           </h1>
           <button className="flex" onClick={onClose}>

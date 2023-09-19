@@ -55,8 +55,8 @@ const Settings = () => {
 
   return (
     <BaseLayout>
-        <div className={`flex flex-col items-start justify-start h-100% overflow-y-scroll  w-full pl-16 gap-y-4`}>
-          <div className="flex flex-col items-start justify-center w-full gap-6">
+        <div className={`w-full overflow-y-scroll`}>
+          <div className="flex flex-col items-start justify-start w-full gap-4 mb-[1rem] mx-auto 3xl:px-0 px-8 max-w-[1500px]">
             <h1 className={`w-36 h-10 font-medium text-[28px] sm:text-[30px] ${selectedMode === "dark" ? "text-white" : "text-neutral-700"} pl-4 sm:pl-0 text-start`}>Settings</h1>
             <div className='w-full flex  justify-center max-w-[824px] flex-col items-start'>
 
