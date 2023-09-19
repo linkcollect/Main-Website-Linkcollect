@@ -149,14 +149,14 @@ const Profile = () => {
                 
                 const userResponse = await patchUser(userFormData); 
 
-                userResponse && dispatch(setUser({
-                    username: userProfileData.username,
+                dispatch(setUser({
+                    username: userResponse.data.data.username,
                     userData: {
-                        name: userProfileData.fullName,
-                        // email: userProfileDdata.email,
+                        name: userResponse.data.data.name,
+                        email: auth.userData.email,
                         profilePic: userResponse.data.data.profilePic,
-                        isPublic: isPublic,
-                        socials: [userSocialLinks.twitterUrl, userSocialLinks.websiteUrl],
+                        isPublic: userResponse.data.data.isPublic,
+                        socials: userResponse.data.data.socials,
                     },
                 }))
                 console.log(...userFormData);
@@ -184,18 +184,19 @@ const Profile = () => {
                 <div className="flex items-center justify-start w-full gap-6">
                     <img src={auth.userData.profilePic} ref={profilePicRef} alt="" className='w-20 h-20 rounded-full' />
                     <div className="flex flex-col gap-1">
-                        <div className={`relative w-32 border rounded-md ${selectedMode === "dark" ? "border-neutral-800 bg-dark-background" : "border-neutral-300 bg-neutral-200"}`}>
+                        <div className={`relative w-32 flex justify-between border rounded-md ${selectedMode === "dark" ? "border-neutral-800 bg-dark-background" : "border-neutral-300 bg-neutral-200"}`}>
                             <input
                                 type="file"
                                 ref={fileInputRef}
                                 id='myFileInput'
-                                // className={`w-full px-2 text-sm font-normal leading-6 rounded-md cursor-pointer h-9 ${selectedMode === "dark" ? "file:border-neutral-800 file:bg-dark-background" : "file:border-neutral-300 file:bg-neutral-200" } file:border-0 file:h-full file:cursor-pointer ${selectedMode === "dark" ? "file:text-white" : "file:text-black"} font-inter focus:outline-none`}
-                                // style={{ boxShadow: `0px 1px 2px rgba(16, 24, 40, 0.04)` }}
+                                className={`w-[6rem] px-2 text-sm font-normal leading-6 rounded-md cursor-pointer h-9 ${selectedMode === "dark" ? "file:border-neutral-800 file:bg-dark-background" : "file:border-neutral-300 file:bg-neutral-200" } file:border-0 file:h-full file:cursor-pointer ${selectedMode === "dark" ? "file:text-white" : "file:text-black"} font-inter focus:outline-none`}
+                                style={{ boxShadow: `0px 1px 2px rgba(16, 24, 40, 0.04)` }}
                                 onChange={handleFileChange}
                                 accept='image/png, image/jpg'
+
                             />
-                            <img src={Upload} alt="upload" className="absolute w-4 h-4 -translate-y-1/2 top-1/2 right-2" />
-                            <label htmlFor="myFileInput"></label>
+                             <img src={Upload} alt="upload" className="absolute w-4 h-4 -translate-y-1/2 top-1/2 right-2" />
+                            {/* <label htmlFor="myFileInput">This is a label </label> */}
                         </div>
                         <span className='text-xs font-normal text-neutral-400'>
                             400 X 400 px jpg or png format
@@ -223,7 +224,7 @@ const Profile = () => {
                         {/* Email  */}
                         <div className="flex flex-col items-start justify-center w-[48%]">
                             <label htmlFor="Full_Name" className={`flex items-start justify-start text-base font-normal ${selectedMode === "dark" ? 'text-neutral-100' : "text-neutral-700"}`}>Account Email</label>
-                            <input readOnly type="email" id='Full_Name' className={`w-full px-2 py-3 text-base font-normal border-2 rounded-lg focus:border-neutral-400 focus:outline-none focus:ring-neutral-400 text-neutral-500 ${selectedMode === "dark" ? 'border-dark-secondary' : "border-neutral-400"} ${selectedMode === "dark" ? 'bg-dark-secondary' : "bg-neutral-200"} ${selectedMode === "dark" ? 'text-neutral-200' : "text-neutral-900"}`} value={userProfileData.email} />
+                            <input readOnly type="email" id='Full_Name' className={`w-full px-2 py-3 text-base font-normal border-2 rounded-lg focus:border-neutral-400 focus:outline-none focus:ring-neutral-400 text-neutral-500 ${selectedMode === "dark" ? 'border-dark-secondary' : "border-neutral-400"} ${selectedMode === "dark" ? 'bg-dark-secondary' : "bg-neutral-200"} ${selectedMode === "dark" ? 'text-neutral-200' : "text-neutral-900"}`} value={auth.userData.email} />
                         </div>
 
                     </div>
@@ -311,18 +312,17 @@ const Profile = () => {
             <hr className={`w-full border ${selectedMode === "dark" ? "border-neutral-600" : "border-neutral-300"}`}/>
 
             {/* Delete my account */}
-            <div className="flex flex-col items-start justify-between gap-5 mb-12">
+            {/* <div className="flex flex-col items-start justify-between gap-5 mb-12">
 
                 <span className={`text-sm font-medium leading-6 ${selectedMode === "dark" ? "text-neutral-50" : "text-neutral-700"}`}>Delete my account</span>
 
                 <span className={`max-w-[530px] text-xs font-normal capitalize ${selectedMode === "dark" ? "text-neutral-400" : "text-neutral-600"} text-left`}>Deleting the account will delete all the data. You will not be able to recover your account once you delete it.</span>
 
-                {/* delete btn */}
                 <div className='flex items-start w-full '>
-                    <button className="flex items-center justify-center p-2.5 text-sm sm:text-base font-normal w-[136px] sm:w-[170px] text-white transition-all duration-500 rounded-md hover:scale-110 h-9 bg-error-500">Delete</button>
+                    <button disabled className="flex items-center justify-center p-2.5 text-sm sm:text-base font-normal w-[136px] sm:w-[170px] text-white transition-all duration-500 rounded-md hover:scale-110 h-9 bg-error-500">Delete</button>
                 </div>
 
-            </div>
+            </div> */}
         </div>
     )
 }
