@@ -10,11 +10,14 @@ const authDefaultState = {
   isLoggedIn: false,
   isLoading: false,
   userData: {
+    name: "",
     email: "",
+    profilePic: "",
     isPremium: false,
     isPublic: false,
     totalCollections: 0,
     totalLinks: 0,
+    socials: ["", ""],
     collections: [], 
     savedCollections: [],
   },
@@ -22,8 +25,8 @@ const authDefaultState = {
 
 // userData saving utility
 const setUserData = (state,action) =>{
-  const {name,email,isPremium,isPublic,savedCollections,collections,profilePic} = action.payload.userData;
-      state.userData = {...state.userData,name,email,isPremium,isPublic,savedCollections,profilePic};
+  const {name,email,isPremium,isPublic,savedCollections,collections,profilePic,socials} = action.payload.userData;
+      state.userData = {...state.userData,name,email,isPremium,isPublic,savedCollections,profilePic,socials};
       state.userData.totalCollections =
         action.payload.userData.collections.length;
       let totalLinks = 0;
@@ -64,6 +67,11 @@ const AuthSlicer = createSlice({
         (saveItem) => saveItem !== action.payload.collectionId
       );
     },
+    setUser: (state, action) => {
+      state.username = action.payload.username;
+      const {name,email,isPublic,profilePic,socials} = action.payload.userData;
+      state.userData = {...state.userData,name,email,isPublic,profilePic,socials};
+    }
   },
   extraReducers: (builder) => {
     builder.addCase(loginAction.fulfilled, (state, action) => {
@@ -102,6 +110,6 @@ const AuthSlicer = createSlice({
   },
 });
 
-export const { logout, setLoggedInUser, save, unsave } = AuthSlicer.actions;
+export const { logout, setLoggedInUser, save, unsave, setUser } = AuthSlicer.actions;
 
 export default AuthSlicer;

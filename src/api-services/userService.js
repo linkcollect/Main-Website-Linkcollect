@@ -12,3 +12,7 @@ export function getCheckUsername(username) {
         username
       }})
 }
+
+export function patchUser(userObject) {
+    return http.patch(`${apiEndpoint}/userInfo/`, userObject)
+}

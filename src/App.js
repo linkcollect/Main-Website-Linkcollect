@@ -8,7 +8,6 @@ import {
 } from "react-router-dom";
 import { Analytics } from '@vercel/analytics/react';
 
-import LandingPage from "./pages/LandingPage";
 import Signup from "./pages/Signup";
 import Login from "./pages/Login";
 import { useEffect, useState } from "react";
@@ -79,7 +78,6 @@ function App() {
         <Routes>
           {/* Conditional Routes */}
           {/* Landing page  */}
-          {/* <Route path="/landing" element={<LandingPageV2 windowWidth={windowWidth} />} /> */}
           <Route path="/" element={auth.isLoggedIn ? (
                 <Navigate to={`/${auth?.username}`} />
               ) : (
