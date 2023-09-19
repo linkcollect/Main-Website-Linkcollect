@@ -9,7 +9,7 @@ import { getCheckUsername, patchUser } from '../../../api-services/userService'
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { setUser } from '../../../store/Slices/user.slice'
-import toast from 'react-hot-toast'
+import toast, { Toaster } from 'react-hot-toast'
 
 const Profile = () => {
     const dispatch = useDispatch()
@@ -74,6 +74,16 @@ const Profile = () => {
             console.log(res);
             if (res.data.data === false) {
                 setError(true);
+                toast.error("Username Not available 😫", {
+                    style: {
+                      border: '1px solid #4B4C63',
+                      padding: '6px',
+                      color: '#713200',
+                      boxShadow: "none",
+                      width: 'max-content',
+                      minWidth: "max-content"
+                    },
+                  })
                 console.log("Showed error");
                 return false;
             } else {
@@ -83,20 +93,6 @@ const Profile = () => {
             }
         } 
     }
-
-    // useEffect(() => {
-    //     error && toast.error("Username Not available 😫", {
-    //         style: {
-    //           border: '1px solid #4B4C63',
-    //           padding: '6px',
-    //           color: '#713200',
-    //           boxShadow: "none",
-    //           width: 'max-content',
-    //           minWidth: "max-content"
-    //         },
-    //       })
-    // }, [error])
-
     // Edit user details handler
     const onChangeUserData = (e) => {
         e.preventDefault();
@@ -136,7 +132,6 @@ const Profile = () => {
         }
         setUserProfileData(setUser)
         setUserSocialLinks(setSocial)
-        console.log(userProfileData);
     }, [])
 
     const handleSave = async(user) => {
@@ -179,12 +174,15 @@ const Profile = () => {
     
     return (
         <div className='w-11/12 mx-auto sm:w-full flex flex-col items-center sm:items-start justify-center gap-8 max-w-[824px]'>
-
+            <Toaster
+                position="top-center"
+                reverseOrder={true}
+            />
             {/* First section of profile settings (name, email, username etc) */}
             <div className="flex flex-col items-center justify-center w-full gap-6 pt-4 sm:items-start ">
                 {/* Profile Image */}
                 <div className="flex items-center justify-start w-full gap-6">
-                    <img src={profile} ref={profilePicRef} alt="" className='w-20 h-20 rounded-full' />
+                    <img src={auth.userData.profilePic} ref={profilePicRef} alt="" className='w-20 h-20 rounded-full' />
                     <div className="flex flex-col gap-1">
                         <div className={`relative w-32 border rounded-md ${selectedMode === "dark" ? "border-neutral-800 bg-dark-background" : "border-neutral-300 bg-neutral-200"}`}>
                             <input
