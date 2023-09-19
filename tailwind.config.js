@@ -18,6 +18,7 @@ module.exports = {
        "border": "#242424",
        "secondary": "#333",
        "placeholder":"#B3B3B3",
+       "background": "#141414",
        "fade": "#636363"
       },
       primary: {

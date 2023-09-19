@@ -46,6 +46,12 @@ const Sidebar = ({ user, handleSetUser, windowWidth }) => {
       icon: saved,
       activeIcon: ActiveSaved
     },
+    {
+      name: "Settings",
+      link: "/settings",
+      icon: settings,
+      activeIcon: ActiveSettings
+    },
   ];
 
   const { selectedMode } = useContext(switchMode)
@@ -103,7 +109,7 @@ const Sidebar = ({ user, handleSetUser, windowWidth }) => {
               />
             ))}
             {/* Temorary until setting page come */}
-            <p className={` relative flex flex-row items-center justify-start w-full gap-3 px-2 py-3 rounded-md cursor-pointer border-1 text-base ${selectedMode === "dark" ? "text-[#B3B3B3] hover:text-primary-500 hover:bg-dark-border" : "text-[#636363] hover:bg-primary-50 hover:text-primary-500"}`} onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}>
+            {/* <p className={` relative flex flex-row items-center justify-start w-full gap-3 px-2 py-3 rounded-md cursor-pointer border-1 text-base ${selectedMode === "dark" ? "text-[#B3B3B3] hover:text-primary-500 hover:bg-dark-border" : "text-[#636363] hover:bg-primary-50 hover:text-primary-500"}`} onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}>
               {
                 isHovered ?
                   <img src={ActiveSettings} />
@@ -123,7 +129,7 @@ const Sidebar = ({ user, handleSetUser, windowWidth }) => {
                   Coming Soon
                 </p>
               </motion.div>}
-            </p>
+            </p> */}
           </div>
         </div>
 

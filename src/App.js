@@ -78,7 +78,6 @@ function App() {
         <Routes>
           {/* Conditional Routes */}
           {/* Landing page  */}
-          {/* <Route path="/landing" element={<LandingPageV2 windowWidth={windowWidth} />} /> */}
           <Route path="/" element={auth.isLoggedIn ? (
                 <Navigate to={`/${auth?.username}`} />
               ) : (
@@ -113,6 +112,7 @@ function App() {
           />
           <Route path="/explore" element={<Explore windowWidth={windowWidth}/>} />
           <Route path="/saved" element={<SavedCollection windowWidth={windowWidth}/>} />
+          <Route path="/settings" element={<Settings windowWidth={windowWidth}/>} />
 
           <Route path="/privacy" element={<Privacy />} />
           {/* <Route path="/settings" element={<Settings />} /> */}
