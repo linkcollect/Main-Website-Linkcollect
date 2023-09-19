@@ -13,6 +13,9 @@ import whitePinIcon from '../../../assets/darkMode/pinIcon.svg'
 import MenuWhiteIcon from '../../../assets/darkMode/MenuWhiteIcon.svg'
 import RedirectWhiteIcon from '../../../assets/darkMode/RedirectWhiteIcon.svg'
 import CopyWhiteIcon from '../../../assets/darkMode/whiteCopyIcon.svg'
+import NoteIcon from '../../../assets/note.svg'
+import WhiteNoteIcon from '../../../assets/darkMode/NoteIcon.svg'
+
 // Utils Imports
 import { nameShortner, getOrigin, fromNow } from "../../../utils/utils";
 
@@ -170,7 +173,7 @@ const BookmarkItem = ({
 
       <div
         // className={`cursor-pointer relative flex items-center justify-between w-full h-[60px] rounded-xl 
-        className={`cursor-pointer relative grid grid-cols-[1fr_70px] sm:grid-cols-[5fr_140px_70px] gap-[0.75rem] sm:gap-[2rem] items-center justify-between w-full h-[60px] rounded-xl 
+        className={`cursor-pointer  relative grid grid-cols-[1fr_70px] sm:grid-cols-[5fr_140px_70px] gap-[0.75rem] sm:gap-[2rem] items-center justify-between w-full h-[60px] rounded-xl 
           ${selectedMode === 'light' ? hovered ? "bg-neutral-200 border-neutral-200" : "bg-neutral-100 border-neutral-200" : hovered ? "bg-dark-secondary border-dark-secondary" :
             "bg-dark-primary border-dark-border"
           } border   duration-200 transition-all group`}
@@ -198,27 +201,27 @@ const BookmarkItem = ({
           </div>
         )}
 
-        <a className="flex justify-start items-center truncate" href={url} rel="noreferrer" target="_blank">
+        <a className="flex items-center justify-start truncate lg:max-w-[70%] " href={url} rel="noreferrer" target="_blank">
           {/* Bookamrk Info: Name , Link, Image */}
           {/* <div className="flex items-center"> */}
-            {/* Bookmark Image */}
-            <div className="min-w-[48px] min-h-[48px] block flex items-center justify-center">
-              <img
-                src={
-                  favicon !== "undefined" && favicon !== undefined
-                    ? favicon
-                    : getFaviconFromURL(url)
-                }
-                alt="Icon"
-                className="w-[30.68px] h-[30px] rounded-md object-contain"
-              />
-            </div>
+          {/* Bookmark Image */}
+          <div className="min-w-[48px] min-h-[48px] block flex items-center justify-center">
+            <img
+              src={
+                favicon !== "undefined" && favicon !== undefined
+                  ? favicon
+                  : getFaviconFromURL(url)
+              }
+              alt="Icon"
+              className="w-[30.68px] h-[30px] rounded-md object-contain"
+            />
+          </div>
 
-            {/* Bookmark Name, Link name */}
-            <div className="flex flex-col block truncate items-start justify-center gap-[2.63px] h-10 sm:h-10">
-              {/* Bookmark Name */}
-              <p className={`font-normal block text-start para text-[0.9rem] ${selectedMode === "light" ? "text-neutral-900" : "text-borderPrimary"}   sm:h-[21px]`}>
-                {/* {windowWidth > 640
+          {/* Bookmark Name, Link name */}
+          <div className="flex flex-col block truncate items-start justify-center gap-[2.63px] h-10 sm:h-10">
+            {/* Bookmark Name */}
+            <p className={`font-normal block text-start para text-[0.9rem] ${selectedMode === "light" ? "text-neutral-900" : "text-borderPrimary"}   sm:h-[21px]`}>
+              {/* {windowWidth > 640
                   ? windowWidth > 768
                     ? windowWidth > 1024
                       ? windowWidth > 1280
@@ -229,53 +232,73 @@ const BookmarkItem = ({
                       : nameShortner(name, 25)
                     : nameShortner(name, 20)
                   : nameShortner(name, 23)} */}
-                  {name}
-              </p>
+              {name}
+            </p>
 
-              {/* Link Name */}
-              <p className={`text-start text-[0.8rem] sm:text-[12px] sm:w-[271px] ${selectedMode === "light" ? "text-neutral-500" : "text-dark-placeholder"} mt-[0.1rem] `}>
-                {windowWidth < 640
-                  ? nameShortner(getOrigin(url), 25)
-                  : nameShortner(getOrigin(url), 40)}
-              </p>
-            </div>
+            {/* Link Name */}
+            <p className={`text-start text-[0.8rem] sm:text-[12px] sm:w-[271px] ${selectedMode === "light" ? "text-neutral-500" : "text-dark-placeholder"} mt-[0.1rem] `}>
+              {windowWidth < 640
+                ? nameShortner(getOrigin(url), 25)
+                : nameShortner(getOrigin(url), 40)}
+            </p>
+          </div>
           {/* </div> */}
         </a>
 
-        {/* Timestamp, Actions: Note, Open Link, Popup menu */}
-        <div className="hidden sm:flex items-center gap-[4rem] mr-2">
-          {/* Timestamp */}
-          <p className={`hidden sm:block text-xs font-medium whitespace-nowrap  ${selectedMode === "light" ? "text-neutral-500" : "text-dark-placeholder"} mr-5`}>
-            Added {fromNow(updatedAt)}
-          </p>
+        {/* Note Attached,  Timestamp, Actions: Note, Open Link, Popup menu */}
 
-          
-        </div>
-        {/* Actions: Note, Open Link, Popup menu */}
-          {/* All actions should work only when all links is not selected */}
-          {!isStillOneBookmarkSelected && (
-            <div className="flex justify-end gap-4 pr-4">
-              <IconButton
-                onClick={onCopy}
-                className="flex items-center justify-center "
-              >
-                {selectedMode === "light" ?
-                  <img
-                    ref={copyRef}
-                    src={copyIcon}
-                    alt=""
-                    className="block mx-auto cursor-pointer"
-                  />
+        <div className="items-center justify-start hidden gap-10 sm:flex">
+
+          {/* Note attached  if note is attached */}
+          {note && !hovered && windowWidth > 1024 && <div className={`flex  items-center justify-center absolute top-1/2 -translate-y-1/2 right-[40%] xl:right-[28%] ${windowWidth < 1150 && ''} transition-all duration-300 z-50 xl:p-1.5 rounded-md border border-primary-500 p-1 text-xs xl:text-sm font-normal  ${selectedMode === 'light' ? "text-charcoalGray bg-neutral-100" : "bg-dark-primary text-neutral-50"} `}>
+            {windowWidth > 1280 ?
+              ' Note Attached'
+              :
+              <>
+                {selectedMode === 'light' ?
+                  <img src={NoteIcon} alt="" className="" />
                   :
-                  <img
-                    ref={copyRef}
-                    src={CopyWhiteIcon}
-                    alt=""
-                    className="block mx-auto cursor-pointer"
-                  />
+                  <img src={WhiteNoteIcon} alt="" className="" />
                 }
-              </IconButton>
-              {/* <a
+              </>
+            }
+          </div>
+          }
+
+          <div className="hidden sm:flex items-center gap-[4rem] mr-2">
+            {/* Timestamp */}
+            <p className={`hidden sm:block text-xs font-medium whitespace-nowrap  ${selectedMode === "light" ? "text-neutral-500" : "text-dark-placeholder"} mr-5`}>
+              Added {fromNow(updatedAt)}
+            </p>
+          </div>
+
+        </div>
+
+        {/* Actions: Note, Open Link, Popup menu */}
+        {/* All actions should work only when all links is not selected */}
+        {!isStillOneBookmarkSelected && (
+          <div className="flex justify-end gap-4 pr-4">
+            <IconButton
+              onClick={onCopy}
+              className="flex items-center justify-center "
+            >
+              {selectedMode === "light" ?
+                <img
+                  ref={copyRef}
+                  src={copyIcon}
+                  alt=""
+                  className="block mx-auto cursor-pointer"
+                />
+                :
+                <img
+                  ref={copyRef}
+                  src={CopyWhiteIcon}
+                  alt=""
+                  className="block mx-auto cursor-pointer"
+                />
+              }
+            </IconButton>
+            {/* <a
                 className="items-center hidden sm:flex"
                 href={url}
                 target="_blank"
@@ -295,56 +318,56 @@ const BookmarkItem = ({
                   />
                 }
               </a> */}
-              {auth.isLoggedIn && isOwner && (
-                <div className="relative">
-                  <button
-                    className="items-center flex"
-                    onClick={() =>
-                      setClickedId((prev) => (prev === id ? null : id))
-                    }
+            {auth.isLoggedIn && isOwner && (
+              <div className="relative">
+                <button
+                  className="flex items-center"
+                  onClick={() =>
+                    setClickedId((prev) => (prev === id ? null : id))
+                  }
+                >
+                  {selectedMode === "light" ?
+                    <img
+                      src={menuIcon}
+                      alt=""
+                      className="block mx-auto cursor-pointer threedotbutton"
+                    />
+                    :
+                    <img
+                      src={MenuWhiteIcon}
+                      alt=""
+                      className="block mx-auto cursor-pointer threedotbutton"
+                    />
+                  }
+                </button>
+                {clickedId === id && (
+                  <motion.div
+                    id="options"
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: 10 }}
+                    transition={{ duration: 0.2 }}
+                    className={`w-[135px] rounded border absolute z-[9990] top-[28px] p-2 right-0 ${selectedMode === "light" ? "border-neutral-300 bg-neutral-100" : "border-dark-border bg-dark-primary"} `}
                   >
-                    {selectedMode === "light" ?
-                      <img
-                        src={menuIcon}
-                        alt=""
-                        className="threedotbutton block mx-auto cursor-pointer"
-                      />
-                      :
-                      <img
-                        src={MenuWhiteIcon}
-                        alt=""
-                        className="threedotbutton block mx-auto cursor-pointer"
-                      />
-                    }
-                  </button>
-                  {clickedId === id && (
-                    <motion.div
-                      id="options"
-                      initial={{ opacity: 0, y: 10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: 10 }}
-                      transition={{ duration: 0.2 }}
-                      className={`w-[135px] rounded border absolute z-[9990] top-[28px] p-2 right-0 ${selectedMode === "light" ? "border-neutral-300 bg-neutral-100" : "border-dark-border bg-dark-primary"} `}
-                    >
-                      {popupActionMenu.map((menuItem, index) => (
-                        <>
-                          <MenuItem
-                            name={menuItem.name}
-                            onClick={menuItem.onClick}
-                            type={menuItem.type}
-                            key={menuItem.type}
-                          />
-                          {index !== popupActionMenu.length - 1 && (
-                            <div className={`w-full h-[1px] ${selectedMode === "light" ? "bg-neutral-300" : "bg-dark-border"} mt-1 mb-1`} />
-                          )}
-                        </>
-                      ))}
-                    </motion.div>
-                  )}
-                </div>
-              )}
-            </div>
-          )}
+                    {popupActionMenu.map((menuItem, index) => (
+                      <>
+                        <MenuItem
+                          name={menuItem.name}
+                          onClick={menuItem.onClick}
+                          type={menuItem.type}
+                          key={menuItem.type}
+                        />
+                        {index !== popupActionMenu.length - 1 && (
+                          <div className={`w-full h-[1px] ${selectedMode === "light" ? "bg-neutral-300" : "bg-dark-border"} mt-1 mb-1`} />
+                        )}
+                      </>
+                    ))}
+                  </motion.div>
+                )}
+              </div>
+            )}
+          </div>
+        )}
       </div>
     </>
   );
