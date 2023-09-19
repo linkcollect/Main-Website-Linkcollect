@@ -88,6 +88,16 @@ const Profile = () => {
                 return false;
             } else {
                 setError(false);
+                toast.success("Username Changed !!!", {
+                    style: {
+                      border: '1px solid #4B4C63',
+                      padding: '6px',
+                      color: '#713200',
+                      boxShadow: "none",
+                      width: 'max-content',
+                      minWidth: "max-content"
+                    },
+                  })
                 console.log("Username response", res.data);
                 return true;
             }
