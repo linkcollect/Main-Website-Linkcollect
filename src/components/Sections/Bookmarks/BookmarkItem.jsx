@@ -201,7 +201,7 @@ const BookmarkItem = ({
           </div>
         )}
 
-        <a className="flex items-center justify-start truncate lg:max-w-[70%] " href={url} rel="noreferrer" target="_blank">
+        <a className="flex items-center justify-start truncate lg:max-w-[80%] " href={url} rel="noreferrer" target="_blank">
           {/* Bookamrk Info: Name , Link, Image */}
           {/* <div className="flex items-center"> */}
           {/* Bookmark Image */}
@@ -250,7 +250,7 @@ const BookmarkItem = ({
         <div className="items-center justify-start hidden gap-10 sm:flex">
 
           {/* Note attached  if note is attached */}
-          {note && !hovered && windowWidth > 1024 && <div className={`flex  items-center justify-center absolute top-1/2 -translate-y-1/2 right-[40%] xl:right-[28%] ${windowWidth < 1150 && ''} transition-all duration-300 z-50 xl:p-1.5 rounded-md border border-primary-500 p-1 text-xs xl:text-sm font-normal  ${selectedMode === 'light' ? "text-charcoalGray bg-neutral-100" : "bg-dark-primary text-neutral-50"} `}>
+          {note && !hovered && windowWidth > 1024 && <div className={`flex  items-center justify-center absolute top-1/2 -translate-y-1/2 right-[40%] xl:right-[27%] ${windowWidth < 1150 && ''} transition-all duration-300 z-50 xl:p-0.9 rounded-md border border-primary-500 p-1 text-xs xl:text-sm font-normal  ${selectedMode === 'light' ? "text-charcoalGray bg-neutral-100" : "bg-dark-primary text-neutral-50"} `}>
             {windowWidth > 1280 ?
               ' Note Attached'
               :
