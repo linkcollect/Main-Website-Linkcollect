@@ -159,6 +159,17 @@ const Profile = () => {
                 
                 const userResponse = await patchUser(userFormData); 
 
+                toast.success("User data Changed !!!", {
+                    style: {
+                      border: '1px solid #4B4C63',
+                      padding: '6px',
+                      color: '#713200',
+                      boxShadow: "none",
+                      width: 'max-content',
+                      minWidth: "max-content"
+                    },
+                  })
+
                 dispatch(setUser({
                     username: userResponse.data.data.username,
                     userData: {
@@ -176,6 +187,16 @@ const Profile = () => {
                 console.log("Not correct data", isValidFileSize, uploadedFile.size );
             }
         } catch (error) {
+            toast.error("Could not update Data", {
+                style: {
+                  border: '1px solid #4B4C63',
+                  padding: '6px',
+                  color: '#713200',
+                  boxShadow: "none",
+                  width: 'max-content',
+                  minWidth: "max-content"
+                },
+              })
             console.log(error);
         }
     }
