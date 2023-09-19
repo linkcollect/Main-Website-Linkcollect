@@ -237,10 +237,10 @@ const Profile = () => {
 
                 <div className="flex flex-col items-center justify-center w-full gap-5 mx-auto sm:items-start">
 
-                    <div className="flex flex-col items-center justify-center w-full gap-3 mx-auto sm:items-start">
+                    <div className="flex flex-col items-start justify-center w-full gap-3 mx-auto sm:items-start">
 
                         {/* full name, username */}
-                        <div className="flex flex-col items-start justify-center w-full gap-5 md:flex-row">
+                        <div className="flex flex-col items-start justify-start w-full gap-5 md:flex-row">
                             <div className="flex flex-col items-start justify-center w-full">
                                 <label htmlFor="Full_Name" className={`flex items-start justify-start text-base font-normal ${selectedMode === "dark" ? 'text-neutral-100' : "text-neutral-700"}`}>Full Name</label>
                                 <input type="text" onChange={onChangeUserData} id='Full_Name' name='fullName' className={`w-full px-2 py-3 text-base font-normal border-2 rounded-lg focus:border-primary-300 ${selectedMode === "dark" ? 'border-dark-secondary' : "border-neutral-400"} focus:outline-none ${selectedMode === "dark" ? 'bg-dark-border' : "bg-neutral-50"} ${selectedMode === "dark" ? 'text-neutral-300' : "text-neutral-900"}`} value={userProfileData.fullName} />
@@ -248,12 +248,12 @@ const Profile = () => {
                             <div className="flex flex-col items-start justify-center w-full">
                                 <label htmlFor="Full_Name" className={`flex items-start justify-start text-base font-normal ${selectedMode === "dark" ? 'text-neutral-100' : "text-neutral-700"}`} >Username</label>
                                 <input type="text" onChange={onChangeUserData} id='username' name='username' className={`w-full px-2 py-3 text-base font-normal border-2 rounded-lg focus:border-primary-300 ${selectedMode === "dark" ? 'border-dark-secondary' : "border-neutral-400"} focus:outline-none ${selectedMode === "dark" ? 'bg-dark-border' : "bg-neutral-50"} ${selectedMode === "dark" ? 'text-neutral-300' : "text-neutral-900"}`} value={userProfileData.username} />
-                                <span className='w-full text-xs font-normal text-left whitespace-nowrap sm:text-sm text-neutral-400'>Your linkcollect profile URL: https://linkcollect.io/harsh007</span>
+                                <span className='w-full text-xs font-normal text-left whitespace-wrap md:whitespace-nowrap sm:text-sm text-neutral-400'>Your linkcollect profile URL: https://linkcollect.io/harsh007</span>
                             </div>
                         </div>
 
                         {/* Email  */}
-                        <div className="flex flex-col items-start justify-center w-[48%]">
+                        <div className="flex flex-col items-start justify-start w-full md:w-[48%]">
                             <label htmlFor="Full_Name" className={`flex items-start justify-start text-base font-normal ${selectedMode === "dark" ? 'text-neutral-100' : "text-neutral-700"}`}>Account Email</label>
                             <input readOnly type="email" id='Full_Name' className={`w-full px-2 py-3 text-base font-normal border-2 rounded-lg focus:border-neutral-400 focus:outline-none focus:ring-neutral-400 text-neutral-500 ${selectedMode === "dark" ? 'border-dark-secondary' : "border-neutral-400"} ${selectedMode === "dark" ? 'bg-dark-secondary' : "bg-neutral-200"} ${selectedMode === "dark" ? 'text-neutral-200' : "text-neutral-900"}`} value={auth.userData.email} />
                         </div>
