@@ -229,7 +229,7 @@ const Bookmarks = ({ windowWidth }) => {
             )}
           </div>
         </div>
-        <MoreFromUser collectionData={collectionData} user={username}></MoreFromUser>
+        {!collectionData.isFetching && <MoreFromUser collectionData={collectionData} user={collectionData?.collectionData?.username}></MoreFromUser>}
       </div>
     </BaseLayout>
   );
