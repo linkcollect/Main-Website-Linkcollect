@@ -1,8 +1,11 @@
 import React, { useRef, useState } from 'react'
 import Upload from '../../../assets/upload.svg'
+import UploadWhiteIcon from '../../../assets/darkMode/uploadIcon.svg'
 import profile from '../../../assets/defaultProfile.svg'
 import twitter from '../../../assets/twitterBlue.svg'
 import websiteIcon from '../../../assets/websiteIcon.svg'
+import twitterWhite from '../../../assets/darkMode/twitterIcon.svg'
+import whiteWebsiteIcon from '../../../assets/darkMode/websiteIcon.svg'
 import { useContext } from 'react'
 import { switchMode } from '../../../hooks/switchMode'
 import { getCheckUsername, patchUser } from '../../../api-services/userService'
@@ -20,7 +23,6 @@ const Profile = () => {
     const [error, setError] = useState(false);
     // profile privacy
     const [isPublic, setIsPublic] = useState(false)
-    const [selectedTheme, setSelectedTheme] = useState('light')
 
     // changed uploaded file
     const [uploadedFile, setUploadedFile] = useState(null)
@@ -40,6 +42,10 @@ const Profile = () => {
         }
     }
 
+
+    // selected mode state
+    const { selectedMode, setSelectedMode } = useContext(switchMode)
+
     function setSrc() {
         const fileReader = new FileReader();
         fileReader.readAsDataURL(fileInputRef.current.files[0])
@@ -48,7 +54,7 @@ const Profile = () => {
         }
         fileReader.onload = changeImageSource
     }
-    
+
     //user personal data
     const [userProfileData, setUserProfileData] = useState({
         fullName: 'Harsh Singh',
@@ -76,32 +82,32 @@ const Profile = () => {
                 setError(true);
                 toast.error("Username Not available 😫", {
                     style: {
-                      border: '1px solid #4B4C63',
-                      padding: '6px',
-                      color: '#713200',
-                      boxShadow: "none",
-                      width: 'max-content',
-                      minWidth: "max-content"
+                        border: '1px solid #4B4C63',
+                        padding: '6px',
+                        color: '#713200',
+                        boxShadow: "none",
+                        width: 'max-content',
+                        minWidth: "max-content"
                     },
-                  })
+                })
                 console.log("Showed error");
                 return false;
             } else {
                 setError(false);
                 toast.success("Username Changed !!!", {
                     style: {
-                      border: '1px solid #4B4C63',
-                      padding: '6px',
-                      color: '#713200',
-                      boxShadow: "none",
-                      width: 'max-content',
-                      minWidth: "max-content"
+                        border: '1px solid #4B4C63',
+                        padding: '6px',
+                        color: '#713200',
+                        boxShadow: "none",
+                        width: 'max-content',
+                        minWidth: "max-content"
                     },
-                  })
+                })
                 console.log("Username response", res.data);
                 return true;
             }
-        } 
+        }
     }
     // Edit user details handler
     const onChangeUserData = (e) => {
@@ -122,7 +128,7 @@ const Profile = () => {
 
     // handling theme switch
     const handleSwitchTheme = (value) => {
-        setSelectedTheme(value)
+        setSelectedMode(value)
     }
 
     useEffect(() => {
@@ -144,31 +150,31 @@ const Profile = () => {
         setUserSocialLinks(setSocial)
     }, [])
 
-    const handleSave = async(user) => {
+    const handleSave = async (user) => {
         const isCorrectData = isValidUsername(userProfileData.username) && isValidFileSize;
         try {
             if (isCorrectData) {
                 const { username, fullName, isPublic } = userProfileData
                 const { twitterUrl, websiteUrl } = userSocialLinks
                 const userFormData = new FormData();
-                userFormData.append('username',username);
+                userFormData.append('username', username);
                 userFormData.append('name', fullName);
                 userFormData.append('isPublic', isPublic);
                 uploadedFile !== null && userFormData.append('profilePic', uploadedFile);
                 userFormData.append('socials', JSON.stringify([twitterUrl, websiteUrl]));
-                
-                const userResponse = await patchUser(userFormData); 
+
+                const userResponse = await patchUser(userFormData);
 
                 toast.success("User data Changed !!!", {
                     style: {
-                      border: '1px solid #4B4C63',
-                      padding: '6px',
-                      color: '#713200',
-                      boxShadow: "none",
-                      width: 'max-content',
-                      minWidth: "max-content"
+                        border: '1px solid #4B4C63',
+                        padding: '6px',
+                        color: '#713200',
+                        boxShadow: "none",
+                        width: 'max-content',
+                        minWidth: "max-content"
                     },
-                  })
+                })
 
                 dispatch(setUser({
                     username: userResponse.data.data.username,
@@ -184,25 +190,24 @@ const Profile = () => {
                 console.log("truthy", isCorrectData);
                 console.log(userResponse);
             } else {
-                console.log("Not correct data", isValidFileSize, uploadedFile.size );
+                console.log("Not correct data", isValidFileSize, uploadedFile.size);
             }
         } catch (error) {
             toast.error("Could not update Data", {
                 style: {
-                  border: '1px solid #4B4C63',
-                  padding: '6px',
-                  color: '#713200',
-                  boxShadow: "none",
-                  width: 'max-content',
-                  minWidth: "max-content"
+                    border: '1px solid #4B4C63',
+                    padding: '6px',
+                    color: '#713200',
+                    boxShadow: "none",
+                    width: 'max-content',
+                    minWidth: "max-content"
                 },
-              })
+            })
             console.log(error);
         }
     }
 
-    const { selectedMode } = useContext(switchMode)
-    
+
     return (
         <div className='w-11/12 mx-auto sm:w-full flex flex-col items-center sm:items-start justify-center gap-8 max-w-[824px]'>
             <Toaster
@@ -220,16 +225,20 @@ const Profile = () => {
                                 type="file"
                                 ref={fileInputRef}
                                 id='myFileInput'
-                                className={`w-[6rem] px-2 text-sm font-normal leading-6 rounded-md cursor-pointer h-9 ${selectedMode === "dark" ? "file:border-neutral-800 file:bg-dark-background" : "file:border-neutral-300 file:bg-neutral-200" } file:border-0 file:h-full file:cursor-pointer ${selectedMode === "dark" ? "file:text-white" : "file:text-black"} font-inter focus:outline-none`}
+                                className={`w-[6rem] px-2 text-sm font-normal leading-6 rounded-md cursor-pointer h-9 ${selectedMode === "dark" ? "file:border-neutral-800 file:bg-dark-background" : "file:border-neutral-300 file:bg-neutral-200"} file:border-0 file:h-full file:cursor-pointer ${selectedMode === "dark" ? "file:text-white" : "file:text-black"} font-inter focus:outline-none`}
                                 style={{ boxShadow: `0px 1px 2px rgba(16, 24, 40, 0.04)` }}
                                 onChange={handleFileChange}
                                 accept='image/png, image/jpg'
 
                             />
-                             <img src={Upload} alt="upload" className="absolute w-4 h-4 -translate-y-1/2 top-1/2 right-2" />
+                            {selectedMode === "light" ?
+                                <img src={Upload} alt="upload" className="absolute w-4 h-4 -translate-y-1/2 top-1/2 right-2" />
+                                :
+                                <img src={UploadWhiteIcon} alt="upload" className="absolute w-4 h-4 -translate-y-1/2 top-1/2 right-2" />
+                            }
                             {/* <label htmlFor="myFileInput">This is a label </label> */}
                         </div>
-                        <span className='text-xs font-normal text-neutral-400'>
+                        <span className={`text-xs font-normal ${selectedMode === 'light' ? "text-neutral-400" : "text-dark-placeholder"}  `}>
                             400 X 400 px jpg or png format
                         </span>
                     </div>
@@ -242,20 +251,20 @@ const Profile = () => {
                         {/* full name, username */}
                         <div className="flex flex-col items-start justify-start w-full gap-5 md:flex-row">
                             <div className="flex flex-col items-start justify-center w-full">
-                                <label htmlFor="Full_Name" className={`flex items-start justify-start text-base font-normal ${selectedMode === "dark" ? 'text-neutral-100' : "text-neutral-700"}`}>Full Name</label>
-                                <input type="text" onChange={onChangeUserData} id='Full_Name' name='fullName' className={`w-full px-2 py-3 text-base font-normal border-2 rounded-lg focus:border-primary-300 ${selectedMode === "dark" ? 'border-dark-secondary' : "border-neutral-400"} focus:outline-none ${selectedMode === "dark" ? 'bg-dark-border' : "bg-neutral-50"} ${selectedMode === "dark" ? 'text-neutral-300' : "text-neutral-900"}`} value={userProfileData.fullName} />
+                                <label htmlFor="Full_Name" className={`flex items-start justify-start text-base font-normal ${selectedMode === "dark" ? 'text-neutral-50' : "text-neutral-700"}`}>Full Name</label>
+                                <input type="text" onChange={onChangeUserData} id='Full_Name' name='fullName' className={`w-full px-2 py-3 text-base font-normal border-2 rounded-lg focus:border-primary-300 ${selectedMode === "dark" ? 'border-dark-secondary text-neutral-50 bg-dark-border ' : "border-neutral-400 text-neutral-900 bg-neutral-50 "} focus:outline-none }`} value={userProfileData.fullName} />
                             </div>
                             <div className="flex flex-col items-start justify-center w-full">
-                                <label htmlFor="Full_Name" className={`flex items-start justify-start text-base font-normal ${selectedMode === "dark" ? 'text-neutral-100' : "text-neutral-700"}`} >Username</label>
-                                <input type="text" onChange={onChangeUserData} id='username' name='username' className={`w-full px-2 py-3 text-base font-normal border-2 rounded-lg focus:border-primary-300 ${selectedMode === "dark" ? 'border-dark-secondary' : "border-neutral-400"} focus:outline-none ${selectedMode === "dark" ? 'bg-dark-border' : "bg-neutral-50"} ${selectedMode === "dark" ? 'text-neutral-300' : "text-neutral-900"}`} value={userProfileData.username} />
-                                <span className='w-full text-xs font-normal text-left whitespace-wrap md:whitespace-nowrap sm:text-sm text-neutral-400'>Your linkcollect profile URL: https://linkcollect.io/harsh007</span>
+                                <label htmlFor="Full_Name" className={`flex items-start justify-start text-base font-normal ${selectedMode === "dark" ? 'text-neutral-50' : "text-neutral-700"}`} >Username</label>
+                                <input type="text" onChange={onChangeUserData} id='username' name='username' className={`w-full px-2 py-3 text-base font-normal border-2 rounded-lg focus:border-primary-300 ${selectedMode === "dark" ? 'border-dark-secondary text-neutral-50 bg-dark-border ' : "border-neutral-400 text-neutral-900 bg-neutral-50 "} focus:outline-none }`} value={userProfileData.username} />
+                                <span className={` w-full text-xs font-normal text-left whitespace-wrap md:whitespace-nowrap sm:text-sm ${selectedMode === 'light' ? "text-neutral-400" : "text-dark-placeholder"} `}>Your linkcollect profile URL: https://linkcollect.io/harsh007</span>
                             </div>
                         </div>
 
                         {/* Email  */}
                         <div className="flex flex-col items-start justify-start w-full md:w-[48%]">
-                            <label htmlFor="Full_Name" className={`flex items-start justify-start text-base font-normal ${selectedMode === "dark" ? 'text-neutral-100' : "text-neutral-700"}`}>Account Email</label>
-                            <input readOnly type="email" id='Full_Name' className={`w-full px-2 py-3 text-base font-normal border-2 rounded-lg focus:border-neutral-400 focus:outline-none focus:ring-neutral-400 text-neutral-500 ${selectedMode === "dark" ? 'border-dark-secondary' : "border-neutral-400"} ${selectedMode === "dark" ? 'bg-dark-secondary' : "bg-neutral-200"} ${selectedMode === "dark" ? 'text-neutral-200' : "text-neutral-900"}`} value={auth.userData.email} />
+                            <label htmlFor="Full_Name" className={`flex items-start justify-start text-base font-normal ${selectedMode === "dark" ? 'text-neutral-50' : "text-neutral-700"}`}>Account Email</label>
+                            <input readOnly type="email" id='Full_Name' className={`w-full px-2 py-3 text-base font-normal border-2 rounded-lg focus:border-neutral-400 focus:outline-none focus:ring-neutral-400 text-neutral-500 ${selectedMode === "dark" ? 'border-dark-secondary bg-dark-secondary text-dark-fade' : "border-neutral-400 bg-neutral-200 text-neutral-900"} `} value={auth.userData.email} />
                         </div>
 
                     </div>
@@ -263,7 +272,7 @@ const Profile = () => {
                     <div className="flex flex-row items-start justify-between w-full gap-3 md:gap-0 sm:pr-6 lg:px-0">
                         <div className="flex flex-col items-start justify-between gap-1">
                             <span className={`text-xs font-normal ${selectedMode === "dark" ? "text-neutral-50" : "text-neutral-700"} sm:text-[13px] `}>Select profile type</span>
-                            <span className='text-[11.2px] font-normal capitalize text-neutral-400 '>{userProfileData.isPublic ? 'Public' : 'Private'} profile...</span>
+                            <span className={` text-[11.2px] font-normal capitalize ${selectedMode === 'light' ? "text-neutral-400" : "text-dark-placeholder"} `}>{userProfileData.isPublic ? 'Public' : 'Private'} profile...</span>
                         </div>
                         <div className={`flex relative items-start justify-center gap-1.5 p-1 w-40 sm:w-40 border-2 ${selectedMode === "dark" ? "border-dark-secondary" : "border-neutral-400"} h-9 ${selectedMode === "dark" ? "bg-dark-background" : "bg-neutral-300"} py-[0.25rem] rounded-lg`}>
                             <div className={`relative z-10 rounded w-1/2 h-full cursor-pointer transition-all duration-300 py-1.5 px-2.5 flex items-center justify-center ${selectedMode === "dark" ? "text-neutral-50" : "text-black"} text-sm sm:text-base font-normal`} onClick={() => handleSwitchPrivacy(false)}>
@@ -286,61 +295,78 @@ const Profile = () => {
                             name: userProfileData.fullName,
                             username: userProfileData.username,
                             isPublic: userProfileData.isPublic,
-                            email: userProfileData.email})} className=" hover:bg-primary-500 hover:text-white transition-all duration-500 hover:scale-110 w-16 h-7 p-1.5 flex items-center justify-center border border-primary-500  text-primary-500 font-normal text-base rounded">Save</button>
+                            email: userProfileData.email
+                        })}
+                            className={` hover:bg-primary-500 hover:text-white transition-all duration-500 hover:scale-110 w-16 h-7 p-1.5 flex items-center justify-center border border-primary-500  ${selectedMode === 'light' ? "text-primary-500" : "text-neutral-50"} font-normal text-base rounded `}
+                        >
+                            Save
+                        </button>
                     </div>
                 </div>
             </div>
 
-            <hr className={`w-full border ${selectedMode === "dark" ? "border-neutral-600" : "border-neutral-300"}`} />
+            <hr className={`w-full border ${selectedMode === "dark" ? "border-dark-secondary" : "border-neutral-300"}`} />
 
             {/* Social Links */}
             <div className="flex flex-col items-start justify-center w-full gap-6 sm:items-start ">
                 <div className="flex flex-col items-start justify-between gap-1">
                     <span className={`text-sm font-normal ${selectedMode === "dark" ? "text-neutral-50" : "text-neutral-700"}`}>Social links</span>
-                    <span className='text-xs font-normal capitalize text-neutral-400'>Note: You only need to add your username.</span>
+                    <span className={` text-xs font-normal capitalize ${selectedMode === 'light' ? "text-neutral-400" : "text-dark-placeholder"}  `}>Note: You only need to add your username.</span>
                 </div>
                 <div className="flex flex-col items-start justify-center w-full gap-4 md:flex-row">
                     <div className="relative flex items-start justify-center w-full  max-w-[395px]">
                         <input type="text" name='twitterUrl' onChange={onChangeSocialLinks} className={`w-full px-3 py-2 text-base font-normal border-2 rounded-lg focus:border-primary-300 ${selectedMode === "dark" ? 'border-dark-secondary' : "border-neutral-400"} focus:outline-none ${selectedMode === "dark" ? 'bg-dark-border' : "bg-neutral-50"} ${selectedMode === "dark" ? 'text-neutral-300' : "text-neutral-900"}`} value={userSocialLinks.twitterUrl} placeholder='twitter.com/' />
-                        <img src={twitter} className='absolute w-5 h-5 -translate-y-1/2 right-4 top-1/2' alt="twitter" />
+                        {selectedMode === "light" ?
+                            <img src={twitter} className='absolute w-5 h-5 -translate-y-1/2 right-4 top-1/2' alt="twitter" />
+                            :
+                            <img src={twitterWhite} className='absolute w-5 h-5 -translate-y-1/2 right-4 top-1/2' alt="twitter" />
+                        }
                     </div>
                     <div className="relative flex items-start justify-center w-full max-w-[395px] ">
                         <input type="text" name='websiteUrl' onChange={onChangeSocialLinks} className={`w-full px-3 py-2 text-base font-normal border-2 rounded-lg focus:border-primary-300 ${selectedMode === "dark" ? 'border-dark-secondary' : "border-neutral-400"} focus:outline-none ${selectedMode === "dark" ? 'bg-dark-border' : "bg-neutral-50"} ${selectedMode === "dark" ? 'text-neutral-300' : "text-neutral-900"}`} value={userSocialLinks.websiteUrl} placeholder='website url' />
-                        <img src={websiteIcon} className='absolute w-5 h-5 -translate-y-1/2 right-4 top-1/2' alt="twitter" />
+                        {selectedMode === "light" ?
+                            <img src={websiteIcon} className='absolute w-5 h-5 -translate-y-1/2 right-4 top-1/2' alt="twitter" />
+                            :
+                            <img src={whiteWebsiteIcon} className='absolute w-5 h-5 -translate-y-1/2 right-4 top-1/2' alt="twitter" />
+                        }
                     </div>
                 </div>
 
                 {/* save */}
                 <div className='flex items-start w-full'>
-                    <button onClick={() => handleSave({socials: [userSocialLinks.twitterUrl, userSocialLinks.websiteUrl]})} className=" hover:bg-primary-500 hover:text-white transition-all duration-500 hover:scale-110 w-16 h-7 p-1.5 flex items-center justify-center border border-primary-500  text-primary-500 font-normal text-base rounded">Save</button>
+                    <button onClick={() => handleSave({ socials: [userSocialLinks.twitterUrl, userSocialLinks.websiteUrl] })}
+                        className={` hover:bg-primary-500 hover:text-white transition-all duration-500 hover:scale-110 w-16 h-7 p-1.5 flex items-center justify-center border border-primary-500  ${selectedMode === 'light' ? "text-primary-500" : "text-neutral-50"} font-normal text-base rounded `}
+                    >
+                        Save
+                    </button>
                 </div>
             </div>
 
-            <hr className={`w-full border ${selectedMode === "dark" ? "border-neutral-600" : "border-neutral-300"}`}/>
+            <hr className={`w-full border ${selectedMode === "dark" ? "border-dark-secondary" : "border-neutral-300"}`} />
 
             {/* theme switch */}
             <div className="flex flex-row items-start justify-between w-full gap-3 md:gap-0 ">
                 <div className="flex flex-col items-start justify-between gap-1">
                     <span className={`text-sm font-normal ${selectedMode === "dark" ? "text-neutral-50" : "text-neutral-700"}`}>Theme</span>
-                    <span className='text-xs font-normal capitalize text-neutral-400'>Select website color theme.</span>
+                    <span className={`text-xs font-normal capitalize text-neutral-400 ${selectedMode === 'light' ? "text-neutral-400" : "text-dark-placeholder"}  `}>Select website color theme.</span>
                 </div>
                 <div className={` relative flex items-start justify-center gap-2 p-1 w-40 h-9  ${selectedMode === "dark" ? "border-dark-secondary" : "border-neutral-400"} h-9 ${selectedMode === "dark" ? "bg-dark-background" : "bg-neutral-300"} border-2 rounded-lg`}>
-                    <div className={`${selectedTheme === 'light' ? 'bg-none' : 'bg-none'} z-10 rounded w-1/2 h-full cursor-pointer transition-all duration-300 py-1.5 px-2.5 flex items-center justify-center ${selectedMode === "dark" ? "text-neutral-50" : "text-black"}  text-sm sm:text-base font-normal`} onClick={() => handleSwitchTheme('light')}>
+                    <div className={`bg-none z-10 rounded w-1/2 h-full cursor-pointer transition-all duration-300 py-1.5 px-2.5 flex items-center justify-center ${selectedMode === "dark" ? "text-neutral-50" : "text-black"}  text-sm sm:text-base font-normal`} onClick={() => handleSwitchTheme('light')}>
                         <span>
                             Light
                         </span>
                     </div>
-                    <div className={`${selectedTheme === 'dark' ? 'bg-none' : 'bg-none'} z-10 rounded w-1/2 h-full cursor-pointer transition-all duration-300 py-1.5 px-2.5 flex items-center justify-center ${selectedMode === "dark" ? "text-neutral-50" : "text-black"}  text-sm sm:text-base font-normal`} onClick={() => handleSwitchTheme('dark')}>
+                    <div className={`bg-none z-10 rounded w-1/2 h-full cursor-pointer transition-all duration-300 py-1.5 px-2.5 flex items-center justify-center ${selectedMode === "dark" ? "text-neutral-50" : "text-black"}  text-sm sm:text-base font-normal`} onClick={() => handleSwitchTheme('dark')}>
                         <span>
                             Dark
                         </span>
                     </div>
-                    <div className={`absolute w-[49%] h-[85%] transition-transform duration-200 top-1/2 -translate-y-1/2 left-0 rounded z-[1] ${selectedMode === "dark" ? "bg-dark-secondary" : "bg-neutral-50"} ${selectedTheme === 'light' ? 'translate-x-[5%]' : 'translate-x-[100%]'}`}></div>
+                    <div className={`absolute w-[49%] h-[85%] transition-transform duration-200 top-1/2 -translate-y-1/2 left-0 rounded z-[1] ${selectedMode === "dark" ? "bg-dark-secondary" : "bg-neutral-50"} ${selectedMode === 'light' ? 'translate-x-[5%]' : 'translate-x-[100%]'}`}></div>
 
                 </div>
             </div>
 
-            <hr className={`w-full border ${selectedMode === "dark" ? "border-neutral-600" : "border-neutral-300"}`}/>
+            <hr className={`w-full border ${selectedMode === "dark" ? "border-dark-secondary" : "border-neutral-300"}`} />
 
             {/* Delete my account */}
             {/* <div className="flex flex-col items-start justify-between gap-5 mb-12">
