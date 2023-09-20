@@ -166,7 +166,7 @@ const Profile = () => {
                 userFormData.append('socials', JSON.stringify([twitterUrl, websiteUrl]));
 
 
-                console.log("Not correct data", isValidFileSize, uploadedFile.size );
+                console.log("Not correct data", isValidFileSize);
                 
                 const userResponse = await patchUser(userFormData); 
 
