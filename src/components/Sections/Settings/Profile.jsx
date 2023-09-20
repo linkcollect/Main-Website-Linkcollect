@@ -88,17 +88,6 @@ const Profile = () => {
                 return false;
             } else {
                 setError(false);
-                toast.success("Username Changed !!!", {
-                    style: {
-                      border: '1px solid #4B4C63',
-                      padding: '6px',
-                      color: '#713200',
-                      boxShadow: "none",
-                      width: 'max-content',
-                      minWidth: "max-content"
-                    },
-                  })
-                console.log("Username response", res.data);
                 return true;
             }
         } 
@@ -145,9 +134,24 @@ const Profile = () => {
     }, [])
 
     const handleSave = async(user) => {
-        const isCorrectData = isValidUsername(userProfileData.username) && isValidFileSize;
+        const isCorrectData = await isValidUsername(userProfileData.username);
+        if (isCorrectData === false) {
+          return;
+        } else if (!isValidFileSize) {
+          toast.error("Files size should be less than 1mb", {
+            style: {
+              border: "1px solid #4B4C63",
+              padding: "6px",
+              color: "#713200",
+              boxShadow: "none",
+              width: "max-content",
+              minWidth: "max-content",
+            },
+          });
+          return;
+        }
         try {
-            if (isCorrectData) {
+     
                 const { username, fullName, isPublic } = userProfileData
                 const { twitterUrl, websiteUrl } = userSocialLinks
                 const userFormData = new FormData();
@@ -156,6 +160,9 @@ const Profile = () => {
                 userFormData.append('isPublic', isPublic);
                 uploadedFile !== null && userFormData.append('profilePic', uploadedFile);
                 userFormData.append('socials', JSON.stringify([twitterUrl, websiteUrl]));
+
+
+                console.log("Not correct data", isValidFileSize, uploadedFile.size );
                 
                 const userResponse = await patchUser(userFormData); 
 
@@ -183,10 +190,9 @@ const Profile = () => {
                 console.log(...userFormData);
                 console.log("truthy", isCorrectData);
                 console.log(userResponse);
-            } else {
-                console.log("Not correct data", isValidFileSize, uploadedFile.size );
-            }
+   
         } catch (error) {
+            console.log("-",error);
             toast.error("Could not update Data", {
                 style: {
                   border: '1px solid #4B4C63',
