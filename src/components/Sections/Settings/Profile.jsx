@@ -42,7 +42,6 @@ const Profile = () => {
         }
     }
 
-
     // selected mode state
     const { selectedMode, setSelectedMode } = useContext(switchMode)
 
@@ -57,12 +56,11 @@ const Profile = () => {
 
     //user personal data
     const [userProfileData, setUserProfileData] = useState({
-        fullName: 'Harsh Singh',
-        username: 'harsh0001',
+        fullName: auth.userData.name,
+        username: auth.username,
         isPublic: isPublic,
-        email: 'harsh0001@gmail.com'
+        email: auth.userData.email
     })
-
     // user social links
     const [userSocialLinks, setUserSocialLinks] = useState({
         websiteUrl: '',
@@ -257,7 +255,7 @@ const Profile = () => {
                             <div className="flex flex-col items-start justify-center w-full">
                                 <label htmlFor="Full_Name" className={`flex items-start justify-start text-base font-normal ${selectedMode === "dark" ? 'text-neutral-50' : "text-neutral-700"}`} >Username</label>
                                 <input type="text" onChange={onChangeUserData} id='username' name='username' className={`w-full px-2 py-3 text-base font-normal border-2 rounded-lg focus:border-primary-300 ${selectedMode === "dark" ? 'border-dark-secondary text-neutral-50 bg-dark-border ' : "border-neutral-400 text-neutral-900 bg-neutral-50 "} focus:outline-none }`} value={userProfileData.username} />
-                                <span className={` w-full text-xs font-normal text-left whitespace-wrap md:whitespace-nowrap sm:text-sm ${selectedMode === 'light' ? "text-neutral-400" : "text-dark-placeholder"} `}>Your linkcollect profile URL: https://linkcollect.io/harsh007</span>
+                                <a href={`https://linkcollect.io/${auth.username}`} target='_blank' rel='noreferrer' className={` w-full text-xs font-normal text-left whitespace-wrap md:whitespace-nowrap sm:text-sm ${selectedMode === 'light' ? "text-neutral-400" : "text-dark-placeholder"} `}>Your linkcollect profile URL : {`https://linkcollect.io/${auth.username}`}</a>
                             </div>
                         </div>
 
