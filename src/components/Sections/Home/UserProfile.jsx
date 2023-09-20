@@ -24,6 +24,7 @@ const UserProfile = ({ username,windowWidth }) => {
         const data = res.data.data;
         const user = {
           name:data.name,
+          username:data.username,
           profilePic:data.profilePic?data.profilePic:"",
           socials:data.socials?data.socials : [],
           totalViews:data.totalViews?data.totalViews:0,
@@ -58,7 +59,7 @@ const UserProfile = ({ username,windowWidth }) => {
       ) : (
         <div className="w-full h-full px-8 pb-6 overflow-y-scroll 3xl:px-0">
           <ProfileHeader
-            username={username}
+            username={user.username}
             name={user.name}
             imageUrl={user.profilePic}
             socials={user.socials}
@@ -90,6 +91,7 @@ const UserProfile = ({ username,windowWidth }) => {
                     onDownVote={downvoteAction}
                     onSave={saveAction}
                     onUnsave={unsaveAction}
+                    userId={collections.userId}
                   />
                 ))}
               </div>

@@ -20,6 +20,7 @@ import { switchMode } from "../../hooks/switchMode";
 import duplicateSvg from "../../assets/duplicate-white.svg"
 import { duplicateCollection } from "../../api-services/collectionService.js";
 import toast, { Toaster } from "react-hot-toast";
+import { getUserById } from "../../api-services/authService";
 
 const CollectionitemV2 = React.forwardRef(({
   id,
@@ -43,6 +44,7 @@ const CollectionitemV2 = React.forwardRef(({
   onPin,
   isHoverable = true,
   isDuplicate = false,
+  userId
 }, ref) => {
   const auth = useSelector(state => state.auth)
   const navigate = useNavigate();
@@ -69,6 +71,7 @@ const CollectionitemV2 = React.forwardRef(({
       isClicked: isUpvoted,
       number: upvotes.length,
     });
+      
   }, [])
   const dispatch = useDispatch();
 
@@ -120,9 +123,15 @@ const CollectionitemV2 = React.forwardRef(({
     }
   }
 
-  const onClickUsername = (e) => {
+  const onClickUsername = async (e) => {
     e.stopPropagation()
+    const getUser = await getUserById(userId)
+    username=getUser.data.data.username
     navigate(`/${username}`)
+  }
+  const onCardClick = async (e) => {
+    e.stopPropagation()
+    navigate(`/${username}/c/${id}`)
   }
 
   const onDuplicate = async (e, id) => {
@@ -167,7 +176,7 @@ const CollectionitemV2 = React.forwardRef(({
         h-[210px] transition duration-300 ease-in-out cursor-pointer select-none`}
         ref={ref}
         onMouseEnter={() => { isHoverable && setHover(true) }} onMouseLeave={() => { isHoverable && setHover(false) }}
-        onClick={() => navigate(`/${username}/c/${id}`)}
+        onClick={onCardClick}
 
       >
         <Toaster
@@ -236,7 +245,7 @@ const CollectionitemV2 = React.forwardRef(({
           <div className={`flex flex-wrap items-center gap-2 ${selectedMode === "dark" ? "text-neutral-50" : "text-neutral-500"}`} >
             {isOwner && <Chip name={isPublic ? "Public" : "Private"} />}
             {tags?.length > 0 ?
-              tags?.map(tag => <Chip name={tag} isTag={true} />) :
+              tags?.map(tag => <Chip name={tag} isTag={true} />) : !isOwner &&
               <button onClick={onClickUsername}> <Chip name={`by ${username}`} /></button>}
           </div>
           <div className="flex items-center justify-between w-full ">

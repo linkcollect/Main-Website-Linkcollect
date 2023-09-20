@@ -163,7 +163,7 @@ const Bookmarks = ({ windowWidth }) => {
                 image={collectionData.collectionData?.image}
                 tags={collectionData.collectionData?.tags}
                 isPublic={collectionData.collectionData?.isPublic}
-                isOwner={username === auth.username}
+                isOwner={collectionData.collectionData.userId === auth.userId}
                 editCollectionModalOpener={editCollectionModalHandler}
                 createBookmarkModalOpener={bookmarkCreateModalHandler}
                 deleteCollectionModalHandler={deleteCollectionModalHandler}

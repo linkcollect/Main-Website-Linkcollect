@@ -82,6 +82,7 @@ const Main = ({ analytics, exploreData = undefined, windowWidth }) => {
                         isOwner={false}
                         upvotes={collection.upvotes}
                         views={collection.views}
+                        userId={collection.userId}
                     />
                   </div>
                   )}

@@ -197,6 +197,7 @@ const Explore = ({ windowWidth }) => {
                     onDownVote={downvoteAction}
                     onSave={saveAction}
                     onUnsave={unsaveAction}
+                    userId={collectionItem.userId}
                     ref={index !== collection.collections.length - 1 ? lastCollectionElementRef : null}
                   />
                 ))}
