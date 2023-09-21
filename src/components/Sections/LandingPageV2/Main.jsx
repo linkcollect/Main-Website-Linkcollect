@@ -45,6 +45,9 @@ const Main = ({ analytics, exploreData = undefined, windowWidth }) => {
           <div className='hero-content mx-auto flex flex-col items-center gap-[2rem] w-[clamp(auto,12vw,60rem)]'>
             <h1 className='text-neutral-900 text-[clamp(1rem,10vw,4.25rem)] leading-[clamp(1rem,12vw,4.75rem)]'>keep forgetting links? <br className='hidden md:block'></br>not anymore</h1>
             <p className='text-neutral-600 max-w-[520px]'> a browser extension that will help you organise your links in simplest and fastest way + discover and search across popular public collections, just like pinterest </p>
+
+            <a href="https://www.producthunt.com/posts/linkcollect-pinterest-for-links?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-linkcollect&#0045;pinterest&#0045;for&#0045;links" target="_blank"><img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=413974&theme=light" alt="LinkCollect&#0032;&#0045;&#0032;Pinterest&#0032;For&#0032;Links - Bookmark&#0032;In&#0032;Public&#0032;&#0045;&#0032;Social&#0032;Bookmarking&#0032;Platform | Product Hunt"  width="220" height="52" /></a>
+            
             {windowWidth > 768 ? (<button 
               onClick={() => {analytics('Install Extension'); window.open(links.extensionUrl, "_blank");}} 
               className="mt-[2.5rem] py-[0.75rem] px-[1rem] w-[175px] h-min leading-[1.25rem] bg-primary-400 rounded-[5px] text-white hover:scale-[1.05] hover:shadow-md transition">
