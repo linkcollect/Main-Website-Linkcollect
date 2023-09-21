@@ -206,7 +206,7 @@ const Bookmarks = ({ windowWidth }) => {
                       favicon={timeline.favicon}
                       windowWidth={windowWidth}
                       updatedAt={timeline.updatedAt}
-                      isOwner={username === auth.username}
+                      isOwner={collectionData.collectionData.userId === auth.userId}
                       clickedId={clickedId}
                       setClickedId={setClickedId}
                       isSelected={timeline.isSelected}
