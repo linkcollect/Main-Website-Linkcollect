@@ -21,6 +21,7 @@ import duplicateSvg from "../../assets/duplicate-white.svg"
 import { duplicateCollection } from "../../api-services/collectionService.js";
 import toast, { Toaster } from "react-hot-toast";
 import { getUserById } from "../../api-services/authService";
+import formatViews from "../../utils/utils";
 
 const CollectionitemV2 = React.forwardRef(({
   id,
@@ -258,7 +259,7 @@ const CollectionitemV2 = React.forwardRef(({
                   <img src={viewsSvg} alt="views" className="w-5 h-5 mr-1" />
                 }
                 <p className={`text-sm font-normal  ${selectedMode === "dark" ? "text-neutral-500" : "text-neutral-500"}`}>
-                  {views ? views : 0}
+                  {views ? formatViews(views) : 0}
                 </p>
               </div>
               {/* votes */}
