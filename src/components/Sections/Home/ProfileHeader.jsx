@@ -88,7 +88,7 @@ const ProfileHeader = ({ name, socials, imageUrl, totalViews, totalCollections, 
 
                             {/* Social Links */}
                             {/* Logic Ramining */}
-                            {socials?.length > 1 && <div className="flex flex-row items-center justify-center w-full gap-3 sm:justify-start">
+                            {socials?.length > 1 && socials[0] && socials[1] && <div className="flex flex-row items-center justify-center w-full gap-3 sm:justify-start">
                             {socials[0].length > 5 && <div className="flex items-center gap-1 p-1 rounded-[18px] justify-center bg-neutral-300">
                                 <img src={Twitter} alt="" />
                                 <a  href={socials[0]} target="_blank" rel="noreferrer" className="text-xs font-normal text-neutral-900">twitter</a>
