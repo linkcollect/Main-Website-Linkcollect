@@ -315,7 +315,7 @@ const Profile = () => {
             <div className="flex flex-col items-start justify-center w-full gap-6 sm:items-start ">
                 <div className="flex flex-col items-start justify-between gap-1">
                     <span className={`text-sm font-normal ${selectedMode === "dark" ? "text-neutral-50" : "text-neutral-700"}`}>Social links</span>
-                    <span className={` text-xs font-normal capitalize ${selectedMode === 'light' ? "text-neutral-400" : "text-dark-placeholder"}  `}>Note: You only need to add your username.</span>
+                    <span className={` text-xs font-normal ${selectedMode === 'light' ? "text-neutral-400" : "text-dark-placeholder"}  `}>{`Note: Add Full Link (Should Start With https://)`}</span>
                 </div>
                 <div className="flex flex-col items-start justify-center w-full gap-4 md:flex-row">
                     <div className="relative flex items-start justify-center w-full  max-w-[395px]">
