@@ -46,8 +46,10 @@ const Main = ({ analytics, exploreData = undefined, windowWidth }) => {
             <h1 className='text-neutral-900 text-[clamp(1rem,10vw,4.25rem)] leading-[clamp(1rem,12vw,4.75rem)]'>keep forgetting links? <br className='hidden md:block'></br>not anymore</h1>
             <p className='text-neutral-600 max-w-[520px]'> a browser extension that will help you organise your links in simplest and fastest way + discover and search across popular public collections, just like pinterest </p>
 
-            <a href="https://www.producthunt.com/posts/linkcollect-pinterest-for-links?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-linkcollect&#0045;pinterest&#0045;for&#0045;links" target="_blank"><img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=413974&theme=light" alt="LinkCollect&#0032;&#0045;&#0032;Pinterest&#0032;For&#0032;Links - Bookmark&#0032;In&#0032;Public&#0032;&#0045;&#0032;Social&#0032;Bookmarking&#0032;Platform | Product Hunt"  width="220" height="52" /></a>
-            
+
+            {/* Product Hunt banner/badge (330 upvotes)*/}
+            {/* <a href="https://www.producthunt.com/posts/linkcollect-pinterest-for-links?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-linkcollect&#0045;pinterest&#0045;for&#0045;links" target="_blank"><img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=413974&theme=light" alt="LinkCollect&#0032;&#0045;&#0032;Pinterest&#0032;For&#0032;Links - Bookmark&#0032;In&#0032;Public&#0032;&#0045;&#0032;Social&#0032;Bookmarking&#0032;Platform | Product Hunt"  width="220" height="52" /></a> */}
+
             {windowWidth > 768 ? (<button 
               onClick={() => {analytics('Install Extension'); window.open(links.extensionUrl, "_blank");}} 
               className="mt-[2.5rem] py-[0.75rem] px-[1rem] w-[175px] h-min leading-[1.25rem] bg-primary-400 rounded-[5px] text-white hover:scale-[1.05] hover:shadow-md transition">
@@ -212,7 +214,7 @@ const Main = ({ analytics, exploreData = undefined, windowWidth }) => {
             <div className='pro w-full max-w-[30rem] p-[2rem] bg-gradient-to-b from-primary-100 border-[1px] border-primary-400 rounded-[1rem] flex flex-col gap-[2rem] shadow-[rgba(0,_0,_0,_0.25)_0px_25px_50px_-12px] hover:scale-[1.02] transition'>
               <div className='head min-h-[10.5rem] border-b-[1px] border-b-neutral-300'>
                 <p className='text-neutral-700'>Pro Plan</p>
-                <h3 className='text-[2.75rem] text-neutral-700'>$20 per user/century</h3>
+                <h3 className='text-[2.75rem] text-neutral-700'>$29 for lifetime</h3>
                 <div className='mx-auto mt-[1rem] py-[0.125rem] px-[0.125rem] rounded-[3.5rem] border-[1px] border-neutral-300 bg-neutral-50 font-light h-max w-max items-center flex'>
                   <div className='rounded-[3.5rem]  py-[0.125rem] px-[0.75rem] text-white bg-neutral-900 flex'>pay once, use forever</div>
                   {/* <div className='px-[0.75rem] text-neutral-500'>monthly</div> */}
@@ -223,11 +225,11 @@ const Main = ({ analytics, exploreData = undefined, windowWidth }) => {
                 <ul className='list-none flex flex-col gap-[0.75rem] text-left'>
                   <li className='flex'><img src={Approve} alt='' className='w-[1.25rem] h-[1.5rem] mr-[0.75rem]'/><p className=''>Unlimited collections</p></li>
                   <li className='flex'><img src={Approve} alt='' className='w-[1.25rem] h-[1.5rem] mr-[0.75rem]'/><p className=''>Unlimited bookmarks</p></li>
+                  <li className='flex'><img src={Approve} alt='' className='w-[1.25rem] h-[1.5rem] mr-[0.75rem]'/><p className=''>Add notes to your bookmarks right when you save</p></li>
                   <li className='flex'><div className='ml-[2rem] rounded-[25px] border-[1px] border-success-300 bg-success-100 leading-0 px-[0.5rem]'>Coming Soon 👇</div></li>
                   <li className='flex'><img src={Approve} alt='' className='w-[1.25rem] h-[1.5rem] mr-[0.75rem]'/><p className=''>Add Reminders to your bookmarks, so you don't forget to check it out later</p></li>
                   <li className='flex'><img src={Approve} alt='' className='w-[1.25rem] h-[1.5rem] mr-[0.75rem]'/><p className=''>Collaborative Curation, create privately shared collections between your colleagues or friends</p></li>
-                  <li className='flex'><img src={Approve} alt='' className='w-[1.25rem] h-[1.5rem] mr-[0.75rem]'/><p className=''>Import Bookmarks from your browser or twitter.</p></li>
-                  <li className='flex'><img src={Approve} alt='' className='w-[1.25rem] h-[1.5rem] mr-[0.75rem]'/><p className=''>Export your collection data into a well organised excel sheet or csv, so you can do research without copy pasting links and titles</p></li>
+                  <li className='flex'><img src={Approve} alt='' className='w-[1.25rem] h-[1.5rem] mr-[0.75rem]'/><p className=''>Export your collection data into a well organised excel sheet or csv, so you can do research without copy pasting links and titles 😃 </p></li>
                 </ul>
               </div>
               <div className='cta mt-auto'>
