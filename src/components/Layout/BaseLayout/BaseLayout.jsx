@@ -42,15 +42,15 @@ const BaseLayout = ({ windowWidth, children }) => {
         {children}
 
         {/* Footer */}
-        <div className="flex md:hidden mt-auto items-center border-t-2 border-neutral-200 justify-around w-full gap-5 max-w-[1500px] py-3 ">
-        {(navabrItem.map(({ name, link }) => (
+        {/* <div className="flex md:hidden mt-auto items-center border-t-2 border-neutral-200 justify-around w-full gap-5 max-w-[1500px] py-3 "> */}
+        {/* {(navabrItem.map(({ name, link }) => (
           <a href={link} target="_blank" className="items-center justify-center rounded flex" key={link} rel="noreferrer">
             <span className={`text-base font-normal text-center ${selectedMode === "light" ? "text-neutral-600" : "text-borderPrimary"} `}>
               {name}
             </span>
           </a>
-        )))}
-      </div>
+        )))} */}
+      {/* </div> */}
       </div>
     </div>
   );
