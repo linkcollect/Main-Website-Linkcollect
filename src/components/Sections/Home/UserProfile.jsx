@@ -117,6 +117,7 @@ const UserProfile = ({ username, windowWidth }) => {
                   No Collection Found
                 </p>
                 <p className="">You can add it from extension</p>
+                <a className="text-primary-400" href="https://chrome.google.com/webstore/detail/linkcollect-save-share-bo/knekpacpcgkieomkhhngenjeeokddkif"> Click To Install </a>
               </div>
             )}
           </div>

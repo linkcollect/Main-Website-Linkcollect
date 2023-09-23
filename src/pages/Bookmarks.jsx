@@ -225,6 +225,7 @@ const Bookmarks = ({ windowWidth }) => {
                   No bookmarks Found
                 </p>
                 <p className={`text-textPrimary ${selectedMode === 'light' ? 'text-textPrimary' : 'text-neutral-300'} `}>You can add it from extension</p>
+                <a className="text-primary-400" href="https://chrome.google.com/webstore/detail/linkcollect-save-share-bo/knekpacpcgkieomkhhngenjeeokddkif"> Click To Install </a>
               </div>
             )}
           </div>
