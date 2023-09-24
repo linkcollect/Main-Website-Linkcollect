@@ -164,7 +164,7 @@ const OwnerProfile = ({ username, windowWidth }) => {
                   isPinned={collections.isPinned}
                   description={collections.description}
                   tags={collections.tags}
-                  // username={username}
+                  username={username}
                   windowWidth={windowWidth}
                   isOwner={true}
                   upvotes={collections.upvotes}

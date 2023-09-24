@@ -66,6 +66,12 @@ const Navabar = () => {
       icon: saved,
       activeIcon: ActiveSaved
     },
+    {
+      name: "Settings",
+      link: "/settings",
+      icon: settings,
+      activeIcon: ActiveSettings
+    },
   ];
   // dark and light mode switch
   const { selectedMode, setSelectedMode } = useContext(switchMode)
@@ -129,7 +135,7 @@ const Navabar = () => {
           />
         ))}
         {/* Temorary until setting page come */}
-        <p className={` relative flex flex-row items-center justify-start w-full gap-3 px-2 py-3 rounded-md cursor-pointer border-1 text-base ${selectedMode === "dark" ? "text-[#B3B3B3] hover:text-primary-500 hover:bg-dark-border" : "text-[#636363] hover:bg-primary-50 hover:text-primary-500"}`} onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}>
+        {/* <p className={` relative flex flex-row items-center justify-start w-full gap-3 px-2 py-3 rounded-md cursor-pointer border-1 text-base ${selectedMode === "dark" ? "text-[#B3B3B3] hover:text-primary-500 hover:bg-dark-border" : "text-[#636363] hover:bg-primary-50 hover:text-primary-500"}`} onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}>
           {
             isHovered ?
               <img src={ActiveSettings} alt=""/>
@@ -149,7 +155,7 @@ const Navabar = () => {
               Coming Soon
             </p>
           </motion.div>}
-        </p>
+        </p> */}
       </div>
       {isLoggedIn && <Button onClick={logoutHandler} className={`px-[9.6px] py-[1rem] mt-[2rem] rounded-[4.8px] text-[0.75rem] h-6 w-full flex  ${selectedMode === "light" ? "text-neutral-600" : "text-borderPrimary"} transition-all duration-200 rounded-md hover:scale-110 border border-error-500 bg-white-10`}>Logout</Button>}
       </div>
