@@ -17,7 +17,7 @@ const MoreFromUser = ({ collectionData, user }) => {
     useEffect(() => {
         async function fetchUserCollections() {
             try {
-                console.log("username", user)
+                // console.log("username", user)
                 if(user && user !== 'undefined'){
                 const getUserCollections = await getByUsername(user)
                 setUserCollections(getUserCollections.data.data.collections);

@@ -21,7 +21,7 @@ export const getUserDetails = createAsyncThunk(
     async (payload) => {
         const { userId, username } = jwt.decode(payload.token);
         const res = await getByUserId(userId);
-        console.log(res);
+        // console.log(res);
         return {userId,username,token:payload.token,userData:res.data.data};
     }
 )

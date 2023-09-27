@@ -191,9 +191,9 @@ const Profile = () => {
                         socials: userResponse.data.data.socials,
                     },
                 }))
-                console.log(...userFormData);
-                console.log("truthy", isCorrectData);
-                console.log(userResponse);
+                // console.log(...userFormData);
+                // console.log("truthy", isCorrectData);
+                // console.log(userResponse);
    
         } catch (error) {
             console.log("-",error);

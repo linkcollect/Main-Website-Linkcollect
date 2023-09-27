@@ -131,7 +131,7 @@ const CollectionitemV2 = React.forwardRef(({
     navigate(`/${username}`)
   }
   const onCardClick = async (e) => {
-    console.log("username", username)
+    // console.log("username", username)
     e.stopPropagation()
     navigate(`/${username}/c/${id}`)
   }
