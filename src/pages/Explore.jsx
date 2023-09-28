@@ -16,17 +16,18 @@ import { FilterActions } from "../components/Common/ActiondropDown";
 import Loader from "../components/UI/Loader/Loader";
 import { getSearch } from "../api-services/collectionService";
 import { useSearchParams } from "react-router-dom";
-import { searchedCollection } from "../store/Slices/explore.slice";
+import { searchedCollection, storeQuery } from "../store/Slices/explore.slice";
 import { SortActions } from "../components/Common/ActiondropDown";
 import SEO from "../components/SEO/SEO";
 import { switchMode } from "../hooks/switchMode";
 const Explore = ({ windowWidth }) => {
   const dispatch = useDispatch();
   const [query, setQuery] = useState("");
-  const [searchParams, setSearcParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
   const [isSearching, setIsSearching] = useState(false);
   const [isSearchingMore, setIsSearchingMore] = useState(false);
   const collection = useSelector((state) => state.explore);
+
   useEffect(() => {
     // collection.isSearched && !searchParams.get("queryFor") may user has navigate away after searhing something in this case we should do reload the original data
     if ((collection.isSearched && !searchParams.get("queryFor")) || collection.collections.length == 0) {
@@ -34,6 +35,37 @@ const Explore = ({ windowWidth }) => {
     }
   }, []);
 
+  useEffect(() => {
+    async function getSearchResult(queryString) {
+      setIsSearching(true);
+      try {
+        const res = await getSearch(queryString);
+        console.log(res);
+        dispatch(searchedCollection({ data: { collections: res.data.data }, page: 1 }));
+      } catch (e) {
+        console.log(e);
+      } finally {
+        setIsSearching(false);
+      }
+    }
+    if (searchParams.get("queryFor")) {
+      const queryString = searchParams.get("queryFor");
+
+      const filteredString = filterString(queryString);
+      console.log(filteredString);
+      setQuery(filteredString);
+      getSearchResult(filteredString);
+    }
+  }, [])
+
+  const pattern = /([\w\s\+])+/g;
+  function filterString(input) {
+    const matches = input.match(pattern);
+    const filteredInput = matches ? matches.join('') : '';
+    return filteredInput;
+  }
+
+  //ye example usage
 
   const observer = useRef()
   const lastCollectionElementRef = useCallback(node => {
@@ -94,7 +126,7 @@ const Explore = ({ windowWidth }) => {
   const getSearchResult = async (e) => {
     e.preventDefault();
     setIsSearching(true);
-    setSearcParams({ queryFor: query })
+    setSearchParams({ queryFor: query })
     try {
       const res = await getSearch(query);
       dispatch(searchedCollection({ data: { collections: res.data.data }, page: 1 }));
@@ -125,7 +157,7 @@ const Explore = ({ windowWidth }) => {
       return
     }
     searchParams.delete("queryFor");
-    setSearcParams(searchParams);
+    setSearchParams(searchParams);
     dispatch(getAllExplore());
   }
   
