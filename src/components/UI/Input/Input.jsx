@@ -1,42 +1,43 @@
-import React, { forwardRef, useState, useMemo, useContext } from "react";
-import { cva } from "class-variance-authority";
-import { classMerge } from "../../../utils/utils";
-import OpenEye from "../../../assets/openEye.svg";
-import CloseEye from "../../../assets/hiddenEye.svg";
-import { switchMode } from "../../../hooks/switchMode";
-
-
-
-
-
+import React, { forwardRef, useState, useMemo, useContext } from 'react';
+import { cva } from 'class-variance-authority';
+import { classMerge } from '../../../utils/utils';
+import OpenEye from '../../../assets/openEye.svg';
+import CloseEye from '../../../assets/hiddenEye.svg';
+import { switchMode } from '../../../hooks/switchMode';
 
 const Input = forwardRef(
-  ({
-    isFocused,
-    hasError,
-    className,
-    type,
-    value,
-    variant: InputVariant,
-    ...props
-  }, ref) => {
-
+  (
+    {
+      isFocused,
+      hasError,
+      className,
+      type,
+      value,
+      variant: InputVariant,
+      ...props
+    },
+    ref
+  ) => {
     // getting current selected mode
-    const { selectedMode } = useContext(switchMode)
+    const { selectedMode } = useContext(switchMode);
 
     // checking if it is a login page as not to show dark mode in login page for now
     // keeping normal styles for login page
-    const urlParams = window?.location?.href?.split('/')
-    const currentPage = urlParams[urlParams.length - 1]
+    const urlParams = window?.location?.href?.split('/');
+    const currentPage = urlParams[urlParams.length - 1];
 
     const inputVariants = cva(
-      `block focus:outline-none text-base ${selectedMode === "dark" && currentPage !== "login" ? "placeholder:text-dark-placeholder text-neutral-200" : "placeholder:text-neutral-500 text-neutral-900"}  border-2 rounded-lg`,
+      `block focus:outline-none text-base ${
+        selectedMode === 'dark' && currentPage !== 'login'
+          ? 'placeholder:text-dark-placeholder text-neutral-200'
+          : 'placeholder:text-neutral-500 text-neutral-900'
+      }  border-2 rounded-lg`,
       {
         variants: {
           variant: {
-            default: "border-primary-100 bg-neutral-50",
-            primary: "border-primary-200 bg-neutral-50",
-            secondary: "border-neutral-300 bg-neutral-50",
+            default: 'border-primary-100 bg-neutral-50',
+            primary: 'border-primary-200 bg-neutral-50',
+            secondary: 'border-neutral-300 bg-neutral-50',
             file: `text-sm border-2 border-primary-200 rounded-md
                      file:mr-4 file:py-0 file:px-4 file:py-1
                       file:rounded-full file:border-2 file:border-borderPrimary
@@ -45,9 +46,9 @@ const Input = forwardRef(
                         hover:file:bg-violet-100
                         file:cursor-pointer
           `,
-            darkDefault: "border-dark-border bg-dark-primary",
-            darkPrimary: "border-dark-border bg-dark-primary",
-            darkSecondary: "border-dark-border bg-dark-primary",
+            darkDefault: 'border-dark-border bg-dark-primary',
+            darkPrimary: 'border-dark-border bg-dark-primary',
+            darkSecondary: 'border-dark-border bg-dark-primary',
             darkFile: `text-sm border-2 border-dark-border bg-dark-primary rounded-md
                      file:mr-4 file:py-0 file:px-4 file:py-1
                       file:rounded-full file:border-2 file:border-dark-border
@@ -57,26 +58,28 @@ const Input = forwardRef(
           `,
           },
           size: {
-            default: " w-full px-3 py-3 ",
+            default: ' w-full px-3 py-3 ',
           },
         },
         defaultVariants: {
-          variant: "default",
-          size: "default",
+          variant: 'default',
+          size: 'default',
         },
       }
     );
     const variant =
-      type !== "file"
+      type !== 'file'
         ? hasError && !isFocused
-          ? "default"
+          ? 'default'
           : InputVariant
-            ? InputVariant
-            : "primary"
-        : selectedMode ==="light"? "file": "darkFile";
+          ? InputVariant
+          : 'primary'
+        : selectedMode === 'light'
+        ? 'file'
+        : 'darkFile';
     const [showPassword, setShowPassword] = useState(false);
     useMemo(() => {
-      if (type !== "file" && value.length === 0 && type === "password") {
+      if (type !== 'file' && value.length === 0 && type === 'password') {
         setShowPassword(false);
       }
     }, [value]);
@@ -85,7 +88,7 @@ const Input = forwardRef(
       <div className="relative">
         <input
           type={
-            type === "password" ? (!showPassword ? "password" : "text") : type
+            type === 'password' ? (!showPassword ? 'password' : 'text') : type
           }
           required
           value={value}
@@ -93,7 +96,7 @@ const Input = forwardRef(
           className={classMerge(inputVariants({ variant, className }))}
         />
 
-        {type === "password" && value.length > 0 && (
+        {type === 'password' && value.length > 0 && (
           <span className="absolute p-2 cursor-pointer top-2 right-4">
             {showPassword ? (
               <img
@@ -117,11 +120,15 @@ const Input = forwardRef(
 
 export const Label = ({ name, htmlFor }) => {
   // getting current selected mode
-  const { selectedMode } = useContext(switchMode)
+  const { selectedMode } = useContext(switchMode);
 
   return (
     <label className="block" htmlFor={htmlFor}>
-      <span className={`${selectedMode === 'light' ? "text-neutral-900" : "text-neutral-50"} font-normal text-[16px] my-[3px]`}>
+      <span
+        className={`${
+          selectedMode === 'light' ? 'text-neutral-900' : 'text-neutral-50'
+        } font-normal text-[16px] my-[3px]`}
+      >
         <p>{name}</p>
       </span>
     </label>
@@ -130,10 +137,15 @@ export const Label = ({ name, htmlFor }) => {
 
 export const TextArea = ({ className, ...props }) => {
   // getting current selected mode
-  const { selectedMode } = useContext(switchMode)
+  const { selectedMode } = useContext(switchMode);
   return (
     <textarea
-      className={classMerge(`${selectedMode === 'light' ? "text-black border-primary-200" : "text-neutral-50 border-dark-border bg-dark-primary"}
+      className={classMerge(
+        `${
+          selectedMode === 'light'
+            ? 'text-black border-primary-200'
+            : 'text-neutral-50 border-dark-border bg-dark-primary'
+        }
       w-full h-28 px-4 py-3  border-solid border-2  rounded-[10px] font-normal text-base  resize-none focus:outline-none`,
         className
       )}

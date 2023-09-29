@@ -1,22 +1,24 @@
-import http from "./httpService";
-import api from "./apiConfig.json";
+import http from './httpService';
+import api from './apiConfig.json';
 
-const apiEndpoint = api.baseUrl + "/user";
+const apiEndpoint = api.baseUrl + '/user';
 
 export function getByUsername(username) {
-    return http.get(`${apiEndpoint}/get_user/${username}`);
+  return http.get(`${apiEndpoint}/get_user/${username}`);
 }
 
 export function getCheckUsername(username) {
-    return http.get(`${apiEndpoint}/check-username/`, {params: {
-        username
-      }})
+  return http.get(`${apiEndpoint}/check-username/`, {
+    params: {
+      username,
+    },
+  });
 }
 
 export function patchUser(userObject) {
-    return http.patch(`${apiEndpoint}/userInfo/`, userObject)
+  return http.patch(`${apiEndpoint}/userInfo/`, userObject);
 }
 
 export function getByUserId(userId) {
-    return http.get(`${apiEndpoint}/get-user/${userId}`);
+  return http.get(`${apiEndpoint}/get-user/${userId}`);
 }

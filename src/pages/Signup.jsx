@@ -1,58 +1,55 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import Banner from "../components/Sections/Authentication/Banner";
-import mainLogo from "../assets/mainLogo.svg";
-import Input from "../components/UI/Input/Input";
-import GoogleAuthBtn from "../components/Sections/Authentication/GoogleAuthBtn";
-import { register } from "../api-services/authService";
-import Emailsent from "../components/Sections/Authentication/EmailSent";
-import Loader from "../components/UI/Loader/Loader";
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import Banner from '../components/Sections/Authentication/Banner';
+import mainLogo from '../assets/mainLogo.svg';
+import Input from '../components/UI/Input/Input';
+import GoogleAuthBtn from '../components/Sections/Authentication/GoogleAuthBtn';
+import { register } from '../api-services/authService';
+import Emailsent from '../components/Sections/Authentication/EmailSent';
+import Loader from '../components/UI/Loader/Loader';
 // import ClaimUsername from "../components/Sections/Authentication/ClaimUsername";
-import Button from "../components/UI/Button/Button";
+import Button from '../components/UI/Button/Button';
 const Signup = ({ windowWidth }) => {
   const [verifying, setVerifying] = useState(false);
   const [isSiging, setIsSigning] = useState(false);
 
   // going for normal approach later on we will use hooks for inputs
-  const [isPasswordfocus,setIsPasswordfocus] = useState(false);
+  const [isPasswordfocus, setIsPasswordfocus] = useState(false);
 
   // signup details handling
   const [data, setData] = useState({
-    name: "",
-    password: "",
-    email: "",
+    name: '',
+    password: '',
+    email: '',
   });
 
   // Login details
-  const onInput = (e) => {
+  const onInput = e => {
     e.preventDefault();
-    setData((state) => ({ ...state, [e.target.name]: e.target.value }));
+    setData(state => ({ ...state, [e.target.name]: e.target.value }));
   };
 
   const isValidName = data.name.length > 3;
   const emailPattern = /^\S+@\S+\.\S+$/;
   const isValidEmail = emailPattern.test(data.email);
-  const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d@$!%*?&#]{8,}$/
+  const passwordPattern =
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d@$!%*?&#]{8,}$/;
   const isValidPassword = passwordPattern.test(data.password);
   const isValidInput = isValidName && isValidEmail && isValidPassword;
 
-  const handleRegister = async (e) => {
+  const handleRegister = async e => {
     e.preventDefault();
-    if(!isValidInput){
-      return
+    if (!isValidInput) {
+      return;
     }
     setIsSigning(true);
     const { name, email, password } = data;
     try {
-      const { data } = await register(
-        name,
-        email,
-        password.trim()
-      );
+      const { data } = await register(name, email, password.trim());
       setIsSigning(false);
       setVerifying(true);
     } catch (error) {
-      console.log(error)
+      console.log(error);
       setIsSigning(false);
     }
   };
@@ -82,7 +79,7 @@ const Signup = ({ windowWidth }) => {
               <div className=" flex items-center justify-center w-[90%] sm:w-2/3  lg:mt-0 md:w-3/4 lg:w-2/3 max-w-[420px] sm:max-w-[600px] md:max-w-[420px] ">
                 <div className="rounded-2xl bg-bgPrimary  px-10 pb-[60px] w-full md:w-[410px]">
                   <div>
-                    <Link to={"/"}>
+                    <Link to={'/'}>
                       <img
                         className="h-16 mx-auto w-36"
                         src={mainLogo}
@@ -94,7 +91,7 @@ const Signup = ({ windowWidth }) => {
                     </h2>
                     <p
                       className="-mt-2 text-sm text-center sm:text-lg para"
-                      style={{ color: "#747474" }}
+                      style={{ color: '#747474' }}
                     >
                       Sign Up to LinkCollect
                     </p>
@@ -129,14 +126,18 @@ const Signup = ({ windowWidth }) => {
                           placeholder="password"
                           onInput={onInput}
                           value={data.password}
-                          onFocus={()=>setIsPasswordfocus(true)}
-                          onBlur={()=>setIsPasswordfocus(false)}
+                          onFocus={() => setIsPasswordfocus(true)}
+                          onBlur={() => setIsPasswordfocus(false)}
                         />
-                        {!isValidPassword && !isPasswordfocus && data.password.length>=1 && (
-                          <p className="text-xs text-error-500 mt-2 text-start">
-                            Password should be at least 8 of character and consist of 1 Uppercase, 1 lower case, 1 special character
-                          </p>
-                        )}
+                        {!isValidPassword &&
+                          !isPasswordfocus &&
+                          data.password.length >= 1 && (
+                            <p className="text-xs text-error-500 mt-2 text-start">
+                              Password should be at least 8 of character and
+                              consist of 1 Uppercase, 1 lower case, 1 special
+                              character
+                            </p>
+                          )}
                       </div>
 
                       {/* Need to add link after adding the api for forget pass */}
@@ -150,10 +151,10 @@ const Signup = ({ windowWidth }) => {
                         onClick={handleRegister}
                         isLoading={isSiging}
                       >
-                        {!isSiging ? "Sign In" : <Loader />}
+                        {!isSiging ? 'Sign In' : <Loader />}
                       </Button>
                       <p className="mt-1 font-light text-left text-neutral-400">
-                        Already have an account?{" "}
+                        Already have an account?{' '}
                         <Link
                           to="/login"
                           className="font-bold text-primary-500"
