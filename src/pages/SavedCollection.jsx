@@ -1,44 +1,44 @@
-import React, { useEffect, useState } from "react";
-import CollectionHeader from "../components/Common/CollectionHeader";
-import BaseLayout from "../components/Layout/BaseLayout/BaseLayout";
-import { useDispatch, useSelector } from "react-redux";
-import CollectionitemV2 from "../components/Common/CollectionCard";
-import PageLoader from "../components/UI/Loader/PageLoader";
+import React, { useEffect, useState } from 'react';
+import CollectionHeader from '../components/Common/CollectionHeader';
+import BaseLayout from '../components/Layout/BaseLayout/BaseLayout';
+import { useDispatch, useSelector } from 'react-redux';
+import CollectionitemV2 from '../components/Common/CollectionCard';
+import PageLoader from '../components/UI/Loader/PageLoader';
 import {
   downvoteAction,
   getSaveCollectionOfUser,
   unsaveAction,
   upvoteAction,
-} from "../store/actions/save.actions";
-import { SortActions } from "../components/Common/ActiondropDown";
-import Search from "../components/Common/Search";
-import { useContext } from "react";
-import { switchMode } from "../hooks/switchMode";
+} from '../store/actions/save.actions';
+import { SortActions } from '../components/Common/ActiondropDown';
+import Search from '../components/Common/Search';
+import { useContext } from 'react';
+import { switchMode } from '../hooks/switchMode';
 
 const SavedCollection = ({ windowWidth }) => {
   const dispatch = useDispatch();
-  const collection = useSelector((state) => state.save);
-  const [query, setQuery] = useState("");
-  const auth = useSelector((state) => state.auth);
+  const collection = useSelector(state => state.save);
+  const [query, setQuery] = useState('');
+  const auth = useSelector(state => state.auth);
   const { selectedMode } = useContext(switchMode);
   useEffect(() => {
     dispatch(getSaveCollectionOfUser(auth.userId));
   }, [dispatch]);
   const menuItem = [
     {
-      name: "Recently Updated",
-      onClick: "",
-      tag: "RECENETLY_UPDATED",
+      name: 'Recently Updated',
+      onClick: '',
+      tag: 'RECENETLY_UPDATED',
     },
     {
-      name: "Most Upvotes",
-      onClick: "",
-      tag: "RECENETLY_UPDATED",
+      name: 'Most Upvotes',
+      onClick: '',
+      tag: 'RECENETLY_UPDATED',
     },
     {
-      name: "Most Links",
-      onClick: "",
-      tag: "RECENETLY_UPDATED",
+      name: 'Most Links',
+      onClick: '',
+      tag: 'RECENETLY_UPDATED',
     },
   ];
   return (
@@ -51,7 +51,7 @@ const SavedCollection = ({ windowWidth }) => {
         />
         <div
           className={`w-full flex items-start justify-between gap-6 ${
-            windowWidth < 700 ? "hidden" : ""
+            windowWidth < 700 ? 'hidden' : ''
           }`}
         >
           <div className=" w-[calc(100%-212px)]">
@@ -72,8 +72,7 @@ const SavedCollection = ({ windowWidth }) => {
         ) : collection.collections.length > 0 ? (
           <div className="flex items-start justify-start w-full h-full mx-auto 3xl:pl-0 3xl:justify-center">
             <div className="w-full justify-start grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-6 2xl:gap-6 max-w-[1500px]">
-              {collection.collections.map((collectionItem,index) => (
-                
+              {collection.collections.map((collectionItem, index) => (
                 <CollectionitemV2
                   key={collectionItem._id}
                   id={collectionItem._id}
@@ -96,7 +95,7 @@ const SavedCollection = ({ windowWidth }) => {
                   onDownVote={downvoteAction}
                   userId={collectionItem.userId}
                   isDuplicate={true}
-                /> 
+                />
               ))}
             </div>
           </div>

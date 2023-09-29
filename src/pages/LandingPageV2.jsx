@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react';
 // components
-import Navbar from "../components/Sections/LandingPageV2/Navbar";
-import Footer from "../components/Sections/LandingPageV2/Footer";
-import Main from "../components/Sections/LandingPageV2/Main";
+import Navbar from '../components/Sections/LandingPageV2/Navbar';
+import Footer from '../components/Sections/LandingPageV2/Footer';
+import Main from '../components/Sections/LandingPageV2/Main';
 // api
 import { getExplore } from '../api-services/collectionService';
 // analytics
-import useAnalyticsEventTracker from "../hooks/useAnalyticsEventTracker";
+import useAnalyticsEventTracker from '../hooks/useAnalyticsEventTracker';
 
 const useExploreData = () => {
   const [exploreData, setExploreData] = useState([]);
@@ -28,15 +28,19 @@ const useExploreData = () => {
 const LandingPageV2 = ({ windowWidth }) => {
   const gaEventTracker = useAnalyticsEventTracker('Landing Page');
 
-  const trackGA = (eventName) => {
-    gaEventTracker(eventName)
-  }
+  const trackGA = eventName => {
+    gaEventTracker(eventName);
+  };
 
   const exploreData = useExploreData();
   return (
     <div className="flex flex-col justify-between h-screen overflow-x-hidden overflow-y-scroll scrollbar-hide">
-      <Navbar analytics={trackGA}/>
-      <Main analytics={trackGA} exploreData={exploreData} windowWidth={windowWidth}/>
+      <Navbar analytics={trackGA} />
+      <Main
+        analytics={trackGA}
+        exploreData={exploreData}
+        windowWidth={windowWidth}
+      />
       <Footer analytics={trackGA} />
     </div>
   );

@@ -1,23 +1,25 @@
-import React, { useState, useEffect, useMemo } from "react";
-import { useParams, useNavigate } from "react-router-dom";
-import PageLoader from "../components/UI/Loader/PageLoader";
-import CollectionModal from "../components/Common/CollectionModal";
-import BookmarkItem from "../components/Sections/Bookmarks/BookmarkItem";
-import Delete from "../components/Sections/Bookmarks/DeleteModal";
-import EcBookamrkModal from "../components/Sections/Bookmarks/ECBookmarkModal";
-import BaseLayout from "../components/Layout/BaseLayout/BaseLayout";
-import Search from "../components/Common/Search";
-import CollectionInfoHeader from "../components/Sections/Bookmarks/CollectionInfoHeader";
-import { useDispatch, useSelector } from "react-redux";
-import { getBookmarks } from "../store/actions/bookmarks.action";
-import { togglePin } from "../api-services/timelineService";
-import { setTogglePinBookmark, sortBookmarksByType } from "../store/Slices/bookmarks.slice";
-import { SortActions } from "../components/Common/ActiondropDown";
-import SEO from "../components/SEO/SEO";
-import { useContext } from "react";
-import { switchMode } from "../hooks/switchMode";
-import MoreFromUser from "../components/Sections/Bookmarks/MoreFromUser";
-
+import React, { useState, useEffect, useMemo } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
+import PageLoader from '../components/UI/Loader/PageLoader';
+import CollectionModal from '../components/Common/CollectionModal';
+import BookmarkItem from '../components/Sections/Bookmarks/BookmarkItem';
+import Delete from '../components/Sections/Bookmarks/DeleteModal';
+import EcBookamrkModal from '../components/Sections/Bookmarks/ECBookmarkModal';
+import BaseLayout from '../components/Layout/BaseLayout/BaseLayout';
+import Search from '../components/Common/Search';
+import CollectionInfoHeader from '../components/Sections/Bookmarks/CollectionInfoHeader';
+import { useDispatch, useSelector } from 'react-redux';
+import { getBookmarks } from '../store/actions/bookmarks.action';
+import { togglePin } from '../api-services/timelineService';
+import {
+  setTogglePinBookmark,
+  sortBookmarksByType,
+} from '../store/Slices/bookmarks.slice';
+import { SortActions } from '../components/Common/ActiondropDown';
+import SEO from '../components/SEO/SEO';
+import { useContext } from 'react';
+import { switchMode } from '../hooks/switchMode';
+import MoreFromUser from '../components/Sections/Bookmarks/MoreFromUser';
 
 const Bookmarks = ({ windowWidth }) => {
   const navigation = useNavigate();
@@ -28,127 +30,154 @@ const Bookmarks = ({ windowWidth }) => {
   // Modal State: Bookmarks
   const [openCreateBookmarkModal, setOpenCreateBookmarkModal] = useState(false);
 
-
   // Sorting State
-  const [sortingType, setSortingType] = useState("RECENETLY_UPDATED")
+  const [sortingType, setSortingType] = useState('RECENETLY_UPDATED');
 
   // search query
-  const [query, setQuery] = useState("");
+  const [query, setQuery] = useState('');
   //For handiling click event on the bookmarkItem
   const [clickedId, setClickedId] = useState(null);
   const auth = useSelector(state => state.auth);
-  const collectionData = useSelector(state => state.collectionData)
+  const collectionData = useSelector(state => state.collectionData);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getBookmarks({ collectionId }))
+    dispatch(getBookmarks({ collectionId }));
   }, [collectionId]);
 
-
   const editCollectionModalHandler = () => {
-    setEditCollectionModalOpen((prev) => !prev);
+    setEditCollectionModalOpen(prev => !prev);
   };
 
   const deleteCollectionModalHandler = () => {
-    setDeleteCollectionModal((prev) => !prev);
-  }
+    setDeleteCollectionModal(prev => !prev);
+  };
 
   const bookmarkCreateModalHandler = () => {
     setOpenCreateBookmarkModal(prev => !prev);
-  }
+  };
 
   useEffect(() => {
-    document.addEventListener('click', (e) => {
-      if (!e.target.className.includes("threedotbutton") && clickedId !== null) {
+    document.addEventListener('click', e => {
+      if (
+        !e.target.className.includes('threedotbutton') &&
+        clickedId !== null
+      ) {
         setClickedId(null);
       }
-    })
+    });
 
-    return (document.removeEventListener('click', (e) => {
+    return document.removeEventListener('click', e => {});
+  });
 
-    }))
-  })
-
-  const backHandler = (e) => {
+  const backHandler = e => {
     e.preventDefault();
     if (!auth.isLoggedIn) {
-      navigation("/login");
+      navigation('/login');
     } else {
       navigation(-1);
     }
   };
 
   // Bookmark Toggle Pin
-  const toggleBookmarkPin = async (bookmarkID) => {
-    dispatch(setTogglePinBookmark({ bookmarkID, sortType: sortingType }))
+  const toggleBookmarkPin = async bookmarkID => {
+    dispatch(setTogglePinBookmark({ bookmarkID, sortType: sortingType }));
     // console.log(collection);
     try {
       const res = await togglePin(collectionId, bookmarkID);
     } catch (error) {
-      console.error(error)
+      console.error(error);
     }
-  }
+  };
 
-  const sortdata = (sortType) => {
+  const sortdata = sortType => {
     setSortingType(sortType);
     dispatch(sortBookmarksByType({ sortType }));
-  }
+  };
 
   const menuItem = [
     {
-      name: "Recently Updated",
+      name: 'Recently Updated',
       onClick: sortdata,
-      type: "RECENETLY_UPDATED",
+      type: 'RECENETLY_UPDATED',
     },
     {
-      name: "Alphabetically",
+      name: 'Alphabetically',
       onClick: sortdata,
-      type: "ALPHABETICAlLY",
+      type: 'ALPHABETICAlLY',
     },
   ];
 
-
-  // Logic for search 
+  // Logic for search
   const filteredBookmarks = useMemo(() => {
-    return (
-      !collectionData.isFetching && collectionData.collectionData.timelines?.length > 0 ?
-        collectionData.collectionData.timelines.filter((tItem) =>
+    return !collectionData.isFetching &&
+      collectionData.collectionData.timelines?.length > 0
+      ? collectionData.collectionData.timelines.filter(tItem =>
           tItem.title.toLowerCase().includes(query.toLowerCase())
-        ) : []
-    );
+        )
+      : [];
   }, [query, collectionData.collectionData, collectionData.isFetching]);
   // dark and light mode switch
-  const { selectedMode } = useContext(switchMode)
+  const { selectedMode } = useContext(switchMode);
 
   return (
     <BaseLayout>
       <SEO
-        title={collectionData.collectionData?.title ? collectionData.collectionData?.title : null}
-        description={collectionData.collectionData?.description ? collectionData.collectionData?.description : "This is an amazing collection of links, curated by " + collectionData.collectionData?.username}
-        image={collectionData.collectionData?.image ? collectionData.collectionData?.image : null}
-      >
-      </SEO>
+        title={
+          collectionData.collectionData?.title
+            ? collectionData.collectionData?.title
+            : null
+        }
+        description={
+          collectionData.collectionData?.description
+            ? collectionData.collectionData?.description
+            : 'This is an amazing collection of links, curated by ' +
+              collectionData.collectionData?.username
+        }
+        image={
+          collectionData.collectionData?.image
+            ? collectionData.collectionData?.image
+            : null
+        }
+      ></SEO>
       <div className="flex flex-col w-full h-[calc(100%)] mx-auto mb-[0.5rem] overflow-y-auto scrollbar-hide">
         {/* Collection Edit Modal */}
-        {!collectionData.isFetching && <CollectionModal
-          isOpen={editCollectionModalOpen}
-          modalCloseHandler={editCollectionModalHandler}
-          isEditing={true}
-          originalCollectionData={{
-            title: collectionData.collectionData?.title,
-            description: collectionData.collectionData?.description,
-            tags: collectionData.collectionData?.tags,
-            isPublic: collectionData.collectionData?.isPublic,
-            image: collectionData.collectionData?.image
-          }}
-          collectionId={collectionId}
-        />}
-        {!collectionData.isFetching && <Delete isOpen={deleteCollectionModal} onClose={deleteCollectionModalHandler} collectionID={collectionId} heading="Delete Collection" subheading={`Delete the collection - ${collectionData.collectionData?.title}`} mode="collectionDelete" />}
+        {!collectionData.isFetching && (
+          <CollectionModal
+            isOpen={editCollectionModalOpen}
+            modalCloseHandler={editCollectionModalHandler}
+            isEditing={true}
+            originalCollectionData={{
+              title: collectionData.collectionData?.title,
+              description: collectionData.collectionData?.description,
+              tags: collectionData.collectionData?.tags,
+              isPublic: collectionData.collectionData?.isPublic,
+              image: collectionData.collectionData?.image,
+            }}
+            collectionId={collectionId}
+          />
+        )}
+        {!collectionData.isFetching && (
+          <Delete
+            isOpen={deleteCollectionModal}
+            onClose={deleteCollectionModalHandler}
+            collectionID={collectionId}
+            heading="Delete Collection"
+            subheading={`Delete the collection - ${collectionData.collectionData?.title}`}
+            mode="collectionDelete"
+          />
+        )}
 
         {/* Bookmarks */}
         {/* Create Bookamrk */}
-        {!collectionData.isFetching && <EcBookamrkModal isOpen={openCreateBookmarkModal} onClose={bookmarkCreateModalHandler} isEditing={false} collectionID={collectionId} />}
-
+        {!collectionData.isFetching && (
+          <EcBookamrkModal
+            isOpen={openCreateBookmarkModal}
+            onClose={bookmarkCreateModalHandler}
+            isEditing={false}
+            collectionID={collectionId}
+          />
+        )}
 
         <div className="flex flex-col w-full px-8 lg:px-[5rem]">
           <div className="">
@@ -179,7 +208,6 @@ const Bookmarks = ({ windowWidth }) => {
                   {/* sort by */}
                   <SortActions name="Sort By" menuItems={menuItem} />
                 </div>
-
               </div>
             </div>
 
@@ -193,10 +221,11 @@ const Bookmarks = ({ windowWidth }) => {
               <div className="flex items-center justify-center w-full h-full">
                 <PageLoader />
               </div>
-            ) : collectionData.collectionData && filteredBookmarks?.length > 0 ? (
+            ) : collectionData.collectionData &&
+              filteredBookmarks?.length > 0 ? (
               <div className="w-full h-[calc(100%-55px)] py-4 scrollbar-hide">
                 <div className="w-[100%] z-0 h-[calc(100%-65px)] space-y-2">
-                  {filteredBookmarks.map((timeline) => (
+                  {filteredBookmarks.map(timeline => (
                     <BookmarkItem
                       key={timeline._id}
                       id={timeline._id}
@@ -206,7 +235,9 @@ const Bookmarks = ({ windowWidth }) => {
                       favicon={timeline.favicon}
                       windowWidth={windowWidth}
                       updatedAt={timeline.updatedAt}
-                      isOwner={collectionData.collectionData.userId === auth.userId}
+                      isOwner={
+                        collectionData.collectionData.userId === auth.userId
+                      }
                       clickedId={clickedId}
                       setClickedId={setClickedId}
                       isSelected={timeline.isSelected}
@@ -221,16 +252,41 @@ const Bookmarks = ({ windowWidth }) => {
               </div>
             ) : (
               <div className="flex flex-col items-center justify-center w-full h-full py-20">
-                <p className={`mb-5 text-5xl ${selectedMode === 'light' ? 'text-textPrimary' : 'text-neutral-300'}  `}>
+                <p
+                  className={`mb-5 text-5xl ${
+                    selectedMode === 'light'
+                      ? 'text-textPrimary'
+                      : 'text-neutral-300'
+                  }  `}
+                >
                   No bookmarks Found
                 </p>
-                <p className={`text-textPrimary ${selectedMode === 'light' ? 'text-textPrimary' : 'text-neutral-300'} `}>You can add it from extension</p>
-                <a className="text-primary-400" href="https://chrome.google.com/webstore/detail/linkcollect-save-share-bo/knekpacpcgkieomkhhngenjeeokddkif"> Click To Install </a>
+                <p
+                  className={`text-textPrimary ${
+                    selectedMode === 'light'
+                      ? 'text-textPrimary'
+                      : 'text-neutral-300'
+                  } `}
+                >
+                  You can add it from extension
+                </p>
+                <a
+                  className="text-primary-400"
+                  href="https://chrome.google.com/webstore/detail/linkcollect-save-share-bo/knekpacpcgkieomkhhngenjeeokddkif"
+                >
+                  {' '}
+                  Click To Install{' '}
+                </a>
               </div>
             )}
           </div>
         </div>
-        {!collectionData.isFetching && <MoreFromUser collectionData={collectionData} user={collectionData?.collectionData?.username}></MoreFromUser>}
+        {!collectionData.isFetching && (
+          <MoreFromUser
+            collectionData={collectionData}
+            user={collectionData?.collectionData?.username}
+          ></MoreFromUser>
+        )}
       </div>
     </BaseLayout>
   );

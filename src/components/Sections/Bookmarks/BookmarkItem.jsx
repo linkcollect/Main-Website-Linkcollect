@@ -1,30 +1,30 @@
 // Package Imports
-import React, { useRef, useState, useEffect, useMemo, useContext } from "react";
-import { useSelector } from "react-redux";
-import { motion } from "framer-motion";
+import React, { useRef, useState, useEffect, useMemo, useContext } from 'react';
+import { useSelector } from 'react-redux';
+import { motion } from 'framer-motion';
 // Assets Imports
-import copyIcon from "../../../assets/copyIcon.svg";
-import menuIcon from "../../../assets/3dot.svg";
-import redirectIcon from "../../../assets/redirectIcon.svg";
-import approveIcon from "../../../assets/approve.svg";
-import bookmarkDefalutIcon from "../../../assets/bookmarkDefault.svg";
-import pinIcon from "../../../assets/bookmarkPin.svg";
-import whitePinIcon from '../../../assets/darkMode/pinIcon.svg'
-import MenuWhiteIcon from '../../../assets/darkMode/MenuWhiteIcon.svg'
-import RedirectWhiteIcon from '../../../assets/darkMode/RedirectWhiteIcon.svg'
-import CopyWhiteIcon from '../../../assets/darkMode/whiteCopyIcon.svg'
-import NoteIcon from '../../../assets/note.svg'
-import WhiteNoteIcon from '../../../assets/darkMode/NoteIcon.svg'
+import copyIcon from '../../../assets/copyIcon.svg';
+import menuIcon from '../../../assets/3dot.svg';
+import redirectIcon from '../../../assets/redirectIcon.svg';
+import approveIcon from '../../../assets/approve.svg';
+import bookmarkDefalutIcon from '../../../assets/bookmarkDefault.svg';
+import pinIcon from '../../../assets/bookmarkPin.svg';
+import whitePinIcon from '../../../assets/darkMode/pinIcon.svg';
+import MenuWhiteIcon from '../../../assets/darkMode/MenuWhiteIcon.svg';
+import RedirectWhiteIcon from '../../../assets/darkMode/RedirectWhiteIcon.svg';
+import CopyWhiteIcon from '../../../assets/darkMode/whiteCopyIcon.svg';
+import NoteIcon from '../../../assets/note.svg';
+import WhiteNoteIcon from '../../../assets/darkMode/NoteIcon.svg';
 
 // Utils Imports
-import { nameShortner, getOrigin, fromNow } from "../../../utils/utils";
+import { nameShortner, getOrigin, fromNow } from '../../../utils/utils';
 
 // Components
-import EcBookamrkModal from "./ECBookmarkModal";
-import { MenuItem } from "../../Common/ActiondropDown";
-import Delete from "./DeleteModal";
-import IconButton from "../../UI/IconButton/IconButton";
-import { switchMode } from "../../../hooks/switchMode";
+import EcBookamrkModal from './ECBookmarkModal';
+import { MenuItem } from '../../Common/ActiondropDown';
+import Delete from './DeleteModal';
+import IconButton from '../../UI/IconButton/IconButton';
+import { switchMode } from '../../../hooks/switchMode';
 import BookmarkNoteModal from './BookmarkNoteModal';
 
 const BookmarkItem = ({
@@ -55,9 +55,9 @@ const BookmarkItem = ({
   const [hovered, setHovered] = useState(false);
   const [bookmarkDeleteModal, setBookmarkDeleteModal] = useState(false);
   const [bookmarkNoteModal, setBookmarkNoteModal] = useState(false);
-  const auth = useSelector((state) => state.auth);
+  const auth = useSelector(state => state.auth);
   const bookmarkDeleteModalHandler = () => {
-    setBookmarkDeleteModal((prev) => !prev);
+    setBookmarkDeleteModal(prev => !prev);
   };
   useEffect(() => {
     if (isSelected) {
@@ -70,7 +70,7 @@ const BookmarkItem = ({
   const copyRef = useRef();
 
   const bookmarkEditModalHandler = () => {
-    setOpenEditBookmarkModal((prev) => !prev);
+    setOpenEditBookmarkModal(prev => !prev);
   };
 
   const onCopy = () => {
@@ -85,17 +85,17 @@ const BookmarkItem = ({
     }, 500);
   };
 
-  const onActionClickeHandler = (type) => {
+  const onActionClickeHandler = type => {
     switch (type) {
-      case "EDIT":
+      case 'EDIT':
         bookmarkEditModalHandler();
         setClickedId(null);
         return;
-      case "DELETE":
+      case 'DELETE':
         bookmarkDeleteModalHandler();
         setClickedId(null);
         return;
-      case "PIN":
+      case 'PIN':
         setClickedId(null);
         toggleBookmarkPin(id);
         return;
@@ -103,8 +103,8 @@ const BookmarkItem = ({
   };
 
   const handleBookmarkNoteModal = () => {
-    setBookmarkNoteModal((prev) => !prev)
-  }
+    setBookmarkNoteModal(prev => !prev);
+  };
 
   useEffect(() => {
     if (hovered) {
@@ -112,41 +112,40 @@ const BookmarkItem = ({
     } else {
       setBookmarkNoteModal(false);
     }
-  }, [hovered])
+  }, [hovered]);
 
-  const getFaviconFromURL = (link) => {
-    const favIconBaseURL = "https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url="
+  const getFaviconFromURL = link => {
+    const favIconBaseURL =
+      'https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=';
     const origin = new URL(link).origin;
-    return `${favIconBaseURL}${origin}`
-  }
+    return `${favIconBaseURL}${origin}`;
+  };
 
   // Popup Action menu
   const popupActionMenu = useMemo(() => {
     return [
       {
-        name: "Edit",
+        name: 'Edit',
         onClick: onActionClickeHandler,
-        type: "EDIT",
+        type: 'EDIT',
       },
       {
-        name: !isPinned ? "Pin" : "Unpin",
+        name: !isPinned ? 'Pin' : 'Unpin',
         onClick: onActionClickeHandler,
-        type: "PIN",
+        type: 'PIN',
       },
       // Move Menu will be here
 
       {
-        name: "Delete",
+        name: 'Delete',
         onClick: onActionClickeHandler,
-        type: "DELETE",
+        type: 'DELETE',
       },
     ];
   }, [isPinned]);
 
-
   // dark and light mode switch
-  const { selectedMode } = useContext(switchMode)
-
+  const { selectedMode } = useContext(switchMode);
 
   return (
     <>
@@ -158,7 +157,7 @@ const BookmarkItem = ({
         originalData={{
           title: name,
           link: url,
-          note: note
+          note: note,
         }}
         bookmarkID={id}
       />
@@ -172,15 +171,26 @@ const BookmarkItem = ({
       />
 
       <div
-        // className={`cursor-pointer relative flex items-center justify-between w-full h-[60px] rounded-xl 
+        // className={`cursor-pointer relative flex items-center justify-between w-full h-[60px] rounded-xl
         className={`cursor-pointer  relative grid grid-cols-[1fr_70px] sm:grid-cols-[5fr_140px_70px] gap-[0.75rem] sm:gap-[2rem] items-center justify-between w-full h-[60px] rounded-xl 
-          ${selectedMode === 'light' ? hovered ? "bg-neutral-200 border-neutral-200" : "bg-neutral-100 border-neutral-200" : hovered ? "bg-dark-secondary border-dark-secondary" :
-            "bg-dark-primary border-dark-border"
+          ${
+            selectedMode === 'light'
+              ? hovered
+                ? 'bg-neutral-200 border-neutral-200'
+                : 'bg-neutral-100 border-neutral-200'
+              : hovered
+              ? 'bg-dark-secondary border-dark-secondary'
+              : 'bg-dark-primary border-dark-border'
           } border   duration-200 transition-all group`}
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
       >
-        {note && bookmarkNoteModal && <BookmarkNoteModal note={note} className={"absolute"}></BookmarkNoteModal>}
+        {note && bookmarkNoteModal && (
+          <BookmarkNoteModal
+            note={note}
+            className={'absolute'}
+          ></BookmarkNoteModal>
+        )}
         {/* Note this below input is to be shown to owner only after  implementing state mangement resolve it */}
         {/* {isOwner && <input
             type="checkbox"
@@ -191,24 +201,35 @@ const BookmarkItem = ({
             checked={checked}
             onChange={handleCheck}
           />} */}
-        { isPinned && (
-          <div className={`w-[20px] h-[20px] absolute z-[100] top-[20px] left-[-13px] cursor-pointer border  ${selectedMode === 'light' ? "border-neutral-300 bg-neutral-100" : "bg-dark-primary border-dark-secondary"}  rounded-md`}>
-            {selectedMode === 'light' ?
+        {isPinned && (
+          <div
+            className={`w-[20px] h-[20px] absolute z-[100] top-[20px] left-[-13px] cursor-pointer border  ${
+              selectedMode === 'light'
+                ? 'border-neutral-300 bg-neutral-100'
+                : 'bg-dark-primary border-dark-secondary'
+            }  rounded-md`}
+          >
+            {selectedMode === 'light' ? (
               <img key="pin-icon" className="" src={pinIcon} alt="" />
-              :
+            ) : (
               <img key="pin-icon" className="" src={whitePinIcon} alt="" />
-            }
+            )}
           </div>
         )}
 
-        <a className="flex items-center justify-start truncate lg:max-w-[80%] " href={url} rel="noreferrer" target="_blank">
+        <a
+          className="flex items-center justify-start truncate lg:max-w-[80%] "
+          href={url}
+          rel="noreferrer"
+          target="_blank"
+        >
           {/* Bookamrk Info: Name , Link, Image */}
           {/* <div className="flex items-center"> */}
           {/* Bookmark Image */}
           <div className="min-w-[48px] min-h-[48px] block flex items-center justify-center">
             <img
               src={
-                favicon !== "undefined" && favicon !== undefined
+                favicon !== 'undefined' && favicon !== undefined
                   ? favicon
                   : getFaviconFromURL(url)
               }
@@ -220,7 +241,13 @@ const BookmarkItem = ({
           {/* Bookmark Name, Link name */}
           <div className="flex flex-col block truncate items-start justify-center gap-[2.63px] h-10 sm:h-10">
             {/* Bookmark Name */}
-            <p className={`font-normal block text-start para text-[0.9rem] ${selectedMode === "light" ? "text-neutral-900" : "text-borderPrimary"}   sm:h-[21px]`}>
+            <p
+              className={`font-normal block text-start para text-[0.9rem] ${
+                selectedMode === 'light'
+                  ? 'text-neutral-900'
+                  : 'text-borderPrimary'
+              }   sm:h-[21px]`}
+            >
               {/* {windowWidth > 640
                   ? windowWidth > 768
                     ? windowWidth > 1024
@@ -236,7 +263,13 @@ const BookmarkItem = ({
             </p>
 
             {/* Link Name */}
-            <p className={`text-start text-[0.8rem] sm:text-[12px] sm:w-[271px] ${selectedMode === "light" ? "text-neutral-500" : "text-dark-placeholder"} mt-[0.1rem] `}>
+            <p
+              className={`text-start text-[0.8rem] sm:text-[12px] sm:w-[271px] ${
+                selectedMode === 'light'
+                  ? 'text-neutral-500'
+                  : 'text-dark-placeholder'
+              } mt-[0.1rem] `}
+            >
               {windowWidth < 640
                 ? nameShortner(getOrigin(url), 25)
                 : nameShortner(getOrigin(url), 40)}
@@ -248,30 +281,43 @@ const BookmarkItem = ({
         {/* Note Attached,  Timestamp, Actions: Note, Open Link, Popup menu */}
 
         <div className="items-center justify-start hidden gap-10 sm:flex">
-
           {/* Note attached  if note is attached */}
-          {note && !hovered && windowWidth > 1024 && <div className={`flex  items-center justify-center absolute top-1/2 -translate-y-1/2 right-[40%] xl:right-[27%] ${windowWidth < 1150 && ''} transition-all duration-300 z-50 xl:p-0.9 rounded-md border border-primary-500 p-1 text-xs xl:text-sm font-normal  ${selectedMode === 'light' ? "text-charcoalGray bg-neutral-100" : "bg-dark-primary text-neutral-50"} `}>
-            {windowWidth > 1280 ?
-              ' Note Attached'
-              :
-              <>
-                {selectedMode === 'light' ?
-                  <img src={NoteIcon} alt="" className="" />
-                  :
-                  <img src={WhiteNoteIcon} alt="" className="" />
-                }
-              </>
-            }
-          </div>
-          }
+          {note && !hovered && windowWidth > 1024 && (
+            <div
+              className={`flex  items-center justify-center absolute top-1/2 -translate-y-1/2 right-[40%] xl:right-[27%] ${
+                windowWidth < 1150 && ''
+              } transition-all duration-300 z-50 xl:p-0.9 rounded-md border border-primary-500 p-1 text-xs xl:text-sm font-normal  ${
+                selectedMode === 'light'
+                  ? 'text-charcoalGray bg-neutral-100'
+                  : 'bg-dark-primary text-neutral-50'
+              } `}
+            >
+              {windowWidth > 1280 ? (
+                ' Note Attached'
+              ) : (
+                <>
+                  {selectedMode === 'light' ? (
+                    <img src={NoteIcon} alt="" className="" />
+                  ) : (
+                    <img src={WhiteNoteIcon} alt="" className="" />
+                  )}
+                </>
+              )}
+            </div>
+          )}
 
           <div className="hidden sm:flex items-center gap-[4rem] mr-2">
             {/* Timestamp */}
-            <p className={`hidden sm:block text-xs font-medium whitespace-nowrap  ${selectedMode === "light" ? "text-neutral-500" : "text-dark-placeholder"} mr-5`}>
+            <p
+              className={`hidden sm:block text-xs font-medium whitespace-nowrap  ${
+                selectedMode === 'light'
+                  ? 'text-neutral-500'
+                  : 'text-dark-placeholder'
+              } mr-5`}
+            >
               Added {fromNow(updatedAt)}
             </p>
           </div>
-
         </div>
 
         {/* Actions: Note, Open Link, Popup menu */}
@@ -282,21 +328,21 @@ const BookmarkItem = ({
               onClick={onCopy}
               className="flex items-center justify-center "
             >
-              {selectedMode === "light" ?
+              {selectedMode === 'light' ? (
                 <img
                   ref={copyRef}
                   src={copyIcon}
                   alt=""
                   className="block mx-auto cursor-pointer"
                 />
-                :
+              ) : (
                 <img
                   ref={copyRef}
                   src={CopyWhiteIcon}
                   alt=""
                   className="block mx-auto cursor-pointer"
                 />
-              }
+              )}
             </IconButton>
             {/* <a
                 className="items-center hidden sm:flex"
@@ -323,22 +369,22 @@ const BookmarkItem = ({
                 <button
                   className="flex items-center"
                   onClick={() =>
-                    setClickedId((prev) => (prev === id ? null : id))
+                    setClickedId(prev => (prev === id ? null : id))
                   }
                 >
-                  {selectedMode === "light" ?
+                  {selectedMode === 'light' ? (
                     <img
                       src={menuIcon}
                       alt=""
                       className="block mx-auto cursor-pointer threedotbutton"
                     />
-                    :
+                  ) : (
                     <img
                       src={MenuWhiteIcon}
                       alt=""
                       className="block mx-auto cursor-pointer threedotbutton"
                     />
-                  }
+                  )}
                 </button>
                 {clickedId === id && (
                   <motion.div
@@ -347,7 +393,11 @@ const BookmarkItem = ({
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: 10 }}
                     transition={{ duration: 0.2 }}
-                    className={`w-[135px] rounded border absolute z-[9990] top-[28px] p-2 right-0 ${selectedMode === "light" ? "border-neutral-300 bg-neutral-100" : "border-dark-border bg-dark-primary"} `}
+                    className={`w-[135px] rounded border absolute z-[9990] top-[28px] p-2 right-0 ${
+                      selectedMode === 'light'
+                        ? 'border-neutral-300 bg-neutral-100'
+                        : 'border-dark-border bg-dark-primary'
+                    } `}
                   >
                     {popupActionMenu.map((menuItem, index) => (
                       <>
@@ -358,7 +408,13 @@ const BookmarkItem = ({
                           key={menuItem.type}
                         />
                         {index !== popupActionMenu.length - 1 && (
-                          <div className={`w-full h-[1px] ${selectedMode === "light" ? "bg-neutral-300" : "bg-dark-border"} mt-1 mb-1`} />
+                          <div
+                            className={`w-full h-[1px] ${
+                              selectedMode === 'light'
+                                ? 'bg-neutral-300'
+                                : 'bg-dark-border'
+                            } mt-1 mb-1`}
+                          />
                         )}
                       </>
                     ))}

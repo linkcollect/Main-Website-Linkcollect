@@ -1,9 +1,9 @@
-import http from "./httpService";
-import api from "./apiConfig.json";
+import http from './httpService';
+import api from './apiConfig.json';
 
-const apiEndpoint = api.baseUrl + "/collections";
+const apiEndpoint = api.baseUrl + '/collections';
 
-const boundary = "---------------------------" + Date.now().toString(16);
+const boundary = '---------------------------' + Date.now().toString(16);
 
 // With Timelines
 export function getAllCollections() {
@@ -38,49 +38,52 @@ export function getAllByUsername(username) {
 }
 
 export function checkLinkExist(collectionId, link) {
-  return http.post(`${apiEndpoint}/${collectionId}/check-duplicate-link`, { link });
+  return http.post(`${apiEndpoint}/${collectionId}/check-duplicate-link`, {
+    link,
+  });
 }
 
 export function getExplore(page = 1, sortBy = 'upvotes') {
-  return http.get(`${apiEndpoint}/page/explore`,{params: {
-    page,
-    sortBy
-  }});
+  return http.get(`${apiEndpoint}/page/explore`, {
+    params: {
+      page,
+      sortBy,
+    },
+  });
 }
 
-
-export function getSearch(queryFor,page=1){
-  return http.get(`${apiEndpoint}/explore/search`,{ params:{  
-    queryFor,
-    page,
-  }
-  })
+export function getSearch(queryFor, page = 1) {
+  return http.get(`${apiEndpoint}/explore/search`, {
+    params: {
+      queryFor,
+      page,
+    },
+  });
 }
 
-export function upvoteCollection(id){
+export function upvoteCollection(id) {
   return http.post(`${apiEndpoint}/${id}/upvote`);
 }
 
-export function downvoteCollection(id){
+export function downvoteCollection(id) {
   return http.post(`${apiEndpoint}/${id}/downvote`);
 }
 
-export function getSavedCollection(userId){
+export function getSavedCollection(userId) {
   return http.get(`${apiEndpoint}/${userId}/getsaved`);
 }
 
-export function saveCollection(id){
-  return http.post(`${apiEndpoint}/${id}/save`)
+export function saveCollection(id) {
+  return http.post(`${apiEndpoint}/${id}/save`);
 }
 
-export function unsaveCollection(id){
-  return http.post(`${apiEndpoint}/${id}/unsave`)
+export function unsaveCollection(id) {
+  return http.post(`${apiEndpoint}/${id}/unsave`);
 }
-export function duplicateCollection(id){
-  return http.post(`${apiEndpoint}/${id}/duplicate`)
+export function duplicateCollection(id) {
+  return http.post(`${apiEndpoint}/${id}/duplicate`);
 }
 
 export function togglePin(collectionId) {
-  return http.post(`${apiEndpoint}/togglePin/${collectionId}`)
+  return http.post(`${apiEndpoint}/togglePin/${collectionId}`);
 }
-

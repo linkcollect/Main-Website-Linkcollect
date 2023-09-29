@@ -1,15 +1,15 @@
-import axios from "axios";
+import axios from 'axios';
 
 // For server internal error handling status-code(500)
-axios.interceptors.response.use(null, (error) => {
-  console.log(error)
+axios.interceptors.response.use(null, error => {
+  console.log(error);
   const expectedError =
     error.response &&
     error.response.status >= 400 &&
     error.response.status < 500;
 
   if (!expectedError) {
-    console.log("An unexpected error occured");
+    console.log('An unexpected error occured');
   }
 
   return Promise.reject(error);
@@ -17,7 +17,7 @@ axios.interceptors.response.use(null, (error) => {
 
 // ----------- Setting JWT token on every request ------------ //
 export function setJwtInRequestHeader(jwt) {
-  axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
+  axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
   // console.log(jwt, "hey")
 }
 

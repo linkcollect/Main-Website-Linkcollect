@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
-import Vector from "../../../assets/Vector.svg";
-import mainLogo from "../../../assets/mainLogo.svg";
-import { Link } from "react-router-dom";
-import { motion, AnimatePresence } from "framer-motion";
+import React, { useEffect, useState } from 'react';
+import Vector from '../../../assets/Vector.svg';
+import mainLogo from '../../../assets/mainLogo.svg';
+import { Link } from 'react-router-dom';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const Banner = () => {
   const [text, setText] = useState('');
@@ -11,12 +11,12 @@ const Banner = () => {
   const allTexts = [
     `Stay organized, save your web links 🔖`,
     `Share your collections in real time 🤳`,
-    `Explore popular public collections 🌏`
+    `Explore popular public collections 🌏`,
   ];
 
   useEffect(() => {
     const intervalId = setInterval(() => {
-      setCurrentIndex((prevIndex) => (prevIndex + 1) % allTexts.length);
+      setCurrentIndex(prevIndex => (prevIndex + 1) % allTexts.length);
     }, 2000);
 
     return () => clearInterval(intervalId);
