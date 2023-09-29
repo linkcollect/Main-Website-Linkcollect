@@ -69,7 +69,7 @@ const Explore = ({ windowWidth }) => {
     }
   }, []);
 
-  const pattern = /([\w\s\+])+/g;
+  const pattern = /([\w\s+])+/g;
   function filterString(input) {
     const matches = input.match(pattern);
     const filteredInput = matches ? matches.join('') : '';
