@@ -136,7 +136,9 @@ const CollectionitemV2 = React.forwardRef(
     const onCardClick = async e => {
       // console.log("username", username)
       e.stopPropagation();
-      onScrollPosi();
+      if (onScrollPosi) {
+        onScrollPosi();
+      }
       navigate(`/${username}/c/${id}`);
     };
 
