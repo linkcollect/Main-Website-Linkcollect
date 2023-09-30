@@ -34,7 +34,6 @@ const Explore = ({ windowWidth }) => {
   const [isSearchingMore, setIsSearchingMore] = useState(false);
   const collection = useSelector(state => state.explore);
   const scrollableDivRef = useRef(null);
-  const [scrollPosition, setScrollPosition] = useState(0);
   const saveScrollPosition = () => {
     if (scrollableDivRef.current) {
       sessionStorage.setItem('scrollPos', scrollableDivRef.current.scrollTop);
