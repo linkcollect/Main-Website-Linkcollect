@@ -43,6 +43,7 @@ const CollectionitemV2 = React.forwardRef(
       onUpvote,
       onDownVote,
       onSave,
+      onScrollPosi,
       onUnsave,
       onPin,
       isHoverable = true,
@@ -135,6 +136,7 @@ const CollectionitemV2 = React.forwardRef(
     const onCardClick = async e => {
       // console.log("username", username)
       e.stopPropagation();
+      onScrollPosi();
       navigate(`/${username}/c/${id}`);
     };
 
@@ -186,7 +188,7 @@ const CollectionitemV2 = React.forwardRef(
           onMouseLeave={() => {
             isHoverable && setHover(false);
           }}
-          onClick={onCardClick}
+          onClick={e => onCardClick(e)}
         >
           <Toaster position="top-center" reverseOrder={true} />
 
