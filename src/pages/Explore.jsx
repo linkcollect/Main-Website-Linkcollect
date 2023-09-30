@@ -33,6 +33,12 @@ const Explore = ({ windowWidth }) => {
   const [isSearching, setIsSearching] = useState(false);
   const [isSearchingMore, setIsSearchingMore] = useState(false);
   const collection = useSelector(state => state.explore);
+  const scrollableDivRef = useRef(null);
+  const saveScrollPosition = () => {
+    if (scrollableDivRef.current) {
+      sessionStorage.setItem('scrollPos', scrollableDivRef.current.scrollTop);
+    }
+  };
 
   useEffect(() => {
     // collection.isSearched && !searchParams.get("queryFor") may user has navigate away after searhing something in this case we should do reload the original data
@@ -41,6 +47,13 @@ const Explore = ({ windowWidth }) => {
       collection.collections.length == 0
     ) {
       dispatch(getAllExplore());
+    }
+  }, []);
+
+  useEffect(() => {
+    const savedScrollPos = sessionStorage.getItem('scrollPos');
+    if (scrollableDivRef.current && savedScrollPos) {
+      scrollableDivRef.current.scrollTop = savedScrollPos;
     }
   }, []);
 
@@ -217,7 +230,10 @@ const Explore = ({ windowWidth }) => {
       </div>
 
       {/* Collection Items */}
-      <div className="w-full h-full mt-[1rem] px-8 pb-6 overflow-y-scroll 3xl:px-0">
+      <div
+        className="w-full h-full mt-[1rem] px-8 pb-6 overflow-y-scroll 3xl:px-0"
+        ref={scrollableDivRef}
+      >
         {/* At fisrt reandering when I am going to get first page loading or if we will get search result for the first time*/}
         {(collection.collections.length === 0 && collection.isFetching) ||
         isSearching ? (
@@ -246,6 +262,7 @@ const Explore = ({ windowWidth }) => {
                     onUpvote={upvoteAction}
                     onDownVote={downvoteAction}
                     onSave={saveAction}
+                    onScrollPosi={saveScrollPosition}
                     onUnsave={unsaveAction}
                     userId={collectionItem.userId}
                     ref={
