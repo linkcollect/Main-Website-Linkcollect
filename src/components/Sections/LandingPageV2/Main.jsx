@@ -415,11 +415,11 @@ const Main = ({ analytics, exploreData = undefined, windowWidth }) => {
               <div className="head min-h-[10.5rem] border-b-[1px] border-b-neutral-300">
                 <p className="text-neutral-700">Pro Plan</p>
                 <h3 className="text-[2.75rem] text-neutral-700">
-                  $29 for lifetime
+                  $29 billed yearly
                 </h3>
                 <div className="mx-auto mt-[1rem] py-[0.125rem] px-[0.125rem] rounded-[3.5rem] border-[1px] border-neutral-300 bg-neutral-50 font-light h-max w-max items-center flex">
                   <div className="rounded-[3.5rem]  py-[0.125rem] px-[0.75rem] text-white bg-neutral-900 flex">
-                    pay once, use forever
+                    yearly
                   </div>
                   {/* <div className='px-[0.75rem] text-neutral-500'>monthly</div> */}
                 </div>
