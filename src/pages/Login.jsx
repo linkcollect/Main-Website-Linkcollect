@@ -10,6 +10,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setLoggedInUser } from '../store/Slices/user.slice';
 import { getUserDetails, loginAction } from '../store/actions/user.action';
 import Button from '../components/UI/Button/Button';
+import toast, { Toaster } from 'react-hot-toast';
+
 const Login = ({ windowWidth }) => {
   const location = useLocation();
   // const navigate = useNavigate();
@@ -39,7 +41,27 @@ const Login = ({ windowWidth }) => {
   // To handle login
   const handleLogin = async e => {
     e.preventDefault();
-    dispatch(loginAction({ email: data.email, password: data.password }));
+    const something = dispatch(
+      loginAction({ email: data.email, password: data.password })
+    );
+
+    setTimeout(() => {
+      if (!auth.isLoggedIn) {
+        console.log('not logged in');
+        // alert('Invalid Credentials');
+        toast.error('Invalid Credentials', {
+          style: {
+            border: '1px solid #4B4C63',
+            padding: '6px',
+            color: '#713200',
+            boxShadow: 'none',
+            width: 'max-content',
+            minWidth: 'max-content',
+          },
+        });
+      }
+    }, 1000);
+
     // // if(auth.isLoggedIn){
     //   console.log(auth.token)
     //   setJwtInRequestHeader(auth.token);
@@ -54,6 +76,8 @@ const Login = ({ windowWidth }) => {
           background: `linear-gradient(0deg, #9092FF -10.03%, rgba(144, 146, 255, 0) 98.39%), #FFFFFF`,
         }}
       >
+        <Toaster position="top-center" reverseOrder={true} />
+
         <div className="flex flex-col items-center justify-evenly min-h-screen gap-0 sm:flex-wrap lg:flex-nowrap sm:flex-row md:justify-center md:gap-12 lg:justify-evenly max-w-[3000px] mx-auto">
           {windowWidth > 1024 && (
             <div className="flex items-center justify-center w-full h-[80vh] lg:min-h-screen lg:w-1/2 ">

@@ -129,15 +129,13 @@ const Signup = ({ windowWidth }) => {
                           onFocus={() => setIsPasswordfocus(true)}
                           onBlur={() => setIsPasswordfocus(false)}
                         />
-                        {!isValidPassword &&
-                          !isPasswordfocus &&
-                          data.password.length >= 1 && (
-                            <p className="text-xs text-error-500 mt-2 text-start">
-                              Password should be at least 8 of character and
-                              consist of 1 Uppercase, 1 lower case, 1 special
-                              character
-                            </p>
-                          )}
+                        {!isValidPassword && !isPasswordfocus && (
+                          <p className="text-xs text-error-500 mt-2 text-start">
+                            Password should be at least 8 of character and
+                            consist of 1 Uppercase, 1 lower case, 1 special
+                            character
+                          </p>
+                        )}
                       </div>
 
                       {/* Need to add link after adding the api for forget pass */}
@@ -151,7 +149,7 @@ const Signup = ({ windowWidth }) => {
                         onClick={handleRegister}
                         isLoading={isSiging}
                       >
-                        {!isSiging ? 'Sign In' : <Loader />}
+                        {!isSiging ? 'Sign Up' : <Loader />}
                       </Button>
                       <p className="mt-1 font-light text-left text-neutral-400">
                         Already have an account?{' '}
