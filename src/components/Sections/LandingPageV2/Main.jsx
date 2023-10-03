@@ -34,6 +34,20 @@ const Main = ({ analytics, exploreData = undefined, windowWidth }) => {
   //   end: () => {video1Ref.current.currentTime = 0; video1Ref.current.play()},
   //   play: () => {if(video1Ref.current.currentTime >= 20) {video1Ref.current.currentTime = 0; video1Ref.current.play()}}
   // }
+  // api call to https://api.linkcollect.io/api/v1/analytics
+
+  const [analyticsData, setAnalyticsData] = useState(undefined);
+
+  useEffect(() => {
+    const getAnalyticsData = async () => {
+      const res = await fetch('https://api.linkcollect.io/api/v1/analytics');
+      const data = await res.json();
+      console.log(data);
+      setAnalyticsData(data.data);
+    };
+    getAnalyticsData();
+  }, []);
+
   const video2Ref = useRef();
   const video2Controls = {
     end: () => {
@@ -56,14 +70,16 @@ const Main = ({ analytics, exploreData = undefined, windowWidth }) => {
         >
           <div className="hero-content mx-auto flex flex-col items-center gap-[2rem] w-[clamp(auto,12vw,60rem)]">
             <h1 className="text-neutral-900 text-[clamp(1rem,10vw,4.25rem)] leading-[clamp(1rem,12vw,4.75rem)]">
-              keep forgetting links? <br className="hidden md:block"></br>not
+              Keep forgetting links? <br className="hidden md:block"></br>not
               anymore
             </h1>
-            <p className="text-neutral-600 max-w-[520px]">
+            <p className="text-neutral-600 max-w-[520px] text-xl">
               {' '}
-              a browser extension that will help you organise your links in
-              simplest and fastest way + discover and search across popular
-              public collections, just like pinterest{' '}
+              {`A browser extension that will help you document your learning
+              journey + discover and search across ${
+                analyticsData ? analyticsData.collections : 3000
+              }+ public collections, just like
+              pinterest`}{' '}
             </p>
 
             {/* Product Hunt banner/badge (330 upvotes)*/}
@@ -157,10 +173,10 @@ const Main = ({ analytics, exploreData = undefined, windowWidth }) => {
             <h2 className="text-[clamp(1rem,10vw,4.25rem)] leading-[clamp(1rem,12vw,4.75rem)] max-w-[1000px] ">
               What we do?
             </h2>
-            <p className="text-neutral-700 max-w-[500px] mx-auto mt-[1rem]">
-              A way to manage your online resources across multiple devices.
-              Save with our browser extension in just a click. we simplify
-              saving, grouping and sharing 🪄 magicly, it's damn simple to use{' '}
+            <p className="text-neutral-700 max-w-[500px] mx-auto mt-[1rem] text-xl">
+              A Bookmarking tool made for Developers, Designers, Content writers
+              and Creators to help collect, curate and share information in a
+              simple and faster way 🤷🏻‍♂️{' '}
             </p>
           </div>
           <div className="content mt-[3rem] grid xl:grid-cols-7 gap-[1.25rem]">
@@ -171,7 +187,7 @@ const Main = ({ analytics, exploreData = undefined, windowWidth }) => {
                 </h3>
                 <p className="text-[0.75rem] md:text-[1rem] text-neutral-600">
                   LinkCollect Makes Bookmarking simpler for everyone. Save,
-                  organise, conquer! , you don't need a PhD in rocket science to
+                  organise, conquer!, you don't need a PhD in rocket science to
                   bookmark. It's so easy, even your cat could do it 🐱
                 </p>
               </div>
@@ -520,7 +536,7 @@ const Main = ({ analytics, exploreData = undefined, windowWidth }) => {
               }}
               className="mt-[2.5rem] py-[0.75rem] px-[1rem] w-[max-content] h-min leading-[1.25rem] bg-primary-400 rounded-[5px] text-white hover:scale-[1.09] hover:shadow-xl transition"
             >
-              Try Linkcollect for Free
+              {`Join ${analyticsData ? analyticsData.users : 1000}+ users ⚡️`}
             </button>
           </div>
         </section>
