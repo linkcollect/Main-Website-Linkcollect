@@ -79,7 +79,6 @@ const BookmarkItemGrid = ({
       .then(data => {
         setJsonResponse(data);
         // Now you can work with the extracted data here
-        console.log(data);
       })
       .catch(error => {
         console.error('There was a problem with the fetch operation:', error);
