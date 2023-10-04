@@ -11,7 +11,7 @@ const SearchBox = ({ query, setQuery, onCancel, onSubmit }) => {
   const { selectedMode } = useContext(switchMode);
 
   return (
-    <div className="flex items-center w-full">
+    <div className="flex items-center w-full ">
       <div className="relative w-full">
         <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none z-[10]">
           {selectedMode === 'dark' ? (
@@ -25,7 +25,11 @@ const SearchBox = ({ query, setQuery, onCancel, onSubmit }) => {
             type="text"
             id="simple-search"
             variant={selectedMode === 'light' ? 'secondary' : 'darkSecondary'}
-            className="p-[0.638rem] pl-10 border"
+            className={`p-[0.638rem] pl-10 border ${
+              selectedMode === 'dark'
+                ? 'border-neutral-600'
+                : 'border-neutral-300'
+            }`}
             value={query}
             placeholder="Search for collection or links"
             onChange={e => setQuery(e.target.value)}

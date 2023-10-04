@@ -54,7 +54,7 @@ export const SortActions = ({ name, menuItems }) => {
       }}
       className={`w-[3rem] px-2 sm:w-48 cursor-pointer h-[46px] relative sm:p-4 flex items-center justify-center rounded-lg ${
         selectedMode === 'dark'
-          ? 'border-dark-border bg-dark-primary text-neutral-50'
+          ? 'border-neutral-600 bg-dark-primary text-neutral-50'
           : 'border-neutral-300 bg-white '
       }  gap-2 border`}
     >
@@ -134,7 +134,7 @@ export const SortVeiw = ({ name, GridmenuItems }) => {
       }}
       className={`w-[3rem] px-2 sm:w-48 cursor-pointer h-[46px] relative sm:p-4 flex items-center justify-center rounded-lg ${
         selectedMode === 'dark'
-          ? 'border-dark-border bg-dark-primary text-neutral-50'
+          ? 'border-neutral-600 bg-dark-primary text-neutral-50'
           : 'border-neutral-300 bg-white '
       }  gap-2 border`}
     >
