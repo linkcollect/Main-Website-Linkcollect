@@ -245,7 +245,7 @@ const BookmarkItemGrid = ({
                     windowWidth < 1150 && ''
                   } transition-all duration-300 z-[1] xl:p-0.9 rounded-md border border-primary-500 p-1 text-xs xl:text-sm font-normal  ${
                     selectedMode === 'light'
-                      ? 'text-white bg-black bg-opacity-40'
+                      ? 'text-white bg-black bg-opacity-70'
                       : 'bg-dark-primary text-neutral-50'
                   } `}
                 >
