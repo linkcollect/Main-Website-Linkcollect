@@ -21,6 +21,7 @@ import Delete from './DeleteModal';
 import IconButton from '../../UI/IconButton/IconButton';
 import { switchMode } from '../../../hooks/switchMode';
 import BookmarkNoteModal from './BookmarkNoteModal';
+import { set } from 'react-ga';
 const BookmarkItemGrid = ({
   id,
   name,
@@ -69,18 +70,18 @@ const BookmarkItemGrid = ({
 
     // Make an HTTP request to the API
     fetch(apiUrl)
-      .then((response) => {
+      .then(response => {
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
         return response.json();
       })
-      .then((data) => {
+      .then(data => {
         setJsonResponse(data);
         // Now you can work with the extracted data here
         console.log(data);
       })
-      .catch((error) => {
+      .catch(error => {
         console.error('There was a problem with the fetch operation:', error);
       });
   }, [setJsonResponse]);
@@ -188,7 +189,12 @@ const BookmarkItemGrid = ({
             heading="Delete Bookmark"
             subheading={`Delete ${name} from ${collectionName}`}
           />
-          <div className="relative bg-bgPrimary border border-neutral-200 hover:shadow-md rounded-lg w-full group h-[279px] transition duration-300 ease-in-out cursor-pointer select-none"
+          <div
+            className={`relative bg-bgPrimary border ${
+              selectedMode === 'light'
+                ? 'border-neutral-200'
+                : 'border-neutral-600'
+            } hover:shadow-md rounded-lg w-full group h-[279px] transition duration-300 ease-in-out cursor-pointer select-none`}
             onMouseEnter={() => setHovered(true)}
             onMouseLeave={() => setHovered(false)}
           >
@@ -198,82 +204,144 @@ const BookmarkItemGrid = ({
                 className={'absolute'}
               ></BookmarkNoteModal>
             )}
-            {isPinned && (
-              <div
-                className={`w-[20px] h-[20px] absolute z-[100] top-2 left-2 cursor-pointer border  ${selectedMode === 'light'
-                  ? 'border-neutral-300 bg-black/[0.20]'
-                  : 'bg-dark-primary border-dark-secondary'
+
+            <a
+              // className=""
+              href={url}
+              rel="noreferrer"
+              target="_blank"
+            >
+              {isPinned && (
+                <div
+                  className={`w-[20px] h-[20px] absolute z-[100] top-2 left-2 cursor-pointer border  ${
+                    selectedMode === 'light'
+                      ? 'border-neutral-300 bg-black/[0.20]'
+                      : 'bg-dark-primary border-dark-secondary'
                   }  rounded-md`}
-              >
-                {selectedMode === 'light' ? (
-                  <img key="pin-icon" className="" src={whitePinIcon} alt="" />
-                ) : (
-                  <img key="pin-icon" className="" src={whitePinIcon} alt="" />
-                )}
-              </div>
-            )}
-            {/* <button className="flex items-center justify-center z-10 absolute p-1 transition-all duration-500 rounded-sm bg-black/[0.20] top-2 left-2 group-hover:opacity-100 opacity-0">
+                >
+                  {selectedMode === 'light' ? (
+                    <img
+                      key="pin-icon"
+                      className=""
+                      src={whitePinIcon}
+                      alt=""
+                    />
+                  ) : (
+                    <img
+                      key="pin-icon"
+                      className=""
+                      src={whitePinIcon}
+                      alt=""
+                    />
+                  )}
+                </div>
+              )}
+              {/* <button className="flex items-center justify-center z-10 absolute p-1 transition-all duration-500 rounded-sm bg-black/[0.20] top-2 left-2 group-hover:opacity-100 opacity-0">
             <img src={whitePinIcon} alt="pinIcon" />
           </button> */}
-            {note && !hovered && windowWidth > 1024 && (
-              <div
-                className={`flex  items-center justify-center absolute top-6 -translate-y-1/2 right-4 xl:right-4 ${windowWidth < 1150 && ''
-                  } transition-all duration-300 z-50 xl:p-0.9 rounded-md border border-primary-500 p-1 text-xs xl:text-sm font-normal  ${selectedMode === 'light'
-                    ? 'text-white bg-black bg-opacity-40'
-                    : 'bg-dark-primary text-neutral-50'
+
+              {note && !hovered && windowWidth > 1024 && (
+                <div
+                  className={`flex  items-center justify-center absolute top-6 -translate-y-1/2 right-4 xl:right-4 ${
+                    windowWidth < 1150 && ''
+                  } transition-all duration-300 z-50 xl:p-0.9 rounded-md border border-primary-500 p-1 text-xs xl:text-sm font-normal  ${
+                    selectedMode === 'light'
+                      ? 'text-white bg-black bg-opacity-40'
+                      : 'bg-dark-primary text-neutral-50'
                   } `}
-              >
-                {windowWidth > 1280 ? (
-                  ' Note Attached'
+                >
+                  {windowWidth > 1280 ? (
+                    ' Note Attached'
+                  ) : (
+                    <>
+                      {selectedMode === 'light' ? (
+                        <img src={NoteIcon} alt="" className="" />
+                      ) : (
+                        <img src={WhiteNoteIcon} alt="" className="" />
+                      )}
+                    </>
+                  )}
+                </div>
+              )}
+
+              <div className="w-full h-[105px] relative">
+                {jsonResponse?.images?.[0] ? (
+                  <img
+                    src={jsonResponse?.images[0]}
+                    alt=""
+                    onError={() => {
+                      setJsonResponse(prev => ({
+                        ...prev,
+                        images: [],
+                      }));
+
+                      // jsonResponse.images[0] =
+                      //   'https://media.discordapp.net/attachments/1075034816849924166/1153938590192128040/Frame.jpg?ex=651e558f&is=651d040f&hm=dd966ebc52ebda4c53c4af3cb0cae55e02bad8c561f7f161307577a50d246e90&=&width=1934&height=1158';
+                    }}
+                    className="object-cover w-full h-full rounded-t-md"
+                  />
                 ) : (
-                  <>
-                    {selectedMode === 'light' ? (
-                      <img src={NoteIcon} alt="" className="" />
-                    ) : (
-                      <img src={WhiteNoteIcon} alt="" className="" />
-                    )}
-                  </>
+                  <BackgroundGradient
+                    hashValue={id}
+                    title={
+                      windowWidth < 640
+                        ? nameShortner(getOrigin(url), 25)
+                        : nameShortner(getOrigin(url), 40)
+                    }
+                  />
                 )}
               </div>
-            )}
-            <div className="w-full h-[105px] relative">
-              {(jsonResponse?.images?.[0]) ? (
-                <img
-                  src={jsonResponse?.images[0]}
-                  alt=""
-                  className="object-cover w-full h-full rounded-t-md"
-                />
-              ) : (
-                <BackgroundGradient
-                  hashValue={id}
-                  title={
-                    windowWidth < 640
-                      ? nameShortner(getOrigin(url), 25)
-                      : nameShortner(getOrigin(url), 40)
-                  }
-                />
-              )}
-            </div>
-            <div className="px-4 py-2">
-              <p className="font-normal text-start text-neutral-800 line-clamp-2 min-h-[48px]">{name}</p>
-              {jsonResponse?.description ? (
-                <p className="mt-2 text-sm text-[#636363] font-light text-start line-clamp-3 min-h-[62px]">
-                  {jsonResponse.description}
-                </p>
-              ) : (
-                <p className="mt-2 text-sm text-[#636363] font-light text-start line-clamp-3 min-h-[62px]">
+            </a>
+            <div className="px-4 py-3">
+              <a
+                // className=""
+                href={url}
+                rel="noreferrer"
+                target="_blank"
+              >
+                <p
+                  className={`font-normal  ${
+                    selectedMode === 'light'
+                      ? 'text-neutral-800'
+                      : 'text-neutral-300'
+                  } text-start  line-clamp-2 min-h-[48px]`}
+                >
                   {name}
                 </p>
-              )}
+                {/* description */}
+                {jsonResponse?.description ? (
+                  <p
+                    className={`mt-2 text-sm   ${
+                      selectedMode === 'light'
+                        ? 'text-neutral-800'
+                        : 'text-neutral-400'
+                    } font-light text-start line-clamp-3 min-h-[62px]`}
+                  >
+                    {jsonResponse.description}
+                  </p>
+                ) : (
+                  <p
+                    className={`mt-2 text-sm  ${
+                      selectedMode === 'light'
+                        ? 'text-neutral-800'
+                        : 'text-neutral-400'
+                    } font-light text-start line-clamp-3 min-h-[62px]`}
+                  >
+                    {name}
+                  </p>
+                )}
+              </a>
               <hr className="my-2 border-[#7575756B]" />
-              <div className='flex justify-between'>
+
+              <div className="flex justify-between">
                 <div className="flex items-center gap-[4rem] mr-2">
                   {/* Timestamp */}
                   <p
-                    className={`hidden sm:block text-xs font-medium whitespace-nowrap  ${selectedMode === 'light'
-                      ? 'text-neutral-500'
-                      : 'text-dark-placeholder'
-                      } mr-5`}
+                    className={`hidden sm:block text-xs font-medium whitespace-nowrap  ${
+                      selectedMode === 'light'
+                        ? 'text-neutral-500'
+                        : 'text-dark-placeholder'
+                    } mr-5`}
                   >
                     Added {fromNow(updatedAt)}
                   </p>
@@ -349,10 +417,11 @@ const BookmarkItemGrid = ({
                             animate={{ opacity: 1, y: 0 }}
                             exit={{ opacity: 0, y: 10 }}
                             transition={{ duration: 0.2 }}
-                            className={`w-[135px] rounded border absolute z-[9990] top-[28px] p-2 right-0 ${selectedMode === 'light'
-                              ? 'border-neutral-300 bg-neutral-100'
-                              : 'border-dark-border bg-dark-primary'
-                              } `}
+                            className={`w-[135px] rounded border absolute z-[9990] top-[28px] p-2 right-0 ${
+                              selectedMode === 'light'
+                                ? 'border-neutral-300 bg-neutral-100'
+                                : 'border-dark-border bg-dark-primary'
+                            } `}
                           >
                             {popupActionMenu.map((menuItem, index) => (
                               <>
@@ -364,10 +433,11 @@ const BookmarkItemGrid = ({
                                 />
                                 {index !== popupActionMenu.length - 1 && (
                                   <div
-                                    className={`w-full h-[1px] ${selectedMode === 'light'
-                                      ? 'bg-neutral-300'
-                                      : 'bg-dark-border'
-                                      } mt-1 mb-1`}
+                                    className={`w-full h-[1px] ${
+                                      selectedMode === 'light'
+                                        ? 'bg-neutral-300'
+                                        : 'bg-dark-border'
+                                    } mt-1 mb-1`}
                                   />
                                 )}
                               </>

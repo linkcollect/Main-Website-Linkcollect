@@ -68,7 +68,7 @@ const Bookmarks = ({ windowWidth }) => {
       }
     });
 
-    return document.removeEventListener('click', e => { });
+    return document.removeEventListener('click', e => {});
   });
 
   const backHandler = e => {
@@ -129,8 +129,8 @@ const Bookmarks = ({ windowWidth }) => {
     return !collectionData.isFetching &&
       collectionData.collectionData.timelines?.length > 0
       ? collectionData.collectionData.timelines.filter(tItem =>
-        tItem.title.toLowerCase().includes(query.toLowerCase())
-      )
+          tItem.title.toLowerCase().includes(query.toLowerCase())
+        )
       : [];
   }, [query, collectionData.collectionData, collectionData.isFetching]);
   // dark and light mode switch
@@ -148,7 +148,7 @@ const Bookmarks = ({ windowWidth }) => {
           collectionData.collectionData?.description
             ? collectionData.collectionData?.description
             : 'This is an amazing collection of links, curated by ' +
-            collectionData.collectionData?.username
+              collectionData.collectionData?.username
         }
         image={
           collectionData.collectionData?.image
@@ -224,7 +224,6 @@ const Bookmarks = ({ windowWidth }) => {
                   {/* sort by */}
                   <SortVeiw name="View" GridmenuItems={GridmenuItem} />
                   <SortActions name="Sort By" menuItems={menuItem} />
-
                 </div>
               </div>
             </div>
@@ -244,8 +243,7 @@ const Bookmarks = ({ windowWidth }) => {
               isGridView ? (
                 <div className="w-full h-[calc(100%-55px)] py-4 scrollbar-hide">
                   <div className="w-[100%] z-0 h-[calc(100%-65px)] space-y-2">
-                    <div className="w-full justify-start grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-6 2xl:gap-6 max-w-[1500px]">
-
+                    <div className="w-full justify-start grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5  gap-6 2xl:gap-6 ">
                       {filteredBookmarks.map(timeline => (
                         <BookmarkItemGrid
                           key={timeline._id}
@@ -275,7 +273,6 @@ const Bookmarks = ({ windowWidth }) => {
                 <div className="w-full h-[calc(100%-55px)] py-4 scrollbar-hide">
                   <div className="w-[100%] z-0 h-[calc(100%-65px)] space-y-2">
                     {filteredBookmarks.map(timeline => (
-
                       <BookmarkItem
                         key={timeline._id}
                         id={timeline._id}
@@ -296,7 +293,6 @@ const Bookmarks = ({ windowWidth }) => {
                         isPinned={timeline.isPinned}
                         collectionName={collectionData.collectionData.title}
                       />
-
                     ))}
                     <div className="h-[60px]"></div>
                   </div>
@@ -305,18 +301,20 @@ const Bookmarks = ({ windowWidth }) => {
             ) : (
               <div className="flex flex-col items-center justify-center w-full h-full py-20">
                 <p
-                  className={`mb-5 text-5xl ${selectedMode === 'light'
-                    ? 'text-textPrimary'
-                    : 'text-neutral-300'
-                    }  `}
+                  className={`mb-5 text-5xl ${
+                    selectedMode === 'light'
+                      ? 'text-textPrimary'
+                      : 'text-neutral-300'
+                  }  `}
                 >
                   No bookmarks Found
                 </p>
                 <p
-                  className={`text-textPrimary ${selectedMode === 'light'
-                    ? 'text-textPrimary'
-                    : 'text-neutral-300'
-                    } `}
+                  className={`text-textPrimary ${
+                    selectedMode === 'light'
+                      ? 'text-textPrimary'
+                      : 'text-neutral-300'
+                  } `}
                 >
                   You can add it from extension
                 </p>
