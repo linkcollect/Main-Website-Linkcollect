@@ -15,11 +15,12 @@ import {
   setTogglePinBookmark,
   sortBookmarksByType,
 } from '../store/Slices/bookmarks.slice';
-import { SortActions } from '../components/Common/ActiondropDown';
+import { SortActions, SortVeiw } from '../components/Common/ActiondropDown';
 import SEO from '../components/SEO/SEO';
 import { useContext } from 'react';
 import { switchMode } from '../hooks/switchMode';
 import MoreFromUser from '../components/Sections/Bookmarks/MoreFromUser';
+import BookmarkItemGrid from '../components/Sections/Bookmarks/BookmarkItemGrid';
 
 const Bookmarks = ({ windowWidth }) => {
   const navigation = useNavigate();
@@ -29,7 +30,7 @@ const Bookmarks = ({ windowWidth }) => {
   const [deleteCollectionModal, setDeleteCollectionModal] = useState(false);
   // Modal State: Bookmarks
   const [openCreateBookmarkModal, setOpenCreateBookmarkModal] = useState(false);
-
+  const [isGridView, setIsGridView] = useState('GRID_VIEW');
   // Sorting State
   const [sortingType, setSortingType] = useState('RECENETLY_UPDATED');
 
@@ -67,7 +68,7 @@ const Bookmarks = ({ windowWidth }) => {
       }
     });
 
-    return document.removeEventListener('click', e => {});
+    return document.removeEventListener('click', e => { });
   });
 
   const backHandler = e => {
@@ -94,7 +95,10 @@ const Bookmarks = ({ windowWidth }) => {
     setSortingType(sortType);
     dispatch(sortBookmarksByType({ sortType }));
   };
-
+  const sortList = sortType => {
+    setIsGridView(sortType);
+    // dispatch(sortBookmarksByType({ sortType }));
+  };
   const menuItem = [
     {
       name: 'Recently Updated',
@@ -107,14 +111,26 @@ const Bookmarks = ({ windowWidth }) => {
       type: 'ALPHABETICAlLY',
     },
   ];
+  const GridmenuItem = [
+    {
+      name: 'Grid view',
+      onClick: sortList,
+      type: 'GRID_VIEW',
+    },
+    {
+      name: 'List view',
+      onClick: sortList,
+      type: 'LIST_VIEW',
+    },
+  ];
 
   // Logic for search
   const filteredBookmarks = useMemo(() => {
     return !collectionData.isFetching &&
       collectionData.collectionData.timelines?.length > 0
       ? collectionData.collectionData.timelines.filter(tItem =>
-          tItem.title.toLowerCase().includes(query.toLowerCase())
-        )
+        tItem.title.toLowerCase().includes(query.toLowerCase())
+      )
       : [];
   }, [query, collectionData.collectionData, collectionData.isFetching]);
   // dark and light mode switch
@@ -132,7 +148,7 @@ const Bookmarks = ({ windowWidth }) => {
           collectionData.collectionData?.description
             ? collectionData.collectionData?.description
             : 'This is an amazing collection of links, curated by ' +
-              collectionData.collectionData?.username
+            collectionData.collectionData?.username
         }
         image={
           collectionData.collectionData?.image
@@ -206,7 +222,9 @@ const Bookmarks = ({ windowWidth }) => {
                   <Search query={query} setQuery={setQuery} />
 
                   {/* sort by */}
+                  <SortVeiw name="View" GridmenuItems={GridmenuItem} />
                   <SortActions name="Sort By" menuItems={menuItem} />
+
                 </div>
               </div>
             </div>
@@ -223,50 +241,82 @@ const Bookmarks = ({ windowWidth }) => {
               </div>
             ) : collectionData.collectionData &&
               filteredBookmarks?.length > 0 ? (
-              <div className="w-full h-[calc(100%-55px)] py-4 scrollbar-hide">
-                <div className="w-[100%] z-0 h-[calc(100%-65px)] space-y-2">
-                  {filteredBookmarks.map(timeline => (
-                    <BookmarkItem
-                      key={timeline._id}
-                      id={timeline._id}
-                      name={timeline.title}
-                      url={timeline.link}
-                      note={!timeline.note ? '' : timeline.note}
-                      favicon={timeline.favicon}
-                      windowWidth={windowWidth}
-                      updatedAt={timeline.updatedAt}
-                      isOwner={
-                        collectionData.collectionData.userId === auth.userId
-                      }
-                      clickedId={clickedId}
-                      setClickedId={setClickedId}
-                      isSelected={timeline.isSelected}
-                      collectionId={collectionId}
-                      toggleBookmarkPin={toggleBookmarkPin}
-                      isPinned={timeline.isPinned}
-                      collectionName={collectionData.collectionData.title}
-                    />
-                  ))}
-                  <div className="h-[60px]"></div>
+              isGridView ? (
+                <div className="w-full h-[calc(100%-55px)] py-4 scrollbar-hide">
+                  <div className="w-[100%] z-0 h-[calc(100%-65px)] space-y-2">
+                    <div className="w-full justify-start grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-6 2xl:gap-6 max-w-[1500px]">
+
+                      {filteredBookmarks.map(timeline => (
+                        <BookmarkItemGrid
+                          key={timeline._id}
+                          id={timeline._id}
+                          name={timeline.title}
+                          url={timeline.link}
+                          note={!timeline.note ? '' : timeline.note}
+                          favicon={timeline.favicon}
+                          windowWidth={windowWidth}
+                          updatedAt={timeline.updatedAt}
+                          isOwner={
+                            collectionData.collectionData.userId === auth.userId
+                          }
+                          clickedId={clickedId}
+                          setClickedId={setClickedId}
+                          isSelected={timeline.isSelected}
+                          collectionId={collectionId}
+                          toggleBookmarkPin={toggleBookmarkPin}
+                          isPinned={timeline.isPinned}
+                          collectionName={collectionData.collectionData.title}
+                        />
+                      ))}
+                    </div>
+                  </div>
                 </div>
-              </div>
+              ) : (
+                <div className="w-full h-[calc(100%-55px)] py-4 scrollbar-hide">
+                  <div className="w-[100%] z-0 h-[calc(100%-65px)] space-y-2">
+                    {filteredBookmarks.map(timeline => (
+
+                      <BookmarkItem
+                        key={timeline._id}
+                        id={timeline._id}
+                        name={timeline.title}
+                        url={timeline.link}
+                        note={!timeline.note ? '' : timeline.note}
+                        favicon={timeline.favicon}
+                        windowWidth={windowWidth}
+                        updatedAt={timeline.updatedAt}
+                        isOwner={
+                          collectionData.collectionData.userId === auth.userId
+                        }
+                        clickedId={clickedId}
+                        setClickedId={setClickedId}
+                        isSelected={timeline.isSelected}
+                        collectionId={collectionId}
+                        toggleBookmarkPin={toggleBookmarkPin}
+                        isPinned={timeline.isPinned}
+                        collectionName={collectionData.collectionData.title}
+                      />
+
+                    ))}
+                    <div className="h-[60px]"></div>
+                  </div>
+                </div>
+              )
             ) : (
               <div className="flex flex-col items-center justify-center w-full h-full py-20">
                 <p
-                  className={`mb-5 text-5xl ${
-                    selectedMode === 'light'
-                      ? 'text-textPrimary'
-                      : 'text-neutral-300'
-                  }  `}
+                  className={`mb-5 text-5xl ${selectedMode === 'light'
+                    ? 'text-textPrimary'
+                    : 'text-neutral-300'
+                    }  `}
                 >
                   No bookmarks Found
                 </p>
                 <p
-                  className={`text-textPrimary ${
-                    selectedMode === 'light'
-                      ? 'text-textPrimary'
-                      : 'text-neutral-300'
-                  } `}
+                  className={`text-textPrimary ${selectedMode === 'light'
+                    ? 'text-textPrimary'
+                    : 'text-neutral-300'
+                    } `}
                 >
                   You can add it from extension
                 </p>
