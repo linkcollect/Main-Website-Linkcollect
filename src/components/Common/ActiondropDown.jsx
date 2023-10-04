@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import SortBy from '../../assets/sortBy.svg';
 import GridVeiw from '../../assets/GridVeiw.svg';
 import DarkSort from '../../assets/darkMode/darkmodeSortBy.svg';
@@ -28,12 +28,30 @@ export const SortActions = ({ name, menuItems }) => {
   const [showDropdown, setShowDropdown] = useState(false);
   const lastIndex = menuItems.length - 1;
 
+  useEffect(() => {
+    window.addEventListener('click', e => {
+      if (e.target.id !== 'sort' && showDropdown) {
+        setShowDropdown(false);
+      }
+    });
+
+    return () => {
+      window.removeEventListener('click', e => {
+        if (e.target.id !== 'sort' && showDropdown) {
+          setShowDropdown(false);
+        }
+      });
+    };
+  }, [showDropdown]);
   // getting selected mode for theme change
   const { selectedMode } = useContext(switchMode);
 
   return (
     <div
-      onClick={() => setShowDropdown(!showDropdown)}
+      onClick={e => {
+        e.stopPropagation();
+        setShowDropdown(!showDropdown);
+      }}
       className={`w-[3rem] px-2 sm:w-48 cursor-pointer h-[46px] relative sm:p-4 flex items-center justify-center rounded-lg ${
         selectedMode === 'dark'
           ? 'border-dark-border bg-dark-primary text-neutral-50'
@@ -54,7 +72,7 @@ export const SortActions = ({ name, menuItems }) => {
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: 10 }}
           transition={{ duration: 0.2 }}
-          className={`w-[188px] rounded border absolute z-[9999_!important] top-[50px] right-0 ${
+          className={`w-[188px] rounded border absolute z-1000 top-[50px] right-0 ${
             selectedMode === 'light'
               ? 'border-white  bg-neutral-100'
               : 'bg-dark-primary border-dark-border'
@@ -84,6 +102,7 @@ export const SortActions = ({ name, menuItems }) => {
     </div>
   );
 };
+
 export const SortVeiw = ({ name, GridmenuItems }) => {
   const [showDropdown, setShowDropdown] = useState(false);
   const lastIndex = GridmenuItems.length - 1;
@@ -91,9 +110,28 @@ export const SortVeiw = ({ name, GridmenuItems }) => {
   // getting selected mode for theme change
   const { selectedMode } = useContext(switchMode);
 
+  useEffect(() => {
+    window.addEventListener('click', e => {
+      if (e.target.id !== 'sort' && showDropdown) {
+        setShowDropdown(false);
+      }
+    });
+
+    return () => {
+      window.removeEventListener('click', e => {
+        if (e.target.id !== 'sort' && showDropdown) {
+          setShowDropdown(false);
+        }
+      });
+    };
+  }, [showDropdown]);
+
   return (
     <div
-      onClick={() => setShowDropdown(!showDropdown)}
+      onClick={e => {
+        e.stopPropagation();
+        setShowDropdown(!showDropdown);
+      }}
       className={`w-[3rem] px-2 sm:w-48 cursor-pointer h-[46px] relative sm:p-4 flex items-center justify-center rounded-lg ${
         selectedMode === 'dark'
           ? 'border-dark-border bg-dark-primary text-neutral-50'
@@ -105,7 +143,7 @@ export const SortVeiw = ({ name, GridmenuItems }) => {
       ) : (
         <img src={GridVeiw} alt="" />
       )}
-      <span className="hidden text-sm font-medium sm:block">Veiw</span>
+      <span className="hidden text-sm font-medium sm:block">View</span>
 
       {/* dropdown */}
       {showDropdown && (
@@ -114,7 +152,7 @@ export const SortVeiw = ({ name, GridmenuItems }) => {
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: 10 }}
           transition={{ duration: 0.2 }}
-          className={`w-[188px] rounded border absolute z-[9999_!important] top-[50px] right-0 ${
+          className={`w-[188px] rounded border absolute z-[1000] top-[50px] right-0 ${
             selectedMode === 'light'
               ? 'border-white  bg-neutral-100'
               : 'bg-dark-primary border-dark-border'
@@ -130,7 +168,7 @@ export const SortVeiw = ({ name, GridmenuItems }) => {
               />
               {index !== lastIndex && (
                 <hr
-                  className={`w-full border ${
+                  className={`w-full border  ${
                     selectedMode === 'dark'
                       ? 'border-dark-border'
                       : 'border-neutral-300'
@@ -157,7 +195,7 @@ export const FilterActions = ({ menuItems, selectedFilters }) => {
 
       {/* dropdown */}
       {showDropdown && (
-        <div className="w-[188px] rounded border absolute z-50 bottom-[-140px] transition-all duration-500 right-0 border-neutral-300 p-3 flex items-start justify-center flex-col gap-2 bg-neutral-100 ">
+        <div className="w-[188px] rounded border absolute z-[100] bottom-[-140px] transition-all duration-500 right-0 border-neutral-300 p-3 flex items-start justify-center flex-col gap-2 bg-neutral-100 ">
           {menuItems.map((menItem, index) => (
             <>
               <MenuItem

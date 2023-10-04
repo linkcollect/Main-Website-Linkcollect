@@ -194,7 +194,7 @@ const BookmarkItemGrid = ({
               selectedMode === 'light'
                 ? 'border-neutral-200'
                 : 'border-neutral-600'
-            } hover:shadow-md rounded-lg w-full group h-[279px] transition duration-300 ease-in-out cursor-pointer select-none`}
+            } hover:shadow-md rounded-lg w-full group h-[279px] mb- transition duration-300 ease-in-out cursor-pointer select-none`}
             onMouseEnter={() => setHovered(true)}
             onMouseLeave={() => setHovered(false)}
           >
@@ -213,7 +213,7 @@ const BookmarkItemGrid = ({
             >
               {isPinned && (
                 <div
-                  className={`w-[20px] h-[20px] absolute z-[100] top-2 left-2 cursor-pointer border  ${
+                  className={`w-[20px] h-[20px] absolute z-[1] top-2 left-2 cursor-pointer border  ${
                     selectedMode === 'light'
                       ? 'border-neutral-300 bg-black/[0.20]'
                       : 'bg-dark-primary border-dark-secondary'
@@ -244,7 +244,7 @@ const BookmarkItemGrid = ({
                 <div
                   className={`flex  items-center justify-center absolute top-6 -translate-y-1/2 right-4 xl:right-4 ${
                     windowWidth < 1150 && ''
-                  } transition-all duration-300 z-50 xl:p-0.9 rounded-md border border-primary-500 p-1 text-xs xl:text-sm font-normal  ${
+                  } transition-all duration-300 z-[1] xl:p-0.9 rounded-md border border-primary-500 p-1 text-xs xl:text-sm font-normal  ${
                     selectedMode === 'light'
                       ? 'text-white bg-black bg-opacity-40'
                       : 'bg-dark-primary text-neutral-50'
@@ -292,7 +292,7 @@ const BookmarkItemGrid = ({
                 )}
               </div>
             </a>
-            <div className="px-4 py-3">
+            <div className="px-4 py-2">
               <a
                 // className=""
                 href={url}
@@ -311,9 +311,9 @@ const BookmarkItemGrid = ({
                 {/* description */}
                 {jsonResponse?.description ? (
                   <p
-                    className={`mt-2 text-sm   ${
+                    className={`mt-3 text-sm   ${
                       selectedMode === 'light'
-                        ? 'text-neutral-800'
+                        ? 'text-neutral-600'
                         : 'text-neutral-400'
                     } font-light text-start line-clamp-3 min-h-[62px]`}
                   >
@@ -321,9 +321,9 @@ const BookmarkItemGrid = ({
                   </p>
                 ) : (
                   <p
-                    className={`mt-2 text-sm  ${
+                    className={`mt-3 text-sm  ${
                       selectedMode === 'light'
-                        ? 'text-neutral-800'
+                        ? 'text-neutral-600'
                         : 'text-neutral-400'
                     } font-light text-start line-clamp-3 min-h-[62px]`}
                   >
