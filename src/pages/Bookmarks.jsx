@@ -246,7 +246,7 @@ const Bookmarks = ({ windowWidth }) => {
             ) : collectionData.collectionData &&
               filteredBookmarks?.length > 0 ? (
               isGridView === 'GRID_VIEW' ? (
-                <div className="w-full h-[calc(100%-55px)] py-4 scrollbar-hide">
+                <div className="w-full h-[calc(100%-55px)] py-10 scrollbar-hide">
                   <div className="w-[100%] z-0 h-[calc(100%-65px)] space-y-2">
                     <div className="w-full justify-start grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5  gap-6 2xl:gap-6 ">
                       {filteredBookmarks.map(timeline => (

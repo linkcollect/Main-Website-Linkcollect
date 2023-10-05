@@ -65,25 +65,65 @@ const BookmarkItemGrid = ({
   }, [isSelected]);
 
   useEffect(() => {
-    // https://jsonlink.io/api/extract?url=https://github.com/hiteshchoudhary/golang
-    const apiUrl = `https://jsonlink.io/api/extract?url=${url}`;
+    const fetchData = async () => {
+      const apiUrl = `https://jsonlink.io/api/extract?url=${url}`;
+      const backupApiUrl = `https://api.dub.co/metatags?url=${url}`;
+      const backupLinkCollect = `https://dev.linkcollect.io/api/v1/analytics/getMetadata?url=${url}`;
 
-    // Make an HTTP request to the API
-    fetch(apiUrl)
-      .then(response => {
+      try {
+        // Make the primary API request
+        const response = await fetch(apiUrl);
+
         if (!response.ok) {
-          throw new Error('Network response was not ok');
+          await fetchAndSetBackup();
+        } else {
+          const data = await response.json();
+
+          // Check if data.images.length is 0 or if data.description is empty or doesn't exist
+          if (data?.images?.length === 0 || !data?.description) {
+            await fetchAndSetBackup();
+          }
+
+          setJsonResponse(data);
         }
-        return response.json();
-      })
-      .then(data => {
-        setJsonResponse(data);
-        // Now you can work with the extracted data here
-      })
-      .catch(error => {
+      } catch (error) {
         console.error('There was a problem with the fetch operation:', error);
-      });
-  }, [setJsonResponse]);
+      }
+    };
+    fetchData();
+
+    const fetchAndSetBackup = async () => {
+      // const backupApiUrl = `https://api.dub.co/metatags?url=${url}`;
+      const backupLinkCollect = `https://dev.linkcollect.io/api/v1/analytics/getMetadata?url=${url}`;
+
+      // If the primary API request fails, fall back to the backup API
+      const backupResponse = await fetch(backupLinkCollect);
+
+      if (!backupResponse.ok) {
+        throw new Error('Both API requests failed');
+      }
+
+      let data = {
+        images: [],
+        description:
+          'This Link has no Description 😔, but hey do you know that with linkcollect you can save all tabs using just a command and share them with your friends like this collection ?',
+      };
+
+      const res = await backupResponse.json();
+
+      console.log(res);
+
+      if (res.data.description) {
+        data.description = res.data.description;
+      }
+      if (res.data.images) {
+        data.images = res.data.images;
+      }
+
+      setJsonResponse(data);
+      console.log('-', data.images[0]);
+    };
+  }, [url, setJsonResponse]);
   const copyRef = useRef();
 
   const bookmarkEditModalHandler = () => {
@@ -193,7 +233,7 @@ const BookmarkItemGrid = ({
               selectedMode === 'light'
                 ? 'border-neutral-200'
                 : 'border-neutral-600'
-            } hover:shadow-md rounded-lg w-full group h-[279px] mb- transition duration-300 ease-in-out cursor-pointer select-none`}
+            } hover:shadow-md transform hover:scale-[1.04] rounded-lg w-full group h-[279px]  transition duration-200 ease-in-out cursor-pointer select-none`}
             onMouseEnter={() => setHovered(true)}
             onMouseLeave={() => setHovered(false)}
           >
@@ -241,7 +281,7 @@ const BookmarkItemGrid = ({
 
               {note && !hovered && windowWidth > 1024 && (
                 <div
-                  className={`flex  items-center justify-center absolute top-6 -translate-y-1/2 right-4 xl:right-4 ${
+                  className={`flex  items-center  justify-center absolute top-6 -translate-y-1/2 right-4 xl:right-4 ${
                     windowWidth < 1150 && ''
                   } transition-all duration-300 z-[1] xl:p-0.9 rounded-md border border-primary-500 p-1 text-xs xl:text-sm font-normal  ${
                     selectedMode === 'light'
@@ -291,7 +331,13 @@ const BookmarkItemGrid = ({
                 )}
               </div>
             </a>
-            <div className="px-4 py-2">
+            <div
+              className={`px-4 py-2 ${
+                selectedMode === 'light'
+                  ? ' hover:bg-neutral-100'
+                  : ' hover:bg-neutral-800'
+              }  transition-all duration-75`}
+            >
               <a
                 // className=""
                 href={url}
@@ -299,9 +345,9 @@ const BookmarkItemGrid = ({
                 target="_blank"
               >
                 <p
-                  className={`font-normal  ${
+                  className={`font-medium  ${
                     selectedMode === 'light'
-                      ? 'text-neutral-800'
+                      ? 'text-neutral-700'
                       : 'text-neutral-300'
                   } text-start  line-clamp-2 min-h-[48px]`}
                 >
@@ -312,7 +358,7 @@ const BookmarkItemGrid = ({
                   <p
                     className={`mt-3 text-sm   ${
                       selectedMode === 'light'
-                        ? 'text-neutral-600'
+                        ? 'text-neutral-500'
                         : 'text-neutral-400'
                     } font-light text-start line-clamp-3 min-h-[62px]`}
                   >
@@ -322,7 +368,7 @@ const BookmarkItemGrid = ({
                   <p
                     className={`mt-3 text-sm  ${
                       selectedMode === 'light'
-                        ? 'text-neutral-600'
+                        ? 'text-neutral-500'
                         : 'text-neutral-400'
                     } font-light text-start line-clamp-3 min-h-[62px]`}
                   >
@@ -332,11 +378,12 @@ const BookmarkItemGrid = ({
               </a>
               <hr className="my-2 border-[#7575756B]" />
 
-              <div className="flex justify-between">
+              <div className="flex justify-between items-center">
                 <div className="flex items-center gap-[4rem] mr-2">
                   {/* Timestamp */}
+                  <img src={favicon} alt="" className="h-4" />
                   <p
-                    className={`hidden sm:block text-xs font-medium whitespace-nowrap  ${
+                    className={` text-xs font-medium whitespace-nowrap  ${
                       selectedMode === 'light'
                         ? 'text-neutral-500'
                         : 'text-dark-placeholder'
@@ -346,7 +393,7 @@ const BookmarkItemGrid = ({
                   </p>
                 </div>
                 {!isStillOneBookmarkSelected && (
-                  <div className="flex justify-end gap-4 pr-4">
+                  <div className="flex justify-end gap-3 pr-2">
                     <IconButton
                       onClick={onCopy}
                       className="flex items-center justify-center "
