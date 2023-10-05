@@ -82,6 +82,7 @@ const BookmarkItemGrid = ({
           // Check if data.images.length is 0 or if data.description is empty or doesn't exist
           if (data?.images?.length === 0 || !data?.description) {
             await fetchAndSetBackup();
+            return;
           }
 
           setJsonResponse(data);
