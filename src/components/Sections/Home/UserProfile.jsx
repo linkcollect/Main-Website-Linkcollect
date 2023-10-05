@@ -53,6 +53,7 @@ const UserProfile = ({ username, windowWidth }) => {
           socials: data.socials ? data.socials : [],
           totalViews: countTotalProfileViews(data.collections),
           totalCollections: data.collections.length,
+          bio: data.bio ? data.bio : '',
         };
         setUser(user);
         dispatch(collectionFetchingSuccess({ data: data }));
@@ -97,6 +98,7 @@ const UserProfile = ({ username, windowWidth }) => {
             socials={user.socials}
             totalViews={user.totalViews}
             totalCollections={user.totalCollections}
+            bio={user.bio}
           />
           <div className="w-full ">
             {collection.collections.length > 0 ? (

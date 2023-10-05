@@ -21,6 +21,7 @@ const ProfileHeader = ({
   totalViews,
   totalCollections,
   username,
+  bio,
 }) => {
   const auth = useSelector(state => state.auth);
   const navigate = useNavigate();
@@ -135,7 +136,7 @@ const ProfileHeader = ({
                       : 'text-neutral-100'
                   } `}
                 >
-                  Collecting the coolest links on linkcollect.io{' '}
+                  {bio}{' '}
                 </p>
               </div>
 

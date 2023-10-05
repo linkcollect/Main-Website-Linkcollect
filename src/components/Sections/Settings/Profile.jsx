@@ -41,7 +41,6 @@ const Profile = () => {
     } else {
     }
   }
-  console.log(auth);
   // selected mode state
   const { selectedMode, setSelectedMode } = useContext(switchMode);
 
@@ -163,7 +162,7 @@ const Profile = () => {
       return;
     }
     try {
-      const { username, fullName, isPublic } = userProfileData;
+      const { username, fullName, isPublic, bio } = userProfileData;
       const { twitterUrl, websiteUrl } = userSocialLinks;
       const userFormData = new FormData();
       userFormData.append('username', username);
@@ -171,6 +170,9 @@ const Profile = () => {
       userFormData.append('isPublic', isPublic);
       uploadedFile !== null && userFormData.append('profilePic', uploadedFile);
       userFormData.append('socials', JSON.stringify([twitterUrl, websiteUrl]));
+      userFormData.append('bio', bio);
+
+      console.log('Correct data', bio);
 
       console.log('Not correct data', isValidFileSize);
 
@@ -353,7 +355,7 @@ const Profile = () => {
             {/* Bio */}
             <div className="flex flex-col items-start justify-center w-full">
               <label
-                htmlFor="Full_Name"
+                htmlFor="Bio"
                 className={`flex items-start justify-start text-base font-normal ${
                   selectedMode === 'dark'
                     ? 'text-neutral-50'
@@ -365,8 +367,8 @@ const Profile = () => {
               <input
                 type="text"
                 onChange={onChangeUserData}
-                id="Full_Name"
-                name="fullName"
+                id="Bio"
+                name="bio"
                 className={`w-full px-2 py-3 text-base font-normal border-2 rounded-lg focus:border-primary-300 ${
                   selectedMode === 'dark'
                     ? 'border-dark-secondary text-neutral-50 bg-dark-border '
