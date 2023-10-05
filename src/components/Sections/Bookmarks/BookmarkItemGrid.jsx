@@ -230,7 +230,7 @@ const BookmarkItemGrid = ({
             subheading={`Delete ${name} from ${collectionName}`}
           />
           <div
-            className={`relative bg-bgPrimary border ${
+            className={`relative z-[100] bg-bgPrimary border ${
               selectedMode === 'light'
                 ? 'border-neutral-200'
                 : 'border-neutral-600'
@@ -379,7 +379,7 @@ const BookmarkItemGrid = ({
               </a>
               <hr className="my-2 border-[#7575756B]" />
 
-              <div className="flex justify-between items-center">
+              <div className="flex items-center justify-between">
                 <div className="flex items-center gap-[4rem] mr-2">
                   {/* Timestamp */}
                   <img src={favicon} alt="" className="h-4" />
