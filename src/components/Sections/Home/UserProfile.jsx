@@ -45,6 +45,7 @@ const UserProfile = ({ username, windowWidth }) => {
       try {
         const res = await getByUsername(username);
         const data = res.data.data;
+        console.log(res);
         const user = {
           name: data.name,
           username: data.username,
