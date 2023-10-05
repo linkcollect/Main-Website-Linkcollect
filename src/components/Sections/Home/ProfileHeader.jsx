@@ -1,6 +1,8 @@
 import React, { useContext, useRef } from 'react';
 import Twitter from '../../../assets/twitterBlue.svg';
 import Website from '../../../assets/websiteIcon.svg';
+import DarkModeWebsite from '../../../assets/darkMode/websiteIcon.svg';
+import DarkModeTwitter from '../../../assets/darkMode/twitterWhite.svg';
 import Copy from '../../../assets/copyIcon.svg';
 import CopyWhiteIcon from '../../../assets/darkMode/whiteCopyIcon.svg';
 import profile from '../../../assets/defaultProfile.svg';
@@ -172,9 +174,17 @@ const ProfileHeader = ({
                     href={socials[0]}
                     target="_blank"
                     rel="noreferrer"
-                    className="flex items-center gap-1 p-1.5 w-8 rounded justify-center bg-neutral-200 border h-8 border-primary-200"
+                    className={`flex items-center gap-1 p-1.5 w-8 rounded justify-center ${
+                      selectedMode === 'light'
+                        ? 'bg-neutral-200 border-primary-200'
+                        : 'bg-dark-primary border-dark-border '
+                    } border h-8 `}
                   >
-                    <img src={Twitter} alt="" className="w-5 h-5 " />
+                    {selectedMode === 'light' ? (
+                      <img src={Twitter} alt="" className="w-5 h-5 " />
+                    ) : (
+                      <img src={DarkModeTwitter} alt="" className="w-5 h-5 " />
+                    )}
                   </a>
                 )}
                 {socials[1].length > 5 && (
@@ -182,9 +192,17 @@ const ProfileHeader = ({
                     href={socials[1]}
                     target="_blank"
                     rel="noreferrer"
-                    className="flex items-center gap-1 p-1.5 w-8 rounded justify-center bg-neutral-200 border h-8 border-primary-200"
+                    className={` flex items-center gap-1 p-1.5 w-8 rounded justify-center ${
+                      selectedMode === 'light'
+                        ? 'bg-neutral-200 border-primary-200'
+                        : 'bg-dark-primary border-dark-border '
+                    } border h-8  `}
                   >
-                    <img src={Website} alt="" className="w-5 h-5 " />
+                    {selectedMode === 'light' ? (
+                      <img src={Website} alt="" className="w-5 h-5 " />
+                    ) : (
+                      <img src={DarkModeWebsite} alt="" className="w-5 h-5 " />
+                    )}
                   </a>
                 )}
               </>
@@ -196,7 +214,11 @@ const ProfileHeader = ({
                 selectedMode === 'light' ? `secondaryOutline` : 'darkOutlined'
               }
               onClick={copyLinkHandler}
-              className="p-1.5 rounded hidden sm:flex align-top w-8 justify-center border border-primary-200 bg-neutral-200 h-8"
+              className={`p-1.5 rounded hidden sm:flex align-top w-8 justify-center border ${
+                selectedMode === 'light'
+                  ? 'bg-neutral-200 border-primary-200'
+                  : 'bg-dark-primary border-dark-border '
+              } h-8 `}
             >
               {selectedMode === 'light' ? (
                 <img ref={copyRef} src={Copy} alt="" className="w-5 h-5" />
