@@ -82,6 +82,7 @@ const BookmarkItemGrid = ({
           // Check if data.images.length is 0 or if data.description is empty or doesn't exist
           if (data?.images?.length === 0 || !data?.description) {
             await fetchAndSetBackup();
+            return;
           }
 
           setJsonResponse(data);
@@ -229,7 +230,7 @@ const BookmarkItemGrid = ({
             subheading={`Delete ${name} from ${collectionName}`}
           />
           <div
-            className={`relative bg-bgPrimary border ${
+            className={`relative z-[100] bg-bgPrimary border ${
               selectedMode === 'light'
                 ? 'border-neutral-200'
                 : 'border-neutral-600'

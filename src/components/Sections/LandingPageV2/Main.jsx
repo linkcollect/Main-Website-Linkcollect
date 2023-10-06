@@ -88,7 +88,7 @@ const Main = ({ analytics, exploreData = undefined, windowWidth }) => {
             {windowWidth > 768 ? (
               <button
                 onClick={() => {
-                  analytics('Install Extension');
+                  analytics('Landing page', 'Install Extension', 'click');
                   window.open(links.extensionUrl, '_blank');
                 }}
                 className="mt-[2.5rem] py-[0.75rem] px-[1rem] w-[175px] h-min leading-[1.25rem] bg-primary-400 rounded-[5px] text-white hover:scale-[1.05] hover:shadow-md transition"
