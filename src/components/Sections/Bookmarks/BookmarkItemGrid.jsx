@@ -380,7 +380,6 @@ const BookmarkItemGrid = ({
               <hr className="my-2 border-[#7575756B]" />
 
               <div className="flex items-center justify-between">
-
                 <div className="flex items-center gap-2 ">
                   {/* Timestamp */}
                   <img src={favicon} alt="faviconIcon" className="w-4 h-4" />
