@@ -228,8 +228,9 @@ const BookmarkItemGrid = ({
             heading="Delete Bookmark"
             subheading={`Delete ${name} from ${collectionName}`}
           />
+          {/* adding z index 100 below solves notes problem, but creates problem in sorting */}
           <div
-            className={`relative z-[100] bg-bgPrimary border ${
+            className={`relative bg-bgPrimary border ${
               selectedMode === 'light'
                 ? 'border-neutral-200'
                 : 'border-neutral-600'
