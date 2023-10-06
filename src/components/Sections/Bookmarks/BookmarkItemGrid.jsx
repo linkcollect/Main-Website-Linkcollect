@@ -82,6 +82,7 @@ const BookmarkItemGrid = ({
           // Check if data.images.length is 0 or if data.description is empty or doesn't exist
           if (data?.images?.length === 0 || !data?.description) {
             await fetchAndSetBackup();
+            return;
           }
 
           setJsonResponse(data);
@@ -230,8 +231,8 @@ const BookmarkItemGrid = ({
           />
           <div
             className={`relative bg-bgPrimary border ${selectedMode === 'light'
-              ? 'border-neutral-200'
-              : 'border-neutral-600'
+                ? 'border-neutral-200'
+                : 'border-neutral-600'
               } hover:shadow-md transform hover:scale-[1.04] rounded-lg w-full group h-[279px]  transition duration-200 ease-in-out cursor-pointer select-none`}
             onMouseEnter={() => setHovered(true)}
             onMouseLeave={() => setHovered(false)}
@@ -371,7 +372,7 @@ const BookmarkItemGrid = ({
               <hr className="my-2 border-[#7575756B]" />
 
               <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2 ">
+                <div className="flex items-center gap-[4rem] mr-2">
                   {/* Timestamp */}
                   <img src={favicon} alt="faviconIcon" className="w-4 h-4" />
                   <p

@@ -41,7 +41,6 @@ const Profile = () => {
     } else {
     }
   }
-
   // selected mode state
   const { selectedMode, setSelectedMode } = useContext(switchMode);
 
@@ -60,6 +59,7 @@ const Profile = () => {
     username: auth.username,
     isPublic: isPublic,
     email: auth.userData.email,
+    bio: auth.userData.bio ? auth.userData.email : '',
   });
   // user social links
   const [userSocialLinks, setUserSocialLinks] = useState({
@@ -162,7 +162,7 @@ const Profile = () => {
       return;
     }
     try {
-      const { username, fullName, isPublic } = userProfileData;
+      const { username, fullName, isPublic, bio } = userProfileData;
       const { twitterUrl, websiteUrl } = userSocialLinks;
       const userFormData = new FormData();
       userFormData.append('username', username);
@@ -170,6 +170,9 @@ const Profile = () => {
       userFormData.append('isPublic', isPublic);
       uploadedFile !== null && userFormData.append('profilePic', uploadedFile);
       userFormData.append('socials', JSON.stringify([twitterUrl, websiteUrl]));
+      userFormData.append('bio', bio);
+
+      console.log('Correct data', bio);
 
       console.log('Not correct data', isValidFileSize);
 
@@ -305,7 +308,7 @@ const Profile = () => {
                   className={`w-full px-2 py-3 text-base font-normal border-2 rounded-lg focus:border-primary-300 ${
                     selectedMode === 'dark'
                       ? 'border-dark-secondary text-neutral-50 bg-dark-border '
-                      : 'border-neutral-400 text-neutral-900 bg-neutral-50 '
+                      : 'border-primary-100 text-neutral-900 bg-neutral-50 '
                   } focus:outline-none }`}
                   value={userProfileData.fullName}
                 />
@@ -329,7 +332,7 @@ const Profile = () => {
                   className={`w-full px-2 py-3 text-base font-normal border-2 rounded-lg focus:border-primary-300 ${
                     selectedMode === 'dark'
                       ? 'border-dark-secondary text-neutral-50 bg-dark-border '
-                      : 'border-neutral-400 text-neutral-900 bg-neutral-50 '
+                      : 'border-primary-100 text-neutral-900 bg-neutral-50 '
                   } focus:outline-none }`}
                   value={userProfileData.username}
                 />
@@ -349,6 +352,32 @@ const Profile = () => {
               </div>
             </div>
 
+            {/* Bio */}
+            <div className="flex flex-col items-start justify-center w-full">
+              <label
+                htmlFor="Bio"
+                className={`flex items-start justify-start text-base font-normal ${
+                  selectedMode === 'dark'
+                    ? 'text-neutral-50'
+                    : 'text-neutral-700'
+                }`}
+              >
+                Bio
+              </label>
+              <input
+                type="text"
+                onChange={onChangeUserData}
+                id="Bio"
+                name="bio"
+                className={`w-full px-2 py-3 text-base font-normal border-2 rounded-lg focus:border-primary-300 ${
+                  selectedMode === 'dark'
+                    ? 'border-dark-secondary text-neutral-50 bg-dark-border '
+                    : 'border-primary-100 text-neutral-900 bg-neutral-50 '
+                } focus:outline-none }`}
+                value={userProfileData.bio}
+              />
+            </div>
+
             {/* Email  */}
             <div className="flex flex-col items-start justify-start w-full md:w-[48%]">
               <label
@@ -365,10 +394,10 @@ const Profile = () => {
                 readOnly
                 type="email"
                 id="Full_Name"
-                className={`w-full px-2 py-3 text-base font-normal border-2 rounded-lg focus:border-neutral-400 focus:outline-none focus:ring-neutral-400 text-neutral-500 ${
+                className={`w-full px-2 py-3 text-base font-normal border-2 rounded-lg focus:border-primary-100 focus:outline-none focus:ring-neutral-400 text-neutral-500 ${
                   selectedMode === 'dark'
                     ? 'border-dark-secondary bg-dark-secondary text-dark-fade'
-                    : 'border-neutral-400 bg-neutral-200 text-neutral-900'
+                    : 'border-primary-100 bg-neutral-200 text-neutral-900'
                 } `}
                 value={auth.userData.email}
               />
@@ -400,7 +429,7 @@ const Profile = () => {
               className={`flex relative items-start justify-center gap-1.5 p-1 w-40 sm:w-40 border-2 ${
                 selectedMode === 'dark'
                   ? 'border-dark-secondary'
-                  : 'border-neutral-400'
+                  : 'border-borderPrimary'
               } h-9 ${
                 selectedMode === 'dark'
                   ? 'bg-dark-background'
@@ -495,7 +524,7 @@ const Profile = () => {
               className={`w-full px-3 py-2 text-base font-normal border-2 rounded-lg focus:border-primary-300 ${
                 selectedMode === 'dark'
                   ? 'border-dark-secondary'
-                  : 'border-neutral-400'
+                  : 'border-primary-100'
               } focus:outline-none ${
                 selectedMode === 'dark' ? 'bg-dark-border' : 'bg-neutral-50'
               } ${
@@ -528,7 +557,7 @@ const Profile = () => {
               className={`w-full px-3 py-2 text-base font-normal border-2 rounded-lg focus:border-primary-300 ${
                 selectedMode === 'dark'
                   ? 'border-dark-secondary'
-                  : 'border-neutral-400'
+                  : 'border-primary-100'
               } focus:outline-none ${
                 selectedMode === 'dark' ? 'bg-dark-border' : 'bg-neutral-50'
               } ${
@@ -607,7 +636,7 @@ const Profile = () => {
           className={` relative flex items-start justify-center gap-2 p-1 w-40 h-9  ${
             selectedMode === 'dark'
               ? 'border-dark-secondary'
-              : 'border-neutral-400'
+              : 'border-borderPrimary'
           } h-9 ${
             selectedMode === 'dark' ? 'bg-dark-background' : 'bg-neutral-300'
           } border-2 rounded-lg`}
