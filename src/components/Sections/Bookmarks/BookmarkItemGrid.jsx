@@ -229,10 +229,11 @@ const BookmarkItemGrid = ({
             subheading={`Delete ${name} from ${collectionName}`}
           />
           <div
-            className={`relative bg-bgPrimary border ${selectedMode === 'light'
-              ? 'border-neutral-200'
-              : 'border-neutral-600'
-              } hover:shadow-md transform hover:scale-[1.04] rounded-lg w-full group h-[279px]  transition duration-200 ease-in-out cursor-pointer select-none`}
+            className={`relative bg-bgPrimary border ${
+              selectedMode === 'light'
+                ? 'border-neutral-200'
+                : 'border-neutral-600'
+            } hover:shadow-md transform hover:scale-[1.04] rounded-lg w-full group h-[279px]  transition duration-200 ease-in-out cursor-pointer select-none`}
             onMouseEnter={() => setHovered(true)}
             onMouseLeave={() => setHovered(false)}
           >
@@ -251,10 +252,11 @@ const BookmarkItemGrid = ({
             >
               {isPinned && (
                 <div
-                  className={`w-[20px] h-[20px] absolute z-[1] top-2 left-2 cursor-pointer border  ${selectedMode === 'light'
-                    ? 'border-neutral-300 bg-black/[0.20]'
-                    : 'bg-dark-primary border-dark-secondary'
-                    }  rounded-md`}
+                  className={`w-[20px] h-[20px] absolute z-[1] top-2 left-2 cursor-pointer border  ${
+                    selectedMode === 'light'
+                      ? 'border-neutral-300 bg-black/[0.20]'
+                      : 'bg-dark-primary border-dark-secondary'
+                  }  rounded-md`}
                 >
                   {selectedMode === 'light' ? (
                     <img
@@ -279,11 +281,13 @@ const BookmarkItemGrid = ({
 
               {note && !hovered && windowWidth > 1024 && (
                 <div
-                  className={`flex  items-center  justify-center absolute top-6 -translate-y-1/2 right-4 xl:right-4 ${windowWidth < 1150 && ''
-                    } transition-all duration-300 z-[1] xl:p-0.9 rounded-md border border-primary-500 p-1 text-xs xl:text-sm font-normal  ${selectedMode === 'light'
+                  className={`flex  items-center  justify-center absolute top-6 -translate-y-1/2 right-4 xl:right-4 ${
+                    windowWidth < 1150 && ''
+                  } transition-all duration-300 z-[1] xl:p-0.9 rounded-md border border-primary-500 p-1 text-xs xl:text-sm font-normal  ${
+                    selectedMode === 'light'
                       ? 'text-white bg-black bg-opacity-70'
                       : 'bg-dark-primary text-neutral-50'
-                    } `}
+                  } `}
                 >
                   {windowWidth > 1280 ? (
                     ' Note Attached'
@@ -328,10 +332,11 @@ const BookmarkItemGrid = ({
               </div>
             </a>
             <div
-              className={`px-4 py-2 ${selectedMode === 'light'
-                ? ' hover:bg-neutral-100'
-                : ' hover:bg-neutral-800'
-                }  transition-all duration-75`}
+              className={`px-4 py-2 ${
+                selectedMode === 'light'
+                  ? ' hover:bg-neutral-100'
+                  : ' hover:bg-neutral-800'
+              }  transition-all duration-75`}
             >
               <a
                 // className=""
@@ -340,29 +345,32 @@ const BookmarkItemGrid = ({
                 target="_blank"
               >
                 <p
-                  className={`font-medium  ${selectedMode === 'light'
-                    ? 'text-neutral-700'
-                    : 'text-neutral-300'
-                    } text-start  line-clamp-2 min-h-[48px]`}
+                  className={`font-medium  ${
+                    selectedMode === 'light'
+                      ? 'text-neutral-700'
+                      : 'text-neutral-300'
+                  } text-start  line-clamp-2 min-h-[48px]`}
                 >
                   {name}
                 </p>
                 {/* description */}
                 {jsonResponse?.description ? (
                   <p
-                    className={`mt-3 text-sm   ${selectedMode === 'light'
-                      ? 'text-neutral-500'
-                      : 'text-neutral-400'
-                      } font-light text-start line-clamp-3 min-h-[62px]`}
+                    className={`mt-3 text-sm   ${
+                      selectedMode === 'light'
+                        ? 'text-neutral-500'
+                        : 'text-neutral-400'
+                    } font-light text-start line-clamp-3 min-h-[62px]`}
                   >
                     {jsonResponse.description}
                   </p>
                 ) : (
                   <p
-                    className={`mt-3 text-sm  ${selectedMode === 'light'
-                      ? 'text-neutral-500'
-                      : 'text-neutral-400'
-                      } font-light text-start line-clamp-3 min-h-[62px]`}
+                    className={`mt-3 text-sm  ${
+                      selectedMode === 'light'
+                        ? 'text-neutral-500'
+                        : 'text-neutral-400'
+                    } font-light text-start line-clamp-3 min-h-[62px]`}
                   >
                     {name}
                   </p>
@@ -375,10 +383,11 @@ const BookmarkItemGrid = ({
                   {/* Timestamp */}
                   <img src={favicon} alt="faviconIcon" className="w-4 h-4" />
                   <p
-                    className={` text-xs font-medium whitespace-nowrap  ${selectedMode === 'light'
-                      ? 'text-neutral-500'
-                      : 'text-dark-placeholder'
-                      } `}
+                    className={` text-xs font-medium whitespace-nowrap  ${
+                      selectedMode === 'light'
+                        ? 'text-neutral-500'
+                        : 'text-dark-placeholder'
+                    } `}
                   >
                     Added {fromNow(updatedAt)}
                   </p>
@@ -454,10 +463,11 @@ const BookmarkItemGrid = ({
                             animate={{ opacity: 1, y: 0 }}
                             exit={{ opacity: 0, y: 10 }}
                             transition={{ duration: 0.2 }}
-                            className={`w-[135px] rounded border absolute z-[9990] top-[28px] p-2 right-0 ${selectedMode === 'light'
-                              ? 'border-neutral-300 bg-neutral-100'
-                              : 'border-dark-border bg-dark-primary'
-                              } `}
+                            className={`w-[135px] rounded border absolute z-[9990] top-[28px] p-2 right-0 ${
+                              selectedMode === 'light'
+                                ? 'border-neutral-300 bg-neutral-100'
+                                : 'border-dark-border bg-dark-primary'
+                            } `}
                           >
                             {popupActionMenu.map((menuItem, index) => (
                               <>
@@ -469,10 +479,11 @@ const BookmarkItemGrid = ({
                                 />
                                 {index !== popupActionMenu.length - 1 && (
                                   <div
-                                    className={`w-full h-[1px] ${selectedMode === 'light'
-                                      ? 'bg-neutral-300'
-                                      : 'bg-dark-border'
-                                      } mt-1 mb-1`}
+                                    className={`w-full h-[1px] ${
+                                      selectedMode === 'light'
+                                        ? 'bg-neutral-300'
+                                        : 'bg-dark-border'
+                                    } mt-1 mb-1`}
                                   />
                                 )}
                               </>

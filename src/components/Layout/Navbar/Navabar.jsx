@@ -34,26 +34,29 @@ const Navabar = () => {
   const state = useLocation();
   const auth = useSelector(state => state.auth);
   const [isHovered, setIsHovered] = useState(false);
-  const [theme, setTheme] = useState(null)
+  const [theme, setTheme] = useState(null);
   useEffect(() => {
-    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-      setTheme('light')
+    if (
+      window.matchMedia &&
+      window.matchMedia('(prefers-color-scheme: dark)').matches
+    ) {
+      setTheme('light');
     } else {
-      setTheme('light')
+      setTheme('light');
     }
-    const localTheme = window.localStorage.getItem('theme')
-    localTheme && setTheme(localTheme)
-  }, [])
+    const localTheme = window.localStorage.getItem('theme');
+    localTheme && setTheme(localTheme);
+  }, []);
   useEffect(() => {
     if (theme === 'light') {
-      document.documentElement.classList.remove('dark')
-      document.documentElement.classList.add('light')
+      document.documentElement.classList.remove('dark');
+      document.documentElement.classList.add('light');
     }
     if (theme === 'dark') {
-      document.documentElement.classList.remove('light')
-      document.documentElement.classList.add('dark')
+      document.documentElement.classList.remove('light');
+      document.documentElement.classList.add('dark');
     }
-  }, [theme])
+  }, [theme]);
   const navabrItem = [
     {
       name: 'Contact us',
@@ -100,13 +103,13 @@ const Navabar = () => {
   // handling theme switch
   const handleSwitchMode = value => {
     if (theme === 'light') {
-      setTheme('dark')
-      window.localStorage.setItem('theme', 'dark')
+      setTheme('dark');
+      window.localStorage.setItem('theme', 'dark');
     } else {
-      setTheme('light')
-      window.localStorage.setItem('theme', 'light')
+      setTheme('light');
+      window.localStorage.setItem('theme', 'light');
     }
-    console.log(value)
+    console.log(value);
     setSelectedMode(value);
   };
 
@@ -125,10 +128,11 @@ const Navabar = () => {
 
   return (
     <div
-      className={`flex mb-[0.5rem] md:mb-[1rem] py-[0.5rem] px-[1rem] sm:px-8 3xl:px-[2rem] relative justify-between items-center w-full border-b  ${selectedMode === 'dark'
-        ? 'bg-dark-primary border-dark-secondary'
-        : 'border-neutral-200 bg-neutral-50'
-        }`}
+      className={`flex mb-[0.5rem] md:mb-[1rem] py-[0.5rem] px-[1rem] sm:px-8 3xl:px-[2rem] relative justify-between items-center w-full border-b  ${
+        selectedMode === 'dark'
+          ? 'bg-dark-primary border-dark-secondary'
+          : 'border-neutral-200 bg-neutral-50'
+      }`}
     >
       <div className="flex items-center justify-start my-auto mr-[1rem] align-center w-32 h-10">
         {(windowWidth < 768 || !auth.isLoggedIn) && (
@@ -169,11 +173,13 @@ const Navabar = () => {
           </button>
         )}
         <div
-          className={`sidebar absolute top-[calc(100%+2px)] right-0 ${selectedMode === 'dark'
-            ? 'bg-dark-primary border-r border-dark-secondary'
-            : 'bg-neutral-50 border-r border-neutral-200'
-            } w-screen z-[100] border-b-2 px-[2rem] py-[3rem] transition ${sideMenuOpen ? 'translate-x-0' : 'translate-x-[100%]'
-            }`}
+          className={`sidebar absolute top-[calc(100%+2px)] right-0 ${
+            selectedMode === 'dark'
+              ? 'bg-dark-primary border-r border-dark-secondary'
+              : 'bg-neutral-50 border-r border-neutral-200'
+          } w-screen z-[100] border-b-2 px-[2rem] py-[3rem] transition ${
+            sideMenuOpen ? 'translate-x-0' : 'translate-x-[100%]'
+          }`}
         >
           <div className="flex flex-col items-start justify-start gap-4">
             {menuItem.map(({ name, link, icon, activeIcon }) => (
@@ -213,10 +219,11 @@ const Navabar = () => {
           {isLoggedIn && (
             <Button
               onClick={logoutHandler}
-              className={`px-[9.6px] py-[1rem] mt-[2rem] rounded-[4.8px] text-[0.75rem] h-6 w-full flex  ${selectedMode === 'light'
-                ? 'text-neutral-600'
-                : 'text-borderPrimary'
-                } transition-all duration-200 rounded-md hover:scale-110 border border-error-500 bg-white-10`}
+              className={`px-[9.6px] py-[1rem] mt-[2rem] rounded-[4.8px] text-[0.75rem] h-6 w-full flex  ${
+                selectedMode === 'light'
+                  ? 'text-neutral-600'
+                  : 'text-borderPrimary'
+              } transition-all duration-200 rounded-md hover:scale-110 border border-error-500 bg-white-10`}
             >
               Logout
             </Button>
@@ -232,10 +239,11 @@ const Navabar = () => {
               rel="noreferrer"
             >
               <span
-                className={`text-base font-normal text-center ${selectedMode === 'light'
-                  ? 'text-neutral-600'
-                  : 'text-borderPrimary'
-                  } `}
+                className={`text-base font-normal text-center ${
+                  selectedMode === 'light'
+                    ? 'text-neutral-600'
+                    : 'text-borderPrimary'
+                } `}
               >
                 {name}
               </span>
@@ -244,10 +252,11 @@ const Navabar = () => {
           {isLoggedIn && (
             <Button
               onClick={logoutHandler}
-              className={`py-[1rem] rounded-[4.8px] text-[0.75rem] h-6 w-max flex  ${selectedMode === 'light'
-                ? 'text-neutral-600'
-                : 'text-borderPrimary'
-                } transition-all duration-200 rounded-md hover:scale-110 border border-error-500 bg-white-10`}
+              className={`py-[1rem] rounded-[4.8px] text-[0.75rem] h-6 w-max flex  ${
+                selectedMode === 'light'
+                  ? 'text-neutral-600'
+                  : 'text-borderPrimary'
+              } transition-all duration-200 rounded-md hover:scale-110 border border-error-500 bg-white-10`}
             >
               Logout
             </Button>
