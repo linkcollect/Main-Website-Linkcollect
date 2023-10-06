@@ -15,6 +15,7 @@
     "clsx": "^2.0.0",
     "framer-motion": "^10.12.16",
     "jsonwebtoken": "^9.0.0",
+    "multiselect-react-dropdown": "^2.0.25",
     "query-string": "^8.1.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -43,7 +44,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npm test", 
+      "pre-commit": "npm test",
       "pre-push": "npm run lint"
     }
   },
