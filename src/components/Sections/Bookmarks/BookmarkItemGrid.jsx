@@ -229,7 +229,7 @@ const BookmarkItemGrid = ({
             subheading={`Delete ${name} from ${collectionName}`}
           />
           <div
-            className={`relative bg-bgPrimary border ${
+            className={`relative z-[100] bg-bgPrimary border ${
               selectedMode === 'light'
                 ? 'border-neutral-200'
                 : 'border-neutral-600'
