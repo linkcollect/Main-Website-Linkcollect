@@ -28,11 +28,11 @@ import { HelmetProvider } from 'react-helmet-async';
 import ReactGA from 'react-ga4';
 const trackingId = 'G-6NHCQSCVJP';
 
-ReactGA.initialize([
-  {
-    trackingId: trackingId,
-  },
-]);
+// ReactGA.initialize([
+//   {
+//     trackingId: trackingId,
+//   },
+// ]);
 
 function App() {
   const auth = useSelector(state => state.auth);
