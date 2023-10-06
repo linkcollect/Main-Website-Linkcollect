@@ -380,21 +380,21 @@ const BookmarkItemGrid = ({
               <hr className="my-2 border-[#7575756B]" />
 
               <div className="flex items-center justify-between">
-                <div className="flex items-center gap-[4rem] mr-2">
+                <div className="flex items-center gap-2 ">
                   {/* Timestamp */}
-                  <img src={favicon} alt="" className="h-4" />
+                  <img src={favicon} alt="faviconIcon" className="w-4 h-4" />
                   <p
                     className={` text-xs font-medium whitespace-nowrap  ${
                       selectedMode === 'light'
                         ? 'text-neutral-500'
                         : 'text-dark-placeholder'
-                    } mr-5`}
+                    } `}
                   >
                     Added {fromNow(updatedAt)}
                   </p>
                 </div>
                 {!isStillOneBookmarkSelected && (
-                  <div className="flex justify-end gap-3 pr-2">
+                  <div className="flex justify-end gap-3 ">
                     <IconButton
                       onClick={onCopy}
                       className="flex items-center justify-center "
