@@ -1,6 +1,8 @@
 import React, { useContext, useRef } from 'react';
 import Twitter from '../../../assets/twitterBlue.svg';
 import Website from '../../../assets/websiteIcon.svg';
+import DarkModeWebsite from '../../../assets/darkMode/websiteIcon.svg';
+import DarkModeTwitter from '../../../assets/darkMode/twitterWhite.svg';
 import Copy from '../../../assets/copyIcon.svg';
 import CopyWhiteIcon from '../../../assets/darkMode/whiteCopyIcon.svg';
 import profile from '../../../assets/defaultProfile.svg';
@@ -19,6 +21,7 @@ const ProfileHeader = ({
   totalViews,
   totalCollections,
   username,
+  bio,
 }) => {
   const auth = useSelector(state => state.auth);
   const navigate = useNavigate();
@@ -58,7 +61,7 @@ const ProfileHeader = ({
     if (!auth.isLoggedIn) {
       navigate('/login');
     } else {
-      navigate(`/${auth.username}`);
+      navigate(`/explore`);
     }
   };
 
@@ -96,7 +99,8 @@ const ProfileHeader = ({
               {/* Name */}
               <div className="flex flex-row gap-2">
                 <p
-                  className={`text-sm font-medium ${
+                  className={`text-lg font-medium 
+                  ${
                     selectedMode === 'light'
                       ? 'text-neutral-900'
                       : 'text-neutral-50'
@@ -123,38 +127,18 @@ const ProfileHeader = ({
                 )}
               </div>
 
-              {/* Social Links */}
-              {/* Logic Ramining */}
-              {socials?.length > 1 && socials[0] && socials[1] && (
-                <div className="flex flex-row items-center justify-center w-full gap-3 sm:justify-start">
-                  {socials[0].length > 5 && (
-                    <div className="flex items-center gap-1 p-1 rounded-[18px] justify-center bg-neutral-300">
-                      <img src={Twitter} alt="" />
-                      <a
-                        href={socials[0]}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="text-xs font-normal text-neutral-900"
-                      >
-                        twitter
-                      </a>
-                    </div>
-                  )}
-                  {socials[1].length > 5 && (
-                    <div className="flex items-center gap-1 p-1 rounded-[18px] justify-center bg-neutral-300">
-                      <img src={Website} alt="" />
-                      <a
-                        href={socials[1]}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="text-xs font-normal text-neutral-900"
-                      >
-                        Website
-                      </a>
-                    </div>
-                  )}
-                </div>
-              )}
+              {/* Bio */}
+              <div className="flex items-center justify-between w-full gap-3 sm:justify-start">
+                <p
+                  className={`text-sm ${
+                    selectedMode === 'light'
+                      ? 'text-dark-secondary'
+                      : 'text-neutral-100'
+                  } `}
+                >
+                  {bio}{' '}
+                </p>
+              </div>
 
               {/*No. of Views and collections */}
               <div className="flex items-center justify-between w-full gap-3 sm:justify-start">
@@ -168,7 +152,7 @@ const ProfileHeader = ({
                   Total Collections {totalCollections}
                 </span>
                 <span
-                  className={`text-xs font-normal ${
+                  className={`text-xs font-normal  ${
                     selectedMode === 'light'
                       ? 'text-neutral-600'
                       : 'text-borderPrimary'
@@ -180,21 +164,73 @@ const ProfileHeader = ({
             </div>
           </div>
 
-          {/* Profile link copy */}
-          <div className="">
+          {/* socials and profile link */}
+          <div className="flex items-center justify-center gap-1.5">
+            {/* Social Links */}
+            {/* Logic Ramining */}
+            {socials?.length > 1 && socials[0] && socials[1] && (
+              <>
+                {socials[0].length > 5 && (
+                  <a
+                    href={socials[0]}
+                    target="_blank"
+                    rel="noreferrer"
+                    className={`flex items-center gap-1 p-1.5 w-8 rounded justify-center ${
+                      selectedMode === 'light'
+                        ? 'bg-neutral-200 border-primary-200'
+                        : 'bg-dark-primary border-dark-border '
+                    } border h-8 `}
+                  >
+                    {selectedMode === 'light' ? (
+                      <img src={Twitter} alt="" className="w-5 h-5 " />
+                    ) : (
+                      <img src={DarkModeTwitter} alt="" className="w-5 h-5 " />
+                    )}
+                  </a>
+                )}
+                {socials[1].length > 5 && (
+                  <a
+                    href={socials[1]}
+                    target="_blank"
+                    rel="noreferrer"
+                    className={` flex items-center gap-1 p-1.5 w-8 rounded justify-center ${
+                      selectedMode === 'light'
+                        ? 'bg-neutral-200 border-primary-200'
+                        : 'bg-dark-primary border-dark-border '
+                    } border h-8  `}
+                  >
+                    {selectedMode === 'light' ? (
+                      <img src={Website} alt="" className="w-5 h-5 " />
+                    ) : (
+                      <img src={DarkModeWebsite} alt="" className="w-5 h-5 " />
+                    )}
+                  </a>
+                )}
+              </>
+            )}
+
+            {/* Profile link copy */}
             <Button
               variant={
                 selectedMode === 'light' ? `secondaryOutline` : 'darkOutlined'
               }
               onClick={copyLinkHandler}
-              className="w-[172px] h-[44px] hidden sm:flex align-top justify-evenly"
+              className={`p-1.5 rounded hidden sm:flex align-top w-8 justify-center border ${
+                selectedMode === 'light'
+                  ? 'bg-neutral-200 border-primary-200'
+                  : 'bg-dark-primary border-dark-border '
+              } h-8 `}
             >
               {selectedMode === 'light' ? (
-                <img ref={copyRef} src={Copy} alt="" />
+                <img ref={copyRef} src={Copy} alt="" className="w-5 h-5" />
               ) : (
-                <img ref={copyRef} src={CopyWhiteIcon} alt="" />
+                <img
+                  ref={copyRef}
+                  src={CopyWhiteIcon}
+                  alt=""
+                  className="w-5 h-5"
+                />
               )}
-              Profile Link
             </Button>
           </div>
         </div>

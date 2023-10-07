@@ -49,8 +49,10 @@ const Login = ({ windowWidth }) => {
     gaEvents.eventLogin();
 
     setTimeout(() => {
-      if (!auth.isLoggedIn) {
-        console.log('not logged in');
+      console.log('log', auth);
+      const token = localStorage.getItem('token');
+      if (!auth.isLoggedIn && !token) {
+        console.log('not logged in', auth.isLoggedIn);
         // alert('Invalid Credentials');
         toast.error('Invalid Credentials', {
           style: {
