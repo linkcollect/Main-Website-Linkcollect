@@ -8,7 +8,6 @@ import {
 } from 'react-router-dom';
 import { Analytics } from '@vercel/analytics/react';
 
-import Signup from './pages/Signup';
 import Login from './pages/Login';
 import { useEffect, useState } from 'react';
 import Privacy from './components/PrivacyPolicy/Privacy';
@@ -25,6 +24,7 @@ import PageLoader from './components/UI/Loader/PageLoader';
 import { setLoggedInUser } from './store/Slices/user.slice';
 import LandingPageV2 from './pages/LandingPageV2';
 import { HelmetProvider } from 'react-helmet-async';
+import Signup from './pages/Signup';
 import ReactGA from 'react-ga';
 const TRACKING_ID = 'G-6NHCQSCVJP';
 
