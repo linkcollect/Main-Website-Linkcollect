@@ -61,7 +61,7 @@ const ProfileHeader = ({
     if (!auth.isLoggedIn) {
       navigate('/login');
     } else {
-      navigate(`/${auth.username}`);
+      navigate(`/explore`);
     }
   };
 
