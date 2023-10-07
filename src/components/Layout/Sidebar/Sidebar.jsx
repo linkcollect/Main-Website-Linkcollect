@@ -62,7 +62,9 @@ const Sidebar = ({ user, handleSetUser, windowWidth }) => {
         selectedMode === 'dark'
           ? 'bg-dark-primary border-r border-dark-secondary'
           : 'bg-neutral-100 border-r border-neutral-300'
-      }  ${windowWidth < 700 ? 'h-[350px] w-full ' : 'w-[270px]'} `}
+      }  ${
+        windowWidth < 700 ? 'h-[350px] w-full ' : 'w-[270px]'
+      }  overflow-y-scroll scrollbar-hidden no-scrollbar`}
     >
       <div
         className={`flex flex-col top-0 items-center justify-between h-[100vh] w-full  ${

@@ -27,7 +27,7 @@ const BaseLayout = ({ windowWidth, children }) => {
 
   return (
     <div
-      className={`flex ${
+      className={`flex overflow-clip  ${
         selectedMode === 'dark' ? 'bg-dark-primary' : 'bg-neutral-50'
       } ${windowWidth < 700 ? 'flex-col' : ''}`}
     >
