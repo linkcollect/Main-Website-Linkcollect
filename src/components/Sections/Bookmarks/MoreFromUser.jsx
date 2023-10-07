@@ -40,7 +40,7 @@ const MoreFromUser = ({ collectionData, user }) => {
     auth.username !== user &&
     userCollections?.length > 1 && (
       <div
-        className={`w-full min-h-[200px] border-t-2 ${
+        className={`w-full min-h-[200px] border-t-2 mt-10 ${
           selectedMode === 'dark'
             ? 'border-dark-secondary'
             : 'border-neutral-300'

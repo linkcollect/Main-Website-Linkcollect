@@ -34,9 +34,9 @@ const Profile = () => {
     if (fileInput?.files && fileInput.files.length > 0) {
       const file = fileInput.files[0];
       fileLabel.innerText = '';
-      console.log(file);
+      // console.log(file);
       setUploadedFile(file);
-      console.log(uploadedFile);
+      // console.log(uploadedFile);
       setSrc();
     } else {
     }
@@ -76,7 +76,7 @@ const Profile = () => {
   const isValidUsername = async username => {
     if (userProfileData.username !== auth.username) {
       const res = await getCheckUsername(username);
-      console.log(res);
+      // console.log(res);
       if (res.data.data === false) {
         setError(true);
         toast.error('Username Not available 😫', {

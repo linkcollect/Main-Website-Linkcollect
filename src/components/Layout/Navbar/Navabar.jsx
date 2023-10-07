@@ -25,6 +25,7 @@ import ActiveExplore from '../../../assets/blueExplore.svg';
 import ActiveHome from '../../../assets/blueHome.svg';
 import ActiveSaved from '../../../assets/outlinedSaved.svg';
 import NavbarItem from '../Sidebar/NavbarItem';
+import { useEffect } from 'react';
 
 const Navabar = () => {
   const isLoggedIn = useSelector(state => state.auth.isLoggedIn);
@@ -33,6 +34,29 @@ const Navabar = () => {
   const state = useLocation();
   const auth = useSelector(state => state.auth);
   const [isHovered, setIsHovered] = useState(false);
+  const [theme, setTheme] = useState(null);
+  useEffect(() => {
+    if (
+      window.matchMedia &&
+      window.matchMedia('(prefers-color-scheme: dark)').matches
+    ) {
+      setTheme('light');
+    } else {
+      setTheme('light');
+    }
+    const localTheme = window.localStorage.getItem('theme');
+    localTheme && setTheme(localTheme);
+  }, []);
+  useEffect(() => {
+    if (theme === 'light') {
+      document.documentElement.classList.remove('dark');
+      document.documentElement.classList.add('light');
+    }
+    if (theme === 'dark') {
+      document.documentElement.classList.remove('light');
+      document.documentElement.classList.add('dark');
+    }
+  }, [theme]);
   const navabrItem = [
     {
       name: 'Contact us',
@@ -78,6 +102,14 @@ const Navabar = () => {
 
   // handling theme switch
   const handleSwitchMode = value => {
+    if (theme === 'light') {
+      setTheme('dark');
+      window.localStorage.setItem('theme', 'dark');
+    } else {
+      setTheme('light');
+      window.localStorage.setItem('theme', 'light');
+    }
+    console.log(value);
     setSelectedMode(value);
   };
 
