@@ -129,7 +129,7 @@ const Signup = ({ windowWidth }) => {
                           onFocus={() => setIsPasswordfocus(true)}
                           onBlur={() => setIsPasswordfocus(false)}
                         />
-                        {!isValidPassword && !isPasswordfocus && (
+                        {!isValidPassword && isPasswordfocus && (
                           <p className="text-xs text-error-500 mt-2 text-start">
                             Password should be at least 8 of character and
                             consist of 1 Uppercase, 1 lower case, 1 special

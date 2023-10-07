@@ -65,7 +65,7 @@ export const CollectionModal = ({
   const isValidDescription = collectionData.description?.length <= 240;
   const isValidTags = collectionData.tags?.length <= 3;
   // File max size
-  const MAXED_ALLOWED_SIZE = 3 * 1024 * 1024;
+  const MAXED_ALLOWED_SIZE = 1 * 1024 * 1024;
   // if no file is selected that means iamge is null so it will be always true as image is not mandatory data
   const isValidFileSize = !collectionData.image
     ? true
@@ -236,7 +236,7 @@ export const CollectionModal = ({
             />
             {!isValidFileSize && (
               <small className="text-xs text-error-500">
-                image should be at most 3MB
+                image should be at most 1MB
               </small>
             )}
           </div>

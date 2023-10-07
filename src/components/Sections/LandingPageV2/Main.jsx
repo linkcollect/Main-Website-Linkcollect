@@ -25,6 +25,8 @@ const links = {
   x: 'https://x.com/linkcollect_io',
   premium:
     'https://linkcollect.lemonsqueezy.com/checkout/buy/7d135ecc-36de-4977-a2d2-7d56c512706b',
+  premium2:
+    'https://linkcollect.lemonsqueezy.com/checkout/buy/02d91509-7595-4a62-9d69-0192f5670ad0',
 };
 
 const Main = ({ analytics, exploreData = undefined, windowWidth }) => {
@@ -519,10 +521,116 @@ const Main = ({ analytics, exploreData = undefined, windowWidth }) => {
                   }}
                   className="p-[0.75rem] h-min w-full leading-[1.25rem] bg-primary-400 rounded-[5px] text-white font-light flex gap-[0.25rem] hover:scale-[1.02] hover:shadow-md transition"
                 >
-                  <p className="mx-auto ">Get started with pro plan</p>
+                  <p className="mx-auto ">Get started with PRO plan</p>
                 </button>
               </div>
             </div>
+            {windowWidth > 768 && (
+              <div className="pro w-full max-w-[30rem] p-[2rem] bg-gradient-to-b from-[#ffd900b9] border-[1px] border-[#ffdf27e3] rounded-[1rem] flex flex-col gap-[2rem] shadow-[rgba(0,_0,_0,_0.25)_0px_25px_50px_-12px] hover:scale-[1.02] transition">
+                <div className="head min-h-[10.5rem] border-b-[1px] border-b-neutral-300">
+                  <p className="text-neutral-700">Pro Plan</p>
+                  <h3 className="text-[2.75rem] text-neutral-700">
+                    $119 for LifeTime
+                  </h3>
+                  <div className="mx-auto mt-[1rem] py-[0.125rem] px-[0.125rem] rounded-[3.5rem] border-[1px] border-neutral-300 bg-neutral-50 font-light h-max w-max items-center flex">
+                    <div className="rounded-[3.5rem]  py-[0.125rem] px-[0.75rem] text-white bg-neutral-900 flex">
+                      lifetime
+                    </div>
+                    {/* <div className='px-[0.75rem] text-neutral-500'>monthly</div> */}
+                  </div>
+                </div>
+                <div className="list text-neutral-800 ">
+                  <p className="text-left mb-[1rem]">
+                    Includes all features of pro plan and
+                  </p>
+                  <ul className="list-none flex flex-col gap-[0.75rem] text-left">
+                    <li className="flex">
+                      <img
+                        src={Approve}
+                        alt=""
+                        className="w-[1.25rem] h-[1.5rem] mr-[0.75rem]"
+                      />
+                      <p className="">Unlimited collections</p>
+                    </li>
+                    <li className="flex">
+                      <img
+                        src={Approve}
+                        alt=""
+                        className="w-[1.25rem] h-[1.5rem] mr-[0.75rem]"
+                      />
+                      <p className="">Unlimited bookmarks</p>
+                    </li>
+                    <li className="flex">
+                      <img
+                        src={Approve}
+                        alt=""
+                        className="w-[1.25rem] h-[1.5rem] mr-[0.75rem]"
+                      />
+                      <p className="">
+                        Add notes to your bookmarks right when you save
+                      </p>
+                    </li>
+                    <li className="flex">
+                      <img
+                        src={Approve}
+                        alt=""
+                        className="w-[1.25rem] h-[1.5rem] mr-[0.75rem]"
+                      />
+                      <p className="">Join Private Community</p>
+                    </li>
+                    <li className="flex">
+                      <div className="ml-[2rem] rounded-[25px] border-[1px] border-success-300 bg-success-100 leading-0 px-[0.5rem]">
+                        Coming Soon 👇
+                      </div>
+                    </li>
+                    <li className="flex">
+                      <img
+                        src={Approve}
+                        alt=""
+                        className="w-[1.25rem] h-[1.5rem] mr-[0.75rem]"
+                      />
+                      <p className="">
+                        Add Reminders to your bookmarks, so you don't forget to
+                        check it out later
+                      </p>
+                    </li>
+                    <li className="flex">
+                      <img
+                        src={Approve}
+                        alt=""
+                        className="w-[1.25rem] h-[1.5rem] mr-[0.75rem]"
+                      />
+                      <p className="">
+                        Collaborative Curation, create privately shared
+                        collections between your colleagues or friends
+                      </p>
+                    </li>
+                    <li className="flex">
+                      <img
+                        src={Approve}
+                        alt=""
+                        className="w-[1.25rem] h-[1.5rem] mr-[0.75rem]"
+                      />
+                      <p className="">
+                        Export your collection data into a well organised excel
+                        sheet or csv, so you can do research without copy
+                        pasting links and titles 😃{' '}
+                      </p>
+                    </li>
+                  </ul>
+                </div>
+                <div className="cta mt-auto">
+                  <button
+                    onClick={() => {
+                      window.open(links.premium2, '_blank');
+                    }}
+                    className="p-[0.75rem] h-min w-full leading-[1.25rem] bg-[#ffdf27d1] rounded-[5px] font-normal flex gap-[0.25rem] hover:scale-[1.02] hover:shadow-md transition"
+                  >
+                    <p className="mx-auto ">Grab PRO for Lifetime</p>
+                  </button>
+                </div>
+              </div>
+            )}
           </div>
         </section>
         <section className="cta py-[clamp(1rem,5vw,6.25rem)] px-[clamp(1rem,5vw,5rem)]">
