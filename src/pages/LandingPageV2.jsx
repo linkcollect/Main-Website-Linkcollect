@@ -7,13 +7,6 @@ import Main from '../components/Sections/LandingPageV2/Main';
 import { getExplore } from '../api-services/collectionService';
 // analytics
 import ReactGA from 'react-ga4';
-const trackingId = 'G-6NHCQSCVJP';
-
-ReactGA.initialize([
-  {
-    trackingId: trackingId,
-  },
-]);
 
 const useExploreData = () => {
   const [exploreData, setExploreData] = useState([]);
@@ -33,12 +26,6 @@ const useExploreData = () => {
 };
 
 const LandingPageV2 = ({ windowWidth }) => {
-  ReactGA.send({
-    hitType: 'pageview',
-    page: '/',
-    title: 'landing page',
-  });
-
   function trackGA(category, action, label) {
     ReactGA.event({ category, action, label });
   }

@@ -25,14 +25,6 @@ import PageLoader from './components/UI/Loader/PageLoader';
 import { setLoggedInUser } from './store/Slices/user.slice';
 import LandingPageV2 from './pages/LandingPageV2';
 import { HelmetProvider } from 'react-helmet-async';
-import ReactGA from 'react-ga4';
-const trackingId = 'G-6NHCQSCVJP';
-
-// ReactGA.initialize([
-//   {
-//     trackingId: trackingId,
-//   },
-// ]);
 
 function App() {
   const auth = useSelector(state => state.auth);
@@ -61,12 +53,6 @@ function App() {
       dispatch(getUserDetails({ token }));
     }
   }, []);
-
-  ReactGA.initialize([
-    {
-      trackingId: trackingId,
-    },
-  ]);
 
   const helmetContext = {};
 
