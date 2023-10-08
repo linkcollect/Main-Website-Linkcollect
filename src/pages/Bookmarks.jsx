@@ -21,6 +21,7 @@ import { useContext } from 'react';
 import { switchMode } from '../hooks/switchMode';
 import MoreFromUser from '../components/Sections/Bookmarks/MoreFromUser';
 import BookmarkItemGrid from '../components/Sections/Bookmarks/BookmarkItemGrid';
+import useDropdown from '../hooks/useDropdown';
 
 const Bookmarks = ({ windowWidth }) => {
   const navigation = useNavigate();
@@ -47,6 +48,12 @@ const Bookmarks = ({ windowWidth }) => {
   const collectionData = useSelector(state => state.collectionData);
   const dispatch = useDispatch();
 
+  const {
+    isSortByDropdownOpen,
+    isViewDropdownOpen,
+    toggleSortByDropdown,
+    toggleViewDropdown,
+  } = useDropdown();
   useEffect(() => {
     dispatch(getBookmarks({ collectionId }));
   }, [collectionId]);
@@ -227,8 +234,18 @@ const Bookmarks = ({ windowWidth }) => {
                   <Search query={query} setQuery={setQuery} />
 
                   {/* sort by */}
-                  <SortVeiw name="View" GridmenuItems={GridmenuItem} />
-                  <SortActions name="Sort By" menuItems={menuItem} />
+                  <SortActions
+                    name="View"
+                    menuItems={GridmenuItem}
+                    isOpen={isViewDropdownOpen}
+                    toggleDropDown={toggleViewDropdown}
+                  />
+                  <SortActions
+                    name="Sort By"
+                    menuItems={menuItem}
+                    isOpen={isSortByDropdownOpen}
+                    toggleDropDown={toggleSortByDropdown}
+                  />
                 </div>
               </div>
             </div>
