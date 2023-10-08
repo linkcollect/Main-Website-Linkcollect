@@ -23,12 +23,14 @@ import { togglePin } from '../../../api-services/collectionService';
 import SEO from '../../SEO/SEO';
 
 import { switchMode } from '../../../hooks/switchMode';
+import useDropdown from '../../../hooks/useDropdown';
 const OwnerProfile = ({ username, windowWidth }) => {
   const dispatch = useDispatch();
   const [query, setQuery] = useState('');
   const collection = useSelector(state => state.collection);
   const user = useSelector(state => state.auth);
   const [sortingType, setSortingType] = useState('RECENETLY_UPDATED');
+  const { toggleSortByDropdown, isSortByDropdownOpen } = useDropdown();
 
   useEffect(() => {
     // dispatch(getUserCollection({username}));
@@ -145,7 +147,12 @@ const OwnerProfile = ({ username, windowWidth }) => {
           </div>
 
           {/* sort by */}
-          <SortActions name="Sort By" menuItems={menuItem} />
+          <SortActions
+            name="Sort By"
+            menuItems={menuItem}
+            isOpen={isSortByDropdownOpen}
+            toggleDropDown={toggleSortByDropdown}
+          />
         </div>
       </div>
       {/* Collections */}
