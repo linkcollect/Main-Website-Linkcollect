@@ -24,25 +24,31 @@ export const MenuItem = ({ name, onClick, type, isSelected }) => {
   );
 };
 
-export const SortActions = ({ name, menuItems }) => {
-  const [showDropdown, setShowDropdown] = useState(false);
+export const SortActions = ({
+  name,
+  menuItems,
+  isSortByOpen,
+  isViewOpen,
+  setIsSortByOpen,
+  setIsViewOpen,
+}) => {
   const lastIndex = menuItems.length - 1;
 
   useEffect(() => {
     window.addEventListener('click', e => {
-      if (e.target.id !== 'sort' && showDropdown) {
-        setShowDropdown(false);
+      if (e.target.id !== 'sort' && isSortByOpen) {
+        setIsSortByOpen(false);
       }
     });
 
     return () => {
       window.removeEventListener('click', e => {
-        if (e.target.id !== 'sort' && showDropdown) {
-          setShowDropdown(false);
+        if (e.target.id !== 'sort' && isSortByOpen) {
+          setIsSortByOpen(false);
         }
       });
     };
-  }, [showDropdown]);
+  }, [isSortByOpen]);
   // getting selected mode for theme change
   const { selectedMode } = useContext(switchMode);
 
@@ -50,7 +56,10 @@ export const SortActions = ({ name, menuItems }) => {
     <div
       onClick={e => {
         e.stopPropagation();
-        setShowDropdown(!showDropdown);
+        setIsSortByOpen(!isSortByOpen);
+        if (isViewOpen) {
+          setIsViewOpen(false);
+        }
       }}
       className={`w-[3rem] px-2 sm:w-48 cursor-pointer h-[46px] relative sm:p-4 flex items-center justify-center rounded-lg ${
         selectedMode === 'dark'
@@ -66,7 +75,7 @@ export const SortActions = ({ name, menuItems }) => {
       <span className="hidden text-sm font-medium sm:block">Sort By</span>
 
       {/* dropdown */}
-      {showDropdown && (
+      {isSortByOpen && (
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
@@ -103,8 +112,14 @@ export const SortActions = ({ name, menuItems }) => {
   );
 };
 
-export const SortVeiw = ({ name, GridmenuItems }) => {
-  const [showDropdown, setShowDropdown] = useState(false);
+export const SortView = ({
+  name,
+  GridmenuItems,
+  isSortByOpen,
+  isViewOpen,
+  setIsSortByOpen,
+  setIsViewOpen,
+}) => {
   const lastIndex = GridmenuItems.length - 1;
 
   // getting selected mode for theme change
@@ -112,25 +127,28 @@ export const SortVeiw = ({ name, GridmenuItems }) => {
 
   useEffect(() => {
     window.addEventListener('click', e => {
-      if (e.target.id !== 'sort' && showDropdown) {
-        setShowDropdown(false);
+      if (e.target.id !== 'sort' && isViewOpen) {
+        setIsViewOpen(false);
       }
     });
 
     return () => {
       window.removeEventListener('click', e => {
-        if (e.target.id !== 'sort' && showDropdown) {
-          setShowDropdown(false);
+        if (e.target.id !== 'sort' && isViewOpen) {
+          setIsViewOpen(false);
         }
       });
     };
-  }, [showDropdown]);
+  }, [isViewOpen]);
 
   return (
     <div
       onClick={e => {
         e.stopPropagation();
-        setShowDropdown(!showDropdown);
+        setIsViewOpen(!isViewOpen);
+        if (isSortByOpen) {
+          setIsSortByOpen(false);
+        }
       }}
       className={`w-[3rem] px-2 sm:w-48 cursor-pointer h-[46px] relative sm:p-4 flex items-center justify-center rounded-lg ${
         selectedMode === 'dark'
@@ -146,7 +164,7 @@ export const SortVeiw = ({ name, GridmenuItems }) => {
       <span className="hidden text-sm font-medium sm:block">View</span>
 
       {/* dropdown */}
-      {showDropdown && (
+      {isViewOpen && (
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}

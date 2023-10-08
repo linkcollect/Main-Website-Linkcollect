@@ -15,7 +15,7 @@ import {
   setTogglePinBookmark,
   sortBookmarksByType,
 } from '../store/Slices/bookmarks.slice';
-import { SortActions, SortVeiw } from '../components/Common/ActiondropDown';
+import { SortActions, SortView } from '../components/Common/ActiondropDown';
 import SEO from '../components/SEO/SEO';
 import { useContext } from 'react';
 import { switchMode } from '../hooks/switchMode';
@@ -47,6 +47,8 @@ const Bookmarks = ({ windowWidth }) => {
   const collectionData = useSelector(state => state.collectionData);
   const dispatch = useDispatch();
 
+  const [isSortByOpen, setIsSortByOpen] = useState(false);
+  const [isViewOpen, setIsViewOpen] = useState(false);
   useEffect(() => {
     dispatch(getBookmarks({ collectionId }));
   }, [collectionId]);
@@ -227,8 +229,22 @@ const Bookmarks = ({ windowWidth }) => {
                   <Search query={query} setQuery={setQuery} />
 
                   {/* sort by */}
-                  <SortVeiw name="View" GridmenuItems={GridmenuItem} />
-                  <SortActions name="Sort By" menuItems={menuItem} />
+                  <SortView
+                    name="View"
+                    GridmenuItems={GridmenuItem}
+                    isSortByOpen={isSortByOpen}
+                    setIsSortByOpen={setIsSortByOpen}
+                    isViewOpen={isViewOpen}
+                    setIsViewOpen={setIsViewOpen}
+                  />
+                  <SortActions
+                    name="Sort By"
+                    menuItems={menuItem}
+                    isSortByOpen={isSortByOpen}
+                    setIsSortByOpen={setIsSortByOpen}
+                    isViewOpen={isViewOpen}
+                    setIsViewOpen={setIsViewOpen}
+                  />
                 </div>
               </div>
             </div>
