@@ -96,6 +96,7 @@ const ProfileHeader = ({
               alt=""
               className="w-20 h-20 rounded-full"
             />
+
             <div className="flex flex-col items-center justify-start w-full gap-3 sm:items-start">
               {/* Name */}
               <div className="flex flex-row gap-2">
