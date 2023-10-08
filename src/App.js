@@ -95,6 +95,7 @@ function App() {
                 )
               }
             />
+
             {/* This are all open routes */}
             <Route
               path="/:username"

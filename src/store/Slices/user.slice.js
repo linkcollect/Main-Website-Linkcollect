@@ -3,6 +3,7 @@ import jwt from 'jsonwebtoken';
 import { getUserDetails, loginAction } from '../actions/user.action';
 import { addCollection } from './collection.slice';
 import { createBookmark } from './bookmarks.slice';
+
 const authDefaultState = {
   username: '',
   userId: '',

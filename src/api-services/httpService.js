@@ -21,7 +21,7 @@ export function setJwtInRequestHeader(jwt) {
   // console.log(jwt, "hey")
 }
 
-// Please use http.get,post....instead of using axios everywhere
+// Please use http.get,post... instead of using axios everywhere
 export default {
   get: axios.get,
   post: axios.post,

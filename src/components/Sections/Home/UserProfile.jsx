@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import PageLoader from '../../UI/Loader/PageLoader';
 import ProfileHeader from './ProfileHeader';
 import CollectionitemV2 from '../../Common/CollectionCard';
@@ -19,10 +19,14 @@ import {
 } from '../../../store/actions/collection.action';
 import SEO from '../../SEO/SEO';
 import { switchMode } from '../../../hooks/switchMode';
+import { useNavigate } from 'react-router-dom';
+
 const UserProfile = ({ username, windowWidth }) => {
   const dispatch = useDispatch();
   const collection = useSelector(state => state.collection);
   const [user, setUser] = useState({});
+
+  const navigate = useNavigate();
 
   const countTotalProfileViews = collections => {
     // keeping the default views 0
@@ -45,10 +49,10 @@ const UserProfile = ({ username, windowWidth }) => {
       try {
         const res = await getByUsername(username);
         const data = res.data.data;
-        console.log(res);
         const user = {
           name: data.name,
           username: data.username,
+          isPublic: data.isPublic,
           profilePic: data.profilePic ? data.profilePic : '',
           socials: data.socials ? data.socials : [],
           totalViews: countTotalProfileViews(data.collections),
@@ -64,6 +68,16 @@ const UserProfile = ({ username, windowWidth }) => {
     }
     getCollectionOfTheUser();
   }, [dispatch, username]);
+
+  // if profile is private, redirect to home after 5 seconds.
+  useEffect(() => {
+    if (!user.isPublic) {
+      const timer = setTimeout(() => {
+        navigate('/');
+      }, 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [JSON.stringify(user)]);
 
   // getting selected mode for theme change
   const { selectedMode } = useContext(switchMode);
@@ -90,64 +104,87 @@ const UserProfile = ({ username, windowWidth }) => {
           <PageLoader />
         </div>
       ) : (
-        <div className="w-full h-full px-8 pb-6 overflow-y-scroll 3xl:px-0">
-          <ProfileHeader
-            username={user.username}
-            name={user.name}
-            imageUrl={user.profilePic}
-            socials={user.socials}
-            totalViews={user.totalViews}
-            totalCollections={user.totalCollections}
-            bio={user.bio}
-          />
-          <div className="w-full ">
-            {collection.collections.length > 0 ? (
-              <div className="flex justify-center w-full mx-auto 3xl:pl-0 3xl:justify-center">
-                <div className="w-full justify-start grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-6 2xl:gap-6 max-w-[1500px]">
-                  {collection.collections.map(collections => (
-                    <CollectionitemV2
-                      key={collection._id}
-                      id={collections._id}
-                      image={collections.image}
-                      title={collections.title}
-                      links={collections.timelines.length}
-                      isPublic={collections.isPublic}
-                      isPinned={collections.isPinned}
-                      description={collections.description}
-                      tags={collections.tags}
-                      username={username}
-                      windowWidth={windowWidth}
-                      isOwner={false}
-                      upvotes={collections.upvotes}
-                      views={collections.views}
-                      isSavedOptionVisible={true}
-                      onUpvote={upvoteAction}
-                      onDownVote={downvoteAction}
-                      onSave={saveAction}
-                      onUnsave={unsaveAction}
-                      userId={collections.userId}
-                    />
-                  ))}
+        <div className="w-full h-full px-8 pb-6 overflow-y-scroll 3xl:px-0 dark:text-white">
+          {user.name ? (
+            <>
+              {user.isPublic ? (
+                <>
+                  <ProfileHeader
+                    username={user.username}
+                    name={user.name}
+                    imageUrl={user.profilePic}
+                    socials={user.socials}
+                    totalViews={user.totalViews}
+                    totalCollections={user.totalCollections}
+                    bio={user.bio}
+                  />
+                  <div className="w-full ">
+                    {collection.collections.length > 0 ? (
+                      <div className="flex justify-center w-full mx-auto 3xl:pl-0 3xl:justify-center">
+                        <div className="w-full justify-start grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-6 2xl:gap-6 max-w-[1500px]">
+                          {collection.collections.map(collections => (
+                            <CollectionitemV2
+                              key={collection._id}
+                              id={collections._id}
+                              image={collections.image}
+                              title={collections.title}
+                              links={collections.timelines.length}
+                              isPublic={collections.isPublic}
+                              isPinned={collections.isPinned}
+                              description={collections.description}
+                              tags={collections.tags}
+                              username={username}
+                              windowWidth={windowWidth}
+                              isOwner={false}
+                              upvotes={collections.upvotes}
+                              views={collections.views}
+                              isSavedOptionVisible={true}
+                              onUpvote={upvoteAction}
+                              onDownVote={downvoteAction}
+                              onSave={saveAction}
+                              onUnsave={unsaveAction}
+                              userId={collections.userId}
+                            />
+                          ))}
+                        </div>
+                      </div>
+                    ) : (
+                      <div
+                        className={`flex flex-col self-center items-center justify-center w-full h-full ${
+                          selectedMode === 'dark'
+                            ? 'text-neutral-50'
+                            : 'text-black'
+                        }`}
+                      >
+                        <p className="mb-5 text-5xl">No Collection Found</p>
+                        <p className="">You can add it from extension</p>
+                        <a
+                          className="text-primary-400"
+                          href="https://chrome.google.com/webstore/detail/linkcollect-save-share-bo/knekpacpcgkieomkhhngenjeeokddkif"
+                        >
+                          Click To Install
+                        </a>
+                      </div>
+                    )}
+                  </div>
+                </>
+              ) : (
+                <div className="w-full h-full flex flex-col align-center justify-center -mt-8">
+                  <h1 className="text-4xl">This user profile is private</h1>
+                  <h2 className="text-xl mt-4">Redirecting...</h2>
                 </div>
-              </div>
-            ) : (
-              <div
-                className={`flex flex-col self-center items-center justify-center w-full h-full ${
-                  selectedMode === 'dark' ? 'text-neutral-50' : 'text-black'
-                }`}
-              >
-                <p className="mb-5 text-5xl">No Collection Found</p>
-                <p className="">You can add it from extension</p>
-                <a
-                  className="text-primary-400"
-                  href="https://chrome.google.com/webstore/detail/linkcollect-save-share-bo/knekpacpcgkieomkhhngenjeeokddkif"
-                >
-                  {' '}
-                  Click To Install{' '}
-                </a>
-              </div>
-            )}
-          </div>
+              )}
+            </>
+          ) : (
+            <div className="w-full h-full flex flex-col align-center justify-center -mt-8">
+              <h1 className="text-4xl">User not found</h1>
+              <h2 className="text-xl mt-4">
+                Make sure you typed the right username. It is case-sensitive.
+                <br />
+                Redirecting...
+              </h2>
+            </div>
+          )}
         </div>
       )}
     </BaseLayout>

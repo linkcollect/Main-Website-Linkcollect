@@ -11,6 +11,7 @@ export const ThemeProvider = ({ children }) => {
   useEffect(() => {
     localStorage.setItem('theme', selectedMode);
   }, [selectedMode]);
+
   return (
     <switchMode.Provider value={{ selectedMode, setSelectedMode }}>
       {children}

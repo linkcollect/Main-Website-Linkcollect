@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import CollectionHeader from '../components/Common/CollectionHeader';
 import BaseLayout from '../components/Layout/BaseLayout/BaseLayout';
 import { useDispatch, useSelector } from 'react-redux';

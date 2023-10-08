@@ -1,5 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { getByUsername, getByUserId } from '../../api-services/userService';
+import { getByUserId } from '../../api-services/userService';
 import { login } from '../../api-services/authService';
 import jwt from 'jsonwebtoken';
 import { setJwtInRequestHeader } from '../../api-services/httpService';

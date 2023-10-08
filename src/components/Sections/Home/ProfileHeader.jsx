@@ -1,4 +1,4 @@
-import React, { useContext, useRef } from 'react';
+import { useContext, useRef } from 'react';
 import Twitter from '../../../assets/twitterBlue.svg';
 import Website from '../../../assets/websiteIcon.svg';
 import DarkModeWebsite from '../../../assets/darkMode/websiteIcon.svg';
@@ -14,6 +14,7 @@ import WhiteApprove from '../../../assets/darkMode/whiteCheck.svg';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { switchMode } from '../../../hooks/switchMode';
+
 const ProfileHeader = ({
   name,
   socials,
