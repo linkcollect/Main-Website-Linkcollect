@@ -21,6 +21,7 @@ import { useContext } from 'react';
 import { switchMode } from '../hooks/switchMode';
 import MoreFromUser from '../components/Sections/Bookmarks/MoreFromUser';
 import BookmarkItemGrid from '../components/Sections/Bookmarks/BookmarkItemGrid';
+import useDropdown from '../hooks/useDropdown.js';
 
 const Bookmarks = ({ windowWidth }) => {
   const navigation = useNavigate();
@@ -47,6 +48,12 @@ const Bookmarks = ({ windowWidth }) => {
   const collectionData = useSelector(state => state.collectionData);
   const dispatch = useDispatch();
 
+  const {
+    isSortByDropdownOpen,
+    isViewDropdownOpen,
+    toggleSortByDropdown,
+    toggleViewDropdown,
+  } = useDropdown();
   useEffect(() => {
     dispatch(getBookmarks({ collectionId }));
   }, [collectionId]);
@@ -222,13 +229,23 @@ const Bookmarks = ({ windowWidth }) => {
                 collectionUsername={collectionData.collectionData.username}
               />
               {/* Search Bar and Filter */}
-              <div className="w-[100%] sticky z-10">
+              <div className="w-[100%] sticky z-[99]">
                 <div className="relative flex flex-row items-end gap-2 mt-5 sm:flex-row">
                   <Search query={query} setQuery={setQuery} />
 
                   {/* sort by */}
-                  <SortVeiw name="View" GridmenuItems={GridmenuItem} />
-                  <SortActions name="Sort By" menuItems={menuItem} />
+                  <SortActions
+                    name="View"
+                    menuItems={GridmenuItem}
+                    isOpen={isViewDropdownOpen}
+                    toggleDropDown={toggleViewDropdown}
+                  />
+                  <SortActions
+                    name="Sort By"
+                    menuItems={menuItem}
+                    isOpen={isSortByDropdownOpen}
+                    toggleDropDown={toggleSortByDropdown}
+                  />
                 </div>
               </div>
             </div>
@@ -247,7 +264,7 @@ const Bookmarks = ({ windowWidth }) => {
               filteredBookmarks?.length > 0 ? (
               isGridView === 'GRID_VIEW' ? (
                 <div className="w-full h-[calc(100%-55px)] py-10 scrollbar-hide">
-                  <div className="w-[100%] z-0 h-[calc(100%-65px)] space-y-2">
+                  <div className="w-[100%] h-[calc(100%-65px)] space-y-2">
                     <div className="grid justify-start w-full grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 2xl:gap-6 ">
                       {filteredBookmarks.map(timeline => (
                         <BookmarkItemGrid
