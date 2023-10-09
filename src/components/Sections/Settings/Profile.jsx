@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react';
 import Upload from '../../../assets/upload.svg';
 import UploadWhiteIcon from '../../../assets/darkMode/uploadIcon.svg';
-import profile from '../../../assets/defaultProfile.svg';
+import defaultImage from '../../../assets/defaultImage.svg';
 import twitter from '../../../assets/twitterBlue.svg';
 import websiteIcon from '../../../assets/websiteIcon.svg';
 import twitterWhite from '../../../assets/darkMode/twitterIcon.svg';
@@ -230,7 +230,9 @@ const Profile = () => {
         {/* Profile Image */}
         <div className="flex items-center justify-start w-full gap-6">
           <img
-            src={auth.userData.profilePic}
+            src={
+              auth.userData.profilePic ? auth.userData.profilePic : defaultImage
+            }
             ref={profilePicRef}
             alt=""
             className="w-20 h-20 rounded-full"
