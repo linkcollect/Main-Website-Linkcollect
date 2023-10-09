@@ -154,8 +154,11 @@ const BookmarkItemGrid = ({
         return;
       case 'PIN':
         setClickedId(null);
+        setBookmarkNoteModal(false);
+        setHovered(false);
         toggleBookmarkPin(id);
         return;
+      default:
     }
   };
 
@@ -234,7 +237,9 @@ const BookmarkItemGrid = ({
               selectedMode === 'light'
                 ? 'border-neutral-200'
                 : 'border-neutral-600'
-            } hover:shadow-md transform hover:scale-[1.04] rounded-lg w-full group h-[279px]  transition duration-200 ease-in-out cursor-pointer select-none`}
+            } hover:shadow-md transform ${
+              clickedId === id ? 'z-[100]' : 'hover:z-[100] '
+            } hover:scale-[1.04] rounded-lg w-full group h-[279px] transition duration-200 ease-in-out cursor-pointer select-none`}
             onMouseEnter={() => setHovered(true)}
             onMouseLeave={() => setHovered(false)}
           >
