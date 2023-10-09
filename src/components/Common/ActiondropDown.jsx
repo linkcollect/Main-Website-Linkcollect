@@ -72,7 +72,7 @@ export const SortActions = ({ name, menuItems }) => {
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: 10 }}
           transition={{ duration: 0.2 }}
-          className={`w-[188px] rounded border absolute z-1000 top-[50px] right-0 ${
+          className={`w-[188px] rounded border absolute z-[1000] top-[50px] right-0 ${
             selectedMode === 'light'
               ? 'border-white  bg-neutral-100'
               : 'bg-dark-primary border-dark-border'
