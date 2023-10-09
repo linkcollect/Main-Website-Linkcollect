@@ -6,7 +6,7 @@ import Main from '../components/Sections/LandingPageV2/Main';
 // api
 import { getExplore } from '../api-services/collectionService';
 // analytics
-import ReactGA from 'react-ga4';
+import useAnalyticsEventTracker from '../hooks/useAnalyticsEventTracker';
 
 const useExploreData = () => {
   const [exploreData, setExploreData] = useState([]);
@@ -26,9 +26,11 @@ const useExploreData = () => {
 };
 
 const LandingPageV2 = ({ windowWidth }) => {
-  function trackGA(category, action, label) {
-    ReactGA.event({ category, action, label });
-  }
+  const gaEventTracker = useAnalyticsEventTracker('Landing Page');
+
+  const trackGA = eventName => {
+    gaEventTracker(eventName);
+  };
 
   const exploreData = useExploreData();
   return (
