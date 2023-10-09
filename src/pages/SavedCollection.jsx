@@ -14,6 +14,7 @@ import { SortActions } from '../components/Common/ActiondropDown';
 import Search from '../components/Common/Search';
 import { useContext } from 'react';
 import { switchMode } from '../hooks/switchMode';
+import useDropdown from '../hooks/useDropdown';
 
 const SavedCollection = ({ windowWidth }) => {
   const dispatch = useDispatch();
@@ -21,6 +22,8 @@ const SavedCollection = ({ windowWidth }) => {
   const [query, setQuery] = useState('');
   const auth = useSelector(state => state.auth);
   const { selectedMode } = useContext(switchMode);
+  const { isSortByDropdownOpen, toggleSortByDropdown } = useDropdown();
+
   useEffect(() => {
     dispatch(getSaveCollectionOfUser(auth.userId));
   }, [dispatch]);
@@ -57,9 +60,13 @@ const SavedCollection = ({ windowWidth }) => {
           <div className=" w-[calc(100%-212px)]">
             <Search query={query} setQuery={setQuery} />
           </div>
-
           {/* sort by */}
-          <SortActions name="Sort By" menuItems={menuItem} />
+          <SortActions
+            name="Sort By"
+            menuItems={menuItem}
+            isOpen={isSortByDropdownOpen}
+            toggleDropDown={toggleSortByDropdown}
+          />{' '}
         </div>
       </div>
 
