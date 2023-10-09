@@ -59,7 +59,7 @@ const Profile = () => {
     username: auth.username,
     isPublic: isPublic,
     email: auth.userData.email,
-    bio: auth.userData.bio ? auth.userData.email : '',
+    bio: auth.userData.bio,
   });
   // user social links
   const [userSocialLinks, setUserSocialLinks] = useState({
@@ -131,6 +131,7 @@ const Profile = () => {
       username: auth.username,
       isPublic: auth.userData.isPublic,
       email: auth.userData.email,
+      bio: auth.userData.bio,
     };
     const setSocial = {
       twitterUrl: auth.userData.socials[0],
@@ -198,6 +199,7 @@ const Profile = () => {
             profilePic: userResponse.data.data.profilePic,
             isPublic: userResponse.data.data.isPublic,
             socials: userResponse.data.data.socials,
+            bio: userResponse.data.data.bio,
           },
         })
       );
