@@ -1,7 +1,8 @@
 import React, { useContext, useEffect, useState } from 'react';
 import SortBy from '../../assets/sortBy.svg';
-import GridVeiw from '../../assets/GridVeiw.svg';
+import GridView from '../../assets/GridView.svg';
 import DarkSort from '../../assets/darkMode/darkmodeSortBy.svg';
+import DarkGrid from '../../assets/darkMode/darkmodeGridView.svg';
 import { motion } from 'framer-motion';
 import { switchMode } from '../../hooks/switchMode';
 export const MenuItem = ({ name, onClick, type, isSelected }) => {
@@ -58,9 +59,9 @@ export const SortActions = ({ name, menuItems, isOpen, toggleDropDown }) => {
       }  gap-2 border`}
     >
       {selectedMode === 'light' ? (
-        <img src={name === 'Sort By' ? SortBy : GridVeiw} alt="" />
+        <img src={name === 'Sort By' ? SortBy : GridView} alt="" />
       ) : (
-        <img src={name === 'Sort By' ? DarkSort : GridVeiw} alt="" />
+        <img src={name === 'Sort By' ? DarkSort : DarkGrid} alt="" />
       )}
       <span className="hidden text-sm font-medium sm:block">{name}</span>
 
