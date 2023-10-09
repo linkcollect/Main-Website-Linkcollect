@@ -237,7 +237,6 @@ const CollectionInfoHeader = ({
                   ) : (
                     <Link
                       to={`/${collectionUsername}`}
-                      state={{ fromCollection: true }}
                       className={`sm:mt-[2px] ${
                         selectedMode === 'light'
                           ? 'text-primary-400'

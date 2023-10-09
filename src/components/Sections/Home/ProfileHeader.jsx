@@ -12,7 +12,7 @@ import Button from '../../UI/Button/Button';
 import approve from '../../../assets/approve.svg';
 import WhiteApprove from '../../../assets/darkMode/whiteCheck.svg';
 import { useSelector } from 'react-redux';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { switchMode } from '../../../hooks/switchMode';
 const ProfileHeader = ({
   name,
@@ -27,8 +27,6 @@ const ProfileHeader = ({
   const navigate = useNavigate();
   const copyRef = useRef();
   const copyMobileRef = useRef();
-
-  const location = useLocation();
 
   // getting current selected mode
   const { selectedMode } = useContext(switchMode);
@@ -63,7 +61,7 @@ const ProfileHeader = ({
     if (!auth.isLoggedIn) {
       navigate('/login');
     } else {
-      navigate(location?.state?.fromCollection ? -1 : `/explore`);
+      navigate(`/explore`);
     }
   };
 

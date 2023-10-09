@@ -1,5 +1,4 @@
 //useAnalyticsEventTracker.js
-import React from 'react';
 import ReactGA from 'react-ga';
 
 const useAnalyticsEventTracker = (category = 'Blog category') => {

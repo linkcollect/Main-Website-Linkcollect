@@ -6,7 +6,7 @@ import {
   Navigate,
   useNavigate,
 } from 'react-router-dom';
-// import { Analytics } from '@vercel/analytics/react';
+import { Analytics } from '@vercel/analytics/react';
 
 import Signup from './pages/Signup';
 import Login from './pages/Login';
@@ -25,8 +25,16 @@ import PageLoader from './components/UI/Loader/PageLoader';
 import { setLoggedInUser } from './store/Slices/user.slice';
 import LandingPageV2 from './pages/LandingPageV2';
 import { HelmetProvider } from 'react-helmet-async';
+import ReactGA from 'react-ga';
+const TRACKING_ID = 'G-6NHCQSCVJP';
+
+ReactGA.initialize(TRACKING_ID);
 
 function App() {
+  useEffect(() => {
+    ReactGA.pageview(window.location.pathname + window.location.search);
+  }, []);
+
   const auth = useSelector(state => state.auth);
   const dispatch = useDispatch();
   //for responsiveness
@@ -54,6 +62,13 @@ function App() {
     }
   }, []);
 
+  if (auth.isLoggedIn && auth.isLoading) {
+    return (
+      <div className="flex items-center justify-center w-full h-screen">
+        <PageLoader />
+      </div>
+    );
+  }
   const helmetContext = {};
 
   return (
@@ -122,7 +137,7 @@ function App() {
             <Route path="*" element={<Navigate to="/" />} />
           </Routes>
         </div>
-        {/* <Analytics /> */}
+        <Analytics />
       </Router>
     </HelmetProvider>
   );
