@@ -24,25 +24,24 @@ export const MenuItem = ({ name, onClick, type, isSelected }) => {
   );
 };
 
-export const SortActions = ({ name, menuItems }) => {
-  const [showDropdown, setShowDropdown] = useState(false);
+export const SortActions = ({ name, menuItems, isOpen, toggleDropDown }) => {
   const lastIndex = menuItems.length - 1;
 
   useEffect(() => {
     window.addEventListener('click', e => {
-      if (e.target.id !== 'sort' && showDropdown) {
-        setShowDropdown(false);
+      if (e.target.id !== 'sort' && isOpen) {
+        toggleDropDown();
       }
     });
 
     return () => {
       window.removeEventListener('click', e => {
-        if (e.target.id !== 'sort' && showDropdown) {
-          setShowDropdown(false);
+        if (e.target.id !== 'sort' && isOpen) {
+          toggleDropDown();
         }
       });
     };
-  }, [showDropdown]);
+  }, [isOpen]);
   // getting selected mode for theme change
   const { selectedMode } = useContext(switchMode);
 
@@ -50,7 +49,7 @@ export const SortActions = ({ name, menuItems }) => {
     <div
       onClick={e => {
         e.stopPropagation();
-        setShowDropdown(!showDropdown);
+        toggleDropDown();
       }}
       className={`w-[3rem] px-2 sm:w-48 cursor-pointer h-[46px] relative sm:p-4 flex items-center justify-center rounded-lg ${
         selectedMode === 'dark'
@@ -59,20 +58,20 @@ export const SortActions = ({ name, menuItems }) => {
       }  gap-2 border`}
     >
       {selectedMode === 'light' ? (
-        <img src={SortBy} alt="" />
+        <img src={name === 'Sort By' ? SortBy : GridVeiw} alt="" />
       ) : (
-        <img src={DarkSort} alt="" />
+        <img src={name === 'Sort By' ? DarkSort : GridVeiw} alt="" />
       )}
-      <span className="hidden text-sm font-medium sm:block">Sort By</span>
+      <span className="hidden text-sm font-medium sm:block">{name}</span>
 
       {/* dropdown */}
-      {showDropdown && (
+      {isOpen && (
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: 10 }}
           transition={{ duration: 0.2 }}
-          className={`w-[188px] rounded border absolute z-1000 top-[50px] right-0 ${
+          className={`w-[188px] rounded border absolute z-[1000] top-[50px] right-0 ${
             selectedMode === 'light'
               ? 'border-white  bg-neutral-100'
               : 'bg-dark-primary border-dark-border'
@@ -103,85 +102,6 @@ export const SortActions = ({ name, menuItems }) => {
   );
 };
 
-export const SortVeiw = ({ name, GridmenuItems }) => {
-  const [showDropdown, setShowDropdown] = useState(false);
-  const lastIndex = GridmenuItems.length - 1;
-
-  // getting selected mode for theme change
-  const { selectedMode } = useContext(switchMode);
-
-  useEffect(() => {
-    window.addEventListener('click', e => {
-      if (e.target.id !== 'sort' && showDropdown) {
-        setShowDropdown(false);
-      }
-    });
-
-    return () => {
-      window.removeEventListener('click', e => {
-        if (e.target.id !== 'sort' && showDropdown) {
-          setShowDropdown(false);
-        }
-      });
-    };
-  }, [showDropdown]);
-
-  return (
-    <div
-      onClick={e => {
-        e.stopPropagation();
-        setShowDropdown(!showDropdown);
-      }}
-      className={`w-[3rem] px-2 sm:w-48 cursor-pointer h-[46px] relative sm:p-4 flex items-center justify-center rounded-lg ${
-        selectedMode === 'dark'
-          ? 'border-neutral-600 bg-dark-primary text-neutral-50'
-          : 'border-neutral-300 bg-white '
-      }  gap-2 border`}
-    >
-      {selectedMode === 'light' ? (
-        <img src={GridVeiw} alt="" />
-      ) : (
-        <img src={GridVeiw} alt="" />
-      )}
-      <span className="hidden text-sm font-medium sm:block">View</span>
-
-      {/* dropdown */}
-      {showDropdown && (
-        <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: 10 }}
-          transition={{ duration: 0.2 }}
-          className={`w-[188px] rounded border absolute z-[1000] top-[50px] right-0 ${
-            selectedMode === 'light'
-              ? 'border-white  bg-neutral-100'
-              : 'bg-dark-primary border-dark-border'
-          } p-1 drop-shadow`}
-        >
-          {GridmenuItems.map((menItem, index) => (
-            <>
-              <MenuItem
-                key={menItem.name}
-                name={menItem.name}
-                onClick={menItem.onClick}
-                type={menItem.type}
-              />
-              {index !== lastIndex && (
-                <hr
-                  className={`w-full border  ${
-                    selectedMode === 'dark'
-                      ? 'border-dark-border'
-                      : 'border-neutral-300'
-                  } `}
-                />
-              )}
-            </>
-          ))}
-        </motion.div>
-      )}
-    </div>
-  );
-};
 export const FilterActions = ({ menuItems, selectedFilters }) => {
   const [showDropdown, setShowDropdown] = useState(false);
   const lastIndex = menuItems.length - 1;
