@@ -98,15 +98,20 @@ const Profile = () => {
     }
   };
   const isValidSocialLink = linksObject => {
+    let isTwitterUrlCorrect = false;
+    let isWebsiteUrlCorrect = false;
     if (linksObject.twitterUrl === '' && linksObject.websiteUrl === '') {
       return true;
     }
 
     if (linksObject.twitterUrl !== '') {
-      if (linksObject.twitterUrl.startsWith('https://twitter.com')) {
-        return true;
+      if (
+        linksObject.twitterUrl.startsWith('https://twitter.com') ||
+        linksObject.twitterUrl.startsWith('https://x.com')
+      ) {
+        isTwitterUrlCorrect = true;
       } else {
-        toast.error('Twitter link should start with https://twitter.com', {
+        toast.error('Invalid Twitter Link', {
           style: {
             border: '1px solid #4B4C63',
             padding: '6px',
@@ -122,9 +127,9 @@ const Profile = () => {
 
     if (linksObject.websiteUrl !== '') {
       if (linksObject.websiteUrl.startsWith('https://')) {
-        return true;
+        isWebsiteUrlCorrect = true;
       } else {
-        toast.error('Website link should start with https://', {
+        toast.error('Invalid Website Link', {
           style: {
             border: '1px solid #4B4C63',
             padding: '6px',
@@ -136,6 +141,10 @@ const Profile = () => {
         });
         return false;
       }
+    }
+
+    if (isTwitterUrlCorrect && isWebsiteUrlCorrect) {
+      return true;
     }
   };
   // Edit user details handler
