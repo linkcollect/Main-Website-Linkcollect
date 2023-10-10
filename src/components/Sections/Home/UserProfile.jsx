@@ -53,7 +53,7 @@ const UserProfile = ({ username, windowWidth }) => {
           socials: data.socials ? data.socials : [],
           totalViews: countTotalProfileViews(data.collections),
           totalCollections: data.collections.length,
-          bio: data.bio ? data.bio : '',
+          bio: data.bio && data.bio !== 'undefined' ? data.bio : '',
         };
         setUser(user);
         dispatch(collectionFetchingSuccess({ data: data }));

@@ -408,7 +408,7 @@ const Main = ({ analytics, exploreData = undefined, windowWidth }) => {
                       alt=""
                       className="w-[1.25rem] mt-[-0.25rem] mr-[0.75rem]"
                     />
-                    <p>Save 3000 bookmarks (100 per collection)</p>
+                    <p>Save 2000 bookmarks (100 per collection)</p>
                   </li>
                   <li className="flex">
                     <img
