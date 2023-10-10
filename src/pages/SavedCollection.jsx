@@ -107,11 +107,13 @@ const SavedCollection = ({ windowWidth }) => {
             </div>
           </div>
         ) : (
-          <div className="flex flex-col self-center items-center justify-center w-full h-full">
-            <p className="mb-5 text-5xl text-textPrimary">
-              No Collection Found
-            </p>
-            <p className="text-textPrimary">You can save from explore page</p>
+          <div
+            className={`flex flex-col self-center items-center justify-center w-full h-full ${
+              selectedMode === 'dark' ? 'text-neutral-50' : 'text-black'
+            }`}
+          >
+            <p className="mb-5 text-5xl">No Collection Found</p>
+            <p>You can save from explore page</p>
           </div>
         )}
       </div>

@@ -77,8 +77,10 @@ const Main = ({ analytics, exploreData = undefined, windowWidth }) => {
             </h1>
             <p className="text-neutral-600 max-w-[520px] text-xl">
               {' '}
-              {`A browser extension that will help you document your learning
-              journey + discover and search across ${
+              <span className="text-primary-500 font-medium">
+                A Bookmark Manager that does it all 😎
+              </span>
+              {` - we help you curate and share links and browser tabs + discover and search across ${
                 analyticsData ? analyticsData.collections : 3000
               }+ public collections, just like
               pinterest`}{' '}
@@ -398,7 +400,7 @@ const Main = ({ analytics, exploreData = undefined, windowWidth }) => {
                       alt=""
                       className="w-[1.25rem] mt-[-0.25rem] mr-[0.75rem]"
                     />
-                    <p>Limited to 30 collections</p>
+                    <p>Limited to 20 collections</p>
                   </li>
                   <li className="flex">
                     <img

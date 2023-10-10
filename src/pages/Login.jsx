@@ -12,6 +12,8 @@ import { getUserDetails, loginAction } from '../store/actions/user.action';
 import Button from '../components/UI/Button/Button';
 import toast, { Toaster } from 'react-hot-toast';
 
+import { gaEvents } from '../components/analytics/gaAnalyticsEventHandler';
+
 const Login = ({ windowWidth }) => {
   const location = useLocation();
   // const navigate = useNavigate();
@@ -44,6 +46,8 @@ const Login = ({ windowWidth }) => {
     const something = dispatch(
       loginAction({ email: data.email, password: data.password })
     );
+
+    gaEvents.eventLogin();
 
     setTimeout(() => {
       console.log('log', auth);
