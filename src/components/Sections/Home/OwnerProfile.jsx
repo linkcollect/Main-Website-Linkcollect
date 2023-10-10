@@ -140,11 +140,11 @@ const OwnerProfile = ({ username, windowWidth }) => {
           name="My Collection"
         />
         <div
-          className={`w-full flex items-start justify-between gap-6 ${
-            windowWidth < 700 ? 'hidden' : ''
-          }`}
+          className="w-full flex items-start justify-between gap-6"
         >
-          <div className=" w-[calc(100%-212px)]">
+          <div className={`${
+            windowWidth < 700 ? 'w-full' : 'w-[calc(100%-212px)] '
+          }`}>
             <Search query={query} setQuery={setQuery} />
           </div>
 
