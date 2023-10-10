@@ -97,6 +97,47 @@ const Profile = () => {
       }
     }
   };
+  const isValidSocialLink = linksObject => {
+    if (linksObject.twitterUrl === '' && linksObject.websiteUrl === '') {
+      return true;
+    }
+
+    if (linksObject.twitterUrl !== '') {
+      if (linksObject.twitterUrl.startsWith('https://twitter.com')) {
+        return true;
+      } else {
+        toast.error('Twitter link should start with https://twitter.com', {
+          style: {
+            border: '1px solid #4B4C63',
+            padding: '6px',
+            color: '#713200',
+            boxShadow: 'none',
+            width: 'max-content',
+            minWidth: 'max-content',
+          },
+        });
+        return false;
+      }
+    }
+
+    if (linksObject.websiteUrl !== '') {
+      if (linksObject.websiteUrl.startsWith('https://')) {
+        return true;
+      } else {
+        toast.error('Website link should start with https://', {
+          style: {
+            border: '1px solid #4B4C63',
+            padding: '6px',
+            color: '#713200',
+            boxShadow: 'none',
+            width: 'max-content',
+            minWidth: 'max-content',
+          },
+        });
+        return false;
+      }
+    }
+  };
   // Edit user details handler
   const onChangeUserData = e => {
     e.preventDefault();
@@ -160,6 +201,10 @@ const Profile = () => {
           minWidth: 'max-content',
         },
       });
+      return;
+    }
+    const isSocialLinkCorrect = isValidSocialLink(userSocialLinks);
+    if (isSocialLinkCorrect === false) {
       return;
     }
     try {
