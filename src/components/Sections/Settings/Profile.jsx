@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react';
 import Upload from '../../../assets/upload.svg';
 import UploadWhiteIcon from '../../../assets/darkMode/uploadIcon.svg';
-import profile from '../../../assets/defaultProfile.svg';
+import defaultImage from '../../../assets/defaultImage.svg';
 import twitter from '../../../assets/twitterBlue.svg';
 import websiteIcon from '../../../assets/websiteIcon.svg';
 import twitterWhite from '../../../assets/darkMode/twitterIcon.svg';
@@ -59,7 +59,7 @@ const Profile = () => {
     username: auth.username,
     isPublic: isPublic,
     email: auth.userData.email,
-    bio: auth.userData.bio ? auth.userData.email : '',
+    bio: auth.userData.bio,
   });
   // user social links
   const [userSocialLinks, setUserSocialLinks] = useState({
@@ -131,6 +131,7 @@ const Profile = () => {
       username: auth.username,
       isPublic: auth.userData.isPublic,
       email: auth.userData.email,
+      bio: auth.userData.bio,
     };
     const setSocial = {
       twitterUrl: auth.userData.socials[0],
@@ -198,6 +199,7 @@ const Profile = () => {
             profilePic: userResponse.data.data.profilePic,
             isPublic: userResponse.data.data.isPublic,
             socials: userResponse.data.data.socials,
+            bio: userResponse.data.data.bio,
           },
         })
       );
@@ -228,7 +230,9 @@ const Profile = () => {
         {/* Profile Image */}
         <div className="flex items-center justify-start w-full gap-6">
           <img
-            src={auth.userData.profilePic}
+            src={
+              auth.userData.profilePic ? auth.userData.profilePic : defaultImage
+            }
             ref={profilePicRef}
             alt=""
             className="w-20 h-20 rounded-full"

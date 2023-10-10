@@ -12,6 +12,7 @@ const authDefaultState = {
   isLoading: false,
   userData: {
     name: '',
+    bio: '',
     email: '',
     profilePic: '',
     isPremium: false,
@@ -28,6 +29,7 @@ const authDefaultState = {
 const setUserData = (state, action) => {
   const {
     name,
+    bio,
     username,
     email,
     isPremium,
@@ -40,6 +42,7 @@ const setUserData = (state, action) => {
   state.userData = {
     ...state.userData,
     name,
+    bio,
     email,
     isPremium,
     isPublic,
@@ -92,11 +95,12 @@ const AuthSlicer = createSlice({
     },
     setUser: (state, action) => {
       state.username = action.payload.username;
-      const { name, email, isPublic, profilePic, socials } =
+      const { name, bio, email, isPublic, profilePic, socials } =
         action.payload.userData;
       state.userData = {
         ...state.userData,
         name,
+        bio,
         email,
         isPublic,
         profilePic,

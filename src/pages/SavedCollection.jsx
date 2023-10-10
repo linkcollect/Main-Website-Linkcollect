@@ -23,6 +23,7 @@ const SavedCollection = ({ windowWidth }) => {
   const auth = useSelector(state => state.auth);
   const { selectedMode } = useContext(switchMode);
   const { isSortByDropdownOpen, toggleSortByDropdown } = useDropdown();
+
   useEffect(() => {
     dispatch(getSaveCollectionOfUser(auth.userId));
   }, [dispatch]);
@@ -59,7 +60,6 @@ const SavedCollection = ({ windowWidth }) => {
           <div className=" w-[calc(100%-212px)]">
             <Search query={query} setQuery={setQuery} />
           </div>
-
           {/* sort by */}
           <SortActions
             name="Sort By"
@@ -67,6 +67,7 @@ const SavedCollection = ({ windowWidth }) => {
             isOpen={isSortByDropdownOpen}
             toggleDropDown={toggleSortByDropdown}
           />
+
         </div>
       </div>
 
@@ -107,11 +108,13 @@ const SavedCollection = ({ windowWidth }) => {
             </div>
           </div>
         ) : (
-          <div className="flex flex-col self-center items-center justify-center w-full h-full">
-            <p className="mb-5 text-5xl text-textPrimary">
-              No Collection Found
-            </p>
-            <p className="text-textPrimary">You can save from explore page</p>
+          <div
+            className={`flex flex-col self-center items-center justify-center w-full h-full ${
+              selectedMode === 'dark' ? 'text-neutral-50' : 'text-black'
+            }`}
+          >
+            <p className="mb-5 text-5xl">No Collection Found</p>
+            <p>You can save from explore page</p>
           </div>
         )}
       </div>

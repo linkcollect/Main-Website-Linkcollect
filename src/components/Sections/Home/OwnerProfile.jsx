@@ -6,6 +6,7 @@ import CollectionHeader from '../../Common/CollectionHeader';
 import { useDispatch, useSelector } from 'react-redux';
 import { getByUsername } from '../../../api-services/userService';
 import Search from '../../Common/Search';
+
 import {
   collectionFetchingFailed,
   collectionFetchingSuccess,
@@ -21,9 +22,11 @@ import {
 import { SortActions } from '../../Common/ActiondropDown';
 import { togglePin } from '../../../api-services/collectionService';
 import SEO from '../../SEO/SEO';
+import useDropdown from '../../../hooks/useDropdown';
 
 import { switchMode } from '../../../hooks/switchMode';
 import useDropdown from '../../../hooks/useDropdown';
+
 const OwnerProfile = ({ username, windowWidth }) => {
   const dispatch = useDispatch();
   const [query, setQuery] = useState('');

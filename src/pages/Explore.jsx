@@ -23,10 +23,13 @@ import Loader from '../components/UI/Loader/Loader';
 import { getSearch } from '../api-services/collectionService';
 import { useSearchParams } from 'react-router-dom';
 import { searchedCollection, storeQuery } from '../store/Slices/explore.slice';
+import useDropdown from '../hooks/useDropdown';
+
 import { SortActions } from '../components/Common/ActiondropDown';
 import SEO from '../components/SEO/SEO';
 import { switchMode } from '../hooks/switchMode';
 import useDropdown from '../hooks/useDropdown';
+
 const Explore = ({ windowWidth }) => {
   const dispatch = useDispatch();
   const [query, setQuery] = useState('');
@@ -35,11 +38,8 @@ const Explore = ({ windowWidth }) => {
   const [isSearchingMore, setIsSearchingMore] = useState(false);
   const collection = useSelector(state => state.explore);
   const scrollableDivRef = useRef(null);
-  const {
-    isSortByDropdownOpen,
+  const { isSortByDropdownOpen, toggleSortByDropdown } = useDropdown();
 
-    toggleSortByDropdown,
-  } = useDropdown();
   const saveScrollPosition = () => {
     if (scrollableDivRef.current) {
       sessionStorage.setItem('scrollPos', scrollableDivRef.current.scrollTop);
@@ -224,7 +224,6 @@ const Explore = ({ windowWidth }) => {
                 onCancel={onCancelSerchedHandler}
                 onSubmit={getSearchResult}
               />
-
               {/* sort by */}
               <SortActions
                 name="Sort By"
@@ -232,6 +231,7 @@ const Explore = ({ windowWidth }) => {
                 isOpen={isSortByDropdownOpen}
                 toggleDropDown={toggleSortByDropdown}
               />
+              
             </div>
           </div>
 

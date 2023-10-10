@@ -1,7 +1,8 @@
 import React, { useContext, useEffect, useState } from 'react';
 import SortBy from '../../assets/sortBy.svg';
-import GridVeiw from '../../assets/GridVeiw.svg';
+import GridView from '../../assets/GridView.svg';
 import DarkSort from '../../assets/darkMode/darkmodeSortBy.svg';
+import DarkGrid from '../../assets/darkMode/darkmodeGridView.svg';
 import { motion } from 'framer-motion';
 import { switchMode } from '../../hooks/switchMode';
 export const MenuItem = ({ name, onClick, type, isSelected }) => {
@@ -58,9 +59,9 @@ export const SortActions = ({ name, menuItems, isOpen, toggleDropDown }) => {
       }  gap-2 border`}
     >
       {selectedMode === 'light' ? (
-        <img src={name === 'Sort By' ? SortBy : GridVeiw} alt="" />
+        <img src={name === 'Sort By' ? SortBy : GridView} alt="" />
       ) : (
-        <img src={name === 'Sort By' ? DarkSort : GridVeiw} alt="" />
+        <img src={name === 'Sort By' ? DarkSort : DarkGrid} alt="" />
       )}
       <span className="hidden text-sm font-medium sm:block">{name}</span>
 
@@ -71,7 +72,7 @@ export const SortActions = ({ name, menuItems, isOpen, toggleDropDown }) => {
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: 10 }}
           transition={{ duration: 0.2 }}
-          className={`w-[188px] rounded border absolute z-1000 top-[50px] right-0 ${
+          className={`w-[188px] rounded border absolute z-[1000] top-[50px] right-0 ${
             selectedMode === 'light'
               ? 'border-white  bg-neutral-100'
               : 'bg-dark-primary border-dark-border'
