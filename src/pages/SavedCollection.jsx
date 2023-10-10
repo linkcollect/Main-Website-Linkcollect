@@ -52,12 +52,12 @@ const SavedCollection = ({ windowWidth }) => {
           isOwner={true}
           name="Saved Collections"
         />
-        <div
-          className={`w-full flex items-start justify-between gap-6 ${
-            windowWidth < 700 ? 'hidden' : ''
-          }`}
-        >
-          <div className=" w-[calc(100%-212px)]">
+        <div className="w-full flex items-start justify-between gap-6">
+          <div
+            className={`${
+              windowWidth < 700 ? 'w-full' : 'w-[calc(100%-212px)]'
+            }`}
+          >
             <Search query={query} setQuery={setQuery} />
           </div>
           {/* sort by */}
