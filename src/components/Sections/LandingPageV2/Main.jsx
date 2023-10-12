@@ -31,6 +31,8 @@ const links = {
 
 const Main = ({ analytics, exploreData = undefined, windowWidth }) => {
   const navigate = useNavigate();
+  const highlightStyle = { backgroundColor: '#ACA1F067' };
+
   // const video1Ref = useRef();
   // const video1Controls = {
   //   end: () => {video1Ref.current.currentTime = 0; video1Ref.current.play()},
@@ -225,10 +227,18 @@ const Main = ({ analytics, exploreData = undefined, windowWidth }) => {
                   Use Commands to save
                 </h3>
                 <p className="text-[0.75rem] md:text-[1rem] text-neutral-600">
-                  Right click or use commands Alt+A or Alt+C to save the link /
-                  tab / All open tabs directly to linkCollect on any Page. Open
-                  all links in a collections with just a click, it's like
-                  restoring you tab sessions
+                  Right click or use commands{' '}
+                  <mark style={highlightStyle}>Alt+A</mark> or{' '}
+                  <mark style={highlightStyle}>Alt+C</mark> to{' '}
+                  <mark style={highlightStyle}>Save Current Open Tab</mark> or{' '}
+                  <mark style={highlightStyle}>All Open Tabs</mark> directly to
+                  linkCollect on any Page. Open all links saved in a collections
+                  with just a click, it's like restoring your tab sessions. You
+                  can also{' '}
+                  <mark style={highlightStyle}>
+                    Save All Links From A Selected Text
+                  </mark>{' '}
+                  to a collection with just a right click.
                 </p>
               </div>
             </div>
@@ -384,16 +394,10 @@ const Main = ({ analytics, exploreData = undefined, windowWidth }) => {
                 </h3>
               </div>
               <div className="list text-neutral-800">
-                <p className="text-left mb-[1rem]">Includes</p>
+                <p className="text-left mb-[1rem]">
+                  Includes Access to all basic features
+                </p>
                 <ul className="list-none flex flex-col gap-[0.75rem] text-left">
-                  <li className="flex">
-                    <img
-                      src={Approve}
-                      alt=""
-                      className="w-[1.25rem] mt-[-0.25rem] mr-[0.75rem]"
-                    />
-                    <p>Access to all basic features</p>
-                  </li>
                   <li className="flex">
                     <img
                       src={Approve}
@@ -476,6 +480,17 @@ const Main = ({ analytics, exploreData = undefined, windowWidth }) => {
                     </p>
                   </li>
                   <li className="flex">
+                    <img
+                      src={Approve}
+                      alt=""
+                      className="w-[1.25rem] h-[1.5rem] mr-[0.75rem]"
+                    />
+                    <p className="">
+                      Scrape and Save links from selection, save all links from
+                      selected text to a collection
+                    </p>
+                  </li>
+                  <li className="flex">
                     <div className="ml-[2rem] rounded-[25px] border-[1px] border-success-300 bg-success-100 leading-0 px-[0.5rem]">
                       Coming Soon 👇
                     </div>
@@ -502,18 +517,6 @@ const Main = ({ analytics, exploreData = undefined, windowWidth }) => {
                       collections between your colleagues or friends
                     </p>
                   </li>
-                  <li className="flex">
-                    <img
-                      src={Approve}
-                      alt=""
-                      className="w-[1.25rem] h-[1.5rem] mr-[0.75rem]"
-                    />
-                    <p className="">
-                      Export your collection data into a well organised excel
-                      sheet or csv, so you can do research without copy pasting
-                      links and titles 😃{' '}
-                    </p>
-                  </li>
                 </ul>
               </div>
               <div className="cta mt-auto">
@@ -529,10 +532,10 @@ const Main = ({ analytics, exploreData = undefined, windowWidth }) => {
             </div>
             {windowWidth > 768 && (
               <div className="pro w-full max-w-[30rem] p-[2rem] bg-gradient-to-b from-[#ffd900b9] border-[1px] border-[#ffdf27e3] rounded-[1rem] flex flex-col gap-[2rem] shadow-[rgba(0,_0,_0,_0.25)_0px_25px_50px_-12px] hover:scale-[1.02] transition">
-                <div className="head min-h-[10.5rem] border-b-[1px] border-b-neutral-300">
+                <div className="head min-h-[10.5rem] border-b-[1px] border-[#ffd900b9]">
                   <p className="text-neutral-700">Pro Plan</p>
                   <h3 className="text-[2.75rem] text-neutral-700">
-                    $119 for LifeTime
+                    $119 LifeTime
                   </h3>
                   <div className="mx-auto mt-[1rem] py-[0.125rem] px-[0.125rem] rounded-[3.5rem] border-[1px] border-neutral-300 bg-neutral-50 font-light h-max w-max items-center flex">
                     <div className="rounded-[3.5rem]  py-[0.125rem] px-[0.75rem] text-white bg-neutral-900 flex">
@@ -578,6 +581,17 @@ const Main = ({ analytics, exploreData = undefined, windowWidth }) => {
                         alt=""
                         className="w-[1.25rem] h-[1.5rem] mr-[0.75rem]"
                       />
+                      <p className="">
+                        Scrape and Save links from selection, save all links
+                        from selected text into a collection
+                      </p>
+                    </li>
+                    <li className="flex">
+                      <img
+                        src={Approve}
+                        alt=""
+                        className="w-[1.25rem] h-[1.5rem] mr-[0.75rem]"
+                      />
                       <p className="">Join Private Community</p>
                     </li>
                     <li className="flex">
@@ -605,18 +619,6 @@ const Main = ({ analytics, exploreData = undefined, windowWidth }) => {
                       <p className="">
                         Collaborative Curation, create privately shared
                         collections between your colleagues or friends
-                      </p>
-                    </li>
-                    <li className="flex">
-                      <img
-                        src={Approve}
-                        alt=""
-                        className="w-[1.25rem] h-[1.5rem] mr-[0.75rem]"
-                      />
-                      <p className="">
-                        Export your collection data into a well organised excel
-                        sheet or csv, so you can do research without copy
-                        pasting links and titles 😃{' '}
                       </p>
                     </li>
                   </ul>
