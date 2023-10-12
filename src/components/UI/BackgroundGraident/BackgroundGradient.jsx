@@ -36,11 +36,11 @@ const BackgroundGradient = ({ hashValue, title, className }) => {
       )}
     >
       <div
-        className={` ${
+        className={`max-w-[250px] overflow-hidden text-ellipsis ${
           selectedMode === 'light' ? 'text-neutral-800' : 'text-neutral-400'
         }`}
       >
-        {nameShortner(title, 100)}
+        {nameShortner(title, 60)}
       </div>
     </div>
   );
