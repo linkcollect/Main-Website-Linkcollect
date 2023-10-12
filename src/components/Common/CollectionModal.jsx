@@ -14,6 +14,7 @@ import {
 import { addCollection } from '../../store/Slices/collection.slice';
 import { updateCollectionData } from '../../store/Slices/bookmarks.slice';
 import { switchMode } from '../../hooks/switchMode';
+import Multiselect from 'multiselect-react-dropdown';
 
 export const CollectionModal = ({
   isOpen,
@@ -222,6 +223,28 @@ export const CollectionModal = ({
           </div>
 
           {/* Collection Tag */}
+          <div className="w-full">
+            <Label name="Tags" htmlFor="tags" />
+            <Multiselect
+              options={[
+                { name: 'Design', id: 1 },
+                { name: 'Product', id: 2 },
+                { name: 'Tech', id: 3 },
+                { name: 'Animation', id: 4 },
+                { name: 'Reading list', id: 5 },
+                { name: 'AI', id: 6 },
+                { name: 'Web development', id: 7 },
+                { name: 'Twitter threads', id: 8 },
+              ]}
+              selectedValues={this.state.selectedValues}
+              onSelect={this.onSelect}
+              onRemove={this.onRemove}
+              displayValue="name"
+              showCheckbox
+              maximumSelectionLength={3}
+              onChange={onChangeHandler}
+            />
+          </div>
 
           {/* Collection Thumbnail Input */}
           <div className="w-full">
