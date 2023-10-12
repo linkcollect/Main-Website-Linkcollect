@@ -432,7 +432,12 @@ const Profile = () => {
                     ? 'border-dark-secondary text-neutral-50 bg-dark-border '
                     : 'border-primary-100 text-neutral-900 bg-neutral-50 '
                 } focus:outline-none }`}
-                value={userProfileData.bio}
+                value={
+                  userProfileData.bio && userProfileData.bio !== 'undefined'
+                    ? userProfileData.bio
+                    : ''
+                }
+                placeholder="Add a bio - anyone visiting your profile will see it"
               />
             </div>
 
