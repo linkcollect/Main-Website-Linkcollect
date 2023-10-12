@@ -14,6 +14,7 @@ import {
 import { addCollection } from '../../store/Slices/collection.slice';
 import { updateCollectionData } from '../../store/Slices/bookmarks.slice';
 import { switchMode } from '../../hooks/switchMode';
+import { useSelector } from 'react-redux';
 
 export const CollectionModal = ({
   isOpen,
@@ -23,7 +24,7 @@ export const CollectionModal = ({
   collectionId = null, // it will be only availble if we edit a collection
 }) => {
   const [isLoading, setIsLoding] = React.useState(false);
-
+  const auth = useSelector(state => state.auth);
   const [collectionData, setCollectionData] = useState({
     title: '',
     description: '',
@@ -65,7 +66,11 @@ export const CollectionModal = ({
   const isValidDescription = collectionData.description?.length <= 240;
   const isValidTags = collectionData.tags?.length <= 3;
   // File max size
-  const MAXED_ALLOWED_SIZE = 1 * 1024 * 1024;
+  // get user.isPremium from redux, if premium give limit of 3 mb. if not give 1 mb
+  let MAXED_ALLOWED_SIZE = 1 * 1024 * 1024;
+  if (auth.userData.isPremium) {
+    MAXED_ALLOWED_SIZE = 3 * 1024 * 1024;
+  }
   // if no file is selected that means iamge is null so it will be always true as image is not mandatory data
   const isValidFileSize = !collectionData.image
     ? true
@@ -236,7 +241,9 @@ export const CollectionModal = ({
             />
             {!isValidFileSize && (
               <small className="text-xs text-error-500">
-                image should be at most 1MB
+                {`image should be at most ${
+                  MAXED_ALLOWED_SIZE / 1024 / 1024
+                } MB`}
               </small>
             )}
           </div>
