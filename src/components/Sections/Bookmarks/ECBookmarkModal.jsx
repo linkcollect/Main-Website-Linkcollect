@@ -16,6 +16,7 @@ import {
 import Button from '../../UI/Button/Button';
 import { useContext } from 'react';
 import { switchMode } from '../../../hooks/switchMode';
+import toast, { Toaster } from 'react-hot-toast';
 
 const EcBookamrkModal = ({
   isOpen,
@@ -99,6 +100,16 @@ const EcBookamrkModal = ({
       resetDataAndClose();
     } catch (e) {
       setIsLoading(false);
+      toast.error(e.response.data.message, {
+        style: {
+          border: '1px solid #4B4C63',
+          padding: '6px',
+          color: '#713200',
+          boxShadow: 'none',
+          width: 'max-content',
+          minWidth: 'max-content',
+        },
+      });
       console.log(e);
     }
   };
@@ -116,126 +127,131 @@ const EcBookamrkModal = ({
   const { selectedMode } = useContext(switchMode);
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose}>
-      <div className="flex flex-col gap-5 px-3">
-        {/* Header */}
-        <div className="flex justify-between w-full">
-          <h1
-            className={`text-start font-medium text-[20px] ${
-              selectedMode === 'light' ? 'text-black' : 'text-neutral-50'
+    <>
+      <Modal isOpen={isOpen} onClose={onClose}>
+        <div className="flex flex-col gap-5 px-3">
+          {/* Header */}
+          <div className="flex justify-between w-full">
+            <h1
+              className={`text-start font-medium text-[20px] ${
+                selectedMode === 'light' ? 'text-black' : 'text-neutral-50'
+              } `}
+            >
+              {isEditing ? 'Edit Bookmark' : 'Create Bookmark'}
+            </h1>
+            <button className="flex" onClick={onClose}>
+              {selectedMode === 'light' ? (
+                <img src={cancelIcon} name="cancel" />
+              ) : (
+                <img src={CancelWhite} name="cancel" />
+              )}
+            </button>
+          </div>
+
+          <hr
+            className={`w-[97%] border ${
+              selectedMode === 'light'
+                ? 'border-neutral-300'
+                : 'border-dark-secondary'
             } `}
-          >
-            {isEditing ? 'Edit Bookmark' : 'Create Bookmark'}
-          </h1>
-          <button className="flex" onClick={onClose}>
-            {selectedMode === 'light' ? (
-              <img src={cancelIcon} name="cancel" />
-            ) : (
-              <img src={CancelWhite} name="cancel" />
-            )}
-          </button>
-        </div>
+          />
 
-        <hr
-          className={`w-[97%] border ${
-            selectedMode === 'light'
-              ? 'border-neutral-300'
-              : 'border-dark-secondary'
-          } `}
-        />
-
-        {/* Content */}
-        <div className="w-[100%]">
-          <div className="flex items-center justify-between w-full">
-            <Label name="Bookmark Title" htmlFor="title" />
-            <small
-              className={`text-xs ${
-                selectedMode === 'light' ? '' : 'text-neutral-300'
-              } `}
-            >
-              <span
-                className={`${
-                  data.title?.length > 200 ? 'text-error-500' : ''
-                }`}
+          {/* Content */}
+          <div className="w-[100%]">
+            <div className="flex items-center justify-between w-full">
+              <Label name="Bookmark Title" htmlFor="title" />
+              <small
+                className={`text-xs ${
+                  selectedMode === 'light' ? '' : 'text-neutral-300'
+                } `}
               >
-                {data.title?.length}
-              </span>
-              /{200}
-            </small>
+                <span
+                  className={`${
+                    data.title?.length > 200 ? 'text-error-500' : ''
+                  }`}
+                >
+                  {data.title?.length}
+                </span>
+                /{200}
+              </small>
+            </div>
+            <Input
+              type="text"
+              name="title"
+              variant={selectedMode === 'light' ? '' : 'darkDefault'}
+              onChange={onChangeHandler}
+              value={data.title}
+            />
           </div>
-          <Input
-            type="text"
-            name="title"
-            variant={selectedMode === 'light' ? '' : 'darkDefault'}
-            onChange={onChangeHandler}
-            value={data.title}
-          />
-        </div>
-        <div className="w-[100%]">
-          <Label name="Bookmark URL" htmlFor="link" />
-          <Input
-            type="text"
-            name="link"
-            variant={selectedMode === 'light' ? '' : 'darkDefault'}
-            onChange={onChangeHandler}
-            value={data.link}
-          />
-          {data.link?.length > 3 && !isValidURL && (
-            <small className="text-xs text-error-500">
-              Please Provide a Valid Url
-            </small>
-          )}
-        </div>
-        <div className="w-[100%]">
-          <div className="flex items-center justify-between w-full">
-            <Label name="Note" htmlFor="note" />
-            <small
-              className={`text-xs ${
-                selectedMode === 'light' ? '' : 'text-neutral-300'
-              } `}
-            >
-              <span
-                className={`${data.note?.length > 150 ? 'text-error-500' : ''}`}
-              >
-                {data.note?.length ? data.note?.length : 0}
-              </span>
-              /{150}
-            </small>
-          </div>
-          <TextArea
-            name="note"
-            variant={selectedMode === 'light' ? '' : 'darkDefault'}
-            onChange={onChangeHandler}
-            value={data.note ? data.note : ''}
-          />
-          {data.note?.length > 150 && !isValidURL && (
-            <small className="text-xs text-error-500">
-              Maximum note length is 150 characters
-            </small>
-          )}
-        </div>
-        {/* Actions */}
-        <div className="flex items-center w-full gap-2 sm:justify-between justify-evenly">
-          <Button
-            variant="primary"
-            disabled={!isValidData || isSameData} // button will be disabled untli all required data is correct
-            onClick={onSubmit}
-            isLoading={isLoading}
-          >
-            {isLoading ? (
-              <Loader />
-            ) : (
-              <span>{isEditing ? 'Update' : 'Add Bookmark'}</span>
+          <div className="w-[100%]">
+            <Label name="Bookmark URL" htmlFor="link" />
+            <Input
+              type="text"
+              name="link"
+              variant={selectedMode === 'light' ? '' : 'darkDefault'}
+              onChange={onChangeHandler}
+              value={data.link}
+            />
+            {data.link?.length > 3 && !isValidURL && (
+              <small className="text-xs text-error-500">
+                Please Provide a Valid Url
+              </small>
             )}
-          </Button>
-          {isEditing && (
-            <Button variant="secondaryOutline" onClick={resetDataAndClose}>
-              <span>Cancel</span>
+          </div>
+          <div className="w-[100%]">
+            <div className="flex items-center justify-between w-full">
+              <Label name="Note" htmlFor="note" />
+              <small
+                className={`text-xs ${
+                  selectedMode === 'light' ? '' : 'text-neutral-300'
+                } `}
+              >
+                <span
+                  className={`${
+                    data.note?.length > 150 ? 'text-error-500' : ''
+                  }`}
+                >
+                  {data.note?.length ? data.note?.length : 0}
+                </span>
+                /{150}
+              </small>
+            </div>
+            <TextArea
+              name="note"
+              variant={selectedMode === 'light' ? '' : 'darkDefault'}
+              onChange={onChangeHandler}
+              value={data.note ? data.note : ''}
+            />
+            {data.note?.length > 150 && !isValidURL && (
+              <small className="text-xs text-error-500">
+                Maximum note length is 150 characters
+              </small>
+            )}
+          </div>
+          {/* Actions */}
+          <div className="flex items-center w-full gap-2 sm:justify-between justify-evenly">
+            <Button
+              variant="primary"
+              disabled={!isValidData || isSameData} // button will be disabled untli all required data is correct
+              onClick={onSubmit}
+              isLoading={isLoading}
+            >
+              {isLoading ? (
+                <Loader />
+              ) : (
+                <span>{isEditing ? 'Update' : 'Add Bookmark'}</span>
+              )}
             </Button>
-          )}
+            {isEditing && (
+              <Button variant="secondaryOutline" onClick={resetDataAndClose}>
+                <span>Cancel</span>
+              </Button>
+            )}
+          </div>
         </div>
-      </div>
-    </Modal>
+      </Modal>
+      <Toaster position="bottom-left" reverseOrder={true} />
+    </>
   );
 };
 
