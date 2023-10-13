@@ -103,11 +103,11 @@ const EcBookamrkModal = ({
     }
   };
   const resetDataAndClose = () => {
-    // setData({
-    //     title: "",
-    //     link: "",
-    //     note: ""
-    // })
+    setData({
+      title: '',
+      link: '',
+      note: '',
+    });
     setIsLoading(false);
     onClose();
   };
