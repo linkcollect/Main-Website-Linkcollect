@@ -250,7 +250,7 @@ const EcBookamrkModal = ({
           </div>
         </div>
       </Modal>
-      <Toaster position="bottom-left" reverseOrder={true} />
+      <Toaster position="top-center" reverseOrder={true} />
     </>
   );
 };
