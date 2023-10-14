@@ -9,20 +9,63 @@ import {
   upvoteCollection,
 } from '../../api-services/collectionService';
 
+async function fetchMetaData(url) {
+  let data = {
+    images: [],
+    description:
+      'This Link has no Description 😔, but hey do you know that with linkcollect you can save all tabs using just a command and share them with your friends like this collection ?',
+  };
+  const apiUrl = `https://jsonlink.io/api/extract?url=${url}`;
+  const backupLinkCollect = `https://dev.linkcollect.io/api/v1/analytics/getMetadata?url=${url}`;
+  try {
+    const response = await fetch(apiUrl);
+
+    if (!response.ok) {
+      const backupResponse = await fetch(backupLinkCollect);
+      if (!backupResponse.ok) {
+        return data;
+      }
+      const res = await backupResponse.json();
+      if (res.description) {
+        data.description = res.description;
+      }
+      if (res.images) {
+        data.images = res.images;
+      }
+      return data;
+    }
+    const res = await response.json();
+    if (res.description) {
+      data.description = res.description;
+    }
+    if (res.images) {
+      data.images = res.images;
+    }
+
+    return data;
+  } catch (err) {
+    console.log(err);
+    return data;
+  }
+}
 // Asynchronus function to get bookmarks by collection ID
 export const getBookmarks = createAsyncThunk(
   'getAllBookMarks',
   async payload => {
     const res = await getCollection(payload.collectionId);
-    const timeLineWithIsSelectedData = [];
-    res.data.data.timelines.map(timeline => {
-      const newTimeLine = {
-        ...timeline,
-        isSelected: false,
-      };
-      timeLineWithIsSelectedData.push(newTimeLine);
-    });
-    res.data.data.timelines = timeLineWithIsSelectedData;
+    const fetchMetaDataPromises = res.data.data.timelines.map(
+      async timeline => {
+        const newTimeLine = {
+          ...timeline,
+          isSelected: false,
+          metaData: await fetchMetaData(timeline.link),
+        };
+        return newTimeLine;
+      }
+    );
+    const updatedTimeline = await Promise.all(fetchMetaDataPromises);
+
+    res.data.data.timelines = updatedTimeline;
     return { collectionData: res.data.data };
   }
 );

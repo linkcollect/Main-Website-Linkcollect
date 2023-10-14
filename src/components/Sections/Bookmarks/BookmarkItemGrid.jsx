@@ -43,9 +43,9 @@ const BookmarkItemGrid = ({
   deleteBookmark,
   toggleBookmarkPin,
   collectionName,
+  metaData,
 }) => {
-  const [jsonResponse, setJsonResponse] = useState({});
-
+  const [imgError, setImgError] = useState(false);
   // to see if checked or not
   const [checked, setChecked] = useState(false);
   const [openEditBookmarkModal, setOpenEditBookmarkModal] = useState(false);
@@ -64,66 +64,6 @@ const BookmarkItemGrid = ({
     }
   }, [isSelected]);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const apiUrl = `https://jsonlink.io/api/extract?url=${url}`;
-      const backupApiUrl = `https://api.dub.co/metatags?url=${url}`;
-      const backupLinkCollect = `https://dev.linkcollect.io/api/v1/analytics/getMetadata?url=${url}`;
-
-      try {
-        // Make the primary API request
-        const response = await fetch(apiUrl);
-
-        if (!response.ok) {
-          await fetchAndSetBackup();
-        } else {
-          const data = await response.json();
-
-          // Check if data.images.length is 0 or if data.description is empty or doesn't exist
-          if (data?.images?.length === 0 || !data?.description) {
-            await fetchAndSetBackup();
-          }
-
-          setJsonResponse(data);
-        }
-      } catch (error) {
-        console.error('There was a problem with the fetch operation:', error);
-      }
-    };
-    fetchData();
-
-    const fetchAndSetBackup = async () => {
-      // const backupApiUrl = `https://api.dub.co/metatags?url=${url}`;
-      const backupLinkCollect = `https://dev.linkcollect.io/api/v1/analytics/getMetadata?url=${url}`;
-
-      // If the primary API request fails, fall back to the backup API
-      const backupResponse = await fetch(backupLinkCollect);
-
-      if (!backupResponse.ok) {
-        throw new Error('Both API requests failed');
-      }
-
-      let data = {
-        images: [],
-        description:
-          'This Link has no Description 😔, but hey do you know that with linkcollect you can save all tabs using just a command and share them with your friends like this collection ?',
-      };
-
-      const res = await backupResponse.json();
-
-      console.log(res);
-
-      if (res.data.description) {
-        data.description = res.data.description;
-      }
-      if (res.data.images) {
-        data.images = res.data.images;
-      }
-
-      setJsonResponse(data);
-      console.log('-', data.images[0]);
-    };
-  }, [url, setJsonResponse]);
   const copyRef = useRef();
 
   const bookmarkEditModalHandler = () => {
@@ -209,7 +149,7 @@ const BookmarkItemGrid = ({
 
   return (
     <>
-      {jsonResponse && (
+      {metaData && (
         <>
           <EcBookamrkModal
             isOpen={openEditBookmarkModal}
@@ -310,18 +250,12 @@ const BookmarkItemGrid = ({
               )}
 
               <div className="w-full h-[105px] relative">
-                {jsonResponse?.images?.[0] ? (
+                {metaData?.images?.[0] && !imgError ? (
                   <img
-                    src={jsonResponse?.images[0]}
+                    src={metaData?.images?.[0]}
                     alt=""
                     onError={() => {
-                      setJsonResponse(prev => ({
-                        ...prev,
-                        images: [],
-                      }));
-
-                      // jsonResponse.images[0] =
-                      //   'https://media.discordapp.net/attachments/1075034816849924166/1153938590192128040/Frame.jpg?ex=651e558f&is=651d040f&hm=dd966ebc52ebda4c53c4af3cb0cae55e02bad8c561f7f161307577a50d246e90&=&width=1934&height=1158';
+                      setImgError(true);
                     }}
                     className="object-cover w-full h-full rounded-t-md"
                   />
@@ -360,7 +294,7 @@ const BookmarkItemGrid = ({
                   {name}
                 </p>
                 {/* description */}
-                {jsonResponse?.description ? (
+                {metaData?.description ? (
                   <p
                     className={`mt-3 text-sm   ${
                       selectedMode === 'light'
@@ -368,7 +302,7 @@ const BookmarkItemGrid = ({
                         : 'text-neutral-400'
                     } font-light text-start line-clamp-3 min-h-[62px]`}
                   >
-                    {jsonResponse.description}
+                    {metaData.description}
                   </p>
                 ) : (
                   <p

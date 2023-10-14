@@ -286,6 +286,7 @@ const Bookmarks = ({ windowWidth }) => {
                           toggleBookmarkPin={toggleBookmarkPin}
                           isPinned={timeline.isPinned}
                           collectionName={collectionData.collectionData.title}
+                          metaData={timeline.metaData}
                         />
                       ))}
                     </div>
