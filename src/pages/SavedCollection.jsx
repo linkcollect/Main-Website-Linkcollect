@@ -15,6 +15,7 @@ import Search from '../components/Common/Search';
 import { useContext } from 'react';
 import { switchMode } from '../hooks/switchMode';
 import useDropdown from '../hooks/useDropdown';
+import toast, { Toaster } from 'react-hot-toast';
 
 const SavedCollection = ({ windowWidth }) => {
   const dispatch = useDispatch();
@@ -27,25 +28,46 @@ const SavedCollection = ({ windowWidth }) => {
   useEffect(() => {
     dispatch(getSaveCollectionOfUser(auth.userId));
   }, [dispatch]);
+  // TODO : implement onclick
+
+  const comingSoonToast = () => {
+    return toast.success('Coming Soon...', {
+      style: {
+        border: '1px solid #4B4C63',
+        padding: '6px',
+        color: '#713200',
+        boxShadow: 'none',
+        width: 'max-content',
+        minWidth: 'max-content',
+      },
+    });
+  };
   const menuItem = [
     {
       name: 'Recently Updated',
-      onClick: '',
+      onClick: () => {
+        comingSoonToast();
+      },
       tag: 'RECENETLY_UPDATED',
     },
     {
       name: 'Most Upvotes',
-      onClick: '',
+      onClick: () => {
+        comingSoonToast();
+      },
       tag: 'RECENETLY_UPDATED',
     },
     {
       name: 'Most Links',
-      onClick: '',
+      onClick: () => {
+        comingSoonToast();
+      },
       tag: 'RECENETLY_UPDATED',
     },
   ];
   return (
     <BaseLayout>
+      <Toaster position="top-center" reverseOrder={true} />
       <div className="flex flex-col items-start justify-center w-full gap-4 mx-auto 3xl:px-0 px-8 max-w-[1500px]">
         <CollectionHeader
           windowWidth={windowWidth}
