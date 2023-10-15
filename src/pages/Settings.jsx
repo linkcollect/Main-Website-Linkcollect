@@ -37,8 +37,8 @@ const Settings = () => {
       id: 'profile-tab',
     },
     {
-      title: 'Notifaction',
-      aria_controls: 'notifaction',
+      title: 'Notification',
+      aria_controls: 'notification',
       id: 'notification-tab',
     },
     {
