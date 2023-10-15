@@ -67,7 +67,7 @@ const MoreFromUser = ({ collectionData, user }) => {
           >
             {userCollections
               ?.filter(collection => {
-                return collection._id !== collectionData.collectionData._id;
+                return collection._id !== collectionData._id;
               })
               .map(collection => {
                 return (
