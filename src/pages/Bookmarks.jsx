@@ -363,8 +363,7 @@ const Bookmarks = ({ windowWidth }) => {
                       className="text-primary-400"
                       href="https://chrome.google.com/webstore/detail/linkcollect-save-share-bo/knekpacpcgkieomkhhngenjeeokddkif"
                     >
-                      {' '}
-                      Click To Install{' '}
+                      Click To Install
                     </a>
                   </div>
                 )}
