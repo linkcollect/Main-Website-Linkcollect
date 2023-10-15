@@ -45,7 +45,10 @@ const Bookmarks = ({ windowWidth }) => {
   //For handiling click event on the bookmarkItem
   const [clickedId, setClickedId] = useState(null);
   const auth = useSelector(state => state.auth);
-  const collectionData = useSelector(state => state.collectionData);
+  const collectionData = useSelector(
+    state => state.collectionData.collectionData
+  );
+  const isFetching = useSelector(state => state.collectionData.isFetching);
   const dispatch = useDispatch();
 
   const {
@@ -54,9 +57,66 @@ const Bookmarks = ({ windowWidth }) => {
     toggleSortByDropdown,
     toggleViewDropdown,
   } = useDropdown();
+
+  const [metaData, setMetaData] = useState([]);
   useEffect(() => {
     dispatch(getBookmarks({ collectionId }));
   }, [collectionId]);
+
+  useEffect(() => {
+    if (!isFetching && collectionData._id === collectionId) {
+      metaDataFetch();
+    }
+  }, [isFetching]);
+  async function fetchMetaData(url) {
+    let data = {
+      images: [],
+      description:
+        'This Link has no Description 😔, but hey do you know that with linkcollect you can save all tabs using just a command and share them with your friends like this collection ?',
+    };
+    const apiUrl = `https://jsonlink.io/api/extract?url=${url}`;
+    const backupLinkCollect = `https://dev.linkcollect.io/api/v1/analytics/getMetadata?url=${url}`;
+    try {
+      const response = await fetch(apiUrl);
+      if (!response.ok) {
+        const backupResponse = await fetch(backupLinkCollect);
+        if (!backupResponse.ok) {
+          return data;
+        }
+        const res = await backupResponse.json();
+        if (res.description) {
+          data.description = res.description;
+        }
+        if (res.images) {
+          data.images = res.images;
+        }
+        return data;
+      }
+      const res = await response.json();
+      if (res.description) {
+        data.description = res.description;
+      }
+      if (res.images) {
+        data.images = res.images;
+      }
+
+      return data;
+    } catch (err) {
+      console.log(err);
+      return data;
+    }
+  }
+  const metaDataFetch = async () => {
+    const fetchMetaDataPromises = collectionData.timelines.map(
+      async timeline => {
+        const metaData = await fetchMetaData(timeline.link);
+        return metaData;
+      }
+    );
+
+    const updatedTimeline = await Promise.all(fetchMetaDataPromises);
+    setMetaData(updatedTimeline);
+  };
 
   const editCollectionModalHandler = () => {
     setEditCollectionModalOpen(prev => !prev);
@@ -138,67 +198,58 @@ const Bookmarks = ({ windowWidth }) => {
 
   // Logic for search
   const filteredBookmarks = useMemo(() => {
-    return !collectionData.isFetching &&
-      collectionData.collectionData.timelines?.length > 0
-      ? collectionData.collectionData.timelines.filter(tItem =>
+    return !isFetching && collectionData.timelines?.length > 0
+      ? collectionData.timelines.filter(tItem =>
           tItem.title.toLowerCase().includes(query.toLowerCase())
         )
       : [];
-  }, [query, collectionData.collectionData, collectionData.isFetching]);
+  }, [query, collectionData, isFetching]);
   // dark and light mode switch
   const { selectedMode } = useContext(switchMode);
 
   return (
     <BaseLayout>
       <SEO
-        title={
-          collectionData.collectionData?.title
-            ? collectionData.collectionData?.title
-            : null
-        }
+        title={collectionData?.title ? collectionData?.title : null}
         description={
-          collectionData.collectionData?.description
-            ? collectionData.collectionData?.description
+          collectionData?.description
+            ? collectionData?.description
             : 'This is an amazing collection of links, curated by ' +
-              collectionData.collectionData?.username
+              collectionData?.username
         }
-        image={
-          collectionData.collectionData?.image
-            ? collectionData.collectionData?.image
-            : null
-        }
+        image={collectionData?.image ? collectionData?.image : null}
       ></SEO>
       <div className="flex flex-col w-full h-[calc(100%)] mx-auto mb-[0.5rem] overflow-y-auto scrollbar-hide">
         {/* Collection Edit Modal */}
-        {!collectionData.isFetching && (
+        {!isFetching && (
           <CollectionModal
             isOpen={editCollectionModalOpen}
             modalCloseHandler={editCollectionModalHandler}
             isEditing={true}
             originalCollectionData={{
-              title: collectionData.collectionData?.title,
-              description: collectionData.collectionData?.description,
-              tags: collectionData.collectionData?.tags,
-              isPublic: collectionData.collectionData?.isPublic,
-              image: collectionData.collectionData?.image,
+              title: collectionData?.title,
+              description: collectionData?.description,
+              tags: collectionData?.tags,
+              isPublic: collectionData?.isPublic,
+              image: collectionData?.image,
             }}
             collectionId={collectionId}
           />
         )}
-        {!collectionData.isFetching && (
+        {!isFetching && (
           <Delete
             isOpen={deleteCollectionModal}
             onClose={deleteCollectionModalHandler}
             collectionID={collectionId}
             heading="Delete Collection"
-            subheading={`Delete the collection - ${collectionData.collectionData?.title}`}
+            subheading={`Delete the collection - ${collectionData?.title}`}
             mode="collectionDelete"
           />
         )}
 
         {/* Bookmarks */}
         {/* Create Bookamrk */}
-        {!collectionData.isFetching && (
+        {!isFetching && (
           <EcBookamrkModal
             isOpen={openCreateBookmarkModal}
             onClose={bookmarkCreateModalHandler}
@@ -214,19 +265,19 @@ const Bookmarks = ({ windowWidth }) => {
               <CollectionInfoHeader
                 windowWidth={windowWidth}
                 onBack={backHandler}
-                collectionName={collectionData.collectionData?.title}
-                collectionDesc={collectionData.collectionData?.description}
-                noOfLinks={collectionData.collectionData?.timelines?.length}
-                image={collectionData.collectionData?.image}
-                tags={collectionData.collectionData?.tags}
-                isPublic={collectionData.collectionData?.isPublic}
-                isOwner={collectionData.collectionData.userId === auth.userId}
+                collectionName={collectionData?.title}
+                collectionDesc={collectionData?.description}
+                noOfLinks={collectionData?.timelines?.length}
+                image={collectionData?.image}
+                tags={collectionData?.tags}
+                isPublic={collectionData?.isPublic}
+                isOwner={collectionData.userId === auth.userId}
                 editCollectionModalOpener={editCollectionModalHandler}
                 createBookmarkModalOpener={bookmarkCreateModalHandler}
                 deleteCollectionModalHandler={deleteCollectionModalHandler}
                 collectionId={collectionId}
-                upvotes={collectionData.collectionData.upvotes}
-                collectionUsername={collectionData.collectionData.username}
+                upvotes={collectionData?.upvotes}
+                collectionUsername={collectionData?.username}
               />
               {/* Search Bar and Filter */}
               <div className="w-[100%] sticky z-[99]">
@@ -256,17 +307,16 @@ const Bookmarks = ({ windowWidth }) => {
 
           {/* Bookmarks Container */}
           <div className="w-full h-[max] mx-auto ">
-            {collectionData.isFetching ? (
+            {isFetching ? (
               <div className="flex items-center justify-center w-full h-full">
                 <PageLoader />
               </div>
-            ) : collectionData.collectionData &&
-              filteredBookmarks?.length > 0 ? (
+            ) : collectionData && filteredBookmarks?.length > 0 ? (
               isGridView === 'GRID_VIEW' ? (
                 <div className="w-full h-[calc(100%-55px)] py-10 scrollbar-hide">
                   <div className="w-[100%] h-[calc(100%-65px)] space-y-2">
                     <div className="grid justify-start w-full grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 2xl:gap-6 ">
-                      {filteredBookmarks.map(timeline => (
+                      {filteredBookmarks.map((timeline, index) => (
                         <BookmarkItemGrid
                           key={timeline._id}
                           id={timeline._id}
@@ -276,16 +326,15 @@ const Bookmarks = ({ windowWidth }) => {
                           favicon={timeline.favicon}
                           windowWidth={windowWidth}
                           updatedAt={timeline.updatedAt}
-                          isOwner={
-                            collectionData.collectionData.userId === auth.userId
-                          }
+                          isOwner={collectionData?.userId === auth.userId}
                           clickedId={clickedId}
                           setClickedId={setClickedId}
                           isSelected={timeline.isSelected}
                           collectionId={collectionId}
                           toggleBookmarkPin={toggleBookmarkPin}
                           isPinned={timeline.isPinned}
-                          collectionName={collectionData.collectionData.title}
+                          collectionName={collectionData?.title}
+                          metaData={metaData[index]}
                         />
                       ))}
                     </div>
@@ -304,16 +353,14 @@ const Bookmarks = ({ windowWidth }) => {
                         favicon={timeline.favicon}
                         windowWidth={windowWidth}
                         updatedAt={timeline.updatedAt}
-                        isOwner={
-                          collectionData.collectionData.userId === auth.userId
-                        }
+                        isOwner={collectionData?.userId === auth.userId}
                         clickedId={clickedId}
                         setClickedId={setClickedId}
                         isSelected={timeline.isSelected}
                         collectionId={collectionId}
                         toggleBookmarkPin={toggleBookmarkPin}
                         isPinned={timeline.isPinned}
-                        collectionName={collectionData.collectionData.title}
+                        collectionName={collectionData?.title}
                       />
                     ))}
                     <div className="h-[60px]"></div>
@@ -351,10 +398,10 @@ const Bookmarks = ({ windowWidth }) => {
             )}
           </div>
         </div>
-        {!collectionData.isFetching && (
+        {isFetching && (
           <MoreFromUser
             collectionData={collectionData}
-            user={collectionData?.collectionData?.username}
+            user={collectionData?.username}
           ></MoreFromUser>
         )}
       </div>
