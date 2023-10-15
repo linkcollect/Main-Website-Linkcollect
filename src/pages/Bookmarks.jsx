@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import PageLoader from '../components/UI/Loader/PageLoader';
 import CollectionModal from '../components/Common/CollectionModal';
@@ -21,7 +21,7 @@ import { useContext } from 'react';
 import { switchMode } from '../hooks/switchMode';
 import MoreFromUser from '../components/Sections/Bookmarks/MoreFromUser';
 import BookmarkItemGrid from '../components/Sections/Bookmarks/BookmarkItemGrid';
-import useDropdown from '../hooks/useDropdown.js';
+import useDropdown from '../hooks/useDropdown';
 
 const Bookmarks = ({ windowWidth }) => {
   const navigation = useNavigate();
@@ -82,6 +82,16 @@ const Bookmarks = ({ windowWidth }) => {
 
     return document.removeEventListener('click', e => {});
   }, [clickedId]);
+
+  // if profile or collection is private, redirect to home after 11 seconds.
+  useEffect(() => {
+    if (!collectionData?.collectionData?.isPublic) {
+      const timer = setTimeout(() => {
+        navigation('/');
+      }, 11000);
+      return () => clearTimeout(timer);
+    }
+  }, [JSON.stringify(collectionData)]);
 
   const backHandler = e => {
     e.preventDefault();
@@ -168,196 +178,219 @@ const Bookmarks = ({ windowWidth }) => {
             : null
         }
       ></SEO>
-      <div className="flex flex-col w-full h-[calc(100%)] mx-auto mb-[0.5rem] overflow-y-auto scrollbar-hide">
-        {/* Collection Edit Modal */}
-        {!collectionData.isFetching && (
-          <CollectionModal
-            isOpen={editCollectionModalOpen}
-            modalCloseHandler={editCollectionModalHandler}
-            isEditing={true}
-            originalCollectionData={{
-              title: collectionData.collectionData?.title,
-              description: collectionData.collectionData?.description,
-              tags: collectionData.collectionData?.tags,
-              isPublic: collectionData.collectionData?.isPublic,
-              image: collectionData.collectionData?.image,
-            }}
-            collectionId={collectionId}
-          />
-        )}
-        {!collectionData.isFetching && (
-          <Delete
-            isOpen={deleteCollectionModal}
-            onClose={deleteCollectionModalHandler}
-            collectionID={collectionId}
-            heading="Delete Collection"
-            subheading={`Delete the collection - ${collectionData.collectionData?.title}`}
-            mode="collectionDelete"
-          />
-        )}
 
-        {/* Bookmarks */}
-        {/* Create Bookamrk */}
-        {!collectionData.isFetching && (
-          <EcBookamrkModal
-            isOpen={openCreateBookmarkModal}
-            onClose={bookmarkCreateModalHandler}
-            isEditing={false}
-            collectionID={collectionId}
-          />
-        )}
-
-        <div className="flex flex-col w-full px-8 lg:px-[5rem]">
-          <div className="">
-            {/* Header : Collection Details , Actions */}
-            <div className="w-full pt-2 mx-auto ">
-              <CollectionInfoHeader
-                windowWidth={windowWidth}
-                onBack={backHandler}
-                collectionName={collectionData.collectionData?.title}
-                collectionDesc={collectionData.collectionData?.description}
-                noOfLinks={collectionData.collectionData?.timelines?.length}
-                image={collectionData.collectionData?.image}
-                tags={collectionData.collectionData?.tags}
-                isPublic={collectionData.collectionData?.isPublic}
-                isOwner={collectionData.collectionData.userId === auth.userId}
-                editCollectionModalOpener={editCollectionModalHandler}
-                createBookmarkModalOpener={bookmarkCreateModalHandler}
-                deleteCollectionModalHandler={deleteCollectionModalHandler}
+      {collectionData?.collectionData?.isPublic ? (
+        <>
+          <div className="flex flex-col w-full h-[calc(100%)] mx-auto mb-[0.5rem] overflow-y-auto scrollbar-hide">
+            {/* Collection Edit Modal */}
+            {!collectionData.isFetching && (
+              <CollectionModal
+                isOpen={editCollectionModalOpen}
+                modalCloseHandler={editCollectionModalHandler}
+                isEditing={true}
+                originalCollectionData={{
+                  title: collectionData.collectionData?.title,
+                  description: collectionData.collectionData?.description,
+                  tags: collectionData.collectionData?.tags,
+                  isPublic: collectionData.collectionData?.isPublic,
+                  image: collectionData.collectionData?.image,
+                }}
                 collectionId={collectionId}
-                upvotes={collectionData.collectionData.upvotes}
-                collectionUsername={collectionData.collectionData.username}
               />
-              {/* Search Bar and Filter */}
-              <div className="w-[100%] sticky z-[99]">
-                <div className="relative flex flex-row items-end gap-2 mt-5 sm:flex-row">
-                  <Search query={query} setQuery={setQuery} />
+            )}
+            {!collectionData.isFetching && (
+              <Delete
+                isOpen={deleteCollectionModal}
+                onClose={deleteCollectionModalHandler}
+                collectionID={collectionId}
+                heading="Delete Collection"
+                subheading={`Delete the collection - ${collectionData.collectionData?.title}`}
+                mode="collectionDelete"
+              />
+            )}
 
-                  {/* sort by */}
-                  <SortActions
-                    name="View"
-                    menuItems={GridmenuItem}
-                    isOpen={isViewDropdownOpen}
-                    toggleDropDown={toggleViewDropdown}
+            {/* Bookmarks */}
+            {/* Create Bookamrk */}
+            {!collectionData.isFetching && (
+              <EcBookamrkModal
+                isOpen={openCreateBookmarkModal}
+                onClose={bookmarkCreateModalHandler}
+                isEditing={false}
+                collectionID={collectionId}
+              />
+            )}
+
+            <div className="flex flex-col w-full px-8 lg:px-[5rem]">
+              <div className="">
+                {/* Header : Collection Details , Actions */}
+                <div className="w-full pt-2 mx-auto ">
+                  <CollectionInfoHeader
+                    windowWidth={windowWidth}
+                    onBack={backHandler}
+                    collectionName={collectionData.collectionData?.title}
+                    collectionDesc={collectionData.collectionData?.description}
+                    noOfLinks={collectionData.collectionData?.timelines?.length}
+                    image={collectionData.collectionData?.image}
+                    tags={collectionData.collectionData?.tags}
+                    isPublic={collectionData.collectionData?.isPublic}
+                    isOwner={
+                      collectionData.collectionData.userId === auth.userId
+                    }
+                    editCollectionModalOpener={editCollectionModalHandler}
+                    createBookmarkModalOpener={bookmarkCreateModalHandler}
+                    deleteCollectionModalHandler={deleteCollectionModalHandler}
+                    collectionId={collectionId}
+                    upvotes={collectionData.collectionData.upvotes}
+                    collectionUsername={collectionData.collectionData.username}
                   />
-                  <SortActions
-                    name="Sort By"
-                    menuItems={menuItem}
-                    isOpen={isSortByDropdownOpen}
-                    toggleDropDown={toggleSortByDropdown}
-                  />
-                </div>
-              </div>
-            </div>
+                  {/* Search Bar and Filter */}
+                  <div className="w-[100%] sticky z-[99]">
+                    <div className="relative flex flex-row items-end gap-2 mt-5 sm:flex-row">
+                      <Search query={query} setQuery={setQuery} />
 
-            {/* Checked Items : Number of CheckItems, Action Select All and Uncheck All, Move and Delete */}
-            {/* Selecet Unslect Component will be shown here */}
-          </div>
-
-          {/* Bookmarks Container */}
-          <div className="w-full h-[max] mx-auto ">
-            {collectionData.isFetching ? (
-              <div className="flex items-center justify-center w-full h-full">
-                <PageLoader />
-              </div>
-            ) : collectionData.collectionData &&
-              filteredBookmarks?.length > 0 ? (
-              isGridView === 'GRID_VIEW' ? (
-                <div className="w-full h-[calc(100%-55px)] py-10 scrollbar-hide">
-                  <div className="w-[100%] h-[calc(100%-65px)] space-y-2">
-                    <div className="grid justify-start w-full grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 2xl:gap-6 ">
-                      {filteredBookmarks.map(timeline => (
-                        <BookmarkItemGrid
-                          key={timeline._id}
-                          id={timeline._id}
-                          name={timeline.title}
-                          url={timeline.link}
-                          note={!timeline.note ? '' : timeline.note}
-                          favicon={timeline.favicon}
-                          windowWidth={windowWidth}
-                          updatedAt={timeline.updatedAt}
-                          isOwner={
-                            collectionData.collectionData.userId === auth.userId
-                          }
-                          clickedId={clickedId}
-                          setClickedId={setClickedId}
-                          isSelected={timeline.isSelected}
-                          collectionId={collectionId}
-                          toggleBookmarkPin={toggleBookmarkPin}
-                          isPinned={timeline.isPinned}
-                          collectionName={collectionData.collectionData.title}
-                        />
-                      ))}
+                      {/* sort by */}
+                      <SortActions
+                        name="View"
+                        menuItems={GridmenuItem}
+                        isOpen={isViewDropdownOpen}
+                        toggleDropDown={toggleViewDropdown}
+                      />
+                      <SortActions
+                        name="Sort By"
+                        menuItems={menuItem}
+                        isOpen={isSortByDropdownOpen}
+                        toggleDropDown={toggleSortByDropdown}
+                      />
                     </div>
                   </div>
                 </div>
-              ) : (
-                <div className="w-full h-[calc(100%-55px)] py-4 scrollbar-hide">
-                  <div className="w-[100%] z-0 h-[calc(100%-65px)] space-y-2">
-                    {filteredBookmarks.map(timeline => (
-                      <BookmarkItem
-                        key={timeline._id}
-                        id={timeline._id}
-                        name={timeline.title}
-                        url={timeline.link}
-                        note={!timeline.note ? '' : timeline.note}
-                        favicon={timeline.favicon}
-                        windowWidth={windowWidth}
-                        updatedAt={timeline.updatedAt}
-                        isOwner={
-                          collectionData.collectionData.userId === auth.userId
-                        }
-                        clickedId={clickedId}
-                        setClickedId={setClickedId}
-                        isSelected={timeline.isSelected}
-                        collectionId={collectionId}
-                        toggleBookmarkPin={toggleBookmarkPin}
-                        isPinned={timeline.isPinned}
-                        collectionName={collectionData.collectionData.title}
-                      />
-                    ))}
-                    <div className="h-[60px]"></div>
-                  </div>
-                </div>
-              )
-            ) : (
-              <div className="flex flex-col items-center justify-center w-full h-full py-20">
-                <p
-                  className={`mb-5 text-5xl ${
-                    selectedMode === 'light'
-                      ? 'text-textPrimary'
-                      : 'text-neutral-300'
-                  }  `}
-                >
-                  No bookmarks Found
-                </p>
-                <p
-                  className={`text-textPrimary ${
-                    selectedMode === 'light'
-                      ? 'text-textPrimary'
-                      : 'text-neutral-300'
-                  } `}
-                >
-                  You can add it from extension
-                </p>
-                <a
-                  className="text-primary-400"
-                  href="https://chrome.google.com/webstore/detail/linkcollect-save-share-bo/knekpacpcgkieomkhhngenjeeokddkif"
-                >
-                  {' '}
-                  Click To Install{' '}
-                </a>
+
+                {/* Checked Items : Number of CheckItems, Action Select All and Uncheck All, Move and Delete */}
+                {/* Selecet Unslect Component will be shown here */}
               </div>
+
+              {/* Bookmarks Container */}
+              <div className="w-full h-[max] mx-auto ">
+                {collectionData.isFetching ? (
+                  <div className="flex items-center justify-center w-full h-full">
+                    <PageLoader />
+                  </div>
+                ) : collectionData.collectionData &&
+                  filteredBookmarks?.length > 0 ? (
+                  isGridView === 'GRID_VIEW' ? (
+                    <div className="w-full h-[calc(100%-55px)] py-10 scrollbar-hide">
+                      <div className="w-[100%] h-[calc(100%-65px)] space-y-2">
+                        <div className="grid justify-start w-full grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 2xl:gap-6 ">
+                          {filteredBookmarks.map(timeline => (
+                            <BookmarkItemGrid
+                              key={timeline._id}
+                              id={timeline._id}
+                              name={timeline.title}
+                              url={timeline.link}
+                              note={!timeline.note ? '' : timeline.note}
+                              favicon={timeline.favicon}
+                              windowWidth={windowWidth}
+                              updatedAt={timeline.updatedAt}
+                              isOwner={
+                                collectionData.collectionData.userId ===
+                                auth.userId
+                              }
+                              clickedId={clickedId}
+                              setClickedId={setClickedId}
+                              isSelected={timeline.isSelected}
+                              collectionId={collectionId}
+                              toggleBookmarkPin={toggleBookmarkPin}
+                              isPinned={timeline.isPinned}
+                              collectionName={
+                                collectionData.collectionData.title
+                              }
+                            />
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="w-full h-[calc(100%-55px)] py-4 scrollbar-hide">
+                      <div className="w-[100%] z-0 h-[calc(100%-65px)] space-y-2">
+                        {filteredBookmarks.map(timeline => (
+                          <BookmarkItem
+                            key={timeline._id}
+                            id={timeline._id}
+                            name={timeline.title}
+                            url={timeline.link}
+                            note={!timeline.note ? '' : timeline.note}
+                            favicon={timeline.favicon}
+                            windowWidth={windowWidth}
+                            updatedAt={timeline.updatedAt}
+                            isOwner={
+                              collectionData.collectionData.userId ===
+                              auth.userId
+                            }
+                            clickedId={clickedId}
+                            setClickedId={setClickedId}
+                            isSelected={timeline.isSelected}
+                            collectionId={collectionId}
+                            toggleBookmarkPin={toggleBookmarkPin}
+                            isPinned={timeline.isPinned}
+                            collectionName={collectionData.collectionData.title}
+                          />
+                        ))}
+                        <div className="h-[60px]"></div>
+                      </div>
+                    </div>
+                  )
+                ) : (
+                  <div className="flex flex-col items-center justify-center w-full h-full py-20">
+                    <p
+                      className={`mb-5 text-5xl ${
+                        selectedMode === 'light'
+                          ? 'text-textPrimary'
+                          : 'text-neutral-300'
+                      }  `}
+                    >
+                      No bookmarks Found
+                    </p>
+                    <p
+                      className={`text-textPrimary ${
+                        selectedMode === 'light'
+                          ? 'text-textPrimary'
+                          : 'text-neutral-300'
+                      } `}
+                    >
+                      You can add it from extension
+                    </p>
+                    <a
+                      className="text-primary-400"
+                      href="https://chrome.google.com/webstore/detail/linkcollect-save-share-bo/knekpacpcgkieomkhhngenjeeokddkif"
+                    >
+                      {' '}
+                      Click To Install{' '}
+                    </a>
+                  </div>
+                )}
+              </div>
+            </div>
+            {!collectionData.isFetching && (
+              <MoreFromUser
+                collectionData={collectionData}
+                user={collectionData?.collectionData?.username}
+              ></MoreFromUser>
             )}
           </div>
+        </>
+      ) : (
+        <div className="w-full h-full flex flex-col align-center justify-center -mt-8 dark:text-white">
+          <h1 className="text-4xl mb-4">User or Collection not found</h1>
+          <h2 className="text-xl">
+            The user or the collection may be private.
+          </h2>
+          <h2 className="text-xl">
+            Please make sure you spelled the username correctly. It is
+            case-sensitive.
+          </h2>
+          <h2 className="text-xl">Redirecting...</h2>
         </div>
-        {!collectionData.isFetching && (
-          <MoreFromUser
-            collectionData={collectionData}
-            user={collectionData?.collectionData?.username}
-          ></MoreFromUser>
-        )}
-      </div>
+      )}
     </BaseLayout>
   );
 };
