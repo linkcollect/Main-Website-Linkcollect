@@ -22,6 +22,7 @@ import { duplicateCollection } from '../../api-services/collectionService.js';
 import toast, { Toaster } from 'react-hot-toast';
 import { getUserById } from '../../api-services/authService';
 import formatViews from '../../utils/utils';
+import ToolTip from '../UI/ToolTip/ToolTip';
 
 const CollectionitemV2 = React.forwardRef(
   (
@@ -57,6 +58,7 @@ const CollectionitemV2 = React.forwardRef(
     // LOCAL STATE WILL HELP TO MUTATE THE ITEM SO QUICKLY WHEN IT COMES TO LARGE DATA
     const [isSaved, setIsSaved] = useState(false);
     const [hover, setHover] = useState(false);
+    const [toolTip, setToolTip] = useState(false);
     const [isUpvoted, setIsUpvoted] = useState({
       isClicked: false,
       number: 0,
@@ -215,7 +217,10 @@ const CollectionitemV2 = React.forwardRef(
                 hover ? 'opacity-100' : 'opacity-0'
               }`}
               onClick={e => onDuplicate(e, id)}
+              onMouseEnter={() => setToolTip(true)}
+              onMouseLeave={() => setToolTip(false)}
             >
+              {toolTip && <ToolTip />}
               <img src={duplicateSvg} alt="pin" />
             </IconButton>
           )}
