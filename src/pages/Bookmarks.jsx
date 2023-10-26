@@ -24,7 +24,7 @@ import BookmarkItemGrid from '../components/Sections/Bookmarks/BookmarkItemGrid'
 import useDropdown from '../hooks/useDropdown';
 
 const Bookmarks = ({ windowWidth }) => {
-  const navigation = useNavigate();
+  const navigate = useNavigate();
   const { collectionId, username } = useParams();
 
   // Modal State: Collection
@@ -87,7 +87,7 @@ const Bookmarks = ({ windowWidth }) => {
   useEffect(() => {
     if (!collectionData?.collectionData?.isPublic) {
       const timer = setTimeout(() => {
-        navigation('/');
+        navigate('/');
       }, 11000);
       return () => clearTimeout(timer);
     }
@@ -96,9 +96,9 @@ const Bookmarks = ({ windowWidth }) => {
   const backHandler = e => {
     e.preventDefault();
     if (!auth.isLoggedIn) {
-      navigation('/login');
+      navigate('/login');
     } else {
-      navigation(-1);
+      navigate(-1);
     }
   };
 
