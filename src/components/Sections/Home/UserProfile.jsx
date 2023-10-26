@@ -26,7 +26,7 @@ const UserProfile = ({ username, windowWidth }) => {
   const collection = useSelector(state => state.collection);
   const [user, setUser] = useState({});
 
-  const navigation = useNavigate();
+  const navigate = useNavigate();
 
   const countTotalProfileViews = collections => {
     // keeping the default views 0
