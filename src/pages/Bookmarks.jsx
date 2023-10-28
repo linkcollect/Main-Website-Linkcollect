@@ -83,12 +83,12 @@ const Bookmarks = ({ windowWidth }) => {
     return document.removeEventListener('click', e => {});
   }, [clickedId]);
 
-  // if profile or collection is private, redirect to home after 11 seconds.
+  // if profile or collection is private, redirect to home after 3.5 seconds.
   useEffect(() => {
     if (!collectionData?.collectionData?.isPublic) {
       const timer = setTimeout(() => {
         navigate('/');
-      }, 11000);
+      }, 3500);
       return () => clearTimeout(timer);
     }
   }, [JSON.stringify(collectionData)]);

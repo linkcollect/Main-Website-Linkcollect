@@ -70,12 +70,12 @@ const UserProfile = ({ username, windowWidth }) => {
     getCollectionOfTheUser();
   }, [dispatch, username]);
 
-  // if profile is private, redirect to home after 5 seconds.
+  // if profile is private, redirect to home after 3.5 seconds.
   useEffect(() => {
     if (!user.isPublic) {
       const timer = setTimeout(() => {
         navigate('/');
-      }, 5000);
+      }, 3500);
       return () => clearTimeout(timer);
     }
   }, [JSON.stringify(user)]);
