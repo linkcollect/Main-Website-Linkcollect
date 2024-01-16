@@ -64,6 +64,47 @@ We welcome contributions from the community to enhance LinkCollect. If you'd lik
 4. Commit your changes and push them to your fork.
 5. Submit a pull request describing your changes.
 
+## Founding Team
+<div align="center">
+  <img src="https://media.licdn.com/dms/image/D5603AQHacQaZI8Hmyw/profile-displayphoto-shrink_800_800/0/1690280083134?e=1710979200&v=beta&t=0MUlDzf87fkTp8-oEkvO4jOKnDmeLa_kGv6ErtR6_ZE" width="200" height="200"/>
+  <h3>Founder: Harsh Singh</h3>
+</div>
+<hr/>
+  <h1 align="center">Developer Team</h1>
+  <div align="center" display="flex" style="
+    display: flex;
+    justify-content: space-between;">
+    <span>
+      <img src="https://pbs.twimg.com/profile_images/1598579574496931840/u0jVRyR2_400x400.jpg" width="200" height="200"/>
+      <h3>Subhradwip Kulavi - Frontend </h3>
+    </span>
+    <span>
+      <img src="https://pbs.twimg.com/profile_images/1598699825813651457/mfIFhjRv_400x400.jpg" width="200" height="200"/>
+      <h3>Tushar Verma - Frontend </h3>
+    </span>
+    <span>
+      <img src="https://media.licdn.com/dms/image/D4D03AQGHJlU42v6pug/profile-displayphoto-shrink_800_800/0/1689629008412?e=1710979200&v=beta&t=t9KN8vEGyrvebeoHWk9VW7_mHqTl9K5W7JfRoei8FHA" width="200" height="200"/>
+      <h3>Sahil Zambani - Frontend </h3>
+    </span>
+     <span>
+      <img src="https://pbs.twimg.com/profile_images/1738389647892635648/NKUJO9M5_400x400.jpg" width="200" height="200"/>
+      <h3>Anshuman Sharma - Backend </h3>
+    </span>
+    <span>
+      <img src="https://pbs.twimg.com/profile_images/1643222610988392449/ysst1H-5_400x400.jpg" width="200" height="200"/>
+      <h3>Bhimgouda D Patil - Backend </h3>
+    </span>
+    <span>
+      <img src="https://pbs.twimg.com/profile_images/1734694806503268352/wJr5oEgD_400x400.jpg" width="200" height="200"/>
+      <h3>Sakcham Singh - Design </h3>
+    </span>
+    <span>
+      <img src="https://media.licdn.com/dms/image/D4D03AQGZg9YLXP9F3w/profile-displayphoto-shrink_800_800/0/1693630885410?e=1710979200&v=beta&t=OlzeBCRB2nJEXVfOBCYx0sy1-sDQBuqPOvkiFrkjelA" width="200" height="200"/>
+      <h3>Rohan Kambli - Design </h3>
+    </span>
+  </div>
+</div>
+
 ## License
 
 LinkCollect is licensed under the [MIT License](LICENSE).
