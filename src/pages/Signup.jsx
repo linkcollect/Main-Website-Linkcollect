@@ -9,6 +9,7 @@ import Emailsent from '../components/Sections/Authentication/EmailSent';
 import Loader from '../components/UI/Loader/Loader';
 // import ClaimUsername from "../components/Sections/Authentication/ClaimUsername";
 import Button from '../components/UI/Button/Button';
+import SEO from '../components/SEO/SEO';
 const Signup = ({ windowWidth }) => {
   const [verifying, setVerifying] = useState(false);
   const [isSiging, setIsSigning] = useState(false);
@@ -56,6 +57,7 @@ const Signup = ({ windowWidth }) => {
 
   return (
     <>
+      <SEO title="Signup to Linkcollect" />
       <div
         style={{
           background: `linear-gradient(0deg, #9092FF -10.03%, rgba(144, 146, 255, 0) 98.39%), #FFFFFF`,

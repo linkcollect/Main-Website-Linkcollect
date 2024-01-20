@@ -5,6 +5,7 @@ import TabContent from '../components/Sections/Settings/TabContent';
 import BaseLayout from '../components/Layout/BaseLayout/BaseLayout';
 import { switchMode } from '../hooks/switchMode';
 import { useContext } from 'react';
+import SEO from '../components/SEO/SEO';
 const Settings = () => {
   const [activeTab, setActiveTab] = useState('profile');
 
@@ -57,6 +58,7 @@ const Settings = () => {
 
   return (
     <BaseLayout>
+      <SEO title="Settings" />
       <div className={`w-full overflow-y-scroll`}>
         <div className="flex flex-col items-start justify-start w-full gap-4 mb-[1rem] mx-auto 3xl:px-0 px-8 max-w-[1500px]">
           <h1
