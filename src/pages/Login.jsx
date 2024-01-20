@@ -13,6 +13,7 @@ import Button from '../components/UI/Button/Button';
 import toast, { Toaster } from 'react-hot-toast';
 
 import { gaEvents } from '../components/analytics/gaAnalyticsEventHandler';
+import SEO from '../components/SEO/SEO';
 
 const Login = ({ windowWidth }) => {
   const location = useLocation();
@@ -77,6 +78,7 @@ const Login = ({ windowWidth }) => {
 
   return (
     <>
+      <SEO title="Login to Linkcollect" />
       <div
         style={{
           background: `linear-gradient(0deg, #9092FF -10.03%, rgba(144, 146, 255, 0) 98.39%), #FFFFFF`,

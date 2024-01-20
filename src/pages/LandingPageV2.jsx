@@ -7,6 +7,7 @@ import Main from '../components/Sections/LandingPageV2/Main';
 import { getExplore } from '../api-services/collectionService';
 // analytics
 import useAnalyticsEventTracker from '../hooks/useAnalyticsEventTracker';
+import SEO from '../components/SEO/SEO';
 
 const useExploreData = () => {
   const [exploreData, setExploreData] = useState([]);
@@ -35,6 +36,7 @@ const LandingPageV2 = ({ windowWidth }) => {
   const exploreData = useExploreData();
   return (
     <div className="flex flex-col justify-between h-screen overflow-x-hidden overflow-y-scroll scrollbar-hide">
+      <SEO />
       <Navbar analytics={trackGA} />
       <Main
         analytics={trackGA}

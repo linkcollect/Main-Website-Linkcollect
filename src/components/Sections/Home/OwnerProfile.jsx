@@ -160,7 +160,7 @@ const OwnerProfile = ({ username, windowWidth }) => {
       {/* Collections */}
       <div className="w-full h-full px-8 pb-6 overflow-y-scroll 3xl:px-0">
         {collection.isFetching ? (
-          <div className="flex items-center justify-center w-full">
+          <div className="flex items-center justify-center w-full h-full">
             <PageLoader />
           </div>
         ) : filteredCollection.length > 0 ? (

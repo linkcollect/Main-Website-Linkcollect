@@ -139,7 +139,7 @@ const EcBookamrkModal = ({
             >
               {isEditing ? 'Edit Bookmark' : 'Create Bookmark'}
             </h1>
-            <button className="flex" onClick={onClose}>
+            <button className="flex" onClick={resetDataAndClose}>
               {selectedMode === 'light' ? (
                 <img src={cancelIcon} name="cancel" />
               ) : (

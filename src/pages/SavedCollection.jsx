@@ -16,6 +16,7 @@ import { useContext } from 'react';
 import { switchMode } from '../hooks/switchMode';
 import useDropdown from '../hooks/useDropdown';
 import toast, { Toaster } from 'react-hot-toast';
+import SEO from '../components/SEO/SEO';
 
 const SavedCollection = ({ windowWidth }) => {
   const dispatch = useDispatch();
@@ -67,6 +68,7 @@ const SavedCollection = ({ windowWidth }) => {
   ];
   return (
     <BaseLayout>
+      <SEO title="Saved Collection" />
       <Toaster position="top-center" reverseOrder={true} />
       <div className="flex flex-col items-start justify-center w-full gap-4 mx-auto 3xl:px-0 px-8 max-w-[1500px]">
         <CollectionHeader

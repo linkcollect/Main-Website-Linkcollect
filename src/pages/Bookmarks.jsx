@@ -54,6 +54,7 @@ const Bookmarks = ({ windowWidth }) => {
     toggleSortByDropdown,
     toggleViewDropdown,
   } = useDropdown();
+  console.log(collectionData.isFetching);
   useEffect(() => {
     dispatch(getBookmarks({ collectionId }));
   }, [collectionId]);
@@ -85,7 +86,10 @@ const Bookmarks = ({ windowWidth }) => {
 
   // if profile or collection is private, redirect to home after 3.5 seconds.
   useEffect(() => {
-    if (!collectionData?.collectionData?.isPublic) {
+    if (
+      !collectionData?.collectionData?.isPublic &&
+      collectionData.collectionData.username !== auth.username
+    ) {
       const timer = setTimeout(() => {
         navigate('/');
       }, 3500);
@@ -179,7 +183,12 @@ const Bookmarks = ({ windowWidth }) => {
         }
       ></SEO>
 
-      {collectionData?.collectionData?.isPublic ? (
+      {collectionData.isFetching ? (
+        <div className="w-full h-full flex justify-center items-center">
+          <PageLoader />
+        </div>
+      ) : collectionData.collectionData.isPublic ||
+        collectionData.collectionData.username === auth.username ? (
         <>
           <div className="flex flex-col w-full h-[calc(100%)] mx-auto mb-[0.5rem] overflow-y-auto scrollbar-hide">
             {/* Collection Edit Modal */}
