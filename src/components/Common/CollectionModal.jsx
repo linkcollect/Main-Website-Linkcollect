@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import Input, { Label, TextArea } from '../UI/Input/Input';
+import MultiSelectDropdown from '../UI/Dropdown/MultiSelectDropdown';
 import Loader from '../UI/Loader/Loader';
 import Modal from '../UI/Modal/Modal';
 import { useDispatch } from 'react-redux';
@@ -23,6 +24,18 @@ export const CollectionModal = ({
   isEditing,
   collectionId = null, // it will be only availble if we edit a collection
 }) => {
+  const tagsList = [
+    'Design',
+    'Product',
+    'Tech',
+    'Animation',
+    'Reading',
+    'AI',
+    'Songs',
+    'coding',
+    'jobs',
+    'youtube',
+  ];
   const [isLoading, setIsLoding] = React.useState(false);
   const auth = useSelector(state => state.auth);
   const [collectionData, setCollectionData] = useState({
@@ -227,6 +240,15 @@ export const CollectionModal = ({
           </div>
 
           {/* Collection Tag */}
+          <div className="w-full">
+            <Label name="Tags" htmlFor="tags" />
+            <MultiSelectDropdown
+              tagsList={tagsList}
+              selectedTag={collectionData}
+              setSelectedTag={setCollectionData}
+              maxTagToselect={3}
+            />
+          </div>
 
           {/* Collection Thumbnail Input */}
           <div className="w-full">
